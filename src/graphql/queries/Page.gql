@@ -1,0 +1,251 @@
+query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
+  pages(where: { slug: $slug }, locales: [$locale, en], first: 1) {
+    id
+    title
+    slug
+    sections {
+      __typename
+      ... on HeroSection {
+        id
+        headline
+        subheadline
+        backgroundMedia {
+          id
+          url
+          width
+          height
+        }
+        textAlignment
+        primaryCTA {
+          id
+          label
+          href
+          variant
+          openInNewTab
+        }
+        secondaryCTA {
+          id
+          label
+          href
+          variant
+          openInNewTab
+        }
+      }
+      ... on FeatureGrid {
+        id
+        title
+        layout
+        features {
+          id
+          title
+          description {
+            text
+          }
+          icon {
+            id
+            url
+            width
+            height
+          }
+        }
+      }
+      ... on TestimonialCarousel {
+        id
+        title
+        testimonials {
+          id
+          quote
+          author
+          role
+          rating
+          avatar {
+            id
+            url
+            width
+            height
+          }
+        }
+      }
+      ... on CTABlock {
+        id
+        headline
+        description {
+          text
+        }
+        backgroundColor
+        primaryButton {
+          id
+          label
+          href
+          variant
+          openInNewTab
+        }
+        secondaryButton {
+          id
+          label
+          href
+          variant
+          openInNewTab
+        }
+      }
+      ... on ProductShowcase {
+        id
+        title
+        layout
+        productLine {
+          id
+          slug
+          name
+        }
+        filterByAudience
+        showPrices
+        showStock
+        itemsPerRow
+      }
+      ... on StatsBar {
+        id
+        title
+        statsLayout: layout
+        backgroundColor
+        stats {
+          value
+          label
+          icon {
+            id
+            url
+            width
+            height
+          }
+        }
+      }
+    }
+    variants(where: { segments_some: { name: $segmentName } }) {
+      sections {
+        __typename
+        ... on HeroSection {
+          id
+          headline
+          subheadline
+          backgroundMedia {
+            id
+            url
+            width
+            height
+          }
+          textAlignment
+          primaryCTA {
+            id
+            label
+            href
+            variant
+            openInNewTab
+          }
+          secondaryCTA {
+            id
+            label
+            href
+            variant
+            openInNewTab
+          }
+        }
+        ... on FeatureGrid {
+          id
+          title
+          layout
+          features {
+            id
+            title
+            description {
+              text
+            }
+            icon {
+              id
+              url
+              width
+              height
+            }
+          }
+        }
+        ... on TestimonialCarousel {
+          id
+          title
+          testimonials {
+            id
+            quote
+            author
+            role
+            rating
+            avatar {
+              id
+              url
+              width
+              height
+            }
+          }
+        }
+        ... on CTABlock {
+          id
+          headline
+          description {
+            text
+          }
+          backgroundColor
+          primaryButton {
+            id
+            label
+            href
+            variant
+            openInNewTab
+          }
+          secondaryButton {
+            id
+            label
+            href
+            variant
+            openInNewTab
+          }
+        }
+        ... on ProductShowcase {
+          id
+          title
+          layout
+          productLine {
+            id
+            slug
+            name
+          }
+          filterByAudience
+          showPrices
+          showStock
+          itemsPerRow
+        }
+        ... on StatsBar {
+          id
+          title
+          statsLayout: layout
+          backgroundColor
+          stats {
+            value
+            label
+            icon {
+              id
+              url
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+    seo {
+      metaTitle
+      metaDescription
+      ogImage {
+        id
+        url
+        width
+        height
+      }
+    }
+  }
+}

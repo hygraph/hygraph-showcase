@@ -1,0 +1,38 @@
+query GetNavigation($identifier: String!, $locale: Locale!) {
+  navigations(
+    where: { identifier: $identifier }
+    locales: [$locale, en]
+    first: 1
+  ) {
+    id
+    identifier
+    items {
+      id
+      label
+      linkType
+      pageLink {
+        id
+        slug
+      }
+      productLineLink {
+        id
+        slug
+      }
+      externalUrl
+      children {
+        id
+        label
+        linkType
+        pageLink {
+          id
+          slug
+        }
+        productLineLink {
+          id
+          slug
+        }
+        externalUrl
+      }
+    }
+  }
+}

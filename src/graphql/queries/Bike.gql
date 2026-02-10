@@ -1,0 +1,55 @@
+query GetBike($id: ID!, $locale: Locale!) {
+  bike(where: { id: $id }, locales: [$locale, en]) {
+    id
+    name
+    baseProductId
+    color
+    size
+    description {
+      text
+      html
+    }
+    images {
+      id
+      url
+      width
+      height
+    }
+    category {
+      value
+    }
+    specifications {
+      weight
+      motor
+      battery
+      range
+      frame
+      brakes
+      gears
+      suspension
+      wheelSize
+    }
+    externalProductId
+    externalProduct {
+      data {
+        id
+        name
+        sku
+        calculated_price
+        inventory_level
+        availability
+        description
+        variants {
+          id
+          sku
+          calculated_price
+          inventory_level
+          option_values {
+            label
+            option_display_name
+          }
+        }
+      }
+    }
+  }
+}

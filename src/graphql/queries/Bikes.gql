@@ -1,0 +1,84 @@
+query GetBikes($locale: Locale!) {
+  bikes(
+    locales: [$locale, en]
+    first: 20
+  ) {
+    id
+    name
+    baseProductId
+    color
+    description {
+      text
+    }
+    images {
+      id
+      url
+      width
+      height
+    }
+    externalProductId
+    externalProduct {
+      data {
+        id
+        name
+        sku
+        calculated_price
+        inventory_level
+        availability
+        variants {
+          id
+          sku
+          calculated_price
+          inventory_level
+          option_values {
+            label
+            option_display_name
+          }
+        }
+      }
+    }
+  }
+}
+
+query GetBikesByCategory($locale: Locale!, $categoryValue: String!) {
+  bikes(
+    locales: [$locale, en]
+    first: 20
+    where: { category: { value: $categoryValue } }
+  ) {
+    id
+    name
+    baseProductId
+    color
+    description {
+      text
+    }
+    images {
+      id
+      url
+      width
+      height
+    }
+    externalProductId
+    externalProduct {
+      data {
+        id
+        name
+        sku
+        calculated_price
+        inventory_level
+        availability
+        variants {
+          id
+          sku
+          calculated_price
+          inventory_level
+          option_values {
+            label
+            option_display_name
+          }
+        }
+      }
+    }
+  }
+}

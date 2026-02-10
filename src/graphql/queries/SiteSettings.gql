@@ -1,0 +1,23 @@
+query GetSiteSettings($locale: Locale!) {
+  allSiteSettings(locales: [$locale, en], first: 1) {
+    id
+    siteName
+    brandColor
+    contactEmail
+    footerText {
+      text
+    }
+    logo {
+      id
+      url
+      width
+      height
+    }
+    socialLinks {
+      id
+      platform
+      url
+      handle
+    }
+  }
+}
