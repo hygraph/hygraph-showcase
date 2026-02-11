@@ -1,6 +1,6 @@
 /**
- * Bike Detail Page
- * Displays full bike information including specs and live BigCommerce data
+ * Product Detail Page
+ * Displays full product information including specs and live BigCommerce data
  */
 
 import Image from 'next/image';
@@ -8,45 +8,45 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { hygraphRequest } from '@/lib/hygraph/client';
 import {
-  GetBikeDocument,
-  type GetBikeQuery,
-  type GetBikeQueryVariables,
+  GetProductDocument,
+  type GetProductQuery,
+  type GetProductQueryVariables,
 } from '@/types/hygraph-generated';
 import { type Locale } from '@/lib/utils/locale';
 
-interface BikePageProps {
+interface ProductPageProps {
   params: Promise<{
     locale: string;
-    bikeId: string;
+    productId: string;
   }>;
 }
 
-export async function generateMetadata({ params }: BikePageProps): Promise<Metadata> {
-  const { locale, bikeId } = await params;
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const { locale, productId } = await params;
 
   try {
-    const data = await hygraphRequest<GetBikeQuery>(GetBikeDocument, {
-      id: bikeId,
+    const data = await hygraphRequest<GetProductQuery>(GetProductDocument, {
+      id: productId,
       locale,
-    } as GetBikeQueryVariables);
+    } as GetProductQueryVariables);
 
-    if (!data.bike) {
+    if (!data.product) {
       return {
-        title: 'Bike Not Found',
+        title: 'Product Not Found',
       };
     }
 
     return {
-      title: `${data.bike.name} | HyBike`,
-      description: data.bike.description?.text.substring(0, 160) ?? undefined,
-      openGraph: data.bike.images[0]
+      title: `${data.product.name} | HyBike`,
+      description: data.product.description?.text.substring(0, 160) ?? undefined,
+      openGraph: data.product.images[0]
         ? {
             images: [
               {
-                url: data.bike.images[0].url,
-                width: data.bike.images[0].width ?? undefined,
-                height: data.bike.images[0].height ?? undefined,
-                alt: data.bike.name,
+                url: data.product.images[0].url,
+                width: data.product.images[0].width ?? undefined,
+                height: data.product.images[0].height ?? undefined,
+                alt: data.product.name,
               },
             ],
           }
@@ -55,32 +55,32 @@ export async function generateMetadata({ params }: BikePageProps): Promise<Metad
   } catch (error) {
     console.error('Failed to generate metadata:', error);
     return {
-      title: 'Bike',
+      title: 'Product',
     };
   }
 }
 
-export default async function BikePage({ params }: BikePageProps) {
-  const { locale, bikeId } = await params;
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { locale, productId } = await params;
 
-  let data: GetBikeQuery | null = null;
+  let data: GetProductQuery | null = null;
   try {
-    data = await hygraphRequest<GetBikeQuery>(GetBikeDocument, {
-      id: bikeId,
+    data = await hygraphRequest<GetProductQuery>(GetProductDocument, {
+      id: productId,
       locale,
-    } as GetBikeQueryVariables);
+    } as GetProductQueryVariables);
   } catch (error) {
-    console.error('Failed to fetch bike:', error);
+    console.error('Failed to fetch product:', error);
     notFound();
   }
 
-  const bike = data?.bike;
-  if (!bike) {
+  const product = data?.product;
+  if (!product) {
     notFound();
   }
 
   // Get BigCommerce data
-  const federatedData = bike.externalProduct?.data;
+  const federatedData = product.externalProduct?.data;
   const price = federatedData?.calculated_price;
   const inStock = federatedData ? federatedData.inventory_level > 0 : true;
 
@@ -94,7 +94,7 @@ export default async function BikePage({ params }: BikePageProps) {
             <span className="mx-2">/</span>
             <a href={`/${locale}/products`} className="hover:text-brand">Products</a>
             <span className="mx-2">/</span>
-            <span className="text-gray-900">{bike.name}</span>
+            <span className="text-gray-900">{product.name}</span>
           </nav>
         </div>
       </div>
@@ -104,11 +104,11 @@ export default async function BikePage({ params }: BikePageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image Gallery */}
           <div className="space-y-4">
-            {bike.images[0] && (
+            {product.images[0] && (
               <div className="relative aspect-square bg-white rounded-lg overflow-hidden shadow-lg">
                 <Image
-                  src={bike.images[0].url}
-                  alt={bike.name}
+                  src={product.images[0].url}
+                  alt={product.name}
                   fill
                   className="object-cover"
                   priority
@@ -123,13 +123,13 @@ export default async function BikePage({ params }: BikePageProps) {
             )}
 
             {/* Thumbnail Gallery */}
-            {bike.images.length > 1 && (
+            {product.images.length > 1 && (
               <div className="grid grid-cols-4 gap-4">
-                {bike.images.slice(1, 5).map((image) => (
+                {product.images.slice(1, 5).map((image) => (
                   <div key={image.id} className="relative aspect-square bg-white rounded-lg overflow-hidden shadow cursor-pointer hover:shadow-lg transition-shadow">
                     <Image
                       src={image.url}
-                      alt={bike.name}
+                      alt={product.name}
                       fill
                       className="object-cover"
                       sizes="(max-width: 1024px) 25vw, 12.5vw"
@@ -144,11 +144,11 @@ export default async function BikePage({ params }: BikePageProps) {
           <div className="space-y-6">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                {bike.name}
+                {product.name}
               </h1>
-              {bike.category && (
+              {product.category && (
                 <p className="text-sm text-gray-600 uppercase tracking-wide">
-                  {bike.category.value}
+                  {product.category.value}
                 </p>
               )}
             </div>
@@ -175,10 +175,10 @@ export default async function BikePage({ params }: BikePageProps) {
             </div>
 
             {/* Description */}
-            {bike.description && (
+            {product.description && (
               <div className="prose prose-gray max-w-none">
                 <p className="text-gray-700 leading-relaxed">
-                  {bike.description.text}
+                  {product.description.text}
                 </p>
               </div>
             )}
@@ -200,21 +200,22 @@ export default async function BikePage({ params }: BikePageProps) {
         </div>
 
         {/* Specifications */}
-        {bike.specifications && (
+        {product.specifications && (
           <div className="mt-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Technical Specifications</h2>
             <div className="bg-white rounded-lg shadow-md p-8">
               <dl className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {Object.entries({
-                  'Weight': bike.specifications.weight,
-                  'Motor': bike.specifications.motor,
-                  'Battery': bike.specifications.battery,
-                  'Range': bike.specifications.range,
-                  'Frame': bike.specifications.frame,
-                  'Brakes': bike.specifications.brakes,
-                  'Gears': bike.specifications.gears,
-                  'Suspension': bike.specifications.suspension,
-                  'Wheel Size': bike.specifications.wheelSize,
+                  'Name': product.specifications.name,
+                  'Weight': product.specifications.weight,
+                  'Motor': product.specifications.motor,
+                  'Battery': product.specifications.battery,
+                  'Range': product.specifications.range,
+                  'Frame': product.specifications.frame,
+                  'Brakes': product.specifications.brakes,
+                  'Gears': product.specifications.gears,
+                  'Suspension': product.specifications.suspension,
+                  'Wheel Size': product.specifications.wheelSize,
                 }).filter(([_, value]) => value).map(([key, value]) => (
                   <div key={key} className="border-b border-gray-200 pb-4">
                     <dt className="text-sm font-medium text-gray-600 mb-1">{key}</dt>

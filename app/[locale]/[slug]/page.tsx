@@ -7,11 +7,11 @@ import { cookies } from 'next/headers';
 import { hygraphRequest } from '@/lib/hygraph/client';
 import {
   GetPageDocument,
-  GetBikesDocument,
+  GetProductsDocument,
   type GetPageQuery,
   type GetPageQueryVariables,
-  type GetBikesQuery,
-  type GetBikesQueryVariables,
+  type GetProductsQuery,
+  type GetProductsQueryVariables,
 } from '@/types/hygraph-generated';
 import { type Locale } from '@/lib/utils/locale';
 import HeroSection from '@/components/sections/HeroSection';
@@ -108,19 +108,19 @@ export default async function Page({ params }: PageProps) {
     ? audienceCookie === 'COMMUTERS' ? 'Commuters' : 'Sports Enthusiasts'
     : undefined;
 
-  // Fetch page content and bikes in parallel
+  // Fetch page content and products in parallel
   let data: GetPageQuery | null = null;
-  let bikesData: GetBikesQuery | null = null;
+  let productsData: GetProductsQuery | null = null;
   try {
-    [data, bikesData] = await Promise.all([
+    [data, productsData] = await Promise.all([
       hygraphRequest<GetPageQuery>(GetPageDocument, {
         slug,
         locale,
         segmentName,
       } as GetPageQueryVariables),
-      hygraphRequest<GetBikesQuery>(GetBikesDocument, {
+      hygraphRequest<GetProductsQuery>(GetProductsDocument, {
         locale,
-      } as GetBikesQueryVariables),
+      } as GetProductsQueryVariables),
     ]);
   } catch (error) {
     console.error('Failed to fetch page:', error);
@@ -128,7 +128,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   const page = data?.pages?.[0];
-  const bikes = bikesData?.bikes || [];
+  const products = productsData?.products || [];
 
   if (!page) {
     notFound();
@@ -156,7 +156,7 @@ export default async function Page({ params }: PageProps) {
           return <CTABlock key={section.id} section={section as any} locale={locale as Locale} />;
         }
         if (isProductShowcase(section)) {
-          return <ProductShowcase key={section.id} section={section as any} locale={locale as Locale} bikes={bikes as any} />;
+          return <ProductShowcase key={section.id} section={section as any} locale={locale as Locale} products={products as any} />;
         }
         if (isStatsBar(section)) {
           return <StatsBar key={section.id} section={section as any} locale={locale as Locale} />;

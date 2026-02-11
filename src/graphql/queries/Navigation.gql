@@ -2,6 +2,7 @@ query GetNavigation($identifier: String!, $locale: Locale!) {
   navigations(
     where: { identifier: $identifier }
     locales: [$locale, en]
+    stage: DRAFT
     first: 1
   ) {
     id

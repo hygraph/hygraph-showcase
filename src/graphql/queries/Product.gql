@@ -1,5 +1,5 @@
-query GetBike($id: ID!, $locale: Locale!) {
-  bike(where: { id: $id }, locales: [$locale, en]) {
+query GetProduct($id: ID!, $locale: Locale!) {
+  product(where: { id: $id }, locales: [$locale, en], stage: DRAFT) {
     id
     name
     baseProductId
@@ -19,6 +19,7 @@ query GetBike($id: ID!, $locale: Locale!) {
       value
     }
     specifications {
+      name
       weight
       motor
       battery

@@ -1,6 +1,7 @@
-query GetBikes($locale: Locale!) {
-  bikes(
+query GetProducts($locale: Locale!) {
+  products(
     locales: [$locale, en]
+    stage: DRAFT
     first: 20
   ) {
     id
@@ -40,9 +41,10 @@ query GetBikes($locale: Locale!) {
   }
 }
 
-query GetBikesByCategory($locale: Locale!, $categoryValue: String!) {
-  bikes(
+query GetProductsByCategory($locale: Locale!, $categoryValue: String!) {
+  products(
     locales: [$locale, en]
+    stage: DRAFT
     first: 20
     where: { category: { value: $categoryValue } }
   ) {

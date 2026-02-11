@@ -1,5 +1,5 @@
 query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
-  pages(where: { slug: $slug }, locales: [$locale, en], first: 1) {
+  pages(where: { slug: $slug }, locales: [$locale, en], stage: DRAFT, first: 1) {
     id
     title
     slug

@@ -13,23 +13,23 @@ import {
   type GetProductLineQueryVariables,
 } from '@/types/hygraph-generated';
 import {
-  GetBikesByCategoryDocument,
-  type GetBikesByCategoryQuery,
-  type GetBikesByCategoryQueryVariables,
+  GetProductsByCategoryDocument,
+  type GetProductsByCategoryQuery,
+  type GetProductsByCategoryQueryVariables,
 } from '@/types/hygraph-generated';
 import { type Locale } from '@/lib/utils/locale';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
 /**
- * Type guard for bikes with federated data
+ * Type guard for products with federated data
  */
-type BikeWithFederation = GetBikesByCategoryQuery['bikes'][0] & {
-  externalProduct: NonNullable<GetBikesByCategoryQuery['bikes'][0]['externalProduct']>;
+type ProductWithFederation = GetProductsByCategoryQuery['products'][0] & {
+  externalProduct: NonNullable<GetProductsByCategoryQuery['products'][0]['externalProduct']>;
 };
 
-function hasFederatedData(bike: GetBikesByCategoryQuery['bikes'][0]): bike is BikeWithFederation {
-  return bike.externalProduct !== undefined && bike.externalProduct !== null;
+function hasFederatedData(product: GetProductsByCategoryQuery['products'][0]): product is ProductWithFederation {
+  return product.externalProduct !== undefined && product.externalProduct !== null;
 }
 
 interface ProductLinePageProps {
@@ -126,32 +126,32 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
   const displayHeroImage = variant?.heroImage || productLine.heroImage;
 
   // Map ProductLine slug to category taxonomy value
-  // Note: BikeCategory taxonomy has: MountainEbikes, UrbanEbikes, RoadBikes, GravelBikes
+  // Note: ProductCategory taxonomy has: MountainEbikes, UrbanEbikes, RoadBikes, GravelBikes
   const categoryMap: Record<string, string> = {
     'electric-trailblazer-series': 'MountainEbikes',
     'urban-commuter-series': 'UrbanEbikes',
-    'comfort-series': 'UrbanEbikes', // Comfort bikes also use UrbanEbikes taxonomy
+    'comfort-series': 'UrbanEbikes', // Comfort products also use UrbanEbikes taxonomy
   };
 
   const categoryValue = categoryMap[productLineSlug];
 
-  // Fetch bikes filtered by category
-  let bikesData: GetBikesByCategoryQuery | null = null;
+  // Fetch products filtered by category
+  let productsData: GetProductsByCategoryQuery | null = null;
   try {
     if (categoryValue) {
-      bikesData = await hygraphRequest<GetBikesByCategoryQuery>(
-        GetBikesByCategoryDocument,
+      productsData = await hygraphRequest<GetProductsByCategoryQuery>(
+        GetProductsByCategoryDocument,
         {
           locale,
           categoryValue,
-        } as GetBikesByCategoryQueryVariables
+        } as GetProductsByCategoryQueryVariables
       );
     }
   } catch (error) {
-    console.error('Failed to fetch bikes:', error);
+    console.error('Failed to fetch products:', error);
   }
 
-  const bikes = bikesData?.bikes || [];
+  const products = productsData?.products || [];
 
   return (
     <div>
@@ -234,24 +234,24 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
             Available Models
           </h2>
 
-          {bikes.length > 0 ? (
+          {products.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {bikes.map((bike) => {
-                const federatedData = hasFederatedData(bike) ? bike.externalProduct.data : null;
+              {products.map((product) => {
+                const federatedData = hasFederatedData(product) ? product.externalProduct.data : null;
                 const price = federatedData?.calculated_price;
                 const inStock = federatedData ? federatedData.inventory_level > 0 : true;
 
                 return (
                   <div
-                    key={bike.id}
+                    key={product.id}
                     className="group relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
                   >
                     {/* Product Image */}
                     <div className="relative aspect-square bg-gray-100">
-                      {bike.images[0] && (
+                      {product.images[0] && (
                         <Image
-                          src={bike.images[0].url}
-                          alt={bike.name}
+                          src={product.images[0].url}
+                          alt={product.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -267,7 +267,7 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
                     {/* Product Info */}
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-2 text-gray-900">
-                        {bike.name}
+                        {product.name}
                       </h3>
 
                       <div className="flex items-center justify-between">
@@ -278,7 +278,7 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
                             </p>
                           )}
                           <p className="text-xs text-gray-500">
-                            {federatedData?.sku || bike.baseProductId}
+                            {federatedData?.sku || product.baseProductId}
                           </p>
                           {federatedData && (
                             <p className="text-xs text-gray-600 mt-1">
@@ -289,7 +289,7 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
 
                         {inStock && (
                           <Link
-                            href={`/${locale}/bikes/${bike.id}`}
+                            href={`/${locale}/product/${product.id}`}
                             className="px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-hover transition-colors text-sm font-medium"
                           >
                             View Details
@@ -304,12 +304,12 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
           ) : (
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow p-8 text-center">
               <p className="text-gray-700">
-                No bikes available for this product line at the moment.
+                No products available for this product line at the moment.
               </p>
             </div>
           )}
 
-          {bikes.length > 0 && (
+          {products.length > 0 && (
             <div className="mt-8 text-center text-sm text-gray-500">
               <p>Live product data via Content Federation (BigCommerce)</p>
             </div>

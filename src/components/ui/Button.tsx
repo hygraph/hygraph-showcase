@@ -7,13 +7,13 @@
 import Link from 'next/link';
 import type { GetPageQuery } from '@/types/hygraph-generated';
 
-// Extract CallToAction type from HeroSection's primaryCTA
-type CallToAction = NonNullable<
+// Extract Button type from HeroSection's primaryCTA
+type ButtonType = NonNullable<
   Extract<GetPageQuery['pages'][0]['sections'][0], { __typename?: 'HeroSection' }>['primaryCTA']
 >;
 
 interface ButtonProps {
-  cta: CallToAction;
+  cta: ButtonType;
   className?: string;
 }
 

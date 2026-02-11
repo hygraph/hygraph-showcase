@@ -14,23 +14,23 @@ import { useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import type { GetPageQuery } from '@/types/hygraph-generated';
 
 type ProductShowcaseType = Extract<GetPageQuery['pages'][0]['sections'][0], { __typename?: 'ProductShowcase' }>;
-import type { GetBikesQuery } from '@/types/hygraph-generated';
+import type { GetProductsQuery } from '@/types/hygraph-generated';
 
-type Bike = GetBikesQuery['bikes'][0];
-// Type guard for bikes with federated data
-type BikeWithFederation = Bike & {
-  externalProduct: NonNullable<Bike['externalProduct']>;
+type Product = GetProductsQuery['products'][0];
+// Type guard for products with federated data
+type ProductWithFederation = Product & {
+  externalProduct: NonNullable<Product['externalProduct']>;
 };
 
-function hasFederatedData(bike: Bike): bike is BikeWithFederation {
-  return bike.externalProduct !== undefined && bike.externalProduct !== null;
+function hasFederatedData(product: Product): product is ProductWithFederation {
+  return product.externalProduct !== undefined && product.externalProduct !== null;
 }
 import type { Locale } from '@/lib/utils/locale';
 
 interface ProductShowcaseProps {
   section: ProductShowcaseType;
   locale: Locale;
-  bikes: Bike[];
+  products: Product[];
 }
 
 function getDisplayStyleClasses(layout: string, itemsPerRow: number): string {
@@ -48,17 +48,17 @@ function getDisplayStyleClasses(layout: string, itemsPerRow: number): string {
   }
 }
 
-export default function ProductShowcase({ section, locale, bikes }: ProductShowcaseProps) {
+export default function ProductShowcase({ section, locale, products }: ProductShowcaseProps) {
   const displayClasses = getDisplayStyleClasses(section.layout, section.itemsPerRow ?? 3);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Filter bikes if showPrices/showStock enabled, only show bikes with federation data
-  const displayBikes = bikes.filter(bike => {
+  // Filter products if showPrices/showStock enabled, only show products with federation data
+  const displayProducts = products.filter(product => {
     if (section.showPrices || section.showStock) {
-      return hasFederatedData(bike);
+      return hasFederatedData(product);
     }
     return true;
   });
@@ -78,7 +78,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
   const scrollToIndex = (index: number) => {
     if (!carouselRef.current) return;
     const container = carouselRef.current;
-    const cardWidth = container.scrollWidth / displayBikes.length;
+    const cardWidth = container.scrollWidth / displayProducts.length;
     const scrollPosition = cardWidth * index;
     container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
     setCurrentIndex(index);
@@ -91,7 +91,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
   };
 
   const goToNext = () => {
-    const newIndex = Math.min(displayBikes.length - itemsPerView, currentIndex + itemsPerView);
+    const newIndex = Math.min(displayProducts.length - itemsPerView, currentIndex + itemsPerView);
     scrollToIndex(newIndex);
   };
 
@@ -111,7 +111,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isCarousel, currentIndex, displayBikes.length]);
+  }, [isCarousel, currentIndex, displayProducts.length]);
 
   // Update scroll buttons on scroll
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
     return () => container.removeEventListener('scroll', updateScrollButtons);
   }, [isCarousel]);
 
-  if (displayBikes.length === 0) {
+  if (displayProducts.length === 0) {
     return (
       <section className="py-20 md:py-28 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4">
@@ -187,14 +187,14 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
               className={`${displayClasses} scroll-smooth`}
               style={{ scrollSnapType: 'x mandatory' }}
             >
-              {displayBikes.map((bike) => {
-                const federatedData = hasFederatedData(bike) ? bike.externalProduct.data : null;
+              {displayProducts.map((product) => {
+                const federatedData = hasFederatedData(product) ? product.externalProduct.data : null;
                 const price = federatedData?.calculated_price;
                 const inStock = federatedData ? federatedData.inventory_level > 0 : true;
 
                 return (
                   <div
-                    key={bike.id}
+                    key={product.id}
                     className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-soft-md dark:shadow-none dark:ring-1 dark:ring-white/10 overflow-hidden hover:shadow-soft-xl dark:hover:ring-white/20 hover:-translate-y-2 transition-all-smooth flex-shrink-0"
                     style={{
                       scrollSnapAlign: 'start',
@@ -203,10 +203,10 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
                   >
                     {/* Product Image */}
                     <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
-                      {bike.images[0] && (
+                      {product.images[0] && (
                         <Image
-                          src={bike.images[0].url}
-                          alt={bike.name}
+                          src={product.images[0].url}
+                          alt={product.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                           sizes="(max-width: 768px) 100vw, 33vw"
@@ -231,7 +231,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
                     {/* Product Info */}
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white group-hover:text-brand transition-colors">
-                        {bike.name}
+                        {product.name}
                       </h3>
 
                       <div className="flex items-end justify-between">
@@ -242,7 +242,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
                             </p>
                           )}
                           <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                            {federatedData?.sku || bike.baseProductId}
+                            {federatedData?.sku || product.baseProductId}
                           </p>
                           {section.showStock && federatedData && (
                             <div className="flex items-center gap-1.5 mt-2">
@@ -256,7 +256,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
 
                         {inStock && (
                           <Link
-                            href={`/${locale}/bikes/${bike.id}`}
+                            href={`/${locale}/product/${product.id}`}
                             className="px-5 py-2.5 bg-brand text-white rounded-lg hover:bg-brand-hover hover:scale-105 shadow-soft hover:shadow-soft-md transition-all-smooth text-sm font-semibold"
                           >
                             View
@@ -270,9 +270,9 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
             </div>
 
             {/* Progress dots */}
-            {displayBikes.length > itemsPerView && (
+            {displayProducts.length > itemsPerView && (
               <div className="flex items-center justify-center gap-2 mt-8">
-                {Array.from({ length: Math.ceil(displayBikes.length / itemsPerView) }).map((_, index) => (
+                {Array.from({ length: Math.ceil(displayProducts.length / itemsPerView) }).map((_, index) => (
                   <button
                     key={index}
                     onClick={() => scrollToIndex(index * itemsPerView)}
@@ -290,8 +290,8 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
         ) : (
           /* Grid/List layout */
           <div className={displayClasses}>
-            {displayBikes.map((bike, index) => {
-              const federatedData = hasFederatedData(bike) ? bike.externalProduct.data : null;
+            {displayProducts.map((product, index) => {
+              const federatedData = hasFederatedData(product) ? product.externalProduct.data : null;
               const price = federatedData?.calculated_price;
               const inStock = federatedData ? federatedData.inventory_level > 0 : true;
 
@@ -300,7 +300,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
 
               return (
                 <div
-                  key={bike.id}
+                  key={product.id}
                   ref={ref}
                   className={`group relative bg-white dark:bg-gray-800 rounded-2xl shadow-soft-md dark:shadow-none dark:ring-1 dark:ring-white/10 overflow-hidden hover:shadow-soft-xl dark:hover:ring-white/20 hover:-translate-y-2 transition-all-smooth ${
                     isVisible ? 'animate-scale-in-subtle' : 'opacity-0'
@@ -308,10 +308,10 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
                 >
                   {/* Product Image */}
                   <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
-                    {bike.images[0] && (
+                    {product.images[0] && (
                       <Image
-                        src={bike.images[0].url}
-                        alt={bike.name}
+                        src={product.images[0].url}
+                        alt={product.name}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -335,7 +335,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
                   {/* Product Info */}
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white group-hover:text-brand transition-colors">
-                      {bike.name}
+                      {product.name}
                     </h3>
 
                     <div className="flex items-end justify-between">
@@ -346,7 +346,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
                           </p>
                         )}
                         <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                          {federatedData?.sku || bike.baseProductId}
+                          {federatedData?.sku || product.baseProductId}
                         </p>
                         {section.showStock && federatedData && (
                           <div className="flex items-center gap-1.5 mt-2">
@@ -360,7 +360,7 @@ export default function ProductShowcase({ section, locale, bikes }: ProductShowc
 
                       {inStock && (
                         <Link
-                          href={`/${locale}/bikes/${bike.id}`}
+                          href={`/${locale}/product/${product.id}`}
                           className="px-5 py-2.5 bg-brand text-white rounded-lg hover:bg-brand-hover hover:scale-105 shadow-soft hover:shadow-soft-md transition-all-smooth text-sm font-semibold"
                         >
                           View
