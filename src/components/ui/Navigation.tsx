@@ -1,24 +1,25 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
-import { SUPPORTED_LOCALES, LOCALE_NAMES, LOCALE_FLAGS, type Locale } from '@/lib/utils/locale';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import {
+  SUPPORTED_LOCALES,
+  LOCALE_NAMES,
+  LOCALE_FLAGS,
+  type Locale,
+} from "@/lib/utils/locale";
+import type { GetNavigationQuery } from "@/types/hygraph-generated";
 
-const navItems = [
-  { label: 'Collection', path: 'collection' },
-  { label: 'Journal', path: 'blog' },
-  { label: 'Careers', path: 'careers' },
-  { label: 'About', path: 'about' },
-  { label: 'Contact', path: 'contact' },
-];
+type NavItem = GetNavigationQuery["navigations"][0]["items"][0];
 
 interface NavigationProps {
   locale: Locale;
+  navItems: NavItem[];
 }
 
-export default function Navigation({ locale }: NavigationProps) {
+export default function Navigation({ locale, navItems }: NavigationProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [localeOpen, setLocaleOpen] = useState(false);
@@ -30,14 +31,22 @@ export default function Navigation({ locale }: NavigationProps) {
         setLocaleOpen(false);
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   function switchLocalePath(newLocale: Locale) {
-    const segments = pathname.split('/');
+    const segments = pathname.split("/");
     segments[1] = newLocale;
-    return segments.join('/');
+    return segments.join("/");
+  }
+
+  function buildHref(item: NavItem): string {
+    if (item.linkType === "EXTERNAL" && item.externalUrl)
+      return item.externalUrl;
+    if (item.linkType === "PAGE" && item.pageLink)
+      return `/${locale}/${item.pageLink.slug}`;
+    return "#";
   }
 
   return (
@@ -48,7 +57,10 @@ export default function Navigation({ locale }: NavigationProps) {
           href={`/${locale}`}
           className="flex items-center px-6 border-r border-primary hover:bg-primary hover:text-secondary transition-colors"
         >
-          <span className="uppercase" style={{ fontWeight: 900, fontSize: '1rem' }}>
+          <span
+            className="uppercase"
+            style={{ fontWeight: 900, fontSize: "1rem" }}
+          >
             HyBikes<span className="text-accent">.</span>
           </span>
         </Link>
@@ -56,16 +68,21 @@ export default function Navigation({ locale }: NavigationProps) {
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-stretch">
           {navItems.map((item) => {
-            const href = `/${locale}/${item.path}`;
+            const href = buildHref(item);
             const isActive = pathname === href;
             return (
               <Link
-                key={item.path}
+                key={item.id}
                 href={href}
                 className={`flex items-center px-6 border-r border-primary transition-colors hover:bg-primary hover:text-secondary ${
-                  isActive ? 'bg-primary text-secondary' : ''
+                  isActive ? "bg-primary text-secondary" : ""
                 }`}
-                style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+                style={{
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  fontWeight: 500,
+                }}
               >
                 {item.label}
               </Link>
@@ -81,11 +98,22 @@ export default function Navigation({ locale }: NavigationProps) {
           <button
             onClick={() => setLocaleOpen(!localeOpen)}
             className="flex items-center gap-1.5 px-4 h-full border-l border-primary hover:bg-primary hover:text-secondary transition-colors"
-            style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+            style={{
+              fontSize: "0.75rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              fontWeight: 500,
+            }}
           >
             <span>{LOCALE_FLAGS[locale]}</span>
             <span>{locale.toUpperCase()}</span>
-            <ChevronDown size={11} strokeWidth={2} className={`transition-transform ${localeOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown
+              size={11}
+              strokeWidth={2}
+              className={`transition-transform ${
+                localeOpen ? "rotate-180" : ""
+              }`}
+            />
           </button>
           {localeOpen && (
             <div className="absolute right-0 top-full z-50 bg-secondary border-l border-r border-b border-primary min-w-[160px]">
@@ -95,9 +123,14 @@ export default function Navigation({ locale }: NavigationProps) {
                   href={switchLocalePath(l)}
                   onClick={() => setLocaleOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 border-b border-primary last:border-b-0 hover:bg-primary hover:text-secondary transition-colors ${
-                    l === locale ? 'bg-primary text-secondary' : ''
+                    l === locale ? "bg-primary text-secondary" : ""
                   }`}
-                  style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+                  style={{
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    fontWeight: 500,
+                  }}
                 >
                   <span>{LOCALE_FLAGS[l]}</span>
                   <span>{LOCALE_NAMES[l]}</span>
@@ -111,7 +144,12 @@ export default function Navigation({ locale }: NavigationProps) {
         <Link
           href={`/${locale}/collection`}
           className="flex items-center px-6 border-l border-primary hover:bg-primary hover:text-secondary transition-colors gap-2"
-          style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+          style={{
+            fontSize: "0.75rem",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            fontWeight: 500,
+          }}
         >
           <ShoppingBag size={16} strokeWidth={1.5} />
           <span className="hidden sm:inline">Cart (0)</span>
@@ -130,23 +168,27 @@ export default function Navigation({ locale }: NavigationProps) {
       {mobileOpen && (
         <div className="md:hidden border-t border-primary">
           {navItems.map((item) => {
-            const href = `/${locale}/${item.path}`;
+            const href = buildHref(item);
             const isActive = pathname === href;
             return (
               <Link
-                key={item.path}
+                key={item.id}
                 href={href}
                 onClick={() => setMobileOpen(false)}
                 className={`block px-6 py-4 border-b border-primary transition-colors hover:bg-primary hover:text-secondary ${
-                  isActive ? 'bg-primary text-secondary' : ''
+                  isActive ? "bg-primary text-secondary" : ""
                 }`}
-                style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+                style={{
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  fontWeight: 500,
+                }}
               >
                 {item.label}
               </Link>
             );
           })}
-
         </div>
       )}
     </nav>

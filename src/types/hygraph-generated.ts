@@ -6089,8 +6089,7 @@ export type JobWhereUniqueInput = {
 /** Types of links for navigation */
 export type LinkType =
   | 'EXTERNAL'
-  | 'PAGE'
-  | 'PRODUCT_LINE';
+  | 'PAGE';
 
 /** Locale system enumeration */
 export type Locale =
@@ -8254,8 +8253,6 @@ export type NavigationEdge = {
 /** Individual navigation link (nestable for dropdown menus) */
 export type NavigationItem = Entity & {
   __typename?: 'NavigationItem';
-  /** Submenu items (for dropdown navigation). Max 2 levels deep for UX. */
-  children: Array<NavigationItem>;
   /** External URL (required if linkType=EXTERNAL) */
   externalUrl?: Maybe<Scalars['String']['output']>;
   /** The unique identifier */
@@ -8270,26 +8267,10 @@ export type NavigationItem = Entity & {
   localizations: Array<NavigationItem>;
   /** Link to a page (required if linkType=PAGE) */
   pageLink?: Maybe<Page>;
-  /** Link to a product line (required if linkType=PRODUCT_LINE) */
-  productLineLink?: Maybe<ProductLine>;
   /** System stage field */
   stage: Stage;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-/** Individual navigation link (nestable for dropdown menus) */
-export type NavigationItemChildrenArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<NavigationItemOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<NavigationItemWhereInput>;
 };
 
 
@@ -8302,13 +8283,6 @@ export type NavigationItemLocalizationsArgs = {
 
 /** Individual navigation link (nestable for dropdown menus) */
 export type NavigationItemPageLinkArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Individual navigation link (nestable for dropdown menus) */
-export type NavigationItemProductLineLinkArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
   locales?: InputMaybe<Array<Locale>>;
 };
@@ -8337,7 +8311,6 @@ export type NavigationItemConnection = {
 };
 
 export type NavigationItemCreateInput = {
-  children?: InputMaybe<NavigationItemCreateManyInlineInput>;
   /** externalUrl input for default locale (en) */
   externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** label input for default locale (en) */
@@ -8346,7 +8319,6 @@ export type NavigationItemCreateInput = {
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<NavigationItemCreateLocalizationsInput>;
   pageLink?: InputMaybe<PageCreateOneInlineInput>;
-  productLineLink?: InputMaybe<ProductLineCreateOneInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -8403,9 +8375,6 @@ export type NavigationItemManyWhereInput = {
   OR?: InputMaybe<Array<NavigationItemWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  children_every?: InputMaybe<NavigationItemWhereInput>;
-  children_none?: InputMaybe<NavigationItemWhereInput>;
-  children_some?: InputMaybe<NavigationItemWhereInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -8433,7 +8402,6 @@ export type NavigationItemManyWhereInput = {
   /** All values that are not contained in given list. */
   linkType_not_in?: InputMaybe<Array<InputMaybe<LinkType>>>;
   pageLink?: InputMaybe<PageWhereInput>;
-  productLineLink?: InputMaybe<ProductLineWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -8463,16 +8431,14 @@ export type NavigationItemOrderByInput =
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
-export type NavigationItemParent = Navigation | NavigationItem;
+export type NavigationItemParent = Navigation;
 
 export type NavigationItemParentConnectInput = {
   Navigation?: InputMaybe<NavigationConnectInput>;
-  NavigationItem?: InputMaybe<NavigationItemConnectInput>;
 };
 
 export type NavigationItemParentCreateInput = {
   Navigation?: InputMaybe<NavigationCreateInput>;
-  NavigationItem?: InputMaybe<NavigationItemCreateInput>;
 };
 
 export type NavigationItemParentCreateManyInlineInput = {
@@ -8491,7 +8457,6 @@ export type NavigationItemParentCreateOneInlineInput = {
 
 export type NavigationItemParentUpdateInput = {
   Navigation?: InputMaybe<NavigationUpdateInput>;
-  NavigationItem?: InputMaybe<NavigationItemUpdateInput>;
 };
 
 export type NavigationItemParentUpdateManyInlineInput = {
@@ -8513,7 +8478,6 @@ export type NavigationItemParentUpdateManyInlineInput = {
 
 export type NavigationItemParentUpdateManyWithNestedWhereInput = {
   Navigation?: InputMaybe<NavigationUpdateManyWithNestedWhereInput>;
-  NavigationItem?: InputMaybe<NavigationItemUpdateManyWithNestedWhereInput>;
 };
 
 export type NavigationItemParentUpdateOneInlineInput = {
@@ -8533,26 +8497,21 @@ export type NavigationItemParentUpdateOneInlineInput = {
 
 export type NavigationItemParentUpdateWithNestedWhereUniqueInput = {
   Navigation?: InputMaybe<NavigationUpdateWithNestedWhereUniqueInput>;
-  NavigationItem?: InputMaybe<NavigationItemUpdateWithNestedWhereUniqueInput>;
 };
 
 export type NavigationItemParentUpsertWithNestedWhereUniqueInput = {
   Navigation?: InputMaybe<NavigationUpsertWithNestedWhereUniqueInput>;
-  NavigationItem?: InputMaybe<NavigationItemUpsertWithNestedWhereUniqueInput>;
 };
 
 export type NavigationItemParentWhereInput = {
   Navigation?: InputMaybe<NavigationWhereInput>;
-  NavigationItem?: InputMaybe<NavigationItemWhereInput>;
 };
 
 export type NavigationItemParentWhereUniqueInput = {
   Navigation?: InputMaybe<NavigationWhereUniqueInput>;
-  NavigationItem?: InputMaybe<NavigationItemWhereUniqueInput>;
 };
 
 export type NavigationItemUpdateInput = {
-  children?: InputMaybe<NavigationItemUpdateManyInlineInput>;
   /** externalUrl input for default locale (en) */
   externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** label input for default locale (en) */
@@ -8561,7 +8520,6 @@ export type NavigationItemUpdateInput = {
   /** Manage document localizations */
   localizations?: InputMaybe<NavigationItemUpdateLocalizationsInput>;
   pageLink?: InputMaybe<PageUpdateOneInlineInput>;
-  productLineLink?: InputMaybe<ProductLineUpdateOneInlineInput>;
 };
 
 export type NavigationItemUpdateLocalizationDataInput = {
@@ -8693,9 +8651,6 @@ export type NavigationItemWhereInput = {
   OR?: InputMaybe<Array<NavigationItemWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  children_every?: InputMaybe<NavigationItemWhereInput>;
-  children_none?: InputMaybe<NavigationItemWhereInput>;
-  children_some?: InputMaybe<NavigationItemWhereInput>;
   externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   externalUrl_contains?: InputMaybe<Scalars['String']['input']>;
@@ -8761,7 +8716,6 @@ export type NavigationItemWhereInput = {
   /** All values that are not contained in given list. */
   linkType_not_in?: InputMaybe<Array<InputMaybe<LinkType>>>;
   pageLink?: InputMaybe<PageWhereInput>;
-  productLineLink?: InputMaybe<ProductLineWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -10800,7 +10754,6 @@ export type ProductLineCreateInput = {
   localizations?: InputMaybe<ProductLineCreateLocalizationsInput>;
   /** name input for default locale (en) */
   name: Scalars['String']['input'];
-  navigationItems?: InputMaybe<NavigationItemCreateManyInlineInput>;
   productShowcases?: InputMaybe<ProductShowcaseCreateManyInlineInput>;
   seo?: InputMaybe<SeoCreateOneInlineInput>;
   slug: Scalars['String']['input'];
@@ -10989,7 +10942,6 @@ export type ProductLineUpdateInput = {
   localizations?: InputMaybe<ProductLineUpdateLocalizationsInput>;
   /** name input for default locale (en) */
   name?: InputMaybe<Scalars['String']['input']>;
-  navigationItems?: InputMaybe<NavigationItemUpdateManyInlineInput>;
   productShowcases?: InputMaybe<ProductShowcaseUpdateManyInlineInput>;
   seo?: InputMaybe<SeoUpdateOneInlineInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -19442,7 +19394,7 @@ export type GetNavigationQueryVariables = Exact<{
 }>;
 
 
-export type GetNavigationQuery = { __typename?: 'Query', navigations: Array<{ __typename?: 'Navigation', id: string, identifier: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null, productLineLink?: { __typename?: 'ProductLine', id: string, slug: string } | null, children: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null, productLineLink?: { __typename?: 'ProductLine', id: string, slug: string } | null }> }> }> };
+export type GetNavigationQuery = { __typename?: 'Query', navigations: Array<{ __typename?: 'Navigation', id: string, identifier: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> }> };
 
 export type GetPageQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -19451,7 +19403,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -19569,28 +19521,10 @@ export const GetNavigationDocument = gql`
       id
       label
       linkType
+      externalUrl
       pageLink {
         id
         slug
-      }
-      productLineLink {
-        id
-        slug
-      }
-      externalUrl
-      children {
-        id
-        label
-        linkType
-        pageLink {
-          id
-          slug
-        }
-        productLineLink {
-          id
-          slug
-        }
-        externalUrl
       }
     }
   }
@@ -19653,7 +19587,9 @@ export const GetPageDocument = gql`
         id
         eyebrow
         editorialHeadline: headline
-        bodyText
+        body {
+          html
+        }
         imageUrl
         imageRight
         ctaLabel
@@ -19766,7 +19702,9 @@ export const GetPageDocument = gql`
           id
           eyebrow
           editorialHeadline: headline
-          bodyText
+          body {
+            html
+          }
           imageUrl
           imageRight
           ctaLabel
