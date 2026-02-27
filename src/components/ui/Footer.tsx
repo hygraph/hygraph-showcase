@@ -1,12 +1,14 @@
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
-import type { Locale } from '@/lib/utils/locale';
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import type { Locale } from "@/lib/utils/locale";
+import { buildHref, type NavItem } from "@/lib/utils/navigation";
 
 interface FooterProps {
   locale: Locale;
+  navItems: NavItem[];
 }
 
-export default function Footer({ locale }: FooterProps) {
+export default function Footer({ locale, navItems }: FooterProps) {
   return (
     <footer className="border-t border-secondary/20 bg-primary text-secondary">
       {/* Newsletter + Links */}
@@ -24,50 +26,73 @@ export default function Footer({ locale }: FooterProps) {
             />
             <button
               className="bg-accent text-white px-6 py-3 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
-              style={{ fontSize: '0.75rem', fontWeight: 700 }}
+              style={{ fontSize: "0.75rem", fontWeight: 700 }}
             >
               Subscribe
             </button>
           </div>
         </div>
+
         <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3">
+          {/* Shop */}
           <div className="p-8 border-b sm:border-b-0 border-r border-secondary/20">
-            <p className="uppercase tracking-[0.15em] text-secondary/40 mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+            <p
+              className="uppercase tracking-[0.15em] text-secondary/40 mb-6"
+              style={{ fontSize: "0.65rem", fontWeight: 700 }}
+            >
               Shop
             </p>
             <div className="space-y-3">
-              {['Road', 'Urban', 'Electric', 'Gravel'].map((cat) => (
+              {["Road", "Urban", "Electric", "Gravel"].map((cat) => (
                 <Link
                   key={cat}
                   href={`/${locale}/collection`}
                   className="block text-secondary/70 hover:text-accent transition-colors"
+                  style={{ fontSize: "0.8rem" }}
                 >
                   {cat}
                 </Link>
               ))}
             </div>
           </div>
+
+          {/* CMS nav links */}
           <div className="p-8 border-b sm:border-b-0 sm:border-r border-secondary/20">
-            <p className="uppercase tracking-[0.15em] text-secondary/40 mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+            <p
+              className="uppercase tracking-[0.15em] text-secondary/40 mb-6"
+              style={{ fontSize: "0.65rem", fontWeight: 700 }}
+            >
               Company
             </p>
             <div className="space-y-3">
-              <Link href={`/${locale}/blog`} className="block text-secondary/70 hover:text-accent transition-colors">Journal</Link>
-              <Link href={`/${locale}/careers`} className="block text-secondary/70 hover:text-accent transition-colors">Careers</Link>
-              <Link href={`/${locale}/about`} className="block text-secondary/70 hover:text-accent transition-colors">About</Link>
-              <Link href={`/${locale}/contact`} className="block text-secondary/70 hover:text-accent transition-colors">Contact</Link>
+              {navItems.map((item) => (
+                <Link
+                  key={item.id}
+                  href={buildHref(item, locale)}
+                  className="block text-secondary/70 hover:text-accent transition-colors"
+                  style={{ fontSize: "0.8rem" }}
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </div>
+
+          {/* Social */}
           <div className="p-8 col-span-2 sm:col-span-1">
-            <p className="uppercase tracking-[0.15em] text-secondary/40 mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+            <p
+              className="uppercase tracking-[0.15em] text-secondary/40 mb-6"
+              style={{ fontSize: "0.65rem", fontWeight: 700 }}
+            >
               Social
             </p>
             <div className="space-y-3">
-              {['Instagram', 'Twitter', 'YouTube'].map((s) => (
+              {["Instagram", "Twitter", "YouTube"].map((s) => (
                 <a
                   key={s}
                   href="#"
                   className="flex items-center gap-1 text-secondary/70 hover:text-accent transition-colors"
+                  style={{ fontSize: "0.8rem" }}
                 >
                   {s}
                   <ArrowUpRight size={12} />
@@ -82,11 +107,11 @@ export default function Footer({ locale }: FooterProps) {
       <div className="flex flex-col items-center justify-between px-8 md:px-12 py-6 gap-4">
         <span
           className="tracking-[-0.05em] uppercase opacity-20 leading-[0.9]"
-          style={{ fontWeight: 900, fontSize: '16rem' }}
+          style={{ fontWeight: 900, fontSize: "16rem" }}
         >
           HyBikes<span className="text-accent">.</span>
         </span>
-        <p className="text-secondary/40" style={{ fontSize: '0.8rem' }}>
+        <p className="text-secondary/40" style={{ fontSize: "0.8rem" }}>
           &copy; 2026. All rights reserved. Designed in Berlin.
         </p>
       </div>

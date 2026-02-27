@@ -9,9 +9,7 @@ import {
   LOCALE_NAMES,
   type Locale,
 } from "@/lib/utils/locale";
-import type { GetNavigationQuery } from "@/types/hygraph-generated";
-
-type NavItem = GetNavigationQuery["navigations"][0]["items"][0];
+import { buildHref, type NavItem } from "@/lib/utils/navigation";
 
 interface NavigationProps {
   locale: Locale;
@@ -40,14 +38,6 @@ export default function Navigation({ locale, navItems }: NavigationProps) {
     return segments.join("/");
   }
 
-  function buildHref(item: NavItem): string {
-    if (item.linkType === "EXTERNAL" && item.externalUrl)
-      return item.externalUrl;
-    if (item.linkType === "PAGE" && item.pageLink)
-      return `/${locale}/${item.pageLink.slug}`;
-    return "#";
-  }
-
   return (
     <nav className="sticky top-0 z-50 bg-secondary border-b border-t border-primary">
       <div className="flex items-stretch h-[56px]">
@@ -67,7 +57,7 @@ export default function Navigation({ locale, navItems }: NavigationProps) {
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-stretch">
           {navItems.map((item) => {
-            const href = buildHref(item);
+            const href = buildHref(item, locale);
             const isActive = pathname === href;
             return (
               <Link
@@ -165,7 +155,7 @@ export default function Navigation({ locale, navItems }: NavigationProps) {
       {mobileOpen && (
         <div className="md:hidden border-t border-primary">
           {navItems.map((item) => {
-            const href = buildHref(item);
+            const href = buildHref(item, locale);
             const isActive = pathname === href;
             return (
               <Link
