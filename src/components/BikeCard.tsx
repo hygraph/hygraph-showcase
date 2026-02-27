@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { Bike } from '@/types/hybike';
-import { formatBikeCategory, formatPrice } from '@/types/hybike';
+import { formatCategoryValue, formatPrice } from '@/types/hybike';
 
 interface BikeCardProps {
   bike: Bike;
@@ -10,7 +10,7 @@ interface BikeCardProps {
 
 export default function BikeCard({ bike, locale }: BikeCardProps) {
   const price = bike.externalProduct?.data?.calculated_price;
-  const category = formatBikeCategory(bike.bikeCategory);
+  const category = formatCategoryValue(bike.category?.value);
 
   return (
     <Link

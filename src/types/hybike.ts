@@ -11,6 +11,7 @@ export interface Bike {
   name: string;
   tagline?: string | null;
   bikeCategory?: string | null; // BikeCategory enum: ROAD | URBAN | ELECTRIC | GRAVEL
+  category?: { value: string } | null; // TaxonomyNode: RoadBikes | UrbanEbikes | MountainEbikes | GravelBikes
   imageUrl?: string | null;
   productFeatures?: string[] | null;
   specifications?: {
@@ -56,16 +57,12 @@ export interface Job {
   niceToHave?: string[] | null;
 }
 
-/** Maps Hygraph BikeCategory enum values to display labels. */
-export function formatBikeCategory(category: string | null | undefined): string {
-  if (!category) return '';
-  const map: Record<string, string> = {
-    ROAD: 'Road',
-    URBAN: 'Urban',
-    ELECTRIC: 'Electric',
-    GRAVEL: 'Gravel',
-  };
-  return map[category] ?? category;
+/** Converts a Hygraph TaxonomyNode category value to a readable display label.
+ *  e.g. "RoadBikes" → "Road Bikes", "UrbanEbikes" → "Urban Ebikes"
+ */
+export function formatCategoryValue(value: string | null | undefined): string {
+  if (!value) return '';
+  return value.replace(/([a-z])([A-Z])/g, '$1 $2');
 }
 
 /** Formats a price number as a Euro string. Returns '—' if price is null/undefined. */

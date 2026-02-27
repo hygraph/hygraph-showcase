@@ -5,6 +5,9 @@ query GetProductBySlug($slug: String!, $locale: Locale!) {
     name
     tagline
     bikeCategory
+    category {
+      value
+    }
     imageUrl
     productFeatures
     featured

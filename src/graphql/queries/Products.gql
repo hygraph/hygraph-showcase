@@ -5,6 +5,9 @@ query GetProducts($locale: Locale!) {
     name
     tagline
     bikeCategory
+    category {
+      value
+    }
     imageUrl
     productFeatures
     featured
@@ -38,6 +41,9 @@ query GetFeaturedProducts($locale: Locale!) {
     name
     tagline
     bikeCategory
+    category {
+      value
+    }
     imageUrl
     productFeatures
     specifications {
@@ -53,6 +59,14 @@ query GetFeaturedProducts($locale: Locale!) {
         inventory_level
         availability
       }
+    }
+  }
+}
+
+query GetProductCategories {
+  products(stage: DRAFT, first: 100) {
+    category {
+      value
     }
   }
 }

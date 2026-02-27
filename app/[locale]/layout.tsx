@@ -14,9 +14,11 @@ import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetNavigationDocument,
   GetSegmentsDocument,
+  GetProductCategoriesDocument,
   type GetNavigationQuery,
   type GetNavigationQueryVariables,
   type GetSegmentsQuery,
+  type GetProductCategoriesQuery,
 } from "@/types/hygraph-generated";
 
 interface LocaleLayoutProps {
@@ -40,22 +42,31 @@ export default async function LocaleLayout({
   let navItems: GetNavigationQuery["navigations"][0]["items"] = [];
   let footerItems: GetNavigationQuery["navigations"][0]["items"] = [];
   let segments: GetSegmentsQuery["segments"] = [];
+  let bikeCategories: string[] = [];
 
   try {
-    const [mainNavData, footerNavData, segmentsData] = await Promise.all([
-      hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
-        identifier: "main-nav",
-        locale,
-      } as GetNavigationQueryVariables),
-      hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
-        identifier: "footer-nav",
-        locale,
-      } as GetNavigationQueryVariables),
-      hygraphRequest<GetSegmentsQuery>(GetSegmentsDocument, {}),
-    ]);
+    const [mainNavData, footerNavData, segmentsData, categoriesData] =
+      await Promise.all([
+        hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
+          identifier: "main-nav",
+          locale,
+        } as GetNavigationQueryVariables),
+        hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
+          identifier: "footer-nav",
+          locale,
+        } as GetNavigationQueryVariables),
+        hygraphRequest<GetSegmentsQuery>(GetSegmentsDocument, {}),
+        hygraphRequest<GetProductCategoriesQuery>(
+          GetProductCategoriesDocument,
+          {}
+        ),
+      ]);
     navItems = mainNavData.navigations?.[0]?.items ?? [];
     footerItems = footerNavData.navigations?.[0]?.items ?? [];
     segments = segmentsData.segments ?? [];
+    bikeCategories = [
+      ...new Set(categoriesData.products.map((p) => p.category?.value)),
+    ];
   } catch {
     // Fall back to empty
   }
@@ -65,7 +76,11 @@ export default async function LocaleLayout({
       <div className="flex min-h-screen flex-col">
         <Navigation locale={locale as Locale} navItems={navItems} />
         <main className="flex-1">{children}</main>
-        <Footer locale={locale as Locale} navItems={footerItems} />
+        <Footer
+          locale={locale as Locale}
+          navItems={footerItems}
+          bikeCategories={bikeCategories}
+        />
         <SegmentSwitcher segments={segments} />
       </div>
     </AudienceProvider>
@@ -77,10 +92,5 @@ export default async function LocaleLayout({
  * Enables ISR for each locale
  */
 export function generateStaticParams() {
-  return [
-    { locale: "en" },
-    { locale: "de" },
-    { locale: "fr" },
-    { locale: "es" },
-  ];
+  return [{ locale: "en" }, { locale: "de" }];
 }

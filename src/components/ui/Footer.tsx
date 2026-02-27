@@ -2,13 +2,15 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/lib/utils/locale";
 import { buildHref, type NavItem } from "@/lib/utils/navigation";
+import { formatCategoryValue } from "@/types/hybike";
 
 interface FooterProps {
   locale: Locale;
   navItems: NavItem[];
+  bikeCategories: string[];
 }
 
-export default function Footer({ locale, navItems }: FooterProps) {
+export default function Footer({ locale, navItems, bikeCategories }: FooterProps) {
   return (
     <footer className="border-t border-secondary/20 bg-primary text-secondary">
       {/* Newsletter + Links */}
@@ -43,14 +45,14 @@ export default function Footer({ locale, navItems }: FooterProps) {
               Shop
             </p>
             <div className="space-y-3">
-              {["Road", "Urban", "Electric", "Gravel"].map((cat) => (
+              {bikeCategories.map((cat) => (
                 <Link
                   key={cat}
-                  href={`/${locale}/collection`}
+                  href={`/${locale}/collection?category=${cat}`}
                   className="block text-secondary/70 hover:text-accent transition-colors"
                   style={{ fontSize: "0.8rem" }}
                 >
-                  {cat}
+                  {formatCategoryValue(cat)}
                 </Link>
               ))}
             </div>

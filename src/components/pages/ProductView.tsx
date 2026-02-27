@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Check, Minus, Plus } from 'lucide-react';
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
-import type { Bike } from '@/types/hybike';
-import { formatBikeCategory, formatPrice } from '@/types/hybike';
+import Link from "next/link";
+import { ArrowLeft, ArrowRight, Check, Minus, Plus } from "lucide-react";
+import { useState } from "react";
+import { useParams } from "next/navigation";
+import type { Bike } from "@/types/hybike";
+import { formatCategoryValue, formatPrice } from "@/types/hybike";
 
 const colorOptions = [
-  { name: 'Matte Black', hex: '#121212' },
-  { name: 'Ivory', hex: '#F9F9F7' },
-  { name: 'Signal Orange', hex: '#FF4F00' },
+  { name: "Matte Black", hex: "#121212" },
+  { name: "Ivory", hex: "#F9F9F7" },
+  { name: "Signal Orange", hex: "#FF4F00" },
 ];
 
-const sizes = ['S', 'M', 'L', 'XL'];
+const sizes = ["S", "M", "L", "XL"];
 
 interface ProductViewProps {
   bike: Bike;
@@ -22,12 +22,12 @@ interface ProductViewProps {
 
 export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
   const params = useParams();
-  const locale = (params.locale as string) || 'en';
+  const locale = (params.locale as string) || "en";
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState(1);
   const [quantity, setQuantity] = useState(1);
 
-  const category = formatBikeCategory(bike.bikeCategory);
+  const category = formatCategoryValue(bike.category?.value);
   const price = bike.externalProduct?.data?.calculated_price;
 
   const specs = bike.specifications
@@ -47,7 +47,12 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
           <Link
             href={`/${locale}/collection`}
             className="flex items-center gap-2 text-muted hover:text-primary transition-colors"
-            style={{ fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.1em' }}
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 500,
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+            }}
           >
             <ArrowLeft size={14} />
             Collection
@@ -55,7 +60,12 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
           <span className="text-muted mx-2">/</span>
           <span
             className="text-primary"
-            style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+            }}
           >
             {bike.name}
           </span>
@@ -76,12 +86,17 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                 />
               ) : (
                 <div className="w-full h-full min-h-[400px] bg-[#E8E8E4] flex items-center justify-center">
-                  <span className="text-muted text-sm uppercase tracking-widest">No image</span>
+                  <span className="text-muted text-sm uppercase tracking-widest">
+                    No image
+                  </span>
                 </div>
               )}
               {category && (
                 <div className="absolute top-0 left-0 bg-accent text-white px-6 py-3">
-                  <p className="uppercase tracking-[0.15em]" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                  <p
+                    className="uppercase tracking-[0.15em]"
+                    style={{ fontSize: "0.65rem", fontWeight: 700 }}
+                  >
                     {category}
                   </p>
                 </div>
@@ -92,7 +107,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
           {/* Details */}
           <div className="lg:col-span-5 p-8 md:p-12 lg:p-16">
             {category && (
-              <p className="uppercase tracking-[0.2em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p
+                className="uppercase tracking-[0.2em] text-muted mb-3"
+                style={{ fontSize: "0.65rem", fontWeight: 700 }}
+              >
                 {category}
               </p>
             )}
@@ -108,10 +126,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
             <p
               className="text-primary mb-8"
               style={{
-                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
                 fontWeight: 900,
                 fontFamily: "'Space Grotesk', sans-serif",
-                letterSpacing: '-0.03em',
+                letterSpacing: "-0.03em",
               }}
             >
               {formatPrice(price)}
@@ -119,7 +137,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Color */}
             <div className="mb-6">
-              <p className="uppercase tracking-[0.15em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p
+                className="uppercase tracking-[0.15em] text-muted mb-3"
+                style={{ fontSize: "0.65rem", fontWeight: 700 }}
+              >
                 Color &mdash; {colorOptions[selectedColor].name}
               </p>
               <div className="flex gap-3">
@@ -128,7 +149,9 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                     key={color.name}
                     onClick={() => setSelectedColor(i)}
                     className={`w-10 h-10 border-2 transition-all ${
-                      selectedColor === i ? 'border-accent scale-110' : 'border-primary/20 hover:border-primary'
+                      selectedColor === i
+                        ? "border-accent scale-110"
+                        : "border-primary/20 hover:border-primary"
                     }`}
                     style={{ backgroundColor: color.hex }}
                   />
@@ -138,7 +161,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Size */}
             <div className="mb-6">
-              <p className="uppercase tracking-[0.15em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p
+                className="uppercase tracking-[0.15em] text-muted mb-3"
+                style={{ fontSize: "0.65rem", fontWeight: 700 }}
+              >
                 Frame Size
               </p>
               <div className="flex gap-2">
@@ -148,10 +174,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                     onClick={() => setSelectedSize(i)}
                     className={`w-12 h-12 border transition-colors uppercase tracking-[0.05em] ${
                       selectedSize === i
-                        ? 'bg-primary text-secondary border-primary'
-                        : 'border-primary hover:bg-primary hover:text-secondary'
+                        ? "bg-primary text-secondary border-primary"
+                        : "border-primary hover:bg-primary hover:text-secondary"
                     }`}
-                    style={{ fontSize: '0.8rem', fontWeight: 700 }}
+                    style={{ fontSize: "0.8rem", fontWeight: 700 }}
                   >
                     {size}
                   </button>
@@ -161,7 +187,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Quantity */}
             <div className="mb-8">
-              <p className="uppercase tracking-[0.15em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p
+                className="uppercase tracking-[0.15em] text-muted mb-3"
+                style={{ fontSize: "0.65rem", fontWeight: 700 }}
+              >
                 Quantity
               </p>
               <div className="flex items-center border border-primary w-fit">
@@ -173,7 +202,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                 </button>
                 <span
                   className="w-12 h-12 flex items-center justify-center"
-                  style={{ fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
+                  style={{
+                    fontWeight: 700,
+                    fontFamily: "'Space Grotesk', sans-serif",
+                  }}
                 >
                   {quantity}
                 </span>
@@ -189,13 +221,16 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
             {/* Add to Cart */}
             <button
               className="w-full bg-accent text-white py-5 uppercase tracking-[0.15em] hover:bg-accent/90 transition-colors flex items-center justify-center gap-3"
-              style={{ fontSize: '0.8rem', fontWeight: 700 }}
+              style={{ fontSize: "0.8rem", fontWeight: 700 }}
             >
               Add to Cart
               <ArrowRight size={16} />
             </button>
 
-            <div className="mt-4 flex items-center gap-2 text-muted" style={{ fontSize: '0.8rem' }}>
+            <div
+              className="mt-4 flex items-center gap-2 text-muted"
+              style={{ fontSize: "0.8rem" }}
+            >
               <Check size={14} className="text-accent" />
               Free shipping within Europe. 30-day returns.
             </div>
@@ -210,11 +245,17 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
             {/* Features */}
             {bike.productFeatures && bike.productFeatures.length > 0 && (
               <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-primary">
-                <p className="uppercase tracking-[0.2em] text-muted mb-4" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                <p
+                  className="uppercase tracking-[0.2em] text-muted mb-4"
+                  style={{ fontSize: "0.65rem", fontWeight: 700 }}
+                >
                   Features
                 </p>
                 {bike.tagline && (
-                  <p className="text-primary mb-6" style={{ lineHeight: 1.7, maxWidth: '540px' }}>
+                  <p
+                    className="text-primary mb-6"
+                    style={{ lineHeight: 1.7, maxWidth: "540px" }}
+                  >
                     {bike.tagline}
                   </p>
                 )}
@@ -233,20 +274,41 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Specs */}
             {specs.length > 0 && (
-              <div className={`${bike.productFeatures?.length ? 'lg:col-span-5' : 'lg:col-span-12'} p-8 md:p-12 lg:p-16`}>
-                <p className="uppercase tracking-[0.2em] text-muted mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <div
+                className={`${
+                  bike.productFeatures?.length
+                    ? "lg:col-span-5"
+                    : "lg:col-span-12"
+                } p-8 md:p-12 lg:p-16`}
+              >
+                <p
+                  className="uppercase tracking-[0.2em] text-muted mb-6"
+                  style={{ fontSize: "0.65rem", fontWeight: 700 }}
+                >
                   Specifications
                 </p>
                 <div>
                   {specs.map(([key, value], i) => (
                     <div
                       key={key}
-                      className={`flex justify-between py-4 ${i < specs.length - 1 ? 'border-b border-primary/20' : ''}`}
+                      className={`flex justify-between py-4 ${
+                        i < specs.length - 1 ? "border-b border-primary/20" : ""
+                      }`}
                     >
-                      <span className="text-muted uppercase tracking-[0.1em]" style={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                      <span
+                        className="text-muted uppercase tracking-[0.1em]"
+                        style={{ fontSize: "0.75rem", fontWeight: 500 }}
+                      >
                         {key}
                       </span>
-                      <span style={{ fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}>{value}</span>
+                      <span
+                        style={{
+                          fontWeight: 700,
+                          fontFamily: "'Space Grotesk', sans-serif",
+                        }}
+                      >
+                        {value}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -260,7 +322,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
       {relatedBikes.length > 0 && (
         <section>
           <div className="p-8 md:p-12 lg:px-16 border-b border-primary">
-            <p className="uppercase tracking-[0.2em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+            <p
+              className="uppercase tracking-[0.2em] text-muted mb-3"
+              style={{ fontSize: "0.65rem", fontWeight: 700 }}
+            >
               You may also like
             </p>
             <h3>More from the collection</h3>
@@ -269,7 +334,9 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
             {relatedBikes.slice(0, 2).map((related, i) => (
               <div
                 key={related.id}
-                className={`${i === 0 ? 'md:border-r border-primary' : ''} border-b border-primary`}
+                className={`${
+                  i === 0 ? "md:border-r border-primary" : ""
+                } border-b border-primary`}
               >
                 <Link
                   href={`/${locale}/product/${related.slug}`}
@@ -290,17 +357,25 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                     <div>
                       <p
                         className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50 mb-1 transition-colors"
-                        style={{ fontSize: '0.65rem', fontWeight: 700 }}
+                        style={{ fontSize: "0.65rem", fontWeight: 700 }}
                       >
-                        {formatBikeCategory(related.bikeCategory)}
+                        {formatCategoryValue(related.category?.value)}
                       </p>
-                      <h3 className="group-hover:text-secondary transition-colors">{related.name}</h3>
+                      <h3 className="group-hover:text-secondary transition-colors">
+                        {related.name}
+                      </h3>
                     </div>
                     <p
                       className="text-primary group-hover:text-accent transition-colors"
-                      style={{ fontSize: '1rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: 700,
+                        fontFamily: "'Space Grotesk', sans-serif",
+                      }}
                     >
-                      {formatPrice(related.externalProduct?.data?.calculated_price)}
+                      {formatPrice(
+                        related.externalProduct?.data?.calculated_price
+                      )}
                     </p>
                   </div>
                 </Link>

@@ -19299,7 +19299,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
 
 export type GetProductLineQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -19315,14 +19315,19 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetFeaturedProductsQueryVariables = Exact<{
   locale: Locale;
 }>;
 
 
-export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+
+export type GetProductCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProductCategoriesQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', category: { __typename?: 'TaxonomyNode', value: string } }> };
 
 export type GetSegmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -19698,6 +19703,9 @@ export const GetProductBySlugDocument = gql`
     name
     tagline
     bikeCategory
+    category {
+      value
+    }
     imageUrl
     productFeatures
     featured
@@ -19781,6 +19789,9 @@ export const GetProductsDocument = gql`
     name
     tagline
     bikeCategory
+    category {
+      value
+    }
     imageUrl
     productFeatures
     featured
@@ -19815,6 +19826,9 @@ export const GetFeaturedProductsDocument = gql`
     name
     tagline
     bikeCategory
+    category {
+      value
+    }
     imageUrl
     productFeatures
     specifications {
@@ -19830,6 +19844,15 @@ export const GetFeaturedProductsDocument = gql`
         inventory_level
         availability
       }
+    }
+  }
+}
+    `;
+export const GetProductCategoriesDocument = gql`
+    query GetProductCategories {
+  products(stage: DRAFT, first: 100) {
+    category {
+      value
     }
   }
 }
@@ -19904,6 +19927,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetFeaturedProducts(variables: GetFeaturedProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetFeaturedProductsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetFeaturedProductsQuery>({ document: GetFeaturedProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetFeaturedProducts', 'query', variables);
+    },
+    GetProductCategories(variables?: GetProductCategoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductCategoriesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductCategoriesQuery>({ document: GetProductCategoriesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProductCategories', 'query', variables);
     },
     GetSegments(variables?: GetSegmentsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetSegmentsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSegmentsQuery>({ document: GetSegmentsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetSegments', 'query', variables);
