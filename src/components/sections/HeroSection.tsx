@@ -22,26 +22,26 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
 
   if (mediaUrl) {
     return (
-      <section className="border-b border-[#121212]">
+      <section className="border-b border-primary">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           {/* Left: Typography */}
-          <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col border-b lg:border-b-0 lg:border-r border-[#121212]">
+          <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col border-b lg:border-b-0 lg:border-r border-primary">
             <div>
               <p
-                className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-8"
+                className="uppercase tracking-[0.2em] text-muted mb-8"
                 style={{ fontSize: "0.65rem", fontWeight: 700 }}
               >
                 Premium Cycling &mdash; Since 2019
               </p>
               <h1 className="relative z-10">
                 {section.headline.replace(/\.$/, "")}
-                <span className="text-[#FF4F00]">.</span>
+                <span className="text-accent">.</span>
               </h1>
             </div>
             <div className="mt-12">
               {section.subheadline && (
                 <p
-                  className="text-[#6B6B6B] max-w-[320px] mb-8"
+                  className="text-muted max-w-[320px] mb-8"
                   style={{ lineHeight: 1.6 }}
                 >
                   {section.subheadline}
@@ -51,7 +51,7 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
                 {section.primaryCTA && (
                   <Link
                     href={section.primaryCTA.href}
-                    className="inline-flex items-center gap-3 bg-[#121212] text-[#F9F9F7] px-8 py-4 uppercase tracking-[0.1em] hover:bg-[#FF4F00] transition-colors"
+                    className="inline-flex items-center gap-3 bg-primary text-secondary px-8 py-4 uppercase tracking-[0.1em] hover:bg-accent transition-colors"
                     style={{ fontSize: "0.75rem", fontWeight: 700 }}
                   >
                     {section.primaryCTA.label}
@@ -70,7 +70,7 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
                 {section.secondaryCTA && (
                   <Link
                     href={section.secondaryCTA.href}
-                    className="inline-flex items-center gap-3 border border-[#121212] px-8 py-4 uppercase tracking-[0.1em] hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors"
+                    className="inline-flex items-center gap-3 border border-primary px-8 py-4 uppercase tracking-[0.1em] hover:bg-primary hover:text-secondary transition-colors"
                     style={{ fontSize: "0.75rem", fontWeight: 700 }}
                   >
                     {section.secondaryCTA.label}
@@ -88,7 +88,7 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
               className="object-cover w-full h-full"
             />
             {section.mediaText && (
-              <div className="absolute bottom-0 left-0 bg-[#FF4F00] text-white px-6 py-3">
+              <div className="absolute bottom-0 left-0 bg-accent text-white px-6 py-3">
                 <p
                   className="uppercase tracking-[0.15em]"
                   style={{ fontSize: "0.65rem", fontWeight: 700 }}
@@ -105,21 +105,21 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
 
   // No image: full-width dark hero
   return (
-    <section className="border-b border-[#121212] bg-[#121212] min-h-[60vh] flex items-center">
+    <section className="border-b border-primary bg-primary min-h-[60vh] flex items-center">
       <div className="p-8 md:p-16 lg:p-24 w-full">
         <p
-          className="uppercase tracking-[0.2em] text-[#F9F9F7]/50 mb-6"
+          className="uppercase tracking-[0.2em] text-secondary/50 mb-6"
           style={{ fontSize: "0.65rem", fontWeight: 700 }}
         >
           Premium Cycling &mdash; Since 2019
         </p>
-        <h1 className="text-[#F9F9F7] mb-8 max-w-3xl">
+        <h1 className="text-secondary mb-8 max-w-3xl">
           {section.headline.replace(/\.$/, "")}
-          <span className="text-[#FF4F00]">.</span>
+          <span className="text-accent">.</span>
         </h1>
         {section.subheadline && (
           <p
-            className="text-[#F9F9F7]/70 max-w-lg mb-10"
+            className="text-secondary/70 max-w-lg mb-10"
             style={{ lineHeight: 1.6 }}
           >
             {section.subheadline}
@@ -129,7 +129,7 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
           {section.primaryCTA && (
             <Link
               href={section.primaryCTA.href}
-              className="inline-flex items-center gap-3 bg-[#FF4F00] text-white px-8 py-4 uppercase tracking-[0.1em] hover:bg-[#FF4F00]/90 transition-colors"
+              className="inline-flex items-center gap-3 bg-accent text-white px-8 py-4 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
               style={{ fontSize: "0.75rem", fontWeight: 700 }}
             >
               {section.primaryCTA.label}
@@ -138,7 +138,7 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
           {section.secondaryCTA && (
             <Link
               href={section.secondaryCTA.href}
-              className="inline-flex items-center gap-3 border border-[#F9F9F7]/40 text-[#F9F9F7] px-8 py-4 uppercase tracking-[0.1em] hover:border-[#F9F9F7] transition-colors"
+              className="inline-flex items-center gap-3 border border-secondary/40 text-secondary px-8 py-4 uppercase tracking-[0.1em] hover:border-secondary transition-colors"
               style={{ fontSize: "0.75rem", fontWeight: 700 }}
             >
               {section.secondaryCTA.label}

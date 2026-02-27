@@ -15,10 +15,10 @@ export default function BikeCard({ bike, locale }: BikeCardProps) {
   return (
     <Link
       href={`/${locale}/product/${bike.slug}`}
-      className="group block border border-[#121212] bg-[#F9F9F7] hover:bg-[#121212] transition-colors duration-300"
+      className="group block border border-primary bg-secondary hover:bg-primary transition-colors duration-300"
     >
       {/* Image */}
-      <div className="aspect-square overflow-hidden border-b border-[#121212]">
+      <div className="aspect-square overflow-hidden border-b border-primary">
         {bike.imageUrl ? (
           <img
             src={bike.imageUrl}
@@ -27,7 +27,7 @@ export default function BikeCard({ bike, locale }: BikeCardProps) {
           />
         ) : (
           <div className="w-full h-full bg-[#E8E8E4] flex items-center justify-center">
-            <span className="text-[#6B6B6B] text-sm uppercase tracking-widest">No image</span>
+            <span className="text-muted text-sm uppercase tracking-widest">No image</span>
           </div>
         )}
       </div>
@@ -37,15 +37,15 @@ export default function BikeCard({ bike, locale }: BikeCardProps) {
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
             <p
-              className="uppercase tracking-[0.15em] text-[#6B6B6B] group-hover:text-[#F9F9F7]/50 mb-1 transition-colors"
+              className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50 mb-1 transition-colors"
               style={{ fontSize: '0.65rem', fontWeight: 700 }}
             >
               {category}
             </p>
-            <h3 className="group-hover:text-[#F9F9F7] transition-colors">{bike.name}</h3>
+            <h3 className="group-hover:text-secondary transition-colors">{bike.name}</h3>
           </div>
           <p
-            className="text-[#121212] group-hover:text-[#FF4F00] transition-colors whitespace-nowrap mt-1"
+            className="text-primary group-hover:text-accent transition-colors whitespace-nowrap mt-1"
             style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
           >
             {formatPrice(price)}
@@ -54,14 +54,14 @@ export default function BikeCard({ bike, locale }: BikeCardProps) {
 
         {bike.tagline && (
           <p
-            className="text-[#6B6B6B] group-hover:text-[#F9F9F7]/60 transition-colors mb-4"
+            className="text-muted group-hover:text-secondary/60 transition-colors mb-4"
             style={{ lineHeight: 1.6 }}
           >
             {bike.tagline}
           </p>
         )}
 
-        <div className="flex items-center gap-2 text-[#FF4F00]">
+        <div className="flex items-center gap-2 text-accent">
           <span className="uppercase tracking-[0.1em]" style={{ fontSize: '0.7rem', fontWeight: 700 }}>
             View Details
           </span>

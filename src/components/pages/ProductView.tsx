@@ -42,19 +42,19 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
   return (
     <div>
       {/* Breadcrumb */}
-      <section className="border-b border-[#121212]">
+      <section className="border-b border-primary">
         <div className="flex items-center px-8 md:px-12 lg:px-16 py-4 gap-2">
           <Link
             href={`/${locale}/collection`}
-            className="flex items-center gap-2 text-[#6B6B6B] hover:text-[#121212] transition-colors"
+            className="flex items-center gap-2 text-muted hover:text-primary transition-colors"
             style={{ fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.1em' }}
           >
             <ArrowLeft size={14} />
             Collection
           </Link>
-          <span className="text-[#6B6B6B] mx-2">/</span>
+          <span className="text-muted mx-2">/</span>
           <span
-            className="text-[#121212]"
+            className="text-primary"
             style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}
           >
             {bike.name}
@@ -63,10 +63,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
       </section>
 
       {/* Product */}
-      <section className="border-b border-[#121212]">
+      <section className="border-b border-primary">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           {/* Image */}
-          <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[#121212]">
+          <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-primary">
             <div className="aspect-[4/3] lg:aspect-auto relative">
               {bike.imageUrl ? (
                 <img
@@ -76,11 +76,11 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                 />
               ) : (
                 <div className="w-full h-full min-h-[400px] bg-[#E8E8E4] flex items-center justify-center">
-                  <span className="text-[#6B6B6B] text-sm uppercase tracking-widest">No image</span>
+                  <span className="text-muted text-sm uppercase tracking-widest">No image</span>
                 </div>
               )}
               {category && (
-                <div className="absolute top-0 left-0 bg-[#FF4F00] text-white px-6 py-3">
+                <div className="absolute top-0 left-0 bg-accent text-white px-6 py-3">
                   <p className="uppercase tracking-[0.15em]" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                     {category}
                   </p>
@@ -92,21 +92,21 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
           {/* Details */}
           <div className="lg:col-span-5 p-8 md:p-12 lg:p-16">
             {category && (
-              <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p className="uppercase tracking-[0.2em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                 {category}
               </p>
             )}
             <h2 className="mb-2">
               {bike.name}
-              <span className="text-[#FF4F00]">.</span>
+              <span className="text-accent">.</span>
             </h2>
             {bike.tagline && (
-              <p className="text-[#6B6B6B] mb-6" style={{ lineHeight: 1.6 }}>
+              <p className="text-muted mb-6" style={{ lineHeight: 1.6 }}>
                 {bike.tagline}
               </p>
             )}
             <p
-              className="text-[#121212] mb-8"
+              className="text-primary mb-8"
               style={{
                 fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
                 fontWeight: 900,
@@ -119,7 +119,7 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Color */}
             <div className="mb-6">
-              <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p className="uppercase tracking-[0.15em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                 Color &mdash; {colorOptions[selectedColor].name}
               </p>
               <div className="flex gap-3">
@@ -128,7 +128,7 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                     key={color.name}
                     onClick={() => setSelectedColor(i)}
                     className={`w-10 h-10 border-2 transition-all ${
-                      selectedColor === i ? 'border-[#FF4F00] scale-110' : 'border-[#121212]/20 hover:border-[#121212]'
+                      selectedColor === i ? 'border-accent scale-110' : 'border-primary/20 hover:border-primary'
                     }`}
                     style={{ backgroundColor: color.hex }}
                   />
@@ -138,7 +138,7 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Size */}
             <div className="mb-6">
-              <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p className="uppercase tracking-[0.15em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                 Frame Size
               </p>
               <div className="flex gap-2">
@@ -148,8 +148,8 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                     onClick={() => setSelectedSize(i)}
                     className={`w-12 h-12 border transition-colors uppercase tracking-[0.05em] ${
                       selectedSize === i
-                        ? 'bg-[#121212] text-[#F9F9F7] border-[#121212]'
-                        : 'border-[#121212] hover:bg-[#121212] hover:text-[#F9F9F7]'
+                        ? 'bg-primary text-secondary border-primary'
+                        : 'border-primary hover:bg-primary hover:text-secondary'
                     }`}
                     style={{ fontSize: '0.8rem', fontWeight: 700 }}
                   >
@@ -161,13 +161,13 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Quantity */}
             <div className="mb-8">
-              <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <p className="uppercase tracking-[0.15em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                 Quantity
               </p>
-              <div className="flex items-center border border-[#121212] w-fit">
+              <div className="flex items-center border border-primary w-fit">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-12 h-12 flex items-center justify-center hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors border-r border-[#121212]"
+                  className="w-12 h-12 flex items-center justify-center hover:bg-primary hover:text-secondary transition-colors border-r border-primary"
                 >
                   <Minus size={14} />
                 </button>
@@ -179,7 +179,7 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                 </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-12 h-12 flex items-center justify-center hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors border-l border-[#121212]"
+                  className="w-12 h-12 flex items-center justify-center hover:bg-primary hover:text-secondary transition-colors border-l border-primary"
                 >
                   <Plus size={14} />
                 </button>
@@ -188,15 +188,15 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Add to Cart */}
             <button
-              className="w-full bg-[#FF4F00] text-white py-5 uppercase tracking-[0.15em] hover:bg-[#FF4F00]/90 transition-colors flex items-center justify-center gap-3"
+              className="w-full bg-accent text-white py-5 uppercase tracking-[0.15em] hover:bg-accent/90 transition-colors flex items-center justify-center gap-3"
               style={{ fontSize: '0.8rem', fontWeight: 700 }}
             >
               Add to Cart
               <ArrowRight size={16} />
             </button>
 
-            <div className="mt-4 flex items-center gap-2 text-[#6B6B6B]" style={{ fontSize: '0.8rem' }}>
-              <Check size={14} className="text-[#FF4F00]" />
+            <div className="mt-4 flex items-center gap-2 text-muted" style={{ fontSize: '0.8rem' }}>
+              <Check size={14} className="text-accent" />
               Free shipping within Europe. 30-day returns.
             </div>
           </div>
@@ -205,23 +205,23 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
       {/* Features & Specs */}
       {(bike.productFeatures?.length || specs.length > 0) && (
-        <section className="border-b border-[#121212]">
+        <section className="border-b border-primary">
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* Features */}
             {bike.productFeatures && bike.productFeatures.length > 0 && (
-              <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-[#121212]">
-                <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-4" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-primary">
+                <p className="uppercase tracking-[0.2em] text-muted mb-4" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                   Features
                 </p>
                 {bike.tagline && (
-                  <p className="text-[#121212] mb-6" style={{ lineHeight: 1.7, maxWidth: '540px' }}>
+                  <p className="text-primary mb-6" style={{ lineHeight: 1.7, maxWidth: '540px' }}>
                     {bike.tagline}
                   </p>
                 )}
                 <div className="space-y-3">
                   {bike.productFeatures.map((feature) => (
                     <div key={feature} className="flex items-center gap-3">
-                      <div className="w-5 h-5 bg-[#FF4F00] flex items-center justify-center flex-shrink-0">
+                      <div className="w-5 h-5 bg-accent flex items-center justify-center flex-shrink-0">
                         <Check size={12} className="text-white" />
                       </div>
                       <span>{feature}</span>
@@ -234,16 +234,16 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
             {/* Specs */}
             {specs.length > 0 && (
               <div className={`${bike.productFeatures?.length ? 'lg:col-span-5' : 'lg:col-span-12'} p-8 md:p-12 lg:p-16`}>
-                <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                <p className="uppercase tracking-[0.2em] text-muted mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                   Specifications
                 </p>
                 <div>
                   {specs.map(([key, value], i) => (
                     <div
                       key={key}
-                      className={`flex justify-between py-4 ${i < specs.length - 1 ? 'border-b border-[#121212]/20' : ''}`}
+                      className={`flex justify-between py-4 ${i < specs.length - 1 ? 'border-b border-primary/20' : ''}`}
                     >
-                      <span className="text-[#6B6B6B] uppercase tracking-[0.1em]" style={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                      <span className="text-muted uppercase tracking-[0.1em]" style={{ fontSize: '0.75rem', fontWeight: 500 }}>
                         {key}
                       </span>
                       <span style={{ fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}>{value}</span>
@@ -259,8 +259,8 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
       {/* Related */}
       {relatedBikes.length > 0 && (
         <section>
-          <div className="p-8 md:p-12 lg:px-16 border-b border-[#121212]">
-            <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+          <div className="p-8 md:p-12 lg:px-16 border-b border-primary">
+            <p className="uppercase tracking-[0.2em] text-muted mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
               You may also like
             </p>
             <h3>More from the collection</h3>
@@ -269,13 +269,13 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
             {relatedBikes.slice(0, 2).map((related, i) => (
               <div
                 key={related.id}
-                className={`${i === 0 ? 'md:border-r border-[#121212]' : ''} border-b border-[#121212]`}
+                className={`${i === 0 ? 'md:border-r border-primary' : ''} border-b border-primary`}
               >
                 <Link
                   href={`/${locale}/product/${related.slug}`}
-                  className="group block hover:bg-[#121212] transition-colors duration-300"
+                  className="group block hover:bg-primary transition-colors duration-300"
                 >
-                  <div className="aspect-square overflow-hidden border-b border-[#121212]">
+                  <div className="aspect-square overflow-hidden border-b border-primary">
                     {related.imageUrl ? (
                       <img
                         src={related.imageUrl}
@@ -289,15 +289,15 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                   <div className="p-5 flex items-center justify-between">
                     <div>
                       <p
-                        className="uppercase tracking-[0.15em] text-[#6B6B6B] group-hover:text-[#F9F9F7]/50 mb-1 transition-colors"
+                        className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50 mb-1 transition-colors"
                         style={{ fontSize: '0.65rem', fontWeight: 700 }}
                       >
                         {formatBikeCategory(related.bikeCategory)}
                       </p>
-                      <h3 className="group-hover:text-[#F9F9F7] transition-colors">{related.name}</h3>
+                      <h3 className="group-hover:text-secondary transition-colors">{related.name}</h3>
                     </div>
                     <p
-                      className="text-[#121212] group-hover:text-[#FF4F00] transition-colors"
+                      className="text-primary group-hover:text-accent transition-colors"
                       style={{ fontSize: '1rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
                     >
                       {formatPrice(related.externalProduct?.data?.calculated_price)}

@@ -15,20 +15,20 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
   const features = section.features;
 
   return (
-    <section className="border-b border-[#121212]">
+    <section className="border-b border-primary">
       {/* Section header */}
-      <div className="p-8 md:p-12 lg:px-16 border-b border-[#121212]">
+      <div className="p-8 md:p-12 lg:px-16 border-b border-primary">
         {section.title && (
           <div>
             <p
-              className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-3"
+              className="uppercase tracking-[0.2em] text-muted mb-3"
               style={{ fontSize: '0.65rem', fontWeight: 700 }}
             >
               Our Approach
             </p>
             <h2>
               {section.title.replace(/\.$/, '')}
-              <span className="text-[#FF4F00]">.</span>
+              <span className="text-accent">.</span>
             </h2>
           </div>
         )}
@@ -41,18 +41,18 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
             key={feature.id}
             className={[
               'p-8 md:p-10',
-              i < features.length - 1 ? 'border-b md:border-b-0 md:border-r border-[#121212]' : '',
+              i < features.length - 1 ? 'border-b md:border-b-0 md:border-r border-primary' : '',
               i === 1 && features.length === 4 ? 'md:border-b lg:border-b-0' : '',
             ].join(' ')}
           >
             <p
-              className="text-[#FF4F00] mb-4 uppercase tracking-[0.2em]"
+              className="text-accent mb-4 uppercase tracking-[0.2em]"
               style={{ fontSize: '0.65rem', fontWeight: 700 }}
             >
               0{i + 1}
             </p>
             <h3 className="mb-4">{feature.title}</h3>
-            <p className="text-[#6B6B6B]" style={{ lineHeight: 1.7 }}>
+            <p className="text-muted" style={{ lineHeight: 1.7 }}>
               {feature.description.text}
             </p>
           </div>

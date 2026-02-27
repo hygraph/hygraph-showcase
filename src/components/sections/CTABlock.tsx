@@ -19,7 +19,7 @@ export default function CTABlock({ section }: CTABlockProps) {
 
   return (
     <section
-      className="border-b border-[#121212]"
+      className="border-b border-primary"
       style={{ backgroundColor: isDark ? '#121212' : '#F9F9F7' }}
     >
       <div
@@ -38,7 +38,7 @@ export default function CTABlock({ section }: CTABlockProps) {
           style={{ color: isDark ? '#F9F9F7' : '#121212' }}
         >
           {section.headline.replace(/\.$/, '')}
-          <span className="text-[#FF4F00]">.</span>
+          <span className="text-accent">.</span>
         </h2>
 
         {section.description && (
@@ -53,7 +53,7 @@ export default function CTABlock({ section }: CTABlockProps) {
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             href={section.primaryButton.href}
-            className="inline-flex items-center gap-3 bg-[#FF4F00] text-white px-10 py-5 uppercase tracking-[0.1em] hover:bg-[#FF4F00]/90 transition-colors"
+            className="inline-flex items-center gap-3 bg-accent text-white px-10 py-5 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
             style={{ fontSize: '0.75rem', fontWeight: 700 }}
           >
             {section.primaryButton.label}

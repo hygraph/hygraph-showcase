@@ -21,11 +21,11 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
   return (
     <div>
       {/* Back */}
-      <div className="border-b border-[#121212]">
+      <div className="border-b border-primary">
         <div className="p-6 md:p-8 lg:px-16">
           <Link
             href={`/${locale}/blog`}
-            className="inline-flex items-center gap-2 text-[#6B6B6B] uppercase tracking-[0.1em] hover:text-[#121212] transition-colors"
+            className="inline-flex items-center gap-2 text-muted uppercase tracking-[0.1em] hover:text-primary transition-colors"
             style={{ fontSize: '0.7rem', fontWeight: 700 }}
           >
             <ArrowLeft size={13} />
@@ -36,18 +36,18 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
 
       {/* Cover */}
       {post.imageUrl && (
-        <section className="border-b border-[#121212]">
+        <section className="border-b border-primary">
           <img src={post.imageUrl} alt={post.title} className="w-full object-cover max-h-[520px]" />
         </section>
       )}
 
       {/* Header */}
-      <section className="border-b border-[#121212]">
+      <section className="border-b border-primary">
         <div className="grid grid-cols-1 lg:grid-cols-12">
-          <div className="lg:col-span-8 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-[#121212]">
+          <div className="lg:col-span-8 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-primary">
             <div className="flex items-center gap-4 mb-6">
               <span
-                className="bg-[#FF4F00] text-white px-3 py-1 uppercase tracking-[0.15em]"
+                className="bg-accent text-white px-3 py-1 uppercase tracking-[0.15em]"
                 style={{ fontSize: '0.6rem', fontWeight: 700 }}
               >
                 {post.category}
@@ -55,22 +55,22 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
             </div>
             <h1>
               {post.title}
-              <span className="text-[#FF4F00]">.</span>
+              <span className="text-accent">.</span>
             </h1>
-            <p className="text-[#6B6B6B] mt-8 max-w-[600px]" style={{ lineHeight: 1.7, fontSize: '1.1rem' }}>
+            <p className="text-muted mt-8 max-w-[600px]" style={{ lineHeight: 1.7, fontSize: '1.1rem' }}>
               {post.summary}
             </p>
           </div>
           <div className="lg:col-span-4 p-8 md:p-12 lg:p-16 flex flex-col gap-4">
             <div>
-              <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-1" style={{ fontSize: '0.6rem', fontWeight: 700 }}>
+              <p className="uppercase tracking-[0.15em] text-muted mb-1" style={{ fontSize: '0.6rem', fontWeight: 700 }}>
                 Published
               </p>
               <p style={{ fontWeight: 600 }}>{post.publishedDate}</p>
             </div>
             {post.readTime && (
               <div>
-                <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-1" style={{ fontSize: '0.6rem', fontWeight: 700 }}>
+                <p className="uppercase tracking-[0.15em] text-muted mb-1" style={{ fontSize: '0.6rem', fontWeight: 700 }}>
                   Read time
                 </p>
                 <p style={{ fontWeight: 600 }}>{post.readTime}</p>
@@ -82,19 +82,19 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
 
       {/* Article body */}
       {post.body?.html && (
-        <section className="border-b border-[#121212]">
+        <section className="border-b border-primary">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className="lg:col-span-8 lg:border-r border-[#121212]">
+            <div className="lg:col-span-8 lg:border-r border-primary">
               <div
-                className="px-8 md:px-12 lg:px-16 py-6 md:py-8 text-[#6B6B6B] prose max-w-none"
+                className="px-8 md:px-12 lg:px-16 py-6 md:py-8 text-muted prose max-w-none"
                 style={{ lineHeight: 1.85, fontSize: '1rem' }}
                 dangerouslySetInnerHTML={{ __html: post.body.html }}
               />
             </div>
 
             {/* Sidebar: other articles */}
-            <div className="lg:col-span-4 p-8 md:p-12 lg:p-16 border-t lg:border-t-0 border-[#121212]">
-              <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+            <div className="lg:col-span-4 p-8 md:p-12 lg:p-16 border-t lg:border-t-0 border-primary">
+              <p className="uppercase tracking-[0.2em] text-muted mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
                 More articles
               </p>
               <div className="space-y-4">
@@ -104,7 +104,7 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
                     <Link
                       key={other.id}
                       href={`/${locale}/blog/${other.slug}`}
-                      className="group block border border-[#121212] hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors overflow-hidden"
+                      className="group block border border-primary hover:bg-primary hover:text-secondary transition-colors overflow-hidden"
                     >
                       {other.imageUrl && (
                         <img
@@ -115,12 +115,12 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
                       )}
                       <div className="p-4">
                         <span
-                          className="uppercase tracking-[0.15em] text-[#6B6B6B] group-hover:text-[#F9F9F7]/50"
+                          className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50"
                           style={{ fontSize: '0.6rem', fontWeight: 700 }}
                         >
                           {other.category} &middot; {other.publishedDate}
                         </span>
-                        <p className="mt-1 group-hover:text-[#F9F9F7]" style={{ fontWeight: 700, fontSize: '0.9rem' }}>
+                        <p className="mt-1 group-hover:text-secondary" style={{ fontWeight: 700, fontSize: '0.9rem' }}>
                           {other.title}
                         </p>
                       </div>
@@ -133,16 +133,16 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
       )}
 
       {/* Prev / next navigation */}
-      <section className="border-b border-[#121212]">
+      <section className="border-b border-primary">
         <div className="grid grid-cols-1 sm:grid-cols-2">
-          <div className={`${next ? 'border-b sm:border-b-0 sm:border-r border-[#121212]' : ''}`}>
+          <div className={`${next ? 'border-b sm:border-b-0 sm:border-r border-primary' : ''}`}>
             {prev ? (
               <Link
                 href={`/${locale}/blog/${prev.slug}`}
-                className="flex flex-col gap-2 p-8 md:p-10 hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors group h-full"
+                className="flex flex-col gap-2 p-8 md:p-10 hover:bg-primary hover:text-secondary transition-colors group h-full"
               >
                 <span
-                  className="flex items-center gap-2 uppercase tracking-[0.1em] text-[#6B6B6B] group-hover:text-[#F9F9F7]/50"
+                  className="flex items-center gap-2 uppercase tracking-[0.1em] text-muted group-hover:text-secondary/50"
                   style={{ fontSize: '0.65rem', fontWeight: 700 }}
                 >
                   <ArrowLeft size={12} />
@@ -158,10 +158,10 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
             {next ? (
               <Link
                 href={`/${locale}/blog/${next.slug}`}
-                className="flex flex-col items-end gap-2 p-8 md:p-10 hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors group h-full text-right"
+                className="flex flex-col items-end gap-2 p-8 md:p-10 hover:bg-primary hover:text-secondary transition-colors group h-full text-right"
               >
                 <span
-                  className="flex items-center gap-2 uppercase tracking-[0.1em] text-[#6B6B6B] group-hover:text-[#F9F9F7]/50"
+                  className="flex items-center gap-2 uppercase tracking-[0.1em] text-muted group-hover:text-secondary/50"
                   style={{ fontSize: '0.65rem', fontWeight: 700 }}
                 >
                   Next

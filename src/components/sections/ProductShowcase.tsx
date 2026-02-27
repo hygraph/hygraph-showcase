@@ -30,12 +30,12 @@ export default function ProductShowcase({ section, locale, products }: ProductSh
   const cols = section.itemsPerRow === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 
   return (
-    <section className="border-b border-[#121212]">
+    <section className="border-b border-primary">
       {/* Header */}
-      <div className="flex items-end justify-between p-8 md:p-12 lg:px-16 border-b border-[#121212]">
+      <div className="flex items-end justify-between p-8 md:p-12 lg:px-16 border-b border-primary">
         <div>
           <p
-            className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-3"
+            className="uppercase tracking-[0.2em] text-muted mb-3"
             style={{ fontSize: '0.65rem', fontWeight: 700 }}
           >
             Featured
@@ -43,13 +43,13 @@ export default function ProductShowcase({ section, locale, products }: ProductSh
           {section.title && (
             <h2>
               {section.title.replace(/\.$/, '')}
-              <span className="text-[#FF4F00]">.</span>
+              <span className="text-accent">.</span>
             </h2>
           )}
         </div>
         <Link
           href={`/${locale}/collection`}
-          className="hidden sm:inline-flex items-center gap-2 text-[#FF4F00] uppercase tracking-[0.1em] hover:gap-3 transition-all"
+          className="hidden sm:inline-flex items-center gap-2 text-accent uppercase tracking-[0.1em] hover:gap-3 transition-all"
           style={{ fontSize: '0.75rem', fontWeight: 700 }}
         >
           View All

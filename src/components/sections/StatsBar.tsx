@@ -18,19 +18,19 @@ export default function StatsBar({ section }: StatsBarProps) {
   const count = stats.length;
 
   return (
-    <section className="border-b border-[#121212]">
+    <section className="border-b border-primary">
       <div className="grid grid-cols-2 md:grid-cols-4">
         {stats.map((stat, i) => (
           <div
             key={i}
             className={[
               'p-6 md:p-8 text-center',
-              i < count - 1 ? 'border-r border-[#121212]' : '',
-              i < 2 && count > 2 ? 'border-b md:border-b-0 border-[#121212]' : '',
+              i < count - 1 ? 'border-r border-primary' : '',
+              i < 2 && count > 2 ? 'border-b md:border-b-0 border-primary' : '',
             ].join(' ')}
           >
             <p
-              className="text-[#121212] mb-1"
+              className="text-primary mb-1"
               style={{
                 fontSize: 'clamp(2rem, 4vw, 3.5rem)',
                 fontWeight: 900,
@@ -47,13 +47,13 @@ export default function StatsBar({ section }: StatsBarProps) {
                 return (
                   <>
                     <span>{num}</span>
-                    {unit && <span className="text-[#FF4F00]" style={{ fontSize: '0.6em' }}>{unit}</span>}
+                    {unit && <span className="text-accent" style={{ fontSize: '0.6em' }}>{unit}</span>}
                   </>
                 );
               })()}
             </p>
             <p
-              className="text-[#6B6B6B] uppercase tracking-[0.15em]"
+              className="text-muted uppercase tracking-[0.15em]"
               style={{ fontSize: '0.65rem', fontWeight: 500 }}
             >
               {stat.label}
