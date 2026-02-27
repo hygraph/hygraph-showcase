@@ -122,7 +122,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           id
           headline
           subheadline
-          imageUrl
+          mediaText
           backgroundMedia {
             id
             url
