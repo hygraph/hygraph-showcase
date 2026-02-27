@@ -1,31 +1,27 @@
 /**
  * Locale utilities for multi-language support
- * Supports: English (en), German (de), French (fr), Spanish (es)
+ * Supports: English (en), German (de)
  */
 
-export const SUPPORTED_LOCALES = ['en', 'de', 'fr', 'es'] as const;
+export const SUPPORTED_LOCALES = ["en", "de"] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
-export const DEFAULT_LOCALE: Locale = 'en';
+export const DEFAULT_LOCALE: Locale = "en";
 
 /**
  * Locale display names for UI
  */
 export const LOCALE_NAMES: Record<Locale, string> = {
-  en: 'English',
-  de: 'Deutsch',
-  fr: 'Français',
-  es: 'Español',
+  en: "English",
+  de: "Deutsch",
 };
 
 /**
  * Locale flags for UI (emoji)
  */
 export const LOCALE_FLAGS: Record<Locale, string> = {
-  en: '🇬🇧',
-  de: '🇩🇪',
-  fr: '🇫🇷',
-  es: '🇪🇸',
+  en: "🇬🇧",
+  de: "🇩🇪",
 };
 
 /**
