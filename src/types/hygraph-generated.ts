@@ -2803,7 +2803,6 @@ export type EditorialSection = Entity & {
   locale: Locale;
   /** Get the other localizations for this document */
   localizations: Array<EditorialSection>;
-  specItemsJson?: Maybe<Scalars['Json']['output']>;
   /** System stage field */
   stage: Stage;
   stats: Array<Stat>;
@@ -2876,7 +2875,6 @@ export type EditorialSectionCreateInput = {
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<EditorialSectionCreateLocalizationsInput>;
-  specItemsJson?: InputMaybe<Scalars['Json']['input']>;
   stats?: InputMaybe<StatCreateManyInlineInput>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
@@ -3037,15 +3035,6 @@ export type EditorialSectionManyWhereInput = {
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
-  /** All values containing the given json path. */
-  specItemsJson_json_path_exists?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Recursively tries to find the provided JSON scalar value inside the field.
-   * It does use an exact match when comparing values.
-   * If you pass `null` as value the filter will be ignored.
-   * Note: This filter fails if you try to look for a non scalar JSON value!
-   */
-  specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
   stats_every?: InputMaybe<StatWhereInput>;
   stats_none?: InputMaybe<StatWhereInput>;
   stats_some?: InputMaybe<StatWhereInput>;
@@ -3185,7 +3174,6 @@ export type EditorialSectionUpdateInput = {
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<EditorialSectionUpdateLocalizationsInput>;
-  specItemsJson?: InputMaybe<Scalars['Json']['input']>;
   stats?: InputMaybe<StatUpdateManyInlineInput>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
@@ -3231,7 +3219,6 @@ export type EditorialSectionUpdateManyInput = {
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<EditorialSectionUpdateManyLocalizationsInput>;
-  specItemsJson?: InputMaybe<Scalars['Json']['input']>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -3425,15 +3412,6 @@ export type EditorialSectionWhereInput = {
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
-  /** All values containing the given json path. */
-  specItemsJson_json_path_exists?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Recursively tries to find the provided JSON scalar value inside the field.
-   * It does use an exact match when comparing values.
-   * If you pass `null` as value the filter will be ignored.
-   * Note: This filter fails if you try to look for a non scalar JSON value!
-   */
-  specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
   stats_every?: InputMaybe<StatWhereInput>;
   stats_none?: InputMaybe<StatWhereInput>;
   stats_some?: InputMaybe<StatWhereInput>;
@@ -19346,6 +19324,11 @@ export type GetFeaturedProductsQueryVariables = Exact<{
 
 export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
+export type GetSegmentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSegmentsQuery = { __typename?: 'Query', segments: Array<{ __typename?: 'Segment', id: string, name: string }> };
+
 export type GetSiteSettingsQueryVariables = Exact<{
   locale: Locale;
 }>;
@@ -19851,6 +19834,14 @@ export const GetFeaturedProductsDocument = gql`
   }
 }
     `;
+export const GetSegmentsDocument = gql`
+    query GetSegments {
+  segments(stage: DRAFT) {
+    id
+    name
+  }
+}
+    `;
 export const GetSiteSettingsDocument = gql`
     query GetSiteSettings($locale: Locale!) {
   allSiteSettings(locales: [$locale, en], stage: DRAFT, first: 1) {
@@ -19913,6 +19904,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetFeaturedProducts(variables: GetFeaturedProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetFeaturedProductsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetFeaturedProductsQuery>({ document: GetFeaturedProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetFeaturedProducts', 'query', variables);
+    },
+    GetSegments(variables?: GetSegmentsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetSegmentsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSegmentsQuery>({ document: GetSegmentsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetSegments', 'query', variables);
     },
     GetSiteSettings(variables: GetSiteSettingsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetSiteSettingsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSiteSettingsQuery>({ document: GetSiteSettingsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetSiteSettings', 'query', variables);

@@ -45,9 +45,7 @@ export async function generateMetadata({ params }: ProductLinePageProps): Promis
   // Read audience from cookie for variant selection
   const cookieStore = await cookies();
   const audienceCookie = cookieStore.get('hybike-audience')?.value;
-  const segmentName = audienceCookie && ['COMMUTERS', 'SPORTS_ENTHUSIASTS'].includes(audienceCookie)
-    ? audienceCookie === 'COMMUTERS' ? 'Commuters' : 'Sports Enthusiasts'
-    : undefined;
+  const segmentName = audienceCookie && audienceCookie !== 'Default' ? audienceCookie : undefined;
 
   try {
     const data = await hygraphRequest<GetProductLineQuery>(GetProductLineDocument, {
@@ -96,9 +94,7 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
   // Read audience from cookie for variant selection
   const cookieStore = await cookies();
   const audienceCookie = cookieStore.get('hybike-audience')?.value;
-  const segmentName = audienceCookie && ['COMMUTERS', 'SPORTS_ENTHUSIASTS'].includes(audienceCookie)
-    ? audienceCookie === 'COMMUTERS' ? 'Commuters' : 'Sports Enthusiasts'
-    : undefined;
+  const segmentName = audienceCookie && audienceCookie !== 'Default' ? audienceCookie : undefined;
 
   // Fetch product line content with variant
   let data: GetProductLineQuery | null = null;

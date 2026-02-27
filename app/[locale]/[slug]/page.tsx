@@ -122,16 +122,11 @@ export async function generateMetadata({
 export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
 
-  // Read audience from cookie for variant selection
+  // Read segment from cookie for variant selection
   const cookieStore = await cookies();
   const audienceCookie = cookieStore.get("hybike-audience")?.value;
   const segmentName =
-    audienceCookie &&
-    ["COMMUTERS", "SPORTS_ENTHUSIASTS"].includes(audienceCookie)
-      ? audienceCookie === "COMMUTERS"
-        ? "Commuters"
-        : "Sports Enthusiasts"
-      : undefined;
+    audienceCookie && audienceCookie !== "Default" ? audienceCookie : undefined;
 
   // Fetch page + additional listing data in parallel based on slug
   let data: GetPageQuery | null = null;
@@ -198,9 +193,7 @@ export default async function Page({ params }: PageProps) {
         return <FeatureGrid key={section.id} section={section as any} />;
       }
       if (isEditorialSection(section)) {
-        return (
-          <EditorialSection key={section.id} section={section as any} />
-        );
+        return <EditorialSection key={section.id} section={section as any} />;
       }
       if (isCTABlock(section)) {
         return (
