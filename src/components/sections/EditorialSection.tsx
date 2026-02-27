@@ -18,16 +18,10 @@ interface EditorialSectionProps {
   section: EditorialSectionType;
 }
 
-interface SpecItem {
-  label: string;
-  value: string;
-}
-
 export default function EditorialSection({ section }: EditorialSectionProps) {
-  const imageUrl = section.image?.url || "";
+  const imageUrl = section.image.url;
   const headline = section.editorialHeadline || "";
-  const specItems = section.specItemsJson as SpecItem[] | null;
-  const hasSpecs = specItems && specItems.length > 0;
+  const hasStats = section.stats && section.stats.length > 0;
 
   if (section.imageRight) {
     // Materials layout: text LEFT (5 cols), image RIGHT (7 cols)
@@ -55,17 +49,17 @@ export default function EditorialSection({ section }: EditorialSectionProps) {
                 dangerouslySetInnerHTML={{ __html: section.body.html }}
               />
             )}
-            {hasSpecs && (
+            {hasStats && (
               <div className="grid grid-cols-2 gap-4 mt-4">
-                {(specItems as SpecItem[]).map((item) => (
-                  <div key={item.label} className="border border-primary p-4">
+                {section.stats.map((stat) => (
+                  <div key={stat.id} className="border border-primary p-4">
                     <p
                       className="uppercase tracking-[0.15em] text-muted mb-1"
                       style={{ fontSize: "0.6rem", fontWeight: 700 }}
                     >
-                      {item.label}
+                      {stat.label}
                     </p>
-                    <p style={{ fontWeight: 700 }}>{item.value}</p>
+                    <p style={{ fontWeight: 700 }}>{stat.value}</p>
                   </div>
                 ))}
               </div>

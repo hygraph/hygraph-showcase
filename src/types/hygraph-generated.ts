@@ -2806,6 +2806,7 @@ export type EditorialSection = Entity & {
   specItemsJson?: Maybe<Scalars['Json']['output']>;
   /** System stage field */
   stage: Stage;
+  stats: Array<Stat>;
   /** Section title (optional) */
   title?: Maybe<Scalars['String']['output']>;
   /** System updatedAt field */
@@ -2825,6 +2826,20 @@ export type EditorialSectionImageArgs = {
 export type EditorialSectionLocalizationsArgs = {
   includeCurrent?: Scalars['Boolean']['input'];
   locales?: Array<Locale>;
+};
+
+
+/** Split-layout editorial section: image + text + optional spec grid */
+export type EditorialSectionStatsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<StatOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<StatWhereInput>;
 };
 
 
@@ -2862,6 +2877,7 @@ export type EditorialSectionCreateInput = {
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<EditorialSectionCreateLocalizationsInput>;
   specItemsJson?: InputMaybe<Scalars['Json']['input']>;
+  stats?: InputMaybe<StatCreateManyInlineInput>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -3030,6 +3046,9 @@ export type EditorialSectionManyWhereInput = {
    * Note: This filter fails if you try to look for a non scalar JSON value!
    */
   specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
+  stats_every?: InputMaybe<StatWhereInput>;
+  stats_none?: InputMaybe<StatWhereInput>;
+  stats_some?: InputMaybe<StatWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -3167,6 +3186,7 @@ export type EditorialSectionUpdateInput = {
   /** Manage document localizations */
   localizations?: InputMaybe<EditorialSectionUpdateLocalizationsInput>;
   specItemsJson?: InputMaybe<Scalars['Json']['input']>;
+  stats?: InputMaybe<StatUpdateManyInlineInput>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -3414,6 +3434,9 @@ export type EditorialSectionWhereInput = {
    * Note: This filter fails if you try to look for a non scalar JSON value!
    */
   specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
+  stats_every?: InputMaybe<StatWhereInput>;
+  stats_none?: InputMaybe<StatWhereInput>;
+  stats_some?: InputMaybe<StatWhereInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   title_contains?: InputMaybe<Scalars['String']['input']>;
@@ -17918,13 +17941,15 @@ export type StatOrderByInput =
   | 'value_ASC'
   | 'value_DESC';
 
-export type StatParent = StatsBar;
+export type StatParent = EditorialSection | StatsBar;
 
 export type StatParentConnectInput = {
+  EditorialSection?: InputMaybe<EditorialSectionConnectInput>;
   StatsBar?: InputMaybe<StatsBarConnectInput>;
 };
 
 export type StatParentCreateInput = {
+  EditorialSection?: InputMaybe<EditorialSectionCreateInput>;
   StatsBar?: InputMaybe<StatsBarCreateInput>;
 };
 
@@ -17939,10 +17964,12 @@ export type StatParentCreateOneInlineInput = {
 };
 
 export type StatParentCreateWithPositionInput = {
+  EditorialSection?: InputMaybe<EditorialSectionCreateWithPositionInput>;
   StatsBar?: InputMaybe<StatsBarCreateWithPositionInput>;
 };
 
 export type StatParentUpdateInput = {
+  EditorialSection?: InputMaybe<EditorialSectionUpdateInput>;
   StatsBar?: InputMaybe<StatsBarUpdateInput>;
 };
 
@@ -17958,6 +17985,7 @@ export type StatParentUpdateManyInlineInput = {
 };
 
 export type StatParentUpdateManyWithNestedWhereInput = {
+  EditorialSection?: InputMaybe<EditorialSectionUpdateManyWithNestedWhereInput>;
   StatsBar?: InputMaybe<StatsBarUpdateManyWithNestedWhereInput>;
 };
 
@@ -17973,26 +18001,32 @@ export type StatParentUpdateOneInlineInput = {
 };
 
 export type StatParentUpdateWithNestedWhereUniqueAndPositionInput = {
+  EditorialSection?: InputMaybe<EditorialSectionUpdateWithNestedWhereUniqueAndPositionInput>;
   StatsBar?: InputMaybe<StatsBarUpdateWithNestedWhereUniqueAndPositionInput>;
 };
 
 export type StatParentUpdateWithNestedWhereUniqueInput = {
+  EditorialSection?: InputMaybe<EditorialSectionUpdateWithNestedWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarUpdateWithNestedWhereUniqueInput>;
 };
 
 export type StatParentUpsertWithNestedWhereUniqueAndPositionInput = {
+  EditorialSection?: InputMaybe<EditorialSectionUpsertWithNestedWhereUniqueAndPositionInput>;
   StatsBar?: InputMaybe<StatsBarUpsertWithNestedWhereUniqueAndPositionInput>;
 };
 
 export type StatParentUpsertWithNestedWhereUniqueInput = {
+  EditorialSection?: InputMaybe<EditorialSectionUpsertWithNestedWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarUpsertWithNestedWhereUniqueInput>;
 };
 
 export type StatParentWhereInput = {
+  EditorialSection?: InputMaybe<EditorialSectionWhereInput>;
   StatsBar?: InputMaybe<StatsBarWhereInput>;
 };
 
 export type StatParentWhereUniqueInput = {
+  EditorialSection?: InputMaybe<EditorialSectionWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarWhereUniqueInput>;
 };
 
@@ -19279,7 +19313,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -19475,7 +19509,11 @@ export const GetPageDocument = gql`
         imageRight
         ctaLabel
         ctaHref
-        specItemsJson
+        stats {
+          id
+          value
+          label
+        }
       }
       ... on CTABlock {
         id
@@ -19595,7 +19633,11 @@ export const GetPageDocument = gql`
           imageRight
           ctaLabel
           ctaHref
-          specItemsJson
+          stats {
+            id
+            value
+            label
+          }
         }
         ... on CTABlock {
           id

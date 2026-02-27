@@ -66,7 +66,11 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         imageRight
         ctaLabel
         ctaHref
-        specItemsJson
+        stats {
+          id
+          value
+          label
+        }
       }
       ... on CTABlock {
         id
@@ -186,7 +190,11 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           imageRight
           ctaLabel
           ctaHref
-          specItemsJson
+          stats {
+            id
+            value
+            label
+          }
         }
         ... on CTABlock {
           id
