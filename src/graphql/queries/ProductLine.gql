@@ -26,19 +26,6 @@ query GetProductLine($slug: String!, $locale: Locale!, $segmentName: String) {
         height
       }
     }
-    testimonials {
-      id
-      quote
-      author
-      role
-      rating
-      avatar {
-        id
-        url
-        width
-        height
-      }
-    }
     variants(where: { segments_some: { name: $segmentName } }) {
       tagline
       description {

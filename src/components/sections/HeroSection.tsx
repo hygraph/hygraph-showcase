@@ -18,10 +18,9 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ section, locale }: HeroSectionProps) {
-  const imageUrl = section.imageUrl;
-  const hasSplitImage = !!imageUrl;
+  const mediaUrl = section.backgroundMedia?.url ?? null;
 
-  if (hasSplitImage) {
+  if (mediaUrl) {
     return (
       <section className="border-b border-[#121212]">
         <div className="grid grid-cols-1 lg:grid-cols-12">
@@ -84,9 +83,9 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
           {/* Right: Image */}
           <div className="lg:col-span-5 relative w-full h-full lg:max-h-[calc(100vh-120px)]">
             <img
-              src={imageUrl}
+              src={mediaUrl}
               alt={section.headline}
-              className="object-cover w-full h-full "
+              className="object-cover w-full h-full"
             />
             <div className="absolute bottom-0 left-0 bg-[#FF4F00] text-white px-6 py-3">
               <p
@@ -102,24 +101,10 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
     );
   }
 
-  // Fallback: full-width with background media
+  // No image: full-width dark hero
   return (
-    <section className="relative overflow-hidden border-b border-[#121212] min-h-[60vh] flex items-center">
-      {section.backgroundMedia && (
-        <div className="absolute inset-0 z-0">
-          <img
-            src={section.backgroundMedia.url}
-            alt=""
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#121212]/60" />
-        </div>
-      )}
-      <div
-        className={`relative z-10 p-8 md:p-16 lg:p-24 ${
-          section.backgroundMedia ? "" : "bg-[#121212]"
-        } w-full`}
-      >
+    <section className="border-b border-[#121212] bg-[#121212] min-h-[60vh] flex items-center">
+      <div className="p-8 md:p-16 lg:p-24 w-full">
         <p
           className="uppercase tracking-[0.2em] text-[#F9F9F7]/50 mb-6"
           style={{ fontSize: "0.65rem", fontWeight: 700 }}

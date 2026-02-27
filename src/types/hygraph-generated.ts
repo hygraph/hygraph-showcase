@@ -189,7 +189,6 @@ export type AssetCreateInput = {
   siteSettingsDefaultMetaImage?: InputMaybe<SiteSettingsCreateManyInlineInput>;
   siteSettingsLogo?: InputMaybe<SiteSettingsCreateManyInlineInput>;
   statIcons?: InputMaybe<StatCreateManyInlineInput>;
-  testimonialAvatar?: InputMaybe<TestimonialCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
   uploadUrl?: InputMaybe<Scalars['String']['input']>;
@@ -380,7 +379,6 @@ export type AssetUpdateInput = {
   siteSettingsDefaultMetaImage?: InputMaybe<SiteSettingsUpdateManyInlineInput>;
   siteSettingsLogo?: InputMaybe<SiteSettingsUpdateManyInlineInput>;
   statIcons?: InputMaybe<StatUpdateManyInlineInput>;
-  testimonialAvatar?: InputMaybe<TestimonialUpdateManyInlineInput>;
   /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
   uploadUrl?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2812,8 +2810,6 @@ export type EditorialSection = Entity & {
   specItemsJson?: Maybe<Scalars['Json']['output']>;
   /** System stage field */
   stage: Stage;
-  /** Select testimonials to show. Use variants for audience-specific testimonials. */
-  testimonials: Array<Testimonial>;
   /** Section title (optional) */
   title?: Maybe<Scalars['String']['output']>;
   /** System updatedAt field */
@@ -2825,20 +2821,6 @@ export type EditorialSection = Entity & {
 export type EditorialSectionLocalizationsArgs = {
   includeCurrent?: Scalars['Boolean']['input'];
   locales?: Array<Locale>;
-};
-
-
-/** Split-layout editorial section: image + text + optional spec grid */
-export type EditorialSectionTestimonialsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<TestimonialOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<TestimonialWhereInput>;
 };
 
 
@@ -2879,7 +2861,6 @@ export type EditorialSectionCreateInput = {
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<EditorialSectionCreateLocalizationsInput>;
   specItemsJson?: InputMaybe<Scalars['Json']['input']>;
-  testimonials?: InputMaybe<TestimonialCreateManyInlineInput>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -3103,9 +3084,6 @@ export type EditorialSectionManyWhereInput = {
    * Note: This filter fails if you try to look for a non scalar JSON value!
    */
   specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -3254,7 +3232,6 @@ export type EditorialSectionUpdateInput = {
   /** Manage document localizations */
   localizations?: InputMaybe<EditorialSectionUpdateLocalizationsInput>;
   specItemsJson?: InputMaybe<Scalars['Json']['input']>;
-  testimonials?: InputMaybe<TestimonialUpdateManyInlineInput>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -3561,9 +3538,6 @@ export type EditorialSectionWhereInput = {
    * Note: This filter fails if you try to look for a non scalar JSON value!
    */
   specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   title_contains?: InputMaybe<Scalars['String']['input']>;
@@ -3667,10 +3641,6 @@ export type EntityTypeName =
   | 'Stat'
   /** Trust indicator bar with statistics (e.g., "10,000+ Riders | 4.8★ Rating") */
   | 'StatsBar'
-  /** Customer review/testimonial */
-  | 'Testimonial'
-  /** Customer review/testimonial */
-  | 'TestimonialVariant'
   /** User system model */
   | 'User';
 
@@ -6140,11 +6110,7 @@ export type Locale =
   /** German locale for German-speaking markets */
   | 'de'
   /** System locale */
-  | 'en'
-  /** Spanish locale for Spanish-speaking markets */
-  | 'es'
-  /** French locale for French-speaking markets */
-  | 'fr';
+  | 'en';
 
 /** Representing a geolocation point with latitude and longitude */
 export type Location = {
@@ -6190,8 +6156,6 @@ export type Mutation = {
   createSegment?: Maybe<Segment>;
   /** Create one siteSettings */
   createSiteSettings?: Maybe<SiteSettings>;
-  /** Create one testimonial */
-  createTestimonial?: Maybe<Testimonial>;
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>;
   /** Delete one blogPost from _all_ existing stages. Returns deleted document. */
@@ -6270,13 +6234,6 @@ export type Mutation = {
   deleteManySegments: BatchPayload;
   /** Delete many Segment documents, return deleted documents */
   deleteManySegmentsConnection: SegmentConnection;
-  /**
-   * Delete many Testimonial documents
-   * @deprecated Please use the new paginated many mutation (deleteManyTestimonialsConnection)
-   */
-  deleteManyTestimonials: BatchPayload;
-  /** Delete many Testimonial documents, return deleted documents */
-  deleteManyTestimonialsConnection: TestimonialConnection;
   /** Delete one navigation from _all_ existing stages. Returns deleted document. */
   deleteNavigation?: Maybe<Navigation>;
   /** Delete one page from _all_ existing stages. Returns deleted document. */
@@ -6293,8 +6250,6 @@ export type Mutation = {
   deleteSegment?: Maybe<Segment>;
   /** Delete one siteSettings from _all_ existing stages. Returns deleted document. */
   deleteSiteSettings?: Maybe<SiteSettings>;
-  /** Delete one testimonial from _all_ existing stages. Returns deleted document. */
-  deleteTestimonial?: Maybe<Testimonial>;
   /** Publish one asset */
   publishAsset?: Maybe<Asset>;
   /** Publish one blogPost */
@@ -6377,15 +6332,6 @@ export type Mutation = {
   publishManySegments: BatchPayload;
   /** Publish many Segment documents */
   publishManySegmentsConnection: SegmentConnection;
-  /** Publish many TestimonialVariant documents */
-  publishManyTestimonialVariantsConnection: TestimonialVariantConnection;
-  /**
-   * Publish many Testimonial documents
-   * @deprecated Please use the new paginated many mutation (publishManyTestimonialsConnection)
-   */
-  publishManyTestimonials: BatchPayload;
-  /** Publish many Testimonial documents */
-  publishManyTestimonialsConnection: TestimonialConnection;
   /** Publish one navigation */
   publishNavigation?: Maybe<Navigation>;
   /** Publish one page */
@@ -6402,10 +6348,6 @@ export type Mutation = {
   publishSegment?: Maybe<Segment>;
   /** Publish one siteSettings */
   publishSiteSettings?: Maybe<SiteSettings>;
-  /** Publish one testimonial */
-  publishTestimonial?: Maybe<Testimonial>;
-  /** Publish one testimonialVariant */
-  publishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Schedule to publish one asset */
   schedulePublishAsset?: Maybe<Asset>;
   /** Schedule to publish one blogPost */
@@ -6430,10 +6372,6 @@ export type Mutation = {
   schedulePublishSegment?: Maybe<Segment>;
   /** Schedule to publish one siteSettings */
   schedulePublishSiteSettings?: Maybe<SiteSettings>;
-  /** Schedule to publish one testimonial */
-  schedulePublishTestimonial?: Maybe<Testimonial>;
-  /** Schedule to publish one testimonialVariant */
-  schedulePublishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAsset?: Maybe<Asset>;
   /** Unpublish one blogPost from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -6458,10 +6396,6 @@ export type Mutation = {
   scheduleUnpublishSegment?: Maybe<Segment>;
   /** Unpublish one siteSettings from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishSiteSettings?: Maybe<SiteSettings>;
-  /** Unpublish one testimonial from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  scheduleUnpublishTestimonial?: Maybe<Testimonial>;
-  /** Unpublish one testimonialVariant from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  scheduleUnpublishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>;
   /** Unpublish one blogPost from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -6544,15 +6478,6 @@ export type Mutation = {
   unpublishManySegments: BatchPayload;
   /** Find many Segment documents that match criteria in specified stage and unpublish from target stages */
   unpublishManySegmentsConnection: SegmentConnection;
-  /** Find many TestimonialVariant documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyTestimonialVariantsConnection: TestimonialVariantConnection;
-  /**
-   * Unpublish many Testimonial documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyTestimonialsConnection)
-   */
-  unpublishManyTestimonials: BatchPayload;
-  /** Find many Testimonial documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyTestimonialsConnection: TestimonialConnection;
   /** Unpublish one navigation from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishNavigation?: Maybe<Navigation>;
   /** Unpublish one page from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -6569,10 +6494,6 @@ export type Mutation = {
   unpublishSegment?: Maybe<Segment>;
   /** Unpublish one siteSettings from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishSiteSettings?: Maybe<SiteSettings>;
-  /** Unpublish one testimonial from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishTestimonial?: Maybe<Testimonial>;
-  /** Unpublish one testimonialVariant from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Update one asset */
   updateAsset?: Maybe<Asset>;
   /** Update one blogPost */
@@ -6651,13 +6572,6 @@ export type Mutation = {
   updateManySegments: BatchPayload;
   /** Update many Segment documents */
   updateManySegmentsConnection: SegmentConnection;
-  /**
-   * Update many testimonials
-   * @deprecated Please use the new paginated many mutation (updateManyTestimonialsConnection)
-   */
-  updateManyTestimonials: BatchPayload;
-  /** Update many Testimonial documents */
-  updateManyTestimonialsConnection: TestimonialConnection;
   /** Update one navigation */
   updateNavigation?: Maybe<Navigation>;
   /** Update one page */
@@ -6672,8 +6586,6 @@ export type Mutation = {
   updateSegment?: Maybe<Segment>;
   /** Update one siteSettings */
   updateSiteSettings?: Maybe<SiteSettings>;
-  /** Update one testimonial */
-  updateTestimonial?: Maybe<Testimonial>;
   /** Upsert one asset */
   upsertAsset?: Maybe<Asset>;
   /** Upsert one blogPost */
@@ -6694,8 +6606,6 @@ export type Mutation = {
   upsertSegment?: Maybe<Segment>;
   /** Upsert one siteSettings */
   upsertSiteSettings?: Maybe<SiteSettings>;
-  /** Upsert one testimonial */
-  upsertTestimonial?: Maybe<Testimonial>;
 };
 
 
@@ -6751,11 +6661,6 @@ export type MutationCreateSegmentArgs = {
 
 export type MutationCreateSiteSettingsArgs = {
   data: SiteSettingsCreateInput;
-};
-
-
-export type MutationCreateTestimonialArgs = {
-  data: TestimonialCreateInput;
 };
 
 
@@ -6929,21 +6834,6 @@ export type MutationDeleteManySegmentsConnectionArgs = {
 };
 
 
-export type MutationDeleteManyTestimonialsArgs = {
-  where?: InputMaybe<TestimonialManyWhereInput>;
-};
-
-
-export type MutationDeleteManyTestimonialsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<TestimonialManyWhereInput>;
-};
-
-
 export type MutationDeleteNavigationArgs = {
   where: NavigationWhereUniqueInput;
 };
@@ -6981,11 +6871,6 @@ export type MutationDeleteSegmentArgs = {
 
 export type MutationDeleteSiteSettingsArgs = {
   where: SiteSettingsWhereUniqueInput;
-};
-
-
-export type MutationDeleteTestimonialArgs = {
-  where: TestimonialWhereUniqueInput;
 };
 
 
@@ -7280,45 +7165,6 @@ export type MutationPublishManySegmentsConnectionArgs = {
 };
 
 
-export type MutationPublishManyTestimonialVariantsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: InputMaybe<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  to?: Array<Stage>;
-  where?: InputMaybe<TestimonialVariantManyWhereInput>;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishManyTestimonialsArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  to?: Array<Stage>;
-  where?: InputMaybe<TestimonialManyWhereInput>;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishManyTestimonialsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: InputMaybe<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  to?: Array<Stage>;
-  where?: InputMaybe<TestimonialManyWhereInput>;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
 export type MutationPublishNavigationArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
@@ -7384,24 +7230,6 @@ export type MutationPublishSiteSettingsArgs = {
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
   to?: Array<Stage>;
   where: SiteSettingsWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishTestimonialArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  to?: Array<Stage>;
-  where: TestimonialWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishTestimonialVariantArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  to?: Array<Stage>;
-  where: TestimonialVariantWhereUniqueInput;
   withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -7532,28 +7360,6 @@ export type MutationSchedulePublishSiteSettingsArgs = {
 };
 
 
-export type MutationSchedulePublishTestimonialArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  to?: Array<Stage>;
-  where: TestimonialWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationSchedulePublishTestimonialVariantArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  to?: Array<Stage>;
-  where: TestimonialVariantWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
 export type MutationScheduleUnpublishAssetArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -7667,26 +7473,6 @@ export type MutationScheduleUnpublishSiteSettingsArgs = {
   releaseId?: InputMaybe<Scalars['String']['input']>;
   unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
   where: SiteSettingsWhereUniqueInput;
-};
-
-
-export type MutationScheduleUnpublishTestimonialArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: TestimonialWhereUniqueInput;
-};
-
-
-export type MutationScheduleUnpublishTestimonialVariantArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: TestimonialVariantWhereUniqueInput;
 };
 
 
@@ -7960,42 +7746,6 @@ export type MutationUnpublishManySegmentsConnectionArgs = {
 };
 
 
-export type MutationUnpublishManyTestimonialVariantsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: Array<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: InputMaybe<Stage>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where?: InputMaybe<TestimonialVariantManyWhereInput>;
-};
-
-
-export type MutationUnpublishManyTestimonialsArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where?: InputMaybe<TestimonialManyWhereInput>;
-};
-
-
-export type MutationUnpublishManyTestimonialsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: Array<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: InputMaybe<Stage>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where?: InputMaybe<TestimonialManyWhereInput>;
-};
-
-
 export type MutationUnpublishNavigationArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -8055,22 +7805,6 @@ export type MutationUnpublishSiteSettingsArgs = {
   locales?: InputMaybe<Array<Locale>>;
   unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
   where: SiteSettingsWhereUniqueInput;
-};
-
-
-export type MutationUnpublishTestimonialArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: TestimonialWhereUniqueInput;
-};
-
-
-export type MutationUnpublishTestimonialVariantArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: TestimonialVariantWhereUniqueInput;
 };
 
 
@@ -8268,23 +8002,6 @@ export type MutationUpdateManySegmentsConnectionArgs = {
 };
 
 
-export type MutationUpdateManyTestimonialsArgs = {
-  data: TestimonialUpdateManyInput;
-  where?: InputMaybe<TestimonialManyWhereInput>;
-};
-
-
-export type MutationUpdateManyTestimonialsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  data: TestimonialUpdateManyInput;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<TestimonialManyWhereInput>;
-};
-
-
 export type MutationUpdateNavigationArgs = {
   data: NavigationUpdateInput;
   where: NavigationWhereUniqueInput;
@@ -8324,12 +8041,6 @@ export type MutationUpdateSegmentArgs = {
 export type MutationUpdateSiteSettingsArgs = {
   data: SiteSettingsUpdateInput;
   where: SiteSettingsWhereUniqueInput;
-};
-
-
-export type MutationUpdateTestimonialArgs = {
-  data: TestimonialUpdateInput;
-  where: TestimonialWhereUniqueInput;
 };
 
 
@@ -8390,12 +8101,6 @@ export type MutationUpsertSegmentArgs = {
 export type MutationUpsertSiteSettingsArgs = {
   upsert: SiteSettingsUpsertInput;
   where: SiteSettingsWhereUniqueInput;
-};
-
-
-export type MutationUpsertTestimonialArgs = {
-  upsert: TestimonialUpsertInput;
-  where: TestimonialWhereUniqueInput;
 };
 
 /** Site navigation structure (e.g., main-nav, footer-nav, mobile-nav) */
@@ -10951,8 +10656,6 @@ export type ProductLine = Entity & Node & {
   stage: Stage;
   /** Short marketing tagline - key personalization field */
   tagline: Scalars['String']['output'];
-  /** Customer testimonials for this product line */
-  testimonials: Array<Testimonial>;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
@@ -11058,20 +10761,6 @@ export type ProductLineSeoArgs = {
 
 
 /** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineTestimonialsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<TestimonialOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<TestimonialWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
 export type ProductLineUpdatedAtArgs = {
   variation?: SystemDateTimeFieldVariation;
 };
@@ -11130,7 +10819,6 @@ export type ProductLineCreateInput = {
   slug: Scalars['String']['input'];
   /** tagline input for default locale (en) */
   tagline: Scalars['String']['input'];
-  testimonials?: InputMaybe<TestimonialCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   variants?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
 };
@@ -11268,9 +10956,6 @@ export type ProductLineManyWhereInput = {
   slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   slug_starts_with?: InputMaybe<Scalars['String']['input']>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -11323,7 +11008,6 @@ export type ProductLineUpdateInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
   /** tagline input for default locale (en) */
   tagline?: InputMaybe<Scalars['String']['input']>;
-  testimonials?: InputMaybe<TestimonialUpdateManyInlineInput>;
   variants?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
 };
 
@@ -11479,8 +11163,6 @@ export type ProductLineVariant = Entity & Node & {
   stage: Stage;
   /** Short marketing tagline - key personalization field */
   tagline: Scalars['String']['output'];
-  /** Customer testimonials for this product line */
-  testimonials: Array<Testimonial>;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
@@ -11587,20 +11269,6 @@ export type ProductLineVariantSegmentsArgs = {
 
 
 /** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantTestimonialsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<TestimonialOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<TestimonialWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
 export type ProductLineVariantUpdatedAtArgs = {
   variation?: SystemDateTimeFieldVariation;
 };
@@ -11641,7 +11309,6 @@ export type ProductLineVariantCreateInput = {
   segments?: InputMaybe<SegmentCreateManyInlineInput>;
   /** tagline input for default locale (en) */
   tagline: Scalars['String']['input'];
-  testimonials?: InputMaybe<TestimonialCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -11756,9 +11423,6 @@ export type ProductLineVariantManyWhereInput = {
   segments_every?: InputMaybe<SegmentWhereInput>;
   segments_none?: InputMaybe<SegmentWhereInput>;
   segments_some?: InputMaybe<SegmentWhereInput>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -11800,7 +11464,6 @@ export type ProductLineVariantUpdateInput = {
   segments?: InputMaybe<SegmentUpdateManyInlineInput>;
   /** tagline input for default locale (en) */
   tagline?: InputMaybe<Scalars['String']['input']>;
-  testimonials?: InputMaybe<TestimonialUpdateManyInlineInput>;
 };
 
 export type ProductLineVariantUpdateLocalizationDataInput = {
@@ -12002,9 +11665,6 @@ export type ProductLineVariantWhereInput = {
   tagline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   tagline_starts_with?: InputMaybe<Scalars['String']['input']>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -12177,9 +11837,6 @@ export type ProductLineWhereInput = {
   tagline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   tagline_starts_with?: InputMaybe<Scalars['String']['input']>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -14429,14 +14086,6 @@ export type Query = {
   siteSettings?: Maybe<SiteSettings>;
   /** Retrieve document version */
   siteSettingsVersion?: Maybe<DocumentVersion>;
-  /** Retrieve a single testimonial */
-  testimonial?: Maybe<Testimonial>;
-  /** Retrieve document version */
-  testimonialVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple testimonials */
-  testimonials: Array<Testimonial>;
-  /** Retrieve multiple testimonials using the Relay connection interface */
-  testimonialsConnection: TestimonialConnection;
   /** Retrieve a single user */
   user?: Maybe<User>;
   /** Retrieve multiple users */
@@ -14902,44 +14551,6 @@ export type QuerySiteSettingsArgs = {
 
 export type QuerySiteSettingsVersionArgs = {
   where: VersionWhereInput;
-};
-
-
-export type QueryTestimonialArgs = {
-  locales?: Array<Locale>;
-  stage?: Stage;
-  where: TestimonialWhereUniqueInput;
-};
-
-
-export type QueryTestimonialVersionArgs = {
-  where: VersionWhereInput;
-};
-
-
-export type QueryTestimonialsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: Array<Locale>;
-  orderBy?: InputMaybe<TestimonialOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: Stage;
-  where?: InputMaybe<TestimonialWhereInput>;
-};
-
-
-export type QueryTestimonialsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: Array<Locale>;
-  orderBy?: InputMaybe<TestimonialOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: Stage;
-  where?: InputMaybe<TestimonialWhereInput>;
 };
 
 
@@ -15691,7 +15302,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | BlogPost | Feature | Job | Navigation | Page | PageVariant | Product | ProductLine | ProductLineVariant | Segment | SiteSettings | Testimonial | TestimonialVariant;
+export type ScheduledOperationAffectedDocument = Asset | BlogPost | Feature | Job | Navigation | Page | PageVariant | Product | ProductLine | ProductLineVariant | Segment | SiteSettings;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -16730,7 +16341,6 @@ export type SegmentCreateInput = {
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   variantsPage?: InputMaybe<PageVariantCreateManyInlineInput>;
   variantsProductLine?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
-  variantsTestimonial?: InputMaybe<TestimonialVariantCreateManyInlineInput>;
 };
 
 export type SegmentCreateManyInlineInput = {
@@ -16898,7 +16508,6 @@ export type SegmentUpdateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   variantsPage?: InputMaybe<PageVariantUpdateManyInlineInput>;
   variantsProductLine?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
-  variantsTestimonial?: InputMaybe<TestimonialVariantUpdateManyInlineInput>;
 };
 
 export type SegmentUpdateManyInlineInput = {
@@ -19312,1272 +18921,6 @@ export type TaxonomyPathNode = {
   value: Scalars['String']['output'];
 };
 
-/** Customer review/testimonial */
-export type Testimonial = Entity & Node & {
-  __typename?: 'Testimonial';
-  /** Customer name */
-  author: Scalars['String']['output'];
-  /** Customer photo */
-  avatar?: Maybe<Asset>;
-  /** The time the document was created */
-  createdAt: Scalars['DateTime']['output'];
-  /** User that created this document */
-  createdBy?: Maybe<User>;
-  /** Get the document in other stages */
-  documentInStages: Array<Testimonial>;
-  /** List of Testimonial versions */
-  history: Array<Version>;
-  /** The unique identifier */
-  id: Scalars['ID']['output'];
-  /** System Locale field */
-  locale: Locale;
-  /** Get the other localizations for this document */
-  localizations: Array<Testimonial>;
-  /** Customer location (e.g., "Berlin, Germany") */
-  location: Scalars['String']['output'];
-  /** The time the document was published. Null on documents in draft stage. */
-  publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  /** User that last published this document */
-  publishedBy?: Maybe<User>;
-  /** Customer testimonial text (variant-enabled for audience-specific messaging) */
-  quote: Scalars['String']['output'];
-  /** Star rating out of 5 */
-  rating: Scalars['Int']['output'];
-  /** Customer role/description (e.g., "Daily Commuter", "Mountain Biker") - variant-enabled for audience-specific roles */
-  role?: Maybe<Scalars['String']['output']>;
-  scheduledIn: Array<ScheduledOperation>;
-  /** System stage field */
-  stage: Stage;
-  /** The time the document was updated */
-  updatedAt: Scalars['DateTime']['output'];
-  /** User that last updated this document */
-  updatedBy?: Maybe<User>;
-  /**
-   *
-   *           This field links the variant model to the main model. It is used to fetch the variants of a model.
-   *
-   */
-  variants: Array<TestimonialVariant>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialAvatarArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  where?: InputMaybe<AssetSingleRelationWhereInput>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialCreatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialCreatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialDocumentInStagesArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  inheritLocale?: Scalars['Boolean']['input'];
-  stages?: Array<Stage>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialHistoryArgs = {
-  limit?: Scalars['Int']['input'];
-  skip?: Scalars['Int']['input'];
-  stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialLocalizationsArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  locales?: Array<Locale>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialPublishedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialPublishedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialScheduledInArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ScheduledOperationWhereInput>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialUpdatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialUpdatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<TestimonialVariantOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<TestimonialVariantWhereInput>;
-};
-
-export type TestimonialConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: TestimonialWhereUniqueInput;
-};
-
-/** A connection to a list of items. */
-export type TestimonialConnection = {
-  __typename?: 'TestimonialConnection';
-  aggregate: Aggregate;
-  /** A list of edges. */
-  edges: Array<TestimonialEdge>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type TestimonialCreateInput = {
-  author: Scalars['String']['input'];
-  avatar?: InputMaybe<AssetCreateOneInlineInput>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Inline mutations for managing document localizations excluding the default locale */
-  localizations?: InputMaybe<TestimonialCreateLocalizationsInput>;
-  /** location input for default locale (en) */
-  location: Scalars['String']['input'];
-  productLinesTestimonial?: InputMaybe<ProductLineCreateManyInlineInput>;
-  productLinesTestimonialVariant?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
-  /** quote input for default locale (en) */
-  quote: Scalars['String']['input'];
-  rating: Scalars['Int']['input'];
-  /** role input for default locale (en) */
-  role?: InputMaybe<Scalars['String']['input']>;
-  testimonialCarousels?: InputMaybe<EditorialSectionCreateManyInlineInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  variants?: InputMaybe<TestimonialVariantCreateManyInlineInput>;
-};
-
-export type TestimonialCreateLocalizationDataInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  location: Scalars['String']['input'];
-  quote: Scalars['String']['input'];
-  role?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type TestimonialCreateLocalizationInput = {
-  /** Localization input */
-  data: TestimonialCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialCreateLocalizationsInput = {
-  /** Create localizations for the newly-created document */
-  create?: InputMaybe<Array<TestimonialCreateLocalizationInput>>;
-};
-
-export type TestimonialCreateManyInlineInput = {
-  /** Connect multiple existing Testimonial documents */
-  connect?: InputMaybe<Array<TestimonialWhereUniqueInput>>;
-  /** Create and connect multiple existing Testimonial documents */
-  create?: InputMaybe<Array<TestimonialCreateInput>>;
-};
-
-export type TestimonialCreateOneInlineInput = {
-  /** Connect one existing Testimonial document */
-  connect?: InputMaybe<TestimonialWhereUniqueInput>;
-  /** Create and connect one Testimonial document */
-  create?: InputMaybe<TestimonialCreateInput>;
-};
-
-/** An edge in a connection. */
-export type TestimonialEdge = {
-  __typename?: 'TestimonialEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: Testimonial;
-};
-
-/** Identifies documents */
-export type TestimonialManyWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  author?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  author_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  author_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  author_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  author_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  author_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  author_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  author_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  author_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  author_starts_with?: InputMaybe<Scalars['String']['input']>;
-  avatar?: InputMaybe<AssetWhereInput>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<TestimonialWhereStageInput>;
-  documentInStages_none?: InputMaybe<TestimonialWhereStageInput>;
-  documentInStages_some?: InputMaybe<TestimonialWhereStageInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  rating?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  rating_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  rating_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  rating_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  rating_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  rating_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  rating_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  rating_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-  variants_every?: InputMaybe<TestimonialVariantWhereInput>;
-  variants_none?: InputMaybe<TestimonialVariantWhereInput>;
-  variants_some?: InputMaybe<TestimonialVariantWhereInput>;
-};
-
-export type TestimonialOrderByInput =
-  | 'author_ASC'
-  | 'author_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'location_ASC'
-  | 'location_DESC'
-  | 'publishedAt_ASC'
-  | 'publishedAt_DESC'
-  | 'quote_ASC'
-  | 'quote_DESC'
-  | 'rating_ASC'
-  | 'rating_DESC'
-  | 'role_ASC'
-  | 'role_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC';
-
-export type TestimonialUpdateInput = {
-  author?: InputMaybe<Scalars['String']['input']>;
-  avatar?: InputMaybe<AssetUpdateOneInlineInput>;
-  /** Manage document localizations */
-  localizations?: InputMaybe<TestimonialUpdateLocalizationsInput>;
-  /** location input for default locale (en) */
-  location?: InputMaybe<Scalars['String']['input']>;
-  productLinesTestimonial?: InputMaybe<ProductLineUpdateManyInlineInput>;
-  productLinesTestimonialVariant?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
-  /** quote input for default locale (en) */
-  quote?: InputMaybe<Scalars['String']['input']>;
-  rating?: InputMaybe<Scalars['Int']['input']>;
-  /** role input for default locale (en) */
-  role?: InputMaybe<Scalars['String']['input']>;
-  testimonialCarousels?: InputMaybe<EditorialSectionUpdateManyInlineInput>;
-  variants?: InputMaybe<TestimonialVariantUpdateManyInlineInput>;
-};
-
-export type TestimonialUpdateLocalizationDataInput = {
-  location?: InputMaybe<Scalars['String']['input']>;
-  quote?: InputMaybe<Scalars['String']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialUpdateLocalizationInput = {
-  data: TestimonialUpdateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialUpdateLocalizationsInput = {
-  /** Localizations to create */
-  create?: InputMaybe<Array<TestimonialCreateLocalizationInput>>;
-  /** Localizations to delete */
-  delete?: InputMaybe<Array<Locale>>;
-  /** Localizations to update */
-  update?: InputMaybe<Array<TestimonialUpdateLocalizationInput>>;
-  upsert?: InputMaybe<Array<TestimonialUpsertLocalizationInput>>;
-};
-
-export type TestimonialUpdateManyInlineInput = {
-  /** Connect multiple existing Testimonial documents */
-  connect?: InputMaybe<Array<TestimonialConnectInput>>;
-  /** Create and connect multiple Testimonial documents */
-  create?: InputMaybe<Array<TestimonialCreateInput>>;
-  /** Delete multiple Testimonial documents */
-  delete?: InputMaybe<Array<TestimonialWhereUniqueInput>>;
-  /** Disconnect multiple Testimonial documents */
-  disconnect?: InputMaybe<Array<TestimonialWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing Testimonial documents */
-  set?: InputMaybe<Array<TestimonialWhereUniqueInput>>;
-  /** Update multiple Testimonial documents */
-  update?: InputMaybe<Array<TestimonialUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple Testimonial documents */
-  upsert?: InputMaybe<Array<TestimonialUpsertWithNestedWhereUniqueInput>>;
-};
-
-export type TestimonialUpdateManyInput = {
-  author?: InputMaybe<Scalars['String']['input']>;
-  /** Optional updates to localizations */
-  localizations?: InputMaybe<TestimonialUpdateManyLocalizationsInput>;
-  /** location input for default locale (en) */
-  location?: InputMaybe<Scalars['String']['input']>;
-  /** quote input for default locale (en) */
-  quote?: InputMaybe<Scalars['String']['input']>;
-  rating?: InputMaybe<Scalars['Int']['input']>;
-  /** role input for default locale (en) */
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialUpdateManyLocalizationDataInput = {
-  location?: InputMaybe<Scalars['String']['input']>;
-  quote?: InputMaybe<Scalars['String']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialUpdateManyLocalizationInput = {
-  data: TestimonialUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: InputMaybe<Array<TestimonialUpdateManyLocalizationInput>>;
-};
-
-export type TestimonialUpdateManyWithNestedWhereInput = {
-  /** Update many input */
-  data: TestimonialUpdateManyInput;
-  /** Document search */
-  where: TestimonialWhereInput;
-};
-
-export type TestimonialUpdateOneInlineInput = {
-  /** Connect existing Testimonial document */
-  connect?: InputMaybe<TestimonialWhereUniqueInput>;
-  /** Create and connect one Testimonial document */
-  create?: InputMaybe<TestimonialCreateInput>;
-  /** Delete currently connected Testimonial document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Disconnect currently connected Testimonial document */
-  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single Testimonial document */
-  update?: InputMaybe<TestimonialUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single Testimonial document */
-  upsert?: InputMaybe<TestimonialUpsertWithNestedWhereUniqueInput>;
-};
-
-export type TestimonialUpdateWithNestedWhereUniqueInput = {
-  /** Document to update */
-  data: TestimonialUpdateInput;
-  /** Unique document search */
-  where: TestimonialWhereUniqueInput;
-};
-
-export type TestimonialUpsertInput = {
-  /** Create document if it didn't exist */
-  create: TestimonialCreateInput;
-  /** Update document if it exists */
-  update: TestimonialUpdateInput;
-};
-
-export type TestimonialUpsertLocalizationInput = {
-  create: TestimonialCreateLocalizationDataInput;
-  locale: Locale;
-  update: TestimonialUpdateLocalizationDataInput;
-};
-
-export type TestimonialUpsertWithNestedWhereUniqueInput = {
-  /** Upsert data */
-  data: TestimonialUpsertInput;
-  /** Unique document search */
-  where: TestimonialWhereUniqueInput;
-};
-
-/** Customer review/testimonial */
-export type TestimonialVariant = Entity & Node & {
-  __typename?: 'TestimonialVariant';
-  /** The time the document was created */
-  createdAt: Scalars['DateTime']['output'];
-  /** User that created this document */
-  createdBy?: Maybe<User>;
-  /** Get the document in other stages */
-  documentInStages: Array<TestimonialVariant>;
-  /** List of TestimonialVariant versions */
-  history: Array<Version>;
-  /** The unique identifier */
-  id: Scalars['ID']['output'];
-  /** System Locale field */
-  locale: Locale;
-  /** Get the other localizations for this document */
-  localizations: Array<TestimonialVariant>;
-  /** The time the document was published. Null on documents in draft stage. */
-  publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  /** User that last published this document */
-  publishedBy?: Maybe<User>;
-  /** Customer testimonial text (variant-enabled for audience-specific messaging) */
-  quote: Scalars['String']['output'];
-  /** Customer role/description (e.g., "Daily Commuter", "Mountain Biker") - variant-enabled for audience-specific roles */
-  role?: Maybe<Scalars['String']['output']>;
-  scheduledIn: Array<ScheduledOperation>;
-  /**
-   *
-   *           This field links the variant model to the segment model. It is used to fetch the segments of a variant.
-   *
-   */
-  segments: Array<Segment>;
-  /** System stage field */
-  stage: Stage;
-  /** The time the document was updated */
-  updatedAt: Scalars['DateTime']['output'];
-  /** User that last updated this document */
-  updatedBy?: Maybe<User>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantCreatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantCreatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantDocumentInStagesArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  inheritLocale?: Scalars['Boolean']['input'];
-  stages?: Array<Stage>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantHistoryArgs = {
-  limit?: Scalars['Int']['input'];
-  skip?: Scalars['Int']['input'];
-  stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantLocalizationsArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  locales?: Array<Locale>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantPublishedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantPublishedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantScheduledInArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ScheduledOperationWhereInput>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantSegmentsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<SegmentOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<SegmentWhereInput>;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantUpdatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Customer review/testimonial */
-export type TestimonialVariantUpdatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-export type TestimonialVariantConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: TestimonialVariantWhereUniqueInput;
-};
-
-/** A connection to a list of items. */
-export type TestimonialVariantConnection = {
-  __typename?: 'TestimonialVariantConnection';
-  aggregate: Aggregate;
-  /** A list of edges. */
-  edges: Array<TestimonialVariantEdge>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type TestimonialVariantCreateInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Inline mutations for managing document localizations excluding the default locale */
-  localizations?: InputMaybe<TestimonialVariantCreateLocalizationsInput>;
-  main?: InputMaybe<TestimonialCreateOneInlineInput>;
-  /** quote input for default locale (en) */
-  quote: Scalars['String']['input'];
-  /** role input for default locale (en) */
-  role?: InputMaybe<Scalars['String']['input']>;
-  segments?: InputMaybe<SegmentCreateManyInlineInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type TestimonialVariantCreateLocalizationDataInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  quote: Scalars['String']['input'];
-  role?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type TestimonialVariantCreateLocalizationInput = {
-  /** Localization input */
-  data: TestimonialVariantCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialVariantCreateLocalizationsInput = {
-  /** Create localizations for the newly-created document */
-  create?: InputMaybe<Array<TestimonialVariantCreateLocalizationInput>>;
-};
-
-export type TestimonialVariantCreateManyInlineInput = {
-  /** Create and connect multiple existing TestimonialVariant documents */
-  create?: InputMaybe<Array<TestimonialVariantCreateInput>>;
-};
-
-export type TestimonialVariantCreateOneInlineInput = {
-  /** Create and connect one TestimonialVariant document */
-  create?: InputMaybe<TestimonialVariantCreateInput>;
-};
-
-/** An edge in a connection. */
-export type TestimonialVariantEdge = {
-  __typename?: 'TestimonialVariantEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: TestimonialVariant;
-};
-
-/** Identifies documents */
-export type TestimonialVariantManyWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialVariantWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialVariantWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialVariantWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<TestimonialVariantWhereStageInput>;
-  documentInStages_none?: InputMaybe<TestimonialVariantWhereStageInput>;
-  documentInStages_some?: InputMaybe<TestimonialVariantWhereStageInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  segments_every?: InputMaybe<SegmentWhereInput>;
-  segments_none?: InputMaybe<SegmentWhereInput>;
-  segments_some?: InputMaybe<SegmentWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-};
-
-export type TestimonialVariantOrderByInput =
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'publishedAt_ASC'
-  | 'publishedAt_DESC'
-  | 'quote_ASC'
-  | 'quote_DESC'
-  | 'role_ASC'
-  | 'role_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC';
-
-export type TestimonialVariantUpdateInput = {
-  /** Manage document localizations */
-  localizations?: InputMaybe<TestimonialVariantUpdateLocalizationsInput>;
-  main?: InputMaybe<TestimonialUpdateOneInlineInput>;
-  /** quote input for default locale (en) */
-  quote?: InputMaybe<Scalars['String']['input']>;
-  /** role input for default locale (en) */
-  role?: InputMaybe<Scalars['String']['input']>;
-  segments?: InputMaybe<SegmentUpdateManyInlineInput>;
-};
-
-export type TestimonialVariantUpdateLocalizationDataInput = {
-  quote?: InputMaybe<Scalars['String']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialVariantUpdateLocalizationInput = {
-  data: TestimonialVariantUpdateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialVariantUpdateLocalizationsInput = {
-  /** Localizations to create */
-  create?: InputMaybe<Array<TestimonialVariantCreateLocalizationInput>>;
-  /** Localizations to delete */
-  delete?: InputMaybe<Array<Locale>>;
-  /** Localizations to update */
-  update?: InputMaybe<Array<TestimonialVariantUpdateLocalizationInput>>;
-  upsert?: InputMaybe<Array<TestimonialVariantUpsertLocalizationInput>>;
-};
-
-export type TestimonialVariantUpdateManyInlineInput = {
-  /** Create and connect multiple TestimonialVariant documents */
-  create?: InputMaybe<Array<TestimonialVariantCreateInput>>;
-  /** Delete multiple TestimonialVariant documents */
-  delete?: InputMaybe<Array<TestimonialVariantWhereUniqueInput>>;
-  /** Update multiple TestimonialVariant documents */
-  update?: InputMaybe<Array<TestimonialVariantUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple TestimonialVariant documents */
-  upsert?: InputMaybe<Array<TestimonialVariantUpsertWithNestedWhereUniqueInput>>;
-};
-
-export type TestimonialVariantUpdateManyInput = {
-  /** Optional updates to localizations */
-  localizations?: InputMaybe<TestimonialVariantUpdateManyLocalizationsInput>;
-  /** quote input for default locale (en) */
-  quote?: InputMaybe<Scalars['String']['input']>;
-  /** role input for default locale (en) */
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialVariantUpdateManyLocalizationDataInput = {
-  quote?: InputMaybe<Scalars['String']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialVariantUpdateManyLocalizationInput = {
-  data: TestimonialVariantUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialVariantUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: InputMaybe<Array<TestimonialVariantUpdateManyLocalizationInput>>;
-};
-
-export type TestimonialVariantUpdateManyWithNestedWhereInput = {
-  /** Update many input */
-  data: TestimonialVariantUpdateManyInput;
-  /** Document search */
-  where: TestimonialVariantWhereInput;
-};
-
-export type TestimonialVariantUpdateOneInlineInput = {
-  /** Create and connect one TestimonialVariant document */
-  create?: InputMaybe<TestimonialVariantCreateInput>;
-  /** Delete currently connected TestimonialVariant document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single TestimonialVariant document */
-  update?: InputMaybe<TestimonialVariantUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single TestimonialVariant document */
-  upsert?: InputMaybe<TestimonialVariantUpsertWithNestedWhereUniqueInput>;
-};
-
-export type TestimonialVariantUpdateWithNestedWhereUniqueInput = {
-  /** Document to update */
-  data: TestimonialVariantUpdateInput;
-  /** Unique document search */
-  where: TestimonialVariantWhereUniqueInput;
-};
-
-export type TestimonialVariantUpsertInput = {
-  /** Create document if it didn't exist */
-  create: TestimonialVariantCreateInput;
-  /** Update document if it exists */
-  update: TestimonialVariantUpdateInput;
-};
-
-export type TestimonialVariantUpsertLocalizationInput = {
-  create: TestimonialVariantCreateLocalizationDataInput;
-  locale: Locale;
-  update: TestimonialVariantUpdateLocalizationDataInput;
-};
-
-export type TestimonialVariantUpsertWithNestedWhereUniqueInput = {
-  /** Upsert data */
-  data: TestimonialVariantUpsertInput;
-  /** Unique document search */
-  where: TestimonialVariantWhereUniqueInput;
-};
-
-/** This contains a set of filters that can be used to compare values internally */
-export type TestimonialVariantWhereComparatorInput = {
-  /** This field can be used to request to check if the entry is outdated by internal comparison */
-  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Identifies documents */
-export type TestimonialVariantWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialVariantWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialVariantWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialVariantWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<TestimonialVariantWhereStageInput>;
-  documentInStages_none?: InputMaybe<TestimonialVariantWhereStageInput>;
-  documentInStages_some?: InputMaybe<TestimonialVariantWhereStageInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  quote?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  quote_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  quote_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  quote_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  quote_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  quote_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  quote_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  quote_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  quote_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  quote_starts_with?: InputMaybe<Scalars['String']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  role_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  role_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  role_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  role_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  role_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  role_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  role_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  role_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  role_starts_with?: InputMaybe<Scalars['String']['input']>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  segments_every?: InputMaybe<SegmentWhereInput>;
-  segments_none?: InputMaybe<SegmentWhereInput>;
-  segments_some?: InputMaybe<SegmentWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-};
-
-/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
-export type TestimonialVariantWhereStageInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialVariantWhereStageInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialVariantWhereStageInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialVariantWhereStageInput>>;
-  /** This field contains fields which can be set as true or false to specify an internal comparison */
-  compareWithParent?: InputMaybe<TestimonialVariantWhereComparatorInput>;
-  /** Specify the stage to compare with */
-  stage?: InputMaybe<Stage>;
-};
-
-/** References TestimonialVariant record uniquely */
-export type TestimonialVariantWhereUniqueInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-/** This contains a set of filters that can be used to compare values internally */
-export type TestimonialWhereComparatorInput = {
-  /** This field can be used to request to check if the entry is outdated by internal comparison */
-  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Identifies documents */
-export type TestimonialWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  author?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  author_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  author_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  author_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  author_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  author_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  author_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  author_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  author_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  author_starts_with?: InputMaybe<Scalars['String']['input']>;
-  avatar?: InputMaybe<AssetWhereInput>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<TestimonialWhereStageInput>;
-  documentInStages_none?: InputMaybe<TestimonialWhereStageInput>;
-  documentInStages_some?: InputMaybe<TestimonialWhereStageInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  location?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  location_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  location_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  location_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  location_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  location_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  location_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  location_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  location_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  location_starts_with?: InputMaybe<Scalars['String']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  quote?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  quote_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  quote_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  quote_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  quote_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  quote_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  quote_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  quote_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  quote_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  quote_starts_with?: InputMaybe<Scalars['String']['input']>;
-  rating?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  rating_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  rating_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  rating_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  rating_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  rating_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  rating_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  rating_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  role?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  role_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  role_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  role_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  role_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  role_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  role_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  role_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  role_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  role_starts_with?: InputMaybe<Scalars['String']['input']>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-  variants_every?: InputMaybe<TestimonialVariantWhereInput>;
-  variants_none?: InputMaybe<TestimonialVariantWhereInput>;
-  variants_some?: InputMaybe<TestimonialVariantWhereInput>;
-};
-
-/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
-export type TestimonialWhereStageInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialWhereStageInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialWhereStageInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialWhereStageInput>>;
-  /** This field contains fields which can be set as true or false to specify an internal comparison */
-  compareWithParent?: InputMaybe<TestimonialWhereComparatorInput>;
-  /** Specify the stage to compare with */
-  stage?: InputMaybe<Stage>;
-};
-
-/** References Testimonial record uniquely */
-export type TestimonialWhereUniqueInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
 /** Text alignment options */
 export type TextAlignment =
   | 'CENTER'
@@ -21121,7 +19464,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, imageUrl?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, imageUrl?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, imageUrl?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -21138,7 +19481,7 @@ export type GetProductLineQueryVariables = Exact<{
 }>;
 
 
-export type GetProductLineQuery = { __typename?: 'Query', productLine?: { __typename?: 'ProductLine', id: string, name: string, slug: string, tagline: string, description: { __typename?: 'RichText', text: string }, heroImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, keyFeatures: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }>, testimonials: Array<{ __typename?: 'Testimonial', id: string, quote: string, author: string, role?: string | null, rating: number, avatar?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }>, variants: Array<{ __typename?: 'ProductLineVariant', tagline: string, description: { __typename?: 'RichText', text: string }, heroImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null } | null };
+export type GetProductLineQuery = { __typename?: 'Query', productLine?: { __typename?: 'ProductLine', id: string, name: string, slug: string, tagline: string, description: { __typename?: 'RichText', text: string }, heroImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, keyFeatures: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }>, variants: Array<{ __typename?: 'ProductLineVariant', tagline: string, description: { __typename?: 'RichText', text: string }, heroImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null } | null };
 
 export type GetProductsQueryVariables = Exact<{
   locale: Locale;
@@ -21278,7 +19621,6 @@ export const GetPageDocument = gql`
         id
         headline
         subheadline
-        imageUrl
         backgroundMedia {
           id
           url
@@ -21563,19 +19905,6 @@ export const GetProductLineDocument = gql`
         text
       }
       icon {
-        id
-        url
-        width
-        height
-      }
-    }
-    testimonials {
-      id
-      quote
-      author
-      role
-      rating
-      avatar {
         id
         url
         width
