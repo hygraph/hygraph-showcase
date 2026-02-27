@@ -87,14 +87,16 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
               alt={section.headline}
               className="object-cover w-full h-full"
             />
-            <div className="absolute bottom-0 left-0 bg-[#FF4F00] text-white px-6 py-3">
-              <p
-                className="uppercase tracking-[0.15em]"
-                style={{ fontSize: "0.65rem", fontWeight: 700 }}
-              >
-                New 2026 Collection
-              </p>
-            </div>
+            {section.mediaText && (
+              <div className="absolute bottom-0 left-0 bg-[#FF4F00] text-white px-6 py-3">
+                <p
+                  className="uppercase tracking-[0.15em]"
+                  style={{ fontSize: "0.65rem", fontWeight: 700 }}
+                >
+                  {section.mediaText}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
