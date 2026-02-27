@@ -7,7 +7,6 @@ import { useState, useRef, useEffect } from "react";
 import {
   SUPPORTED_LOCALES,
   LOCALE_NAMES,
-  LOCALE_FLAGS,
   type Locale,
 } from "@/lib/utils/locale";
 import type { GetNavigationQuery } from "@/types/hygraph-generated";
@@ -105,7 +104,6 @@ export default function Navigation({ locale, navItems }: NavigationProps) {
               fontWeight: 500,
             }}
           >
-            <span>{LOCALE_FLAGS[locale]}</span>
             <span>{locale.toUpperCase()}</span>
             <ChevronDown
               size={11}
@@ -132,7 +130,6 @@ export default function Navigation({ locale, navItems }: NavigationProps) {
                     fontWeight: 500,
                   }}
                 >
-                  <span>{LOCALE_FLAGS[l]}</span>
                   <span>{LOCALE_NAMES[l]}</span>
                 </Link>
               ))}

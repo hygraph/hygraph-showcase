@@ -17,14 +17,6 @@ export const LOCALE_NAMES: Record<Locale, string> = {
 };
 
 /**
- * Locale flags for UI (emoji)
- */
-export const LOCALE_FLAGS: Record<Locale, string> = {
-  en: "🇬🇧",
-  de: "🇩🇪",
-};
-
-/**
  * Checks if a string is a valid locale
  */
 export function isValidLocale(locale: string): locale is Locale {
