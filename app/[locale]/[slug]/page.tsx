@@ -1,53 +1,76 @@
 /**
- * Dynamic Page - Renders any Page by slug
- * Dynamically renders sections based on __typename
+ * Dynamic Page - Renders any Page by slug via Hygraph Page model.
+ * Listing slugs (blog, careers, collection) also fetch their respective content.
  */
 
-import { cookies } from 'next/headers';
-import { hygraphRequest } from '@/lib/hygraph/client';
+import { cookies } from "next/headers";
+import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetPageDocument,
+  GetFeaturedProductsDocument,
   GetProductsDocument,
+  GetBlogPostsDocument,
+  GetJobsDocument,
   type GetPageQuery,
   type GetPageQueryVariables,
+  type GetFeaturedProductsQuery,
+  type GetFeaturedProductsQueryVariables,
   type GetProductsQuery,
   type GetProductsQueryVariables,
-} from '@/types/hygraph-generated';
-import { type Locale } from '@/lib/utils/locale';
-import HeroSection from '@/components/sections/HeroSection';
-import FeatureGrid from '@/components/sections/FeatureGrid';
-import TestimonialCarousel from '@/components/sections/TestimonialCarousel';
-import CTABlock from '@/components/sections/CTABlock';
-import ProductShowcase from '@/components/sections/ProductShowcase';
-import StatsBar from '@/components/sections/StatsBar';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
+  type GetBlogPostsQuery,
+  type GetJobsQuery,
+} from "@/types/hygraph-generated";
+import { type Locale } from "@/lib/utils/locale";
+import HeroSection from "@/components/sections/HeroSection";
+import FeatureGrid from "@/components/sections/FeatureGrid";
+import EditorialSection from "@/components/sections/EditorialSection";
+import CTABlock from "@/components/sections/CTABlock";
+import ProductShowcase from "@/components/sections/ProductShowcase";
+import StatsBar from "@/components/sections/StatsBar";
+import BlogView from "@/components/pages/BlogView";
+import CareersView from "@/components/pages/CareersView";
+import CollectionView from "@/components/pages/CollectionView";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import type { Post, Job, Bike } from "@/types/hybike";
 
 // Type guards for section types
-type PageSection = GetPageQuery['pages'][0]['sections'][0];
+type PageSection = GetPageQuery["pages"][0]["sections"][0];
 
-function isHeroSection(section: PageSection): section is Extract<PageSection, { __typename?: 'HeroSection' }> {
-  return section.__typename === 'HeroSection';
+function isHeroSection(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "HeroSection" }> {
+  return section.__typename === "HeroSection";
 }
 
-function isFeatureGrid(section: PageSection): section is Extract<PageSection, { __typename?: 'FeatureGrid' }> {
-  return section.__typename === 'FeatureGrid';
+function isFeatureGrid(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "FeatureGrid" }> {
+  return section.__typename === "FeatureGrid";
 }
 
-function isTestimonialCarousel(section: PageSection): section is Extract<PageSection, { __typename?: 'TestimonialCarousel' }> {
-  return section.__typename === 'TestimonialCarousel';
+function isEditorialSection(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "EditorialSection" }> {
+  return section.__typename === "EditorialSection";
 }
 
-function isCTABlock(section: PageSection): section is Extract<PageSection, { __typename?: 'CTABlock' }> {
-  return section.__typename === 'CTABlock';
+function isCTABlock(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "CTABlock" }> {
+  return section.__typename === "CTABlock";
 }
 
-function isProductShowcase(section: PageSection): section is Extract<PageSection, { __typename?: 'ProductShowcase' }> {
-  return section.__typename === 'ProductShowcase';
+function isProductShowcase(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "ProductShowcase" }> {
+  return section.__typename === "ProductShowcase";
 }
 
-function isStatsBar(section: PageSection): section is Extract<PageSection, { __typename?: 'StatsBar' }> {
-  return section.__typename === 'StatsBar';
+function isStatsBar(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "StatsBar" }> {
+  return section.__typename === "StatsBar";
 }
 
 interface PageProps {
@@ -57,7 +80,9 @@ interface PageProps {
   }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
 
   try {
@@ -69,9 +94,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const page = data.pages?.[0];
     if (!page) {
-      return {
-        title: 'Page Not Found',
-      };
+      return { title: "Page Not Found" };
     }
 
     return {
@@ -91,10 +114,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         : undefined,
     };
   } catch (error) {
-    console.error('Failed to generate metadata:', error);
-    return {
-      title: 'Page',
-    };
+    console.error("Failed to generate metadata:", error);
+    return { title: "Page" };
   }
 }
 
@@ -103,71 +124,153 @@ export default async function Page({ params }: PageProps) {
 
   // Read audience from cookie for variant selection
   const cookieStore = await cookies();
-  const audienceCookie = cookieStore.get('hybike-audience')?.value;
-  const segmentName = audienceCookie && ['COMMUTERS', 'SPORTS_ENTHUSIASTS'].includes(audienceCookie)
-    ? audienceCookie === 'COMMUTERS' ? 'Commuters' : 'Sports Enthusiasts'
-    : undefined;
+  const audienceCookie = cookieStore.get("hybike-audience")?.value;
+  const segmentName =
+    audienceCookie &&
+    ["COMMUTERS", "SPORTS_ENTHUSIASTS"].includes(audienceCookie)
+      ? audienceCookie === "COMMUTERS"
+        ? "Commuters"
+        : "Sports Enthusiasts"
+      : undefined;
 
-  // Fetch page content and products in parallel
+  // Fetch page + additional listing data in parallel based on slug
   let data: GetPageQuery | null = null;
-  let productsData: GetProductsQuery | null = null;
+  let featuredProducts: GetFeaturedProductsQuery | null = null;
+  let allProducts: GetProductsQuery | null = null;
+  let blogPosts: GetBlogPostsQuery | null = null;
+  let jobs: GetJobsQuery | null = null;
+
   try {
-    [data, productsData] = await Promise.all([
+    [data, featuredProducts, allProducts, blogPosts, jobs] = await Promise.all([
       hygraphRequest<GetPageQuery>(GetPageDocument, {
         slug,
         locale,
         segmentName,
       } as GetPageQueryVariables),
-      hygraphRequest<GetProductsQuery>(GetProductsDocument, {
-        locale,
-      } as GetProductsQueryVariables),
+      slug !== "collection"
+        ? hygraphRequest<GetFeaturedProductsQuery>(
+            GetFeaturedProductsDocument,
+            { locale } as GetFeaturedProductsQueryVariables
+          )
+        : Promise.resolve(null),
+      slug === "collection"
+        ? hygraphRequest<GetProductsQuery>(GetProductsDocument, {
+            locale,
+          } as GetProductsQueryVariables)
+        : Promise.resolve(null),
+      slug === "blog"
+        ? hygraphRequest<GetBlogPostsQuery>(GetBlogPostsDocument, {})
+        : Promise.resolve(null),
+      slug === "careers"
+        ? hygraphRequest<GetJobsQuery>(GetJobsDocument, {})
+        : Promise.resolve(null),
     ]);
   } catch (error) {
-    console.error('Failed to fetch page:', error);
+    console.error("Failed to fetch page:", error);
     notFound();
   }
 
   const page = data?.pages?.[0];
-  const products = productsData?.products || [];
 
   if (!page) {
     notFound();
   }
 
   // Use variant sections if available, otherwise use base sections
-  const variant = page.variants && page.variants.length > 0 ? page.variants[0] : null;
+  const variant =
+    page.variants && page.variants.length > 0 ? page.variants[0] : null;
   const displaySections = variant?.sections || page.sections;
 
-  return (
-    <div>
-      {displaySections.map((section) => {
-        // Render section based on __typename using type guards
-        // Note: Using 'as any' to handle GraphQL null vs TypeScript undefined mismatch
-        if (isHeroSection(section)) {
-          return <HeroSection key={section.id} section={section as any} locale={locale as Locale} />;
-        }
-        if (isFeatureGrid(section)) {
-          return <FeatureGrid key={section.id} section={section as any} />;
-        }
-        if (isTestimonialCarousel(section)) {
-          return <TestimonialCarousel key={section.id} section={section as any} />;
-        }
-        if (isCTABlock(section)) {
-          return <CTABlock key={section.id} section={section as any} locale={locale as Locale} />;
-        }
-        if (isProductShowcase(section)) {
-          return <ProductShowcase key={section.id} section={section as any} locale={locale as Locale} products={products as any} />;
-        }
-        if (isStatsBar(section)) {
-          return <StatsBar key={section.id} section={section as any} locale={locale as Locale} />;
-        }
+  const products = featuredProducts?.products || [];
 
-        // Unknown section type
-        console.warn(`Unknown section type: ${(section as { __typename: string }).__typename}`);
-        return null;
-      })}
-    </div>
-  );
+  function renderSections() {
+    return displaySections.map((section) => {
+      if (isHeroSection(section)) {
+        return (
+          <HeroSection
+            key={section.id}
+            section={section as any}
+            locale={locale as Locale}
+          />
+        );
+      }
+      if (isFeatureGrid(section)) {
+        return <FeatureGrid key={section.id} section={section as any} />;
+      }
+      if (isEditorialSection(section)) {
+        return (
+          <EditorialSection key={section.id} section={section as any} />
+        );
+      }
+      if (isCTABlock(section)) {
+        return (
+          <CTABlock
+            key={section.id}
+            section={section as any}
+            locale={locale as Locale}
+          />
+        );
+      }
+      if (isProductShowcase(section)) {
+        return (
+          <ProductShowcase
+            key={section.id}
+            section={section as any}
+            locale={locale as Locale}
+            products={products as any}
+          />
+        );
+      }
+      if (isStatsBar(section)) {
+        return (
+          <StatsBar
+            key={section.id}
+            section={section as any}
+            locale={locale as Locale}
+          />
+        );
+      }
+
+      console.warn(
+        `Unknown section type: ${
+          (section as { __typename: string }).__typename
+        }`
+      );
+      return null;
+    });
+  }
+
+  if (slug === "blog") {
+    const posts = (blogPosts?.blogPosts ?? []) as unknown as Post[];
+    return (
+      <div>
+        {renderSections()}
+        <BlogView posts={posts} />
+      </div>
+    );
+  }
+
+  if (slug === "careers") {
+    const jobList = (jobs?.jobs ?? []) as unknown as Job[];
+    return (
+      <div>
+        {renderSections()}
+        <CareersView jobs={jobList} />
+      </div>
+    );
+  }
+
+  if (slug === "collection") {
+    const bikes = (allProducts?.products ?? []) as unknown as Bike[];
+    return (
+      <div>
+        {renderSections()}
+        <CollectionView bikes={bikes} />
+      </div>
+    );
+  }
+
+  return <div>{renderSections()}</div>;
 }
 
-export const revalidate = 300; // Revalidate every 5 minutes
+export const revalidate = 300;

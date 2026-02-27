@@ -1,0 +1,314 @@
+'use client';
+
+import Link from 'next/link';
+import { ArrowLeft, ArrowRight, Check, Minus, Plus } from 'lucide-react';
+import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import type { Bike } from '@/types/hybike';
+import { formatBikeCategory, formatPrice } from '@/types/hybike';
+
+const colorOptions = [
+  { name: 'Matte Black', hex: '#121212' },
+  { name: 'Ivory', hex: '#F9F9F7' },
+  { name: 'Signal Orange', hex: '#FF4F00' },
+];
+
+const sizes = ['S', 'M', 'L', 'XL'];
+
+interface ProductViewProps {
+  bike: Bike;
+  relatedBikes: Bike[];
+}
+
+export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
+  const params = useParams();
+  const locale = (params.locale as string) || 'en';
+  const [selectedColor, setSelectedColor] = useState(0);
+  const [selectedSize, setSelectedSize] = useState(1);
+  const [quantity, setQuantity] = useState(1);
+
+  const category = formatBikeCategory(bike.bikeCategory);
+  const price = bike.externalProduct?.data?.calculated_price;
+
+  const specs = bike.specifications
+    ? Object.entries({
+        Frame: bike.specifications.frame,
+        Weight: bike.specifications.weight,
+        Groupset: bike.specifications.groupset,
+        Wheels: bike.specifications.wheels,
+      }).filter(([, v]) => v)
+    : [];
+
+  return (
+    <div>
+      {/* Breadcrumb */}
+      <section className="border-b border-[#121212]">
+        <div className="flex items-center px-8 md:px-12 lg:px-16 py-4 gap-2">
+          <Link
+            href={`/${locale}/collection`}
+            className="flex items-center gap-2 text-[#6B6B6B] hover:text-[#121212] transition-colors"
+            style={{ fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.1em' }}
+          >
+            <ArrowLeft size={14} />
+            Collection
+          </Link>
+          <span className="text-[#6B6B6B] mx-2">/</span>
+          <span
+            className="text-[#121212]"
+            style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}
+          >
+            {bike.name}
+          </span>
+        </div>
+      </section>
+
+      {/* Product */}
+      <section className="border-b border-[#121212]">
+        <div className="grid grid-cols-1 lg:grid-cols-12">
+          {/* Image */}
+          <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[#121212]">
+            <div className="aspect-[4/3] lg:aspect-auto relative">
+              {bike.imageUrl ? (
+                <img
+                  src={bike.imageUrl}
+                  alt={bike.name}
+                  className="w-full lg:max-h-[calc(100vh-107px)] object-cover"
+                />
+              ) : (
+                <div className="w-full h-full min-h-[400px] bg-[#E8E8E4] flex items-center justify-center">
+                  <span className="text-[#6B6B6B] text-sm uppercase tracking-widest">No image</span>
+                </div>
+              )}
+              {category && (
+                <div className="absolute top-0 left-0 bg-[#FF4F00] text-white px-6 py-3">
+                  <p className="uppercase tracking-[0.15em]" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                    {category}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Details */}
+          <div className="lg:col-span-5 p-8 md:p-12 lg:p-16">
+            {category && (
+              <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                {category}
+              </p>
+            )}
+            <h2 className="mb-2">
+              {bike.name}
+              <span className="text-[#FF4F00]">.</span>
+            </h2>
+            {bike.tagline && (
+              <p className="text-[#6B6B6B] mb-6" style={{ lineHeight: 1.6 }}>
+                {bike.tagline}
+              </p>
+            )}
+            <p
+              className="text-[#121212] mb-8"
+              style={{
+                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                fontWeight: 900,
+                fontFamily: "'Space Grotesk', sans-serif",
+                letterSpacing: '-0.03em',
+              }}
+            >
+              {formatPrice(price)}
+            </p>
+
+            {/* Color */}
+            <div className="mb-6">
+              <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                Color &mdash; {colorOptions[selectedColor].name}
+              </p>
+              <div className="flex gap-3">
+                {colorOptions.map((color, i) => (
+                  <button
+                    key={color.name}
+                    onClick={() => setSelectedColor(i)}
+                    className={`w-10 h-10 border-2 transition-all ${
+                      selectedColor === i ? 'border-[#FF4F00] scale-110' : 'border-[#121212]/20 hover:border-[#121212]'
+                    }`}
+                    style={{ backgroundColor: color.hex }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Size */}
+            <div className="mb-6">
+              <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                Frame Size
+              </p>
+              <div className="flex gap-2">
+                {sizes.map((size, i) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(i)}
+                    className={`w-12 h-12 border transition-colors uppercase tracking-[0.05em] ${
+                      selectedSize === i
+                        ? 'bg-[#121212] text-[#F9F9F7] border-[#121212]'
+                        : 'border-[#121212] hover:bg-[#121212] hover:text-[#F9F9F7]'
+                    }`}
+                    style={{ fontSize: '0.8rem', fontWeight: 700 }}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quantity */}
+            <div className="mb-8">
+              <p className="uppercase tracking-[0.15em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                Quantity
+              </p>
+              <div className="flex items-center border border-[#121212] w-fit">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="w-12 h-12 flex items-center justify-center hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors border-r border-[#121212]"
+                >
+                  <Minus size={14} />
+                </button>
+                <span
+                  className="w-12 h-12 flex items-center justify-center"
+                  style={{ fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  {quantity}
+                </span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="w-12 h-12 flex items-center justify-center hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors border-l border-[#121212]"
+                >
+                  <Plus size={14} />
+                </button>
+              </div>
+            </div>
+
+            {/* Add to Cart */}
+            <button
+              className="w-full bg-[#FF4F00] text-white py-5 uppercase tracking-[0.15em] hover:bg-[#FF4F00]/90 transition-colors flex items-center justify-center gap-3"
+              style={{ fontSize: '0.8rem', fontWeight: 700 }}
+            >
+              Add to Cart
+              <ArrowRight size={16} />
+            </button>
+
+            <div className="mt-4 flex items-center gap-2 text-[#6B6B6B]" style={{ fontSize: '0.8rem' }}>
+              <Check size={14} className="text-[#FF4F00]" />
+              Free shipping within Europe. 30-day returns.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features & Specs */}
+      {(bike.productFeatures?.length || specs.length > 0) && (
+        <section className="border-b border-[#121212]">
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            {/* Features */}
+            {bike.productFeatures && bike.productFeatures.length > 0 && (
+              <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-[#121212]">
+                <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-4" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                  Features
+                </p>
+                {bike.tagline && (
+                  <p className="text-[#121212] mb-6" style={{ lineHeight: 1.7, maxWidth: '540px' }}>
+                    {bike.tagline}
+                  </p>
+                )}
+                <div className="space-y-3">
+                  {bike.productFeatures.map((feature) => (
+                    <div key={feature} className="flex items-center gap-3">
+                      <div className="w-5 h-5 bg-[#FF4F00] flex items-center justify-center flex-shrink-0">
+                        <Check size={12} className="text-white" />
+                      </div>
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Specs */}
+            {specs.length > 0 && (
+              <div className={`${bike.productFeatures?.length ? 'lg:col-span-5' : 'lg:col-span-12'} p-8 md:p-12 lg:p-16`}>
+                <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+                  Specifications
+                </p>
+                <div>
+                  {specs.map(([key, value], i) => (
+                    <div
+                      key={key}
+                      className={`flex justify-between py-4 ${i < specs.length - 1 ? 'border-b border-[#121212]/20' : ''}`}
+                    >
+                      <span className="text-[#6B6B6B] uppercase tracking-[0.1em]" style={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                        {key}
+                      </span>
+                      <span style={{ fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}>{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Related */}
+      {relatedBikes.length > 0 && (
+        <section>
+          <div className="p-8 md:p-12 lg:px-16 border-b border-[#121212]">
+            <p className="uppercase tracking-[0.2em] text-[#6B6B6B] mb-3" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+              You may also like
+            </p>
+            <h3>More from the collection</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {relatedBikes.slice(0, 2).map((related, i) => (
+              <div
+                key={related.id}
+                className={`${i === 0 ? 'md:border-r border-[#121212]' : ''} border-b border-[#121212]`}
+              >
+                <Link
+                  href={`/${locale}/product/${related.slug}`}
+                  className="group block hover:bg-[#121212] transition-colors duration-300"
+                >
+                  <div className="aspect-square overflow-hidden border-b border-[#121212]">
+                    {related.imageUrl ? (
+                      <img
+                        src={related.imageUrl}
+                        alt={related.name}
+                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#E8E8E4]" />
+                    )}
+                  </div>
+                  <div className="p-5 flex items-center justify-between">
+                    <div>
+                      <p
+                        className="uppercase tracking-[0.15em] text-[#6B6B6B] group-hover:text-[#F9F9F7]/50 mb-1 transition-colors"
+                        style={{ fontSize: '0.65rem', fontWeight: 700 }}
+                      >
+                        {formatBikeCategory(related.bikeCategory)}
+                      </p>
+                      <h3 className="group-hover:text-[#F9F9F7] transition-colors">{related.name}</h3>
+                    </div>
+                    <p
+                      className="text-[#121212] group-hover:text-[#FF4F00] transition-colors"
+                      style={{ fontSize: '1rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
+                    >
+                      {formatPrice(related.externalProduct?.data?.calculated_price)}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
+}

@@ -934,6 +934,771 @@ export type BigCommerce_BigCommerceVariant = {
   sku: Scalars['String']['output'];
 };
 
+/** hybikes product category (Road, Urban, Electric, Gravel) */
+export type BikeCategory =
+  | 'ELECTRIC'
+  | 'GRAVEL'
+  | 'ROAD'
+  | 'URBAN';
+
+/** Blog articles with rich text body */
+export type BlogPost = Entity & Node & {
+  __typename?: 'BlogPost';
+  body: RichText;
+  category: Scalars['String']['output'];
+  /** The time the document was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<BlogPost>;
+  /** List of BlogPost versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID']['output'];
+  imageUrl?: Maybe<Scalars['String']['output']>;
+  /** System Locale field */
+  locale: Locale;
+  /** Get the other localizations for this document */
+  localizations: Array<BlogPost>;
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  publishedDate: Scalars['Date']['output'];
+  readTime?: Maybe<Scalars['String']['output']>;
+  scheduledIn: Array<ScheduledOperation>;
+  slug: Scalars['String']['output'];
+  /** System stage field */
+  stage: Stage;
+  summary: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime']['output'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostCreatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  inheritLocale?: Scalars['Boolean']['input'];
+  stages?: Array<Stage>;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostHistoryArgs = {
+  limit?: Scalars['Int']['input'];
+  skip?: Scalars['Int']['input'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostLocalizationsArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  locales?: Array<Locale>;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostPublishedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostPublishedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostUpdatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+/** Blog articles with rich text body */
+export type BlogPostUpdatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type BlogPostConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: BlogPostWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type BlogPostConnection = {
+  __typename?: 'BlogPostConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<BlogPostEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type BlogPostCreateInput = {
+  body: Scalars['RichTextAST']['input'];
+  category: Scalars['String']['input'];
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Inline mutations for managing document localizations excluding the default locale */
+  localizations?: InputMaybe<BlogPostCreateLocalizationsInput>;
+  publishedDate: Scalars['Date']['input'];
+  readTime?: InputMaybe<Scalars['String']['input']>;
+  slug: Scalars['String']['input'];
+  /** summary input for default locale (en) */
+  summary: Scalars['String']['input'];
+  /** title input for default locale (en) */
+  title: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type BlogPostCreateLocalizationDataInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  summary: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type BlogPostCreateLocalizationInput = {
+  /** Localization input */
+  data: BlogPostCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type BlogPostCreateLocalizationsInput = {
+  /** Create localizations for the newly-created document */
+  create?: InputMaybe<Array<BlogPostCreateLocalizationInput>>;
+};
+
+export type BlogPostCreateManyInlineInput = {
+  /** Connect multiple existing BlogPost documents */
+  connect?: InputMaybe<Array<BlogPostWhereUniqueInput>>;
+  /** Create and connect multiple existing BlogPost documents */
+  create?: InputMaybe<Array<BlogPostCreateInput>>;
+};
+
+export type BlogPostCreateOneInlineInput = {
+  /** Connect one existing BlogPost document */
+  connect?: InputMaybe<BlogPostWhereUniqueInput>;
+  /** Create and connect one BlogPost document */
+  create?: InputMaybe<BlogPostCreateInput>;
+};
+
+/** An edge in a connection. */
+export type BlogPostEdge = {
+  __typename?: 'BlogPostEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: BlogPost;
+};
+
+/** Identifies documents */
+export type BlogPostManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<BlogPostWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<BlogPostWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<BlogPostWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  category_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  category_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  category_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  category_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  category_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  category_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  category_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  category_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  category_starts_with?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<BlogPostWhereStageInput>;
+  documentInStages_none?: InputMaybe<BlogPostWhereStageInput>;
+  documentInStages_some?: InputMaybe<BlogPostWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  /** All values greater than the given value. */
+  publishedDate_gt?: InputMaybe<Scalars['Date']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedDate_gte?: InputMaybe<Scalars['Date']['input']>;
+  /** All values that are contained in given list. */
+  publishedDate_in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
+  /** All values less than the given value. */
+  publishedDate_lt?: InputMaybe<Scalars['Date']['input']>;
+  /** All values less than or equal the given value. */
+  publishedDate_lte?: InputMaybe<Scalars['Date']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedDate_not?: InputMaybe<Scalars['Date']['input']>;
+  /** All values that are not contained in given list. */
+  publishedDate_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
+  readTime?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  readTime_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  readTime_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  readTime_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  readTime_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  readTime_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  readTime_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  readTime_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  readTime_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  readTime_starts_with?: InputMaybe<Scalars['String']['input']>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export type BlogPostOrderByInput =
+  | 'category_ASC'
+  | 'category_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'imageUrl_ASC'
+  | 'imageUrl_DESC'
+  | 'publishedAt_ASC'
+  | 'publishedAt_DESC'
+  | 'publishedDate_ASC'
+  | 'publishedDate_DESC'
+  | 'readTime_ASC'
+  | 'readTime_DESC'
+  | 'slug_ASC'
+  | 'slug_DESC'
+  | 'summary_ASC'
+  | 'summary_DESC'
+  | 'title_ASC'
+  | 'title_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
+
+export type BlogPostUpdateInput = {
+  body?: InputMaybe<Scalars['RichTextAST']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Manage document localizations */
+  localizations?: InputMaybe<BlogPostUpdateLocalizationsInput>;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  readTime?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** summary input for default locale (en) */
+  summary?: InputMaybe<Scalars['String']['input']>;
+  /** title input for default locale (en) */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BlogPostUpdateLocalizationDataInput = {
+  summary?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BlogPostUpdateLocalizationInput = {
+  data: BlogPostUpdateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type BlogPostUpdateLocalizationsInput = {
+  /** Localizations to create */
+  create?: InputMaybe<Array<BlogPostCreateLocalizationInput>>;
+  /** Localizations to delete */
+  delete?: InputMaybe<Array<Locale>>;
+  /** Localizations to update */
+  update?: InputMaybe<Array<BlogPostUpdateLocalizationInput>>;
+  upsert?: InputMaybe<Array<BlogPostUpsertLocalizationInput>>;
+};
+
+export type BlogPostUpdateManyInlineInput = {
+  /** Connect multiple existing BlogPost documents */
+  connect?: InputMaybe<Array<BlogPostConnectInput>>;
+  /** Create and connect multiple BlogPost documents */
+  create?: InputMaybe<Array<BlogPostCreateInput>>;
+  /** Delete multiple BlogPost documents */
+  delete?: InputMaybe<Array<BlogPostWhereUniqueInput>>;
+  /** Disconnect multiple BlogPost documents */
+  disconnect?: InputMaybe<Array<BlogPostWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing BlogPost documents */
+  set?: InputMaybe<Array<BlogPostWhereUniqueInput>>;
+  /** Update multiple BlogPost documents */
+  update?: InputMaybe<Array<BlogPostUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple BlogPost documents */
+  upsert?: InputMaybe<Array<BlogPostUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type BlogPostUpdateManyInput = {
+  body?: InputMaybe<Scalars['RichTextAST']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Optional updates to localizations */
+  localizations?: InputMaybe<BlogPostUpdateManyLocalizationsInput>;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  readTime?: InputMaybe<Scalars['String']['input']>;
+  /** summary input for default locale (en) */
+  summary?: InputMaybe<Scalars['String']['input']>;
+  /** title input for default locale (en) */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BlogPostUpdateManyLocalizationDataInput = {
+  summary?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BlogPostUpdateManyLocalizationInput = {
+  data: BlogPostUpdateManyLocalizationDataInput;
+  locale: Locale;
+};
+
+export type BlogPostUpdateManyLocalizationsInput = {
+  /** Localizations to update */
+  update?: InputMaybe<Array<BlogPostUpdateManyLocalizationInput>>;
+};
+
+export type BlogPostUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: BlogPostUpdateManyInput;
+  /** Document search */
+  where: BlogPostWhereInput;
+};
+
+export type BlogPostUpdateOneInlineInput = {
+  /** Connect existing BlogPost document */
+  connect?: InputMaybe<BlogPostWhereUniqueInput>;
+  /** Create and connect one BlogPost document */
+  create?: InputMaybe<BlogPostCreateInput>;
+  /** Delete currently connected BlogPost document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Disconnect currently connected BlogPost document */
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single BlogPost document */
+  update?: InputMaybe<BlogPostUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single BlogPost document */
+  upsert?: InputMaybe<BlogPostUpsertWithNestedWhereUniqueInput>;
+};
+
+export type BlogPostUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: BlogPostUpdateInput;
+  /** Unique document search */
+  where: BlogPostWhereUniqueInput;
+};
+
+export type BlogPostUpsertInput = {
+  /** Create document if it didn't exist */
+  create: BlogPostCreateInput;
+  /** Update document if it exists */
+  update: BlogPostUpdateInput;
+};
+
+export type BlogPostUpsertLocalizationInput = {
+  create: BlogPostCreateLocalizationDataInput;
+  locale: Locale;
+  update: BlogPostUpdateLocalizationDataInput;
+};
+
+export type BlogPostUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: BlogPostUpsertInput;
+  /** Unique document search */
+  where: BlogPostWhereUniqueInput;
+};
+
+/** This contains a set of filters that can be used to compare values internally */
+export type BlogPostWhereComparatorInput = {
+  /** This field can be used to request to check if the entry is outdated by internal comparison */
+  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Identifies documents */
+export type BlogPostWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<BlogPostWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<BlogPostWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<BlogPostWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  category_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  category_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  category_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  category_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  category_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  category_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  category_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  category_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  category_starts_with?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<BlogPostWhereStageInput>;
+  documentInStages_none?: InputMaybe<BlogPostWhereStageInput>;
+  documentInStages_some?: InputMaybe<BlogPostWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  /** All values greater than the given value. */
+  publishedDate_gt?: InputMaybe<Scalars['Date']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedDate_gte?: InputMaybe<Scalars['Date']['input']>;
+  /** All values that are contained in given list. */
+  publishedDate_in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
+  /** All values less than the given value. */
+  publishedDate_lt?: InputMaybe<Scalars['Date']['input']>;
+  /** All values less than or equal the given value. */
+  publishedDate_lte?: InputMaybe<Scalars['Date']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedDate_not?: InputMaybe<Scalars['Date']['input']>;
+  /** All values that are not contained in given list. */
+  publishedDate_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
+  readTime?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  readTime_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  readTime_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  readTime_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  readTime_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  readTime_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  readTime_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  readTime_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  readTime_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  readTime_starts_with?: InputMaybe<Scalars['String']['input']>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  summary_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  summary_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  summary_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  summary_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  summary_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  summary_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  summary_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  summary_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  summary_starts_with?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
+export type BlogPostWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<BlogPostWhereStageInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<BlogPostWhereStageInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<BlogPostWhereStageInput>>;
+  /** This field contains fields which can be set as true or false to specify an internal comparison */
+  compareWithParent?: InputMaybe<BlogPostWhereComparatorInput>;
+  /** Specify the stage to compare with */
+  stage?: InputMaybe<Stage>;
+};
+
+/** References BlogPost record uniquely */
+export type BlogPostWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Reusable button/link configuration */
 export type Button = Entity & {
   __typename?: 'Button';
@@ -2020,6 +2785,826 @@ export type DocumentVersion = {
   stage: Stage;
 };
 
+/** Split-layout editorial section: image + text + optional spec grid */
+export type EditorialSection = Entity & {
+  __typename?: 'EditorialSection';
+  /** Auto-advance carousel */
+  autoplay: Scalars['Boolean']['output'];
+  /** Seconds to display each testimonial (if autoplay enabled) */
+  autoplayDuration?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<RichText>;
+  /** Plain text body content for the editorial section */
+  bodyText?: Maybe<Scalars['String']['output']>;
+  ctaHref?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  /** Only show testimonials where targetAudience matches current audience */
+  filterByAudience: Scalars['Boolean']['output'];
+  headline?: Maybe<Scalars['String']['output']>;
+  /** The unique identifier */
+  id: Scalars['ID']['output'];
+  imageRight?: Maybe<Scalars['Boolean']['output']>;
+  imageUrl?: Maybe<Scalars['String']['output']>;
+  /** System Locale field */
+  locale: Locale;
+  /** Get the other localizations for this document */
+  localizations: Array<EditorialSection>;
+  specItemsJson?: Maybe<Scalars['Json']['output']>;
+  /** System stage field */
+  stage: Stage;
+  /** Select testimonials to show. Use variants for audience-specific testimonials. */
+  testimonials: Array<Testimonial>;
+  /** Section title (optional) */
+  title?: Maybe<Scalars['String']['output']>;
+  /** System updatedAt field */
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+/** Split-layout editorial section: image + text + optional spec grid */
+export type EditorialSectionLocalizationsArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  locales?: Array<Locale>;
+};
+
+
+/** Split-layout editorial section: image + text + optional spec grid */
+export type EditorialSectionTestimonialsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<TestimonialOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TestimonialWhereInput>;
+};
+
+
+/** Split-layout editorial section: image + text + optional spec grid */
+export type EditorialSectionUpdatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+export type EditorialSectionConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: EditorialSectionWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type EditorialSectionConnection = {
+  __typename?: 'EditorialSectionConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<EditorialSectionEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type EditorialSectionCreateInput = {
+  autoplay: Scalars['Boolean']['input'];
+  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['RichTextAST']['input']>;
+  bodyText?: InputMaybe<Scalars['String']['input']>;
+  ctaHref?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  filterByAudience: Scalars['Boolean']['input'];
+  headline?: InputMaybe<Scalars['String']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Inline mutations for managing document localizations excluding the default locale */
+  localizations?: InputMaybe<EditorialSectionCreateLocalizationsInput>;
+  specItemsJson?: InputMaybe<Scalars['Json']['input']>;
+  testimonials?: InputMaybe<TestimonialCreateManyInlineInput>;
+  /** title input for default locale (en) */
+  title?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type EditorialSectionCreateLocalizationDataInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type EditorialSectionCreateLocalizationInput = {
+  /** Localization input */
+  data: EditorialSectionCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type EditorialSectionCreateLocalizationsInput = {
+  /** Create localizations for the newly-created document */
+  create?: InputMaybe<Array<EditorialSectionCreateLocalizationInput>>;
+};
+
+export type EditorialSectionCreateManyInlineInput = {
+  /** Create and connect multiple existing EditorialSection documents */
+  create?: InputMaybe<Array<EditorialSectionCreateInput>>;
+};
+
+export type EditorialSectionCreateOneInlineInput = {
+  /** Create and connect one EditorialSection document */
+  create?: InputMaybe<EditorialSectionCreateInput>;
+};
+
+export type EditorialSectionCreateWithPositionInput = {
+  /** Document to create */
+  data: EditorialSectionCreateInput;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+};
+
+/** An edge in a connection. */
+export type EditorialSectionEdge = {
+  __typename?: 'EditorialSectionEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: EditorialSection;
+};
+
+/** Identifies documents */
+export type EditorialSectionManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<EditorialSectionWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<EditorialSectionWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<EditorialSectionWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
+  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  autoplayDuration_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  autoplayDuration_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  autoplayDuration_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  autoplayDuration_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  autoplayDuration_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  autoplayDuration_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  autoplayDuration_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  autoplay_not?: InputMaybe<Scalars['Boolean']['input']>;
+  bodyText?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  bodyText_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  bodyText_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  bodyText_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  bodyText_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  bodyText_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  bodyText_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  bodyText_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  bodyText_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  bodyText_starts_with?: InputMaybe<Scalars['String']['input']>;
+  ctaHref?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  ctaHref_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  ctaHref_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  ctaHref_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  ctaHref_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  ctaHref_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  ctaHref_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  ctaHref_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  ctaHref_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  ctaHref_starts_with?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  ctaLabel_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  ctaLabel_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  ctaLabel_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  ctaLabel_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  ctaLabel_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  ctaLabel_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  ctaLabel_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  ctaLabel_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  ctaLabel_starts_with?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  eyebrow_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  eyebrow_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  eyebrow_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  eyebrow_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  eyebrow_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  eyebrow_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  eyebrow_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  eyebrow_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  eyebrow_starts_with?: InputMaybe<Scalars['String']['input']>;
+  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  filterByAudience_not?: InputMaybe<Scalars['Boolean']['input']>;
+  headline?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  headline_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  headline_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  headline_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  headline_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  headline_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  headline_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  headline_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  headline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  headline_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given json path. */
+  specItemsJson_json_path_exists?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Recursively tries to find the provided JSON scalar value inside the field.
+   * It does use an exact match when comparing values.
+   * If you pass `null` as value the filter will be ignored.
+   * Note: This filter fails if you try to look for a non scalar JSON value!
+   */
+  specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
+  testimonials_every?: InputMaybe<TestimonialWhereInput>;
+  testimonials_none?: InputMaybe<TestimonialWhereInput>;
+  testimonials_some?: InputMaybe<TestimonialWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+};
+
+export type EditorialSectionOrderByInput =
+  | 'autoplayDuration_ASC'
+  | 'autoplayDuration_DESC'
+  | 'autoplay_ASC'
+  | 'autoplay_DESC'
+  | 'bodyText_ASC'
+  | 'bodyText_DESC'
+  | 'ctaHref_ASC'
+  | 'ctaHref_DESC'
+  | 'ctaLabel_ASC'
+  | 'ctaLabel_DESC'
+  | 'eyebrow_ASC'
+  | 'eyebrow_DESC'
+  | 'filterByAudience_ASC'
+  | 'filterByAudience_DESC'
+  | 'headline_ASC'
+  | 'headline_DESC'
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'imageRight_ASC'
+  | 'imageRight_DESC'
+  | 'imageUrl_ASC'
+  | 'imageUrl_DESC'
+  | 'title_ASC'
+  | 'title_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
+
+export type EditorialSectionParent = Page | PageVariant;
+
+export type EditorialSectionParentConnectInput = {
+  Page?: InputMaybe<PageConnectInput>;
+  PageVariant?: InputMaybe<PageVariantConnectInput>;
+};
+
+export type EditorialSectionParentCreateInput = {
+  Page?: InputMaybe<PageCreateInput>;
+  PageVariant?: InputMaybe<PageVariantCreateInput>;
+};
+
+export type EditorialSectionParentCreateManyInlineInput = {
+  /** Connect multiple existing EditorialSectionParent documents */
+  connect?: InputMaybe<Array<EditorialSectionParentWhereUniqueInput>>;
+  /** Create and connect multiple existing EditorialSectionParent documents */
+  create?: InputMaybe<Array<EditorialSectionParentCreateInput>>;
+};
+
+export type EditorialSectionParentCreateOneInlineInput = {
+  /** Connect one existing EditorialSectionParent document */
+  connect?: InputMaybe<EditorialSectionParentWhereUniqueInput>;
+  /** Create and connect one EditorialSectionParent document */
+  create?: InputMaybe<EditorialSectionParentCreateInput>;
+};
+
+export type EditorialSectionParentUpdateInput = {
+  Page?: InputMaybe<PageUpdateInput>;
+  PageVariant?: InputMaybe<PageVariantUpdateInput>;
+};
+
+export type EditorialSectionParentUpdateManyInlineInput = {
+  /** Connect multiple existing EditorialSectionParent documents */
+  connect?: InputMaybe<Array<EditorialSectionParentConnectInput>>;
+  /** Create and connect multiple EditorialSectionParent documents */
+  create?: InputMaybe<Array<EditorialSectionParentCreateInput>>;
+  /** Delete multiple EditorialSectionParent documents */
+  delete?: InputMaybe<Array<EditorialSectionParentWhereUniqueInput>>;
+  /** Disconnect multiple EditorialSectionParent documents */
+  disconnect?: InputMaybe<Array<EditorialSectionParentWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing EditorialSectionParent documents */
+  set?: InputMaybe<Array<EditorialSectionParentWhereUniqueInput>>;
+  /** Update multiple EditorialSectionParent documents */
+  update?: InputMaybe<Array<EditorialSectionParentUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple EditorialSectionParent documents */
+  upsert?: InputMaybe<Array<EditorialSectionParentUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type EditorialSectionParentUpdateManyWithNestedWhereInput = {
+  Page?: InputMaybe<PageUpdateManyWithNestedWhereInput>;
+  PageVariant?: InputMaybe<PageVariantUpdateManyWithNestedWhereInput>;
+};
+
+export type EditorialSectionParentUpdateOneInlineInput = {
+  /** Connect existing EditorialSectionParent document */
+  connect?: InputMaybe<EditorialSectionParentWhereUniqueInput>;
+  /** Create and connect one EditorialSectionParent document */
+  create?: InputMaybe<EditorialSectionParentCreateInput>;
+  /** Delete currently connected EditorialSectionParent document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Disconnect currently connected EditorialSectionParent document */
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single EditorialSectionParent document */
+  update?: InputMaybe<EditorialSectionParentUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single EditorialSectionParent document */
+  upsert?: InputMaybe<EditorialSectionParentUpsertWithNestedWhereUniqueInput>;
+};
+
+export type EditorialSectionParentUpdateWithNestedWhereUniqueInput = {
+  Page?: InputMaybe<PageUpdateWithNestedWhereUniqueInput>;
+  PageVariant?: InputMaybe<PageVariantUpdateWithNestedWhereUniqueInput>;
+};
+
+export type EditorialSectionParentUpsertWithNestedWhereUniqueInput = {
+  Page?: InputMaybe<PageUpsertWithNestedWhereUniqueInput>;
+  PageVariant?: InputMaybe<PageVariantUpsertWithNestedWhereUniqueInput>;
+};
+
+export type EditorialSectionParentWhereInput = {
+  Page?: InputMaybe<PageWhereInput>;
+  PageVariant?: InputMaybe<PageVariantWhereInput>;
+};
+
+export type EditorialSectionParentWhereUniqueInput = {
+  Page?: InputMaybe<PageWhereUniqueInput>;
+  PageVariant?: InputMaybe<PageVariantWhereUniqueInput>;
+};
+
+export type EditorialSectionUpdateInput = {
+  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
+  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['RichTextAST']['input']>;
+  bodyText?: InputMaybe<Scalars['String']['input']>;
+  ctaHref?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
+  headline?: InputMaybe<Scalars['String']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Manage document localizations */
+  localizations?: InputMaybe<EditorialSectionUpdateLocalizationsInput>;
+  specItemsJson?: InputMaybe<Scalars['Json']['input']>;
+  testimonials?: InputMaybe<TestimonialUpdateManyInlineInput>;
+  /** title input for default locale (en) */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type EditorialSectionUpdateLocalizationDataInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type EditorialSectionUpdateLocalizationInput = {
+  data: EditorialSectionUpdateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type EditorialSectionUpdateLocalizationsInput = {
+  /** Localizations to create */
+  create?: InputMaybe<Array<EditorialSectionCreateLocalizationInput>>;
+  /** Localizations to delete */
+  delete?: InputMaybe<Array<Locale>>;
+  /** Localizations to update */
+  update?: InputMaybe<Array<EditorialSectionUpdateLocalizationInput>>;
+  upsert?: InputMaybe<Array<EditorialSectionUpsertLocalizationInput>>;
+};
+
+export type EditorialSectionUpdateManyInlineInput = {
+  /** Create and connect multiple EditorialSection component instances */
+  create?: InputMaybe<Array<EditorialSectionCreateWithPositionInput>>;
+  /** Delete multiple EditorialSection documents */
+  delete?: InputMaybe<Array<EditorialSectionWhereUniqueInput>>;
+  /** Update multiple EditorialSection component instances */
+  update?: InputMaybe<Array<EditorialSectionUpdateWithNestedWhereUniqueAndPositionInput>>;
+  /** Upsert multiple EditorialSection component instances */
+  upsert?: InputMaybe<Array<EditorialSectionUpsertWithNestedWhereUniqueAndPositionInput>>;
+};
+
+export type EditorialSectionUpdateManyInput = {
+  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
+  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['RichTextAST']['input']>;
+  bodyText?: InputMaybe<Scalars['String']['input']>;
+  ctaHref?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
+  headline?: InputMaybe<Scalars['String']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Optional updates to localizations */
+  localizations?: InputMaybe<EditorialSectionUpdateManyLocalizationsInput>;
+  specItemsJson?: InputMaybe<Scalars['Json']['input']>;
+  /** title input for default locale (en) */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type EditorialSectionUpdateManyLocalizationDataInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type EditorialSectionUpdateManyLocalizationInput = {
+  data: EditorialSectionUpdateManyLocalizationDataInput;
+  locale: Locale;
+};
+
+export type EditorialSectionUpdateManyLocalizationsInput = {
+  /** Localizations to update */
+  update?: InputMaybe<Array<EditorialSectionUpdateManyLocalizationInput>>;
+};
+
+export type EditorialSectionUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: EditorialSectionUpdateManyInput;
+  /** Document search */
+  where: EditorialSectionWhereInput;
+};
+
+export type EditorialSectionUpdateOneInlineInput = {
+  /** Create and connect one EditorialSection document */
+  create?: InputMaybe<EditorialSectionCreateInput>;
+  /** Delete currently connected EditorialSection document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single EditorialSection document */
+  update?: InputMaybe<EditorialSectionUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single EditorialSection document */
+  upsert?: InputMaybe<EditorialSectionUpsertWithNestedWhereUniqueInput>;
+};
+
+export type EditorialSectionUpdateWithNestedWhereUniqueAndPositionInput = {
+  /** Document to update */
+  data?: InputMaybe<EditorialSectionUpdateInput>;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Unique component instance search */
+  where: EditorialSectionWhereUniqueInput;
+};
+
+export type EditorialSectionUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: EditorialSectionUpdateInput;
+  /** Unique document search */
+  where: EditorialSectionWhereUniqueInput;
+};
+
+export type EditorialSectionUpsertInput = {
+  /** Create document if it didn't exist */
+  create: EditorialSectionCreateInput;
+  /** Update document if it exists */
+  update: EditorialSectionUpdateInput;
+};
+
+export type EditorialSectionUpsertLocalizationInput = {
+  create: EditorialSectionCreateLocalizationDataInput;
+  locale: Locale;
+  update: EditorialSectionUpdateLocalizationDataInput;
+};
+
+export type EditorialSectionUpsertWithNestedWhereUniqueAndPositionInput = {
+  /** Document to upsert */
+  data?: InputMaybe<EditorialSectionUpsertInput>;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Unique component instance search */
+  where: EditorialSectionWhereUniqueInput;
+};
+
+export type EditorialSectionUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: EditorialSectionUpsertInput;
+  /** Unique document search */
+  where: EditorialSectionWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type EditorialSectionWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<EditorialSectionWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<EditorialSectionWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<EditorialSectionWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
+  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  autoplayDuration_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  autoplayDuration_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  autoplayDuration_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  autoplayDuration_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  autoplayDuration_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  autoplayDuration_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  autoplayDuration_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  autoplay_not?: InputMaybe<Scalars['Boolean']['input']>;
+  bodyText?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  bodyText_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  bodyText_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  bodyText_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  bodyText_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  bodyText_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  bodyText_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  bodyText_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  bodyText_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  bodyText_starts_with?: InputMaybe<Scalars['String']['input']>;
+  ctaHref?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  ctaHref_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  ctaHref_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  ctaHref_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  ctaHref_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  ctaHref_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  ctaHref_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  ctaHref_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  ctaHref_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  ctaHref_starts_with?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  ctaLabel_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  ctaLabel_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  ctaLabel_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  ctaLabel_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  ctaLabel_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  ctaLabel_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  ctaLabel_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  ctaLabel_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  ctaLabel_starts_with?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  eyebrow_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  eyebrow_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  eyebrow_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  eyebrow_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  eyebrow_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  eyebrow_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  eyebrow_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  eyebrow_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  eyebrow_starts_with?: InputMaybe<Scalars['String']['input']>;
+  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  filterByAudience_not?: InputMaybe<Scalars['Boolean']['input']>;
+  headline?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  headline_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  headline_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  headline_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  headline_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  headline_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  headline_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  headline_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  headline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  headline_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given json path. */
+  specItemsJson_json_path_exists?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Recursively tries to find the provided JSON scalar value inside the field.
+   * It does use an exact match when comparing values.
+   * If you pass `null` as value the filter will be ignored.
+   * Note: This filter fails if you try to look for a non scalar JSON value!
+   */
+  specItemsJson_value_recursive?: InputMaybe<Scalars['Json']['input']>;
+  testimonials_every?: InputMaybe<TestimonialWhereInput>;
+  testimonials_none?: InputMaybe<TestimonialWhereInput>;
+  testimonials_some?: InputMaybe<TestimonialWhereInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+};
+
+/** References EditorialSection record uniquely */
+export type EditorialSectionWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 /** An object with an ID */
 export type Entity = {
   /** The id of the object. */
@@ -2032,16 +3617,22 @@ export type Entity = {
 export type EntityTypeName =
   /** Asset system model */
   | 'Asset'
+  /** Blog articles with rich text body */
+  | 'BlogPost'
   /** Reusable button/link configuration */
   | 'Button'
   /** Conversion-focused section with headline and buttons */
   | 'CTABlock'
+  /** Split-layout editorial section: image + text + optional spec grid */
+  | 'EditorialSection'
   /** Reusable product feature (e.g., "Carbon Frame", "Weather Protection") */
   | 'Feature'
   /** Grid display of product features */
   | 'FeatureGrid'
   /** Hero banner with headline, media, and CTAs */
   | 'HeroSection'
+  /** Job listings for the Careers page */
+  | 'Job'
   /** Site navigation structure (e.g., main-nav, footer-nav, mobile-nav) */
   | 'Navigation'
   /** Individual navigation link (nestable for dropdown menus) */
@@ -2078,8 +3669,6 @@ export type EntityTypeName =
   | 'StatsBar'
   /** Customer review/testimonial */
   | 'Testimonial'
-  /** Carousel of customer testimonials */
-  | 'TestimonialCarousel'
   /** Customer review/testimonial */
   | 'TestimonialVariant'
   /** User system model */
@@ -2355,7 +3944,7 @@ export type FeatureGridConnection = {
 };
 
 export type FeatureGridCreateInput = {
-  features: FeatureCreateManyInlineInput;
+  features?: InputMaybe<FeatureCreateManyInlineInput>;
   layout: DisplayLayout;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<FeatureGridCreateLocalizationsInput>;
@@ -3135,6 +4724,8 @@ export type HeroSection = Entity & {
   headline: Scalars['String']['output'];
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  /** Local image path for split-layout hero (e.g. /img/hero_lifePerson.png) */
+  imageUrl?: Maybe<Scalars['String']['output']>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -3211,6 +4802,7 @@ export type HeroSectionCreateInput = {
   backgroundMedia?: InputMaybe<AssetCreateOneInlineInput>;
   /** headline input for default locale (en) */
   headline: Scalars['String']['input'];
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<HeroSectionCreateLocalizationsInput>;
   primaryCTA?: InputMaybe<ButtonCreateOneInlineInput>;
@@ -3295,6 +4887,25 @@ export type HeroSectionManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
   primaryCTA?: InputMaybe<ButtonWhereInput>;
   secondaryCTA?: InputMaybe<ButtonWhereInput>;
   textAlignment?: InputMaybe<TextAlignment>;
@@ -3333,6 +4944,8 @@ export type HeroSectionOrderByInput =
   | 'headline_DESC'
   | 'id_ASC'
   | 'id_DESC'
+  | 'imageUrl_ASC'
+  | 'imageUrl_DESC'
   | 'subheadline_ASC'
   | 'subheadline_DESC'
   | 'textAlignment_ASC'
@@ -3434,6 +5047,7 @@ export type HeroSectionUpdateInput = {
   backgroundMedia?: InputMaybe<AssetUpdateOneInlineInput>;
   /** headline input for default locale (en) */
   headline?: InputMaybe<Scalars['String']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<HeroSectionUpdateLocalizationsInput>;
   primaryCTA?: InputMaybe<ButtonUpdateOneInlineInput>;
@@ -3478,6 +5092,7 @@ export type HeroSectionUpdateManyInlineInput = {
 export type HeroSectionUpdateManyInput = {
   /** headline input for default locale (en) */
   headline?: InputMaybe<Scalars['String']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<HeroSectionUpdateManyLocalizationsInput>;
   /** subheadline input for default locale (en) */
@@ -3613,6 +5228,25 @@ export type HeroSectionWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
   primaryCTA?: InputMaybe<ButtonWhereInput>;
   secondaryCTA?: InputMaybe<ButtonWhereInput>;
   subheadline?: InputMaybe<Scalars['String']['input']>;
@@ -3757,6 +5391,744 @@ export type ImageTransformationInput = {
   sharpen?: InputMaybe<ImageSharpenInput>;
 };
 
+/** Job listings for the Careers page */
+export type Job = Entity & Node & {
+  __typename?: 'Job';
+  /** The time the document was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  department: Scalars['String']['output'];
+  description: RichText;
+  /** Get the document in other stages */
+  documentInStages: Array<Job>;
+  /** List of Job versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID']['output'];
+  jobType: Scalars['String']['output'];
+  location: Scalars['String']['output'];
+  niceToHave: Array<Scalars['String']['output']>;
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  requirements: Array<Scalars['String']['output']>;
+  responsibilities: Array<Scalars['String']['output']>;
+  scheduledIn: Array<ScheduledOperation>;
+  slug: Scalars['String']['output'];
+  /** System stage field */
+  stage: Stage;
+  summary: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime']['output'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+/** Job listings for the Careers page */
+export type JobCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Job listings for the Careers page */
+export type JobDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  inheritLocale?: Scalars['Boolean']['input'];
+  stages?: Array<Stage>;
+};
+
+
+/** Job listings for the Careers page */
+export type JobHistoryArgs = {
+  limit?: Scalars['Int']['input'];
+  skip?: Scalars['Int']['input'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+/** Job listings for the Careers page */
+export type JobPublishedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Job listings for the Careers page */
+export type JobScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+/** Job listings for the Careers page */
+export type JobUpdatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type JobConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: JobWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type JobConnection = {
+  __typename?: 'JobConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<JobEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type JobCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  department: Scalars['String']['input'];
+  description: Scalars['RichTextAST']['input'];
+  jobType: Scalars['String']['input'];
+  location: Scalars['String']['input'];
+  niceToHave?: InputMaybe<Array<Scalars['String']['input']>>;
+  requirements?: InputMaybe<Array<Scalars['String']['input']>>;
+  responsibilities?: InputMaybe<Array<Scalars['String']['input']>>;
+  slug: Scalars['String']['input'];
+  summary: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type JobCreateManyInlineInput = {
+  /** Connect multiple existing Job documents */
+  connect?: InputMaybe<Array<JobWhereUniqueInput>>;
+  /** Create and connect multiple existing Job documents */
+  create?: InputMaybe<Array<JobCreateInput>>;
+};
+
+export type JobCreateOneInlineInput = {
+  /** Connect one existing Job document */
+  connect?: InputMaybe<JobWhereUniqueInput>;
+  /** Create and connect one Job document */
+  create?: InputMaybe<JobCreateInput>;
+};
+
+/** An edge in a connection. */
+export type JobEdge = {
+  __typename?: 'JobEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Job;
+};
+
+/** Identifies documents */
+export type JobManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<JobWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<JobWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<JobWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  department?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  department_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  department_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  department_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  department_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  department_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  department_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  department_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  department_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  department_starts_with?: InputMaybe<Scalars['String']['input']>;
+  documentInStages_every?: InputMaybe<JobWhereStageInput>;
+  documentInStages_none?: InputMaybe<JobWhereStageInput>;
+  documentInStages_some?: InputMaybe<JobWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  jobType?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  jobType_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  jobType_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  jobType_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  jobType_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  jobType_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  jobType_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  jobType_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  jobType_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  jobType_starts_with?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  location_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  location_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  location_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  location_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  location_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  location_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  location_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  location_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  location_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  niceToHave?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  niceToHave_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  niceToHave_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  niceToHave_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  niceToHave_not?: InputMaybe<Array<Scalars['String']['input']>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  requirements?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  requirements_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  requirements_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  requirements_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  requirements_not?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  responsibilities?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  responsibilities_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  responsibilities_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  responsibilities_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  responsibilities_not?: InputMaybe<Array<Scalars['String']['input']>>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  summary_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  summary_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  summary_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  summary_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  summary_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  summary_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  summary_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  summary_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  summary_starts_with?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export type JobOrderByInput =
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'department_ASC'
+  | 'department_DESC'
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'jobType_ASC'
+  | 'jobType_DESC'
+  | 'location_ASC'
+  | 'location_DESC'
+  | 'niceToHave_ASC'
+  | 'niceToHave_DESC'
+  | 'publishedAt_ASC'
+  | 'publishedAt_DESC'
+  | 'requirements_ASC'
+  | 'requirements_DESC'
+  | 'responsibilities_ASC'
+  | 'responsibilities_DESC'
+  | 'slug_ASC'
+  | 'slug_DESC'
+  | 'summary_ASC'
+  | 'summary_DESC'
+  | 'title_ASC'
+  | 'title_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
+
+export type JobUpdateInput = {
+  department?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['RichTextAST']['input']>;
+  jobType?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  niceToHave?: InputMaybe<Array<Scalars['String']['input']>>;
+  requirements?: InputMaybe<Array<Scalars['String']['input']>>;
+  responsibilities?: InputMaybe<Array<Scalars['String']['input']>>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type JobUpdateManyInlineInput = {
+  /** Connect multiple existing Job documents */
+  connect?: InputMaybe<Array<JobConnectInput>>;
+  /** Create and connect multiple Job documents */
+  create?: InputMaybe<Array<JobCreateInput>>;
+  /** Delete multiple Job documents */
+  delete?: InputMaybe<Array<JobWhereUniqueInput>>;
+  /** Disconnect multiple Job documents */
+  disconnect?: InputMaybe<Array<JobWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing Job documents */
+  set?: InputMaybe<Array<JobWhereUniqueInput>>;
+  /** Update multiple Job documents */
+  update?: InputMaybe<Array<JobUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple Job documents */
+  upsert?: InputMaybe<Array<JobUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type JobUpdateManyInput = {
+  department?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['RichTextAST']['input']>;
+  jobType?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  niceToHave?: InputMaybe<Array<Scalars['String']['input']>>;
+  requirements?: InputMaybe<Array<Scalars['String']['input']>>;
+  responsibilities?: InputMaybe<Array<Scalars['String']['input']>>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type JobUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: JobUpdateManyInput;
+  /** Document search */
+  where: JobWhereInput;
+};
+
+export type JobUpdateOneInlineInput = {
+  /** Connect existing Job document */
+  connect?: InputMaybe<JobWhereUniqueInput>;
+  /** Create and connect one Job document */
+  create?: InputMaybe<JobCreateInput>;
+  /** Delete currently connected Job document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Disconnect currently connected Job document */
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single Job document */
+  update?: InputMaybe<JobUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single Job document */
+  upsert?: InputMaybe<JobUpsertWithNestedWhereUniqueInput>;
+};
+
+export type JobUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: JobUpdateInput;
+  /** Unique document search */
+  where: JobWhereUniqueInput;
+};
+
+export type JobUpsertInput = {
+  /** Create document if it didn't exist */
+  create: JobCreateInput;
+  /** Update document if it exists */
+  update: JobUpdateInput;
+};
+
+export type JobUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: JobUpsertInput;
+  /** Unique document search */
+  where: JobWhereUniqueInput;
+};
+
+/** This contains a set of filters that can be used to compare values internally */
+export type JobWhereComparatorInput = {
+  /** This field can be used to request to check if the entry is outdated by internal comparison */
+  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Identifies documents */
+export type JobWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<JobWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<JobWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<JobWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  department?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  department_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  department_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  department_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  department_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  department_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  department_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  department_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  department_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  department_starts_with?: InputMaybe<Scalars['String']['input']>;
+  documentInStages_every?: InputMaybe<JobWhereStageInput>;
+  documentInStages_none?: InputMaybe<JobWhereStageInput>;
+  documentInStages_some?: InputMaybe<JobWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  jobType?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  jobType_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  jobType_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  jobType_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  jobType_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  jobType_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  jobType_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  jobType_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  jobType_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  jobType_starts_with?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  location_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  location_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  location_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  location_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  location_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  location_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  location_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  location_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  location_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  niceToHave?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  niceToHave_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  niceToHave_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  niceToHave_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  niceToHave_not?: InputMaybe<Array<Scalars['String']['input']>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  requirements?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  requirements_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  requirements_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  requirements_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  requirements_not?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  responsibilities?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  responsibilities_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  responsibilities_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  responsibilities_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  responsibilities_not?: InputMaybe<Array<Scalars['String']['input']>>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  summary_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  summary_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  summary_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  summary_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  summary_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  summary_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  summary_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  summary_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  summary_starts_with?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
+export type JobWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<JobWhereStageInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<JobWhereStageInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<JobWhereStageInput>>;
+  /** This field contains fields which can be set as true or false to specify an internal comparison */
+  compareWithParent?: InputMaybe<JobWhereComparatorInput>;
+  /** Specify the stage to compare with */
+  stage?: InputMaybe<Stage>;
+};
+
+/** References Job record uniquely */
+export type JobWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Types of links for navigation */
 export type LinkType =
   | 'EXTERNAL'
@@ -3798,8 +6170,12 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Create an asset. Use the returned info to finish the creation process by uploading the asset. */
   createAsset?: Maybe<Asset>;
+  /** Create one blogPost */
+  createBlogPost?: Maybe<BlogPost>;
   /** Create one feature */
   createFeature?: Maybe<Feature>;
+  /** Create one job */
+  createJob?: Maybe<Job>;
   /** Create one navigation */
   createNavigation?: Maybe<Navigation>;
   /** Create one page */
@@ -3818,8 +6194,12 @@ export type Mutation = {
   createTestimonial?: Maybe<Testimonial>;
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>;
+  /** Delete one blogPost from _all_ existing stages. Returns deleted document. */
+  deleteBlogPost?: Maybe<BlogPost>;
   /** Delete one feature from _all_ existing stages. Returns deleted document. */
   deleteFeature?: Maybe<Feature>;
+  /** Delete one job from _all_ existing stages. Returns deleted document. */
+  deleteJob?: Maybe<Job>;
   /**
    * Delete many SiteSettings documents
    * @deprecated Please use the new paginated many mutation (deleteManyAllSiteSettingsConnection)
@@ -3835,12 +6215,26 @@ export type Mutation = {
   /** Delete many Asset documents, return deleted documents */
   deleteManyAssetsConnection: AssetConnection;
   /**
+   * Delete many BlogPost documents
+   * @deprecated Please use the new paginated many mutation (deleteManyBlogPostsConnection)
+   */
+  deleteManyBlogPosts: BatchPayload;
+  /** Delete many BlogPost documents, return deleted documents */
+  deleteManyBlogPostsConnection: BlogPostConnection;
+  /**
    * Delete many Feature documents
    * @deprecated Please use the new paginated many mutation (deleteManyFeaturesConnection)
    */
   deleteManyFeatures: BatchPayload;
   /** Delete many Feature documents, return deleted documents */
   deleteManyFeaturesConnection: FeatureConnection;
+  /**
+   * Delete many Job documents
+   * @deprecated Please use the new paginated many mutation (deleteManyJobsConnection)
+   */
+  deleteManyJobs: BatchPayload;
+  /** Delete many Job documents, return deleted documents */
+  deleteManyJobsConnection: JobConnection;
   /**
    * Delete many Navigation documents
    * @deprecated Please use the new paginated many mutation (deleteManyNavigationsConnection)
@@ -3903,8 +6297,12 @@ export type Mutation = {
   deleteTestimonial?: Maybe<Testimonial>;
   /** Publish one asset */
   publishAsset?: Maybe<Asset>;
+  /** Publish one blogPost */
+  publishBlogPost?: Maybe<BlogPost>;
   /** Publish one feature */
   publishFeature?: Maybe<Feature>;
+  /** Publish one job */
+  publishJob?: Maybe<Job>;
   /**
    * Publish many SiteSettings documents
    * @deprecated Please use the new paginated many mutation (publishManyAllSiteSettingsConnection)
@@ -3920,12 +6318,26 @@ export type Mutation = {
   /** Publish many Asset documents */
   publishManyAssetsConnection: AssetConnection;
   /**
+   * Publish many BlogPost documents
+   * @deprecated Please use the new paginated many mutation (publishManyBlogPostsConnection)
+   */
+  publishManyBlogPosts: BatchPayload;
+  /** Publish many BlogPost documents */
+  publishManyBlogPostsConnection: BlogPostConnection;
+  /**
    * Publish many Feature documents
    * @deprecated Please use the new paginated many mutation (publishManyFeaturesConnection)
    */
   publishManyFeatures: BatchPayload;
   /** Publish many Feature documents */
   publishManyFeaturesConnection: FeatureConnection;
+  /**
+   * Publish many Job documents
+   * @deprecated Please use the new paginated many mutation (publishManyJobsConnection)
+   */
+  publishManyJobs: BatchPayload;
+  /** Publish many Job documents */
+  publishManyJobsConnection: JobConnection;
   /**
    * Publish many Navigation documents
    * @deprecated Please use the new paginated many mutation (publishManyNavigationsConnection)
@@ -3996,8 +6408,12 @@ export type Mutation = {
   publishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Schedule to publish one asset */
   schedulePublishAsset?: Maybe<Asset>;
+  /** Schedule to publish one blogPost */
+  schedulePublishBlogPost?: Maybe<BlogPost>;
   /** Schedule to publish one feature */
   schedulePublishFeature?: Maybe<Feature>;
+  /** Schedule to publish one job */
+  schedulePublishJob?: Maybe<Job>;
   /** Schedule to publish one navigation */
   schedulePublishNavigation?: Maybe<Navigation>;
   /** Schedule to publish one page */
@@ -4020,8 +6436,12 @@ export type Mutation = {
   schedulePublishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAsset?: Maybe<Asset>;
+  /** Unpublish one blogPost from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishBlogPost?: Maybe<BlogPost>;
   /** Unpublish one feature from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishFeature?: Maybe<Feature>;
+  /** Unpublish one job from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishJob?: Maybe<Job>;
   /** Unpublish one navigation from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishNavigation?: Maybe<Navigation>;
   /** Unpublish one page from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -4044,8 +6464,12 @@ export type Mutation = {
   scheduleUnpublishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>;
+  /** Unpublish one blogPost from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishBlogPost?: Maybe<BlogPost>;
   /** Unpublish one feature from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishFeature?: Maybe<Feature>;
+  /** Unpublish one job from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishJob?: Maybe<Job>;
   /**
    * Unpublish many SiteSettings documents
    * @deprecated Please use the new paginated many mutation (unpublishManyAllSiteSettingsConnection)
@@ -4061,12 +6485,26 @@ export type Mutation = {
   /** Find many Asset documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyAssetsConnection: AssetConnection;
   /**
+   * Unpublish many BlogPost documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyBlogPostsConnection)
+   */
+  unpublishManyBlogPosts: BatchPayload;
+  /** Find many BlogPost documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyBlogPostsConnection: BlogPostConnection;
+  /**
    * Unpublish many Feature documents
    * @deprecated Please use the new paginated many mutation (unpublishManyFeaturesConnection)
    */
   unpublishManyFeatures: BatchPayload;
   /** Find many Feature documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyFeaturesConnection: FeatureConnection;
+  /**
+   * Unpublish many Job documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyJobsConnection)
+   */
+  unpublishManyJobs: BatchPayload;
+  /** Find many Job documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyJobsConnection: JobConnection;
   /**
    * Unpublish many Navigation documents
    * @deprecated Please use the new paginated many mutation (unpublishManyNavigationsConnection)
@@ -4137,8 +6575,12 @@ export type Mutation = {
   unpublishTestimonialVariant?: Maybe<TestimonialVariant>;
   /** Update one asset */
   updateAsset?: Maybe<Asset>;
+  /** Update one blogPost */
+  updateBlogPost?: Maybe<BlogPost>;
   /** Update one feature */
   updateFeature?: Maybe<Feature>;
+  /** Update one job */
+  updateJob?: Maybe<Job>;
   /**
    * Update many allSiteSettings
    * @deprecated Please use the new paginated many mutation (updateManyAllSiteSettingsConnection)
@@ -4154,12 +6596,26 @@ export type Mutation = {
   /** Update many Asset documents */
   updateManyAssetsConnection: AssetConnection;
   /**
+   * Update many blogPosts
+   * @deprecated Please use the new paginated many mutation (updateManyBlogPostsConnection)
+   */
+  updateManyBlogPosts: BatchPayload;
+  /** Update many BlogPost documents */
+  updateManyBlogPostsConnection: BlogPostConnection;
+  /**
    * Update many features
    * @deprecated Please use the new paginated many mutation (updateManyFeaturesConnection)
    */
   updateManyFeatures: BatchPayload;
   /** Update many Feature documents */
   updateManyFeaturesConnection: FeatureConnection;
+  /**
+   * Update many jobs
+   * @deprecated Please use the new paginated many mutation (updateManyJobsConnection)
+   */
+  updateManyJobs: BatchPayload;
+  /** Update many Job documents */
+  updateManyJobsConnection: JobConnection;
   /**
    * Update many navigations
    * @deprecated Please use the new paginated many mutation (updateManyNavigationsConnection)
@@ -4220,8 +6676,12 @@ export type Mutation = {
   updateTestimonial?: Maybe<Testimonial>;
   /** Upsert one asset */
   upsertAsset?: Maybe<Asset>;
+  /** Upsert one blogPost */
+  upsertBlogPost?: Maybe<BlogPost>;
   /** Upsert one feature */
   upsertFeature?: Maybe<Feature>;
+  /** Upsert one job */
+  upsertJob?: Maybe<Job>;
   /** Upsert one navigation */
   upsertNavigation?: Maybe<Navigation>;
   /** Upsert one page */
@@ -4244,8 +6704,18 @@ export type MutationCreateAssetArgs = {
 };
 
 
+export type MutationCreateBlogPostArgs = {
+  data: BlogPostCreateInput;
+};
+
+
 export type MutationCreateFeatureArgs = {
   data: FeatureCreateInput;
+};
+
+
+export type MutationCreateJobArgs = {
+  data: JobCreateInput;
 };
 
 
@@ -4294,8 +6764,18 @@ export type MutationDeleteAssetArgs = {
 };
 
 
+export type MutationDeleteBlogPostArgs = {
+  where: BlogPostWhereUniqueInput;
+};
+
+
 export type MutationDeleteFeatureArgs = {
   where: FeatureWhereUniqueInput;
+};
+
+
+export type MutationDeleteJobArgs = {
+  where: JobWhereUniqueInput;
 };
 
 
@@ -4329,6 +6809,21 @@ export type MutationDeleteManyAssetsConnectionArgs = {
 };
 
 
+export type MutationDeleteManyBlogPostsArgs = {
+  where?: InputMaybe<BlogPostManyWhereInput>;
+};
+
+
+export type MutationDeleteManyBlogPostsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<BlogPostManyWhereInput>;
+};
+
+
 export type MutationDeleteManyFeaturesArgs = {
   where?: InputMaybe<FeatureManyWhereInput>;
 };
@@ -4341,6 +6836,21 @@ export type MutationDeleteManyFeaturesConnectionArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<FeatureManyWhereInput>;
+};
+
+
+export type MutationDeleteManyJobsArgs = {
+  where?: InputMaybe<JobManyWhereInput>;
+};
+
+
+export type MutationDeleteManyJobsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<JobManyWhereInput>;
 };
 
 
@@ -4488,12 +6998,27 @@ export type MutationPublishAssetArgs = {
 };
 
 
+export type MutationPublishBlogPostArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  to?: Array<Stage>;
+  where: BlogPostWhereUniqueInput;
+  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationPublishFeatureArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
   to?: Array<Stage>;
   where: FeatureWhereUniqueInput;
   withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationPublishJobArgs = {
+  to?: Array<Stage>;
+  where: JobWhereUniqueInput;
 };
 
 
@@ -4545,6 +7070,30 @@ export type MutationPublishManyAssetsConnectionArgs = {
 };
 
 
+export type MutationPublishManyBlogPostsArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<BlogPostManyWhereInput>;
+  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationPublishManyBlogPostsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<BlogPostManyWhereInput>;
+  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationPublishManyFeaturesArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
@@ -4566,6 +7115,24 @@ export type MutationPublishManyFeaturesConnectionArgs = {
   to?: Array<Stage>;
   where?: InputMaybe<FeatureManyWhereInput>;
   withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationPublishManyJobsArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<JobManyWhereInput>;
+};
+
+
+export type MutationPublishManyJobsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<JobManyWhereInput>;
 };
 
 
@@ -4850,6 +7417,17 @@ export type MutationSchedulePublishAssetArgs = {
 };
 
 
+export type MutationSchedulePublishBlogPostArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  to?: Array<Stage>;
+  where: BlogPostWhereUniqueInput;
+  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationSchedulePublishFeatureArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
@@ -4858,6 +7436,14 @@ export type MutationSchedulePublishFeatureArgs = {
   to?: Array<Stage>;
   where: FeatureWhereUniqueInput;
   withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationSchedulePublishJobArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  to?: Array<Stage>;
+  where: JobWhereUniqueInput;
 };
 
 
@@ -4978,6 +7564,16 @@ export type MutationScheduleUnpublishAssetArgs = {
 };
 
 
+export type MutationScheduleUnpublishBlogPostArgs = {
+  from?: Array<Stage>;
+  locales?: InputMaybe<Array<Locale>>;
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  where: BlogPostWhereUniqueInput;
+};
+
+
 export type MutationScheduleUnpublishFeatureArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -4985,6 +7581,14 @@ export type MutationScheduleUnpublishFeatureArgs = {
   releaseId?: InputMaybe<Scalars['String']['input']>;
   unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
   where: FeatureWhereUniqueInput;
+};
+
+
+export type MutationScheduleUnpublishJobArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  where: JobWhereUniqueInput;
 };
 
 
@@ -5094,11 +7698,25 @@ export type MutationUnpublishAssetArgs = {
 };
 
 
+export type MutationUnpublishBlogPostArgs = {
+  from?: Array<Stage>;
+  locales?: InputMaybe<Array<Locale>>;
+  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  where: BlogPostWhereUniqueInput;
+};
+
+
 export type MutationUnpublishFeatureArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
   unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
   where: FeatureWhereUniqueInput;
+};
+
+
+export type MutationUnpublishJobArgs = {
+  from?: Array<Stage>;
+  where: JobWhereUniqueInput;
 };
 
 
@@ -5146,6 +7764,28 @@ export type MutationUnpublishManyAssetsConnectionArgs = {
 };
 
 
+export type MutationUnpublishManyBlogPostsArgs = {
+  from?: Array<Stage>;
+  locales?: InputMaybe<Array<Locale>>;
+  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<BlogPostManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyBlogPostsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: InputMaybe<Stage>;
+  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<BlogPostManyWhereInput>;
+};
+
+
 export type MutationUnpublishManyFeaturesArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -5165,6 +7805,24 @@ export type MutationUnpublishManyFeaturesConnectionArgs = {
   stage?: InputMaybe<Stage>;
   unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<FeatureManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyJobsArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<JobManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyJobsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<JobManyWhereInput>;
 };
 
 
@@ -5422,9 +8080,21 @@ export type MutationUpdateAssetArgs = {
 };
 
 
+export type MutationUpdateBlogPostArgs = {
+  data: BlogPostUpdateInput;
+  where: BlogPostWhereUniqueInput;
+};
+
+
 export type MutationUpdateFeatureArgs = {
   data: FeatureUpdateInput;
   where: FeatureWhereUniqueInput;
+};
+
+
+export type MutationUpdateJobArgs = {
+  data: JobUpdateInput;
+  where: JobWhereUniqueInput;
 };
 
 
@@ -5462,6 +8132,23 @@ export type MutationUpdateManyAssetsConnectionArgs = {
 };
 
 
+export type MutationUpdateManyBlogPostsArgs = {
+  data: BlogPostUpdateManyInput;
+  where?: InputMaybe<BlogPostManyWhereInput>;
+};
+
+
+export type MutationUpdateManyBlogPostsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  data: BlogPostUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<BlogPostManyWhereInput>;
+};
+
+
 export type MutationUpdateManyFeaturesArgs = {
   data: FeatureUpdateManyInput;
   where?: InputMaybe<FeatureManyWhereInput>;
@@ -5476,6 +8163,23 @@ export type MutationUpdateManyFeaturesConnectionArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<FeatureManyWhereInput>;
+};
+
+
+export type MutationUpdateManyJobsArgs = {
+  data: JobUpdateManyInput;
+  where?: InputMaybe<JobManyWhereInput>;
+};
+
+
+export type MutationUpdateManyJobsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  data: JobUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<JobManyWhereInput>;
 };
 
 
@@ -5635,9 +8339,21 @@ export type MutationUpsertAssetArgs = {
 };
 
 
+export type MutationUpsertBlogPostArgs = {
+  upsert: BlogPostUpsertInput;
+  where: BlogPostWhereUniqueInput;
+};
+
+
 export type MutationUpsertFeatureArgs = {
   upsert: FeatureUpsertInput;
   where: FeatureWhereUniqueInput;
+};
+
+
+export type MutationUpsertJobArgs = {
+  upsert: JobUpsertInput;
+  where: JobWhereUniqueInput;
 };
 
 
@@ -7817,24 +10533,24 @@ export type PageWhereUniqueInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PagesectionsUnion = CtaBlock | FeatureGrid | HeroSection | ProductShowcase | StatsBar | TestimonialCarousel;
+export type PagesectionsUnion = CtaBlock | EditorialSection | FeatureGrid | HeroSection | ProductShowcase | StatsBar;
 
 export type PagesectionsUnionConnectInput = {
   CTABlock?: InputMaybe<CtaBlockConnectInput>;
+  EditorialSection?: InputMaybe<EditorialSectionConnectInput>;
   FeatureGrid?: InputMaybe<FeatureGridConnectInput>;
   HeroSection?: InputMaybe<HeroSectionConnectInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseConnectInput>;
   StatsBar?: InputMaybe<StatsBarConnectInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselConnectInput>;
 };
 
 export type PagesectionsUnionCreateInput = {
   CTABlock?: InputMaybe<CtaBlockCreateInput>;
+  EditorialSection?: InputMaybe<EditorialSectionCreateInput>;
   FeatureGrid?: InputMaybe<FeatureGridCreateInput>;
   HeroSection?: InputMaybe<HeroSectionCreateInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseCreateInput>;
   StatsBar?: InputMaybe<StatsBarCreateInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselCreateInput>;
 };
 
 export type PagesectionsUnionCreateManyInlineInput = {
@@ -7849,20 +10565,20 @@ export type PagesectionsUnionCreateOneInlineInput = {
 
 export type PagesectionsUnionCreateWithPositionInput = {
   CTABlock?: InputMaybe<CtaBlockCreateWithPositionInput>;
+  EditorialSection?: InputMaybe<EditorialSectionCreateWithPositionInput>;
   FeatureGrid?: InputMaybe<FeatureGridCreateWithPositionInput>;
   HeroSection?: InputMaybe<HeroSectionCreateWithPositionInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseCreateWithPositionInput>;
   StatsBar?: InputMaybe<StatsBarCreateWithPositionInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselCreateWithPositionInput>;
 };
 
 export type PagesectionsUnionUpdateInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateInput>;
+  EditorialSection?: InputMaybe<EditorialSectionUpdateInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateInput>;
   StatsBar?: InputMaybe<StatsBarUpdateInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselUpdateInput>;
 };
 
 export type PagesectionsUnionUpdateManyInlineInput = {
@@ -7878,11 +10594,11 @@ export type PagesectionsUnionUpdateManyInlineInput = {
 
 export type PagesectionsUnionUpdateManyWithNestedWhereInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateManyWithNestedWhereInput>;
+  EditorialSection?: InputMaybe<EditorialSectionUpdateManyWithNestedWhereInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateManyWithNestedWhereInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateManyWithNestedWhereInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateManyWithNestedWhereInput>;
   StatsBar?: InputMaybe<StatsBarUpdateManyWithNestedWhereInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselUpdateManyWithNestedWhereInput>;
 };
 
 export type PagesectionsUnionUpdateOneInlineInput = {
@@ -7898,56 +10614,56 @@ export type PagesectionsUnionUpdateOneInlineInput = {
 
 export type PagesectionsUnionUpdateWithNestedWhereUniqueAndPositionInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateWithNestedWhereUniqueAndPositionInput>;
+  EditorialSection?: InputMaybe<EditorialSectionUpdateWithNestedWhereUniqueAndPositionInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateWithNestedWhereUniqueAndPositionInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateWithNestedWhereUniqueAndPositionInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateWithNestedWhereUniqueAndPositionInput>;
   StatsBar?: InputMaybe<StatsBarUpdateWithNestedWhereUniqueAndPositionInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselUpdateWithNestedWhereUniqueAndPositionInput>;
 };
 
 export type PagesectionsUnionUpdateWithNestedWhereUniqueInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateWithNestedWhereUniqueInput>;
+  EditorialSection?: InputMaybe<EditorialSectionUpdateWithNestedWhereUniqueInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateWithNestedWhereUniqueInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateWithNestedWhereUniqueInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateWithNestedWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarUpdateWithNestedWhereUniqueInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselUpdateWithNestedWhereUniqueInput>;
 };
 
 export type PagesectionsUnionUpsertWithNestedWhereUniqueAndPositionInput = {
   CTABlock?: InputMaybe<CtaBlockUpsertWithNestedWhereUniqueAndPositionInput>;
+  EditorialSection?: InputMaybe<EditorialSectionUpsertWithNestedWhereUniqueAndPositionInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpsertWithNestedWhereUniqueAndPositionInput>;
   HeroSection?: InputMaybe<HeroSectionUpsertWithNestedWhereUniqueAndPositionInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpsertWithNestedWhereUniqueAndPositionInput>;
   StatsBar?: InputMaybe<StatsBarUpsertWithNestedWhereUniqueAndPositionInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselUpsertWithNestedWhereUniqueAndPositionInput>;
 };
 
 export type PagesectionsUnionUpsertWithNestedWhereUniqueInput = {
   CTABlock?: InputMaybe<CtaBlockUpsertWithNestedWhereUniqueInput>;
+  EditorialSection?: InputMaybe<EditorialSectionUpsertWithNestedWhereUniqueInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpsertWithNestedWhereUniqueInput>;
   HeroSection?: InputMaybe<HeroSectionUpsertWithNestedWhereUniqueInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpsertWithNestedWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarUpsertWithNestedWhereUniqueInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselUpsertWithNestedWhereUniqueInput>;
 };
 
 export type PagesectionsUnionWhereInput = {
   CTABlock?: InputMaybe<CtaBlockWhereInput>;
+  EditorialSection?: InputMaybe<EditorialSectionWhereInput>;
   FeatureGrid?: InputMaybe<FeatureGridWhereInput>;
   HeroSection?: InputMaybe<HeroSectionWhereInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseWhereInput>;
   StatsBar?: InputMaybe<StatsBarWhereInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselWhereInput>;
 };
 
 export type PagesectionsUnionWhereUniqueInput = {
   CTABlock?: InputMaybe<CtaBlockWhereUniqueInput>;
+  EditorialSection?: InputMaybe<EditorialSectionWhereUniqueInput>;
   FeatureGrid?: InputMaybe<FeatureGridWhereUniqueInput>;
   HeroSection?: InputMaybe<HeroSectionWhereUniqueInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarWhereUniqueInput>;
-  TestimonialCarousel?: InputMaybe<TestimonialCarouselWhereUniqueInput>;
 };
 
 /** Individual product with marketing content in Hygraph and live pricing/stock from BigCommerce/CommerceTools */
@@ -7955,6 +10671,8 @@ export type Product = Entity & Node & {
   __typename?: 'Product';
   /** Base product identifier from BigCommerce/CommerceTools (e.g., "ATH-NVA-700") */
   baseProductId: Scalars['String']['output'];
+  /** hybikes product category */
+  bikeCategory?: Maybe<BikeCategory>;
   /** Product category from native Hygraph taxonomy */
   category: TaxonomyNode;
   /** Product color (SKU code, e.g., RE for Red). Used in remote field URL: ${baseProductId}-${color}-${size} */
@@ -7971,10 +10689,12 @@ export type Product = Entity & Node & {
   externalProduct?: Maybe<BigCommerce_BigCommerceSingleProductResponse>;
   /** BigCommerce product ID used to fetch live data via Remote Source */
   externalProductId?: Maybe<Scalars['Int']['output']>;
+  featured: Scalars['Boolean']['output'];
   /** List of Product versions */
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  imageUrl?: Maybe<Scalars['String']['output']>;
   /** Product images (lifestyle shots, detail views, etc.) */
   images: Array<Asset>;
   /** System Locale field */
@@ -7983,6 +10703,7 @@ export type Product = Entity & Node & {
   localizations: Array<Product>;
   /** Product name for marketing and display */
   name: Scalars['String']['output'];
+  productFeatures: Array<Scalars['String']['output']>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   /** User that last published this document */
@@ -7996,6 +10717,7 @@ export type Product = Entity & Node & {
   specifications?: Maybe<ProductSpecification>;
   /** System stage field */
   stage: Stage;
+  tagline?: Maybe<Scalars['String']['output']>;
   /** Which audience segments find this product relevant (used for filtering in ProductShowcase) */
   targetAudiences: Array<Audience>;
   /** The time the document was updated */
@@ -8125,20 +10847,26 @@ export type ProductConnection = {
 
 export type ProductCreateInput = {
   baseProductId: Scalars['String']['input'];
+  bikeCategory?: InputMaybe<BikeCategory>;
   category: TaxonomyNodeInput;
   color: ProductColor;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
   description: Scalars['RichTextAST']['input'];
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
+  featured: Scalars['Boolean']['input'];
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
   images: AssetCreateManyInlineInput;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<ProductCreateLocalizationsInput>;
   /** name input for default locale (en) */
   name: Scalars['String']['input'];
+  productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
   size: ProductSize;
   slug: Scalars['String']['input'];
   specifications?: InputMaybe<ProductSpecificationCreateOneInlineInput>;
+  /** tagline input for default locale (en) */
+  tagline?: InputMaybe<Scalars['String']['input']>;
   targetAudiences?: InputMaybe<Array<Audience>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -8147,6 +10875,7 @@ export type ProductCreateLocalizationDataInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description: Scalars['RichTextAST']['input'];
   name: Scalars['String']['input'];
+  tagline?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -9521,6 +12250,13 @@ export type ProductManyWhereInput = {
   baseProductId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   baseProductId_starts_with?: InputMaybe<Scalars['String']['input']>;
+  bikeCategory?: InputMaybe<BikeCategory>;
+  /** All values that are contained in given list. */
+  bikeCategory_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  bikeCategory_not?: InputMaybe<BikeCategory>;
+  /** All values that are not contained in given list. */
+  bikeCategory_not_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
   category?: InputMaybe<TaxonomyNodeWhereInput>;
   /** Matches if the field value is a descendant of the provided taxonomy nodes */
   category_descendants_of?: InputMaybe<Array<TaxonomyNodeWhereInput>>;
@@ -9571,6 +12307,9 @@ export type ProductManyWhereInput = {
   externalProductId_not?: InputMaybe<Scalars['Int']['input']>;
   /** All values that are not contained in given list. */
   externalProductId_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  featured?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  featured_not?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -9590,9 +12329,38 @@ export type ProductManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
   images_every?: InputMaybe<AssetWhereInput>;
   images_none?: InputMaybe<AssetWhereInput>;
   images_some?: InputMaybe<AssetWhereInput>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  productFeatures_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  productFeatures_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  productFeatures_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  productFeatures_not?: InputMaybe<Array<Scalars['String']['input']>>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -9670,22 +12438,32 @@ export type ProductManyWhereInput = {
 export type ProductOrderByInput =
   | 'baseProductId_ASC'
   | 'baseProductId_DESC'
+  | 'bikeCategory_ASC'
+  | 'bikeCategory_DESC'
   | 'color_ASC'
   | 'color_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
   | 'externalProductId_ASC'
   | 'externalProductId_DESC'
+  | 'featured_ASC'
+  | 'featured_DESC'
   | 'id_ASC'
   | 'id_DESC'
+  | 'imageUrl_ASC'
+  | 'imageUrl_DESC'
   | 'name_ASC'
   | 'name_DESC'
+  | 'productFeatures_ASC'
+  | 'productFeatures_DESC'
   | 'publishedAt_ASC'
   | 'publishedAt_DESC'
   | 'size_ASC'
   | 'size_DESC'
   | 'slug_ASC'
   | 'slug_DESC'
+  | 'tagline_ASC'
+  | 'tagline_DESC'
   | 'targetAudiences_ASC'
   | 'targetAudiences_DESC'
   | 'updatedAt_ASC'
@@ -10248,6 +13026,7 @@ export type ProductSpecification = Entity & {
   frame?: Maybe<Scalars['String']['output']>;
   /** Gear system (e.g., "12-speed Shimano XT", "Single speed") */
   gears?: Maybe<Scalars['String']['output']>;
+  groupset?: Maybe<Scalars['String']['output']>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
   /** System Locale field */
@@ -10270,6 +13049,7 @@ export type ProductSpecification = Entity & {
   weight?: Maybe<Scalars['Float']['output']>;
   /** Wheel diameter */
   wheelSize?: Maybe<WheelSize>;
+  wheels?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -10307,6 +13087,7 @@ export type ProductSpecificationCreateInput = {
   brakes?: InputMaybe<Scalars['String']['input']>;
   frame?: InputMaybe<Scalars['String']['input']>;
   gears?: InputMaybe<Scalars['String']['input']>;
+  groupset?: InputMaybe<Scalars['String']['input']>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<ProductSpecificationCreateLocalizationsInput>;
   motor?: InputMaybe<Scalars['String']['input']>;
@@ -10317,6 +13098,7 @@ export type ProductSpecificationCreateInput = {
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   weight?: InputMaybe<Scalars['Float']['input']>;
   wheelSize?: InputMaybe<WheelSize>;
+  wheels?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductSpecificationCreateLocalizationDataInput = {
@@ -10447,6 +13229,25 @@ export type ProductSpecificationManyWhereInput = {
   gears_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   gears_starts_with?: InputMaybe<Scalars['String']['input']>;
+  groupset?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  groupset_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  groupset_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  groupset_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  groupset_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  groupset_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  groupset_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  groupset_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  groupset_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  groupset_starts_with?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -10560,6 +13361,25 @@ export type ProductSpecificationManyWhereInput = {
   wheelSize_not?: InputMaybe<WheelSize>;
   /** All values that are not contained in given list. */
   wheelSize_not_in?: InputMaybe<Array<InputMaybe<WheelSize>>>;
+  wheels?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  wheels_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  wheels_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  wheels_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  wheels_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  wheels_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  wheels_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  wheels_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  wheels_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  wheels_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductSpecificationOrderByInput =
@@ -10571,6 +13391,8 @@ export type ProductSpecificationOrderByInput =
   | 'frame_DESC'
   | 'gears_ASC'
   | 'gears_DESC'
+  | 'groupset_ASC'
+  | 'groupset_DESC'
   | 'id_ASC'
   | 'id_DESC'
   | 'motor_ASC'
@@ -10586,7 +13408,9 @@ export type ProductSpecificationOrderByInput =
   | 'weight_ASC'
   | 'weight_DESC'
   | 'wheelSize_ASC'
-  | 'wheelSize_DESC';
+  | 'wheelSize_DESC'
+  | 'wheels_ASC'
+  | 'wheels_DESC';
 
 export type ProductSpecificationParent = Product;
 
@@ -10673,6 +13497,7 @@ export type ProductSpecificationUpdateInput = {
   brakes?: InputMaybe<Scalars['String']['input']>;
   frame?: InputMaybe<Scalars['String']['input']>;
   gears?: InputMaybe<Scalars['String']['input']>;
+  groupset?: InputMaybe<Scalars['String']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<ProductSpecificationUpdateLocalizationsInput>;
   motor?: InputMaybe<Scalars['String']['input']>;
@@ -10682,6 +13507,7 @@ export type ProductSpecificationUpdateInput = {
   suspension?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['Float']['input']>;
   wheelSize?: InputMaybe<WheelSize>;
+  wheels?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductSpecificationUpdateLocalizationDataInput = {
@@ -10719,6 +13545,7 @@ export type ProductSpecificationUpdateManyInput = {
   brakes?: InputMaybe<Scalars['String']['input']>;
   frame?: InputMaybe<Scalars['String']['input']>;
   gears?: InputMaybe<Scalars['String']['input']>;
+  groupset?: InputMaybe<Scalars['String']['input']>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<ProductSpecificationUpdateManyLocalizationsInput>;
   motor?: InputMaybe<Scalars['String']['input']>;
@@ -10728,6 +13555,7 @@ export type ProductSpecificationUpdateManyInput = {
   suspension?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['Float']['input']>;
   wheelSize?: InputMaybe<WheelSize>;
+  wheels?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductSpecificationUpdateManyLocalizationDataInput = {
@@ -10893,6 +13721,25 @@ export type ProductSpecificationWhereInput = {
   gears_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   gears_starts_with?: InputMaybe<Scalars['String']['input']>;
+  groupset?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  groupset_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  groupset_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  groupset_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  groupset_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  groupset_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  groupset_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  groupset_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  groupset_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  groupset_starts_with?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -11025,6 +13872,25 @@ export type ProductSpecificationWhereInput = {
   wheelSize_not?: InputMaybe<WheelSize>;
   /** All values that are not contained in given list. */
   wheelSize_not_in?: InputMaybe<Array<InputMaybe<WheelSize>>>;
+  wheels?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  wheels_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  wheels_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  wheels_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  wheels_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  wheels_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  wheels_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  wheels_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  wheels_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  wheels_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** References ProductSpecification record uniquely */
@@ -11034,25 +13900,32 @@ export type ProductSpecificationWhereUniqueInput = {
 
 export type ProductUpdateInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
+  bikeCategory?: InputMaybe<BikeCategory>;
   category?: InputMaybe<TaxonomyNodeInput>;
   color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
+  featured?: InputMaybe<Scalars['Boolean']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
   images?: InputMaybe<AssetUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<ProductUpdateLocalizationsInput>;
   /** name input for default locale (en) */
   name?: InputMaybe<Scalars['String']['input']>;
+  productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
   size?: InputMaybe<ProductSize>;
   slug?: InputMaybe<Scalars['String']['input']>;
   specifications?: InputMaybe<ProductSpecificationUpdateOneInlineInput>;
+  /** tagline input for default locale (en) */
+  tagline?: InputMaybe<Scalars['String']['input']>;
   targetAudiences?: InputMaybe<Array<Audience>>;
 };
 
 export type ProductUpdateLocalizationDataInput = {
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductUpdateLocalizationInput = {
@@ -11089,22 +13962,29 @@ export type ProductUpdateManyInlineInput = {
 
 export type ProductUpdateManyInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
+  bikeCategory?: InputMaybe<BikeCategory>;
   category?: InputMaybe<TaxonomyNodeInput>;
   color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
+  featured?: InputMaybe<Scalars['Boolean']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<ProductUpdateManyLocalizationsInput>;
   /** name input for default locale (en) */
   name?: InputMaybe<Scalars['String']['input']>;
+  productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
   size?: InputMaybe<ProductSize>;
+  /** tagline input for default locale (en) */
+  tagline?: InputMaybe<Scalars['String']['input']>;
   targetAudiences?: InputMaybe<Array<Audience>>;
 };
 
 export type ProductUpdateManyLocalizationDataInput = {
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductUpdateManyLocalizationInput = {
@@ -11201,6 +14081,13 @@ export type ProductWhereInput = {
   baseProductId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   baseProductId_starts_with?: InputMaybe<Scalars['String']['input']>;
+  bikeCategory?: InputMaybe<BikeCategory>;
+  /** All values that are contained in given list. */
+  bikeCategory_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  bikeCategory_not?: InputMaybe<BikeCategory>;
+  /** All values that are not contained in given list. */
+  bikeCategory_not_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
   category?: InputMaybe<TaxonomyNodeWhereInput>;
   /** Matches if the field value is a descendant of the provided taxonomy nodes */
   category_descendants_of?: InputMaybe<Array<TaxonomyNodeWhereInput>>;
@@ -11251,6 +14138,9 @@ export type ProductWhereInput = {
   externalProductId_not?: InputMaybe<Scalars['Int']['input']>;
   /** All values that are not contained in given list. */
   externalProductId_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  featured?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  featured_not?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -11270,6 +14160,25 @@ export type ProductWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
   images_every?: InputMaybe<AssetWhereInput>;
   images_none?: InputMaybe<AssetWhereInput>;
   images_some?: InputMaybe<AssetWhereInput>;
@@ -11292,6 +14201,16 @@ export type ProductWhereInput = {
   name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   name_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  productFeatures_contains_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  productFeatures_contains_none?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  productFeatures_contains_some?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  productFeatures_not?: InputMaybe<Array<Scalars['String']['input']>>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -11338,6 +14257,25 @@ export type ProductWhereInput = {
   /** All values starting with the given string. */
   slug_starts_with?: InputMaybe<Scalars['String']['input']>;
   specifications?: InputMaybe<ProductSpecificationWhereInput>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  tagline_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  tagline_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  tagline_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  tagline_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  tagline_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  tagline_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  tagline_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  tagline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  tagline_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field array contains *all* items provided to the filter and order does match */
   targetAudiences?: InputMaybe<Array<Audience>>;
   /** Matches if the field array contains *all* items provided to the filter */
@@ -11407,6 +14345,14 @@ export type Query = {
   assets: Array<Asset>;
   /** Retrieve multiple assets using the Relay connection interface */
   assetsConnection: AssetConnection;
+  /** Retrieve a single blogPost */
+  blogPost?: Maybe<BlogPost>;
+  /** Retrieve document version */
+  blogPostVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple blogPosts */
+  blogPosts: Array<BlogPost>;
+  /** Retrieve multiple blogPosts using the Relay connection interface */
+  blogPostsConnection: BlogPostConnection;
   /** Fetches an object given its ID */
   entities?: Maybe<Array<Entity>>;
   /** Retrieve a single feature */
@@ -11417,6 +14363,14 @@ export type Query = {
   features: Array<Feature>;
   /** Retrieve multiple features using the Relay connection interface */
   featuresConnection: FeatureConnection;
+  /** Retrieve a single job */
+  job?: Maybe<Job>;
+  /** Retrieve document version */
+  jobVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple jobs */
+  jobs: Array<Job>;
+  /** Retrieve multiple jobs using the Relay connection interface */
+  jobsConnection: JobConnection;
   /** Retrieve a single navigation */
   navigation?: Maybe<Navigation>;
   /** Retrieve document version */
@@ -11556,6 +14510,44 @@ export type QueryAssetsConnectionArgs = {
 };
 
 
+export type QueryBlogPostArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: BlogPostWhereUniqueInput;
+};
+
+
+export type QueryBlogPostVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryBlogPostsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<BlogPostOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<BlogPostWhereInput>;
+};
+
+
+export type QueryBlogPostsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<BlogPostOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<BlogPostWhereInput>;
+};
+
+
 export type QueryEntitiesArgs = {
   locales?: InputMaybe<Array<Locale>>;
   where: Array<EntityWhereInput>;
@@ -11597,6 +14589,44 @@ export type QueryFeaturesConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   stage?: Stage;
   where?: InputMaybe<FeatureWhereInput>;
+};
+
+
+export type QueryJobArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: JobWhereUniqueInput;
+};
+
+
+export type QueryJobVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryJobsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<JobOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<JobWhereInput>;
+};
+
+
+export type QueryJobsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<JobOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<JobWhereInput>;
 };
 
 
@@ -12661,7 +15691,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | Feature | Navigation | Page | PageVariant | Product | ProductLine | ProductLineVariant | Segment | SiteSettings | Testimonial | TestimonialVariant;
+export type ScheduledOperationAffectedDocument = Asset | BlogPost | Feature | Job | Navigation | Page | PageVariant | Product | ProductLine | ProductLineVariant | Segment | SiteSettings | Testimonial | TestimonialVariant;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -16427,523 +19457,6 @@ export type TestimonialVariantsArgs = {
   where?: InputMaybe<TestimonialVariantWhereInput>;
 };
 
-/** Carousel of customer testimonials */
-export type TestimonialCarousel = Entity & {
-  __typename?: 'TestimonialCarousel';
-  /** Auto-advance carousel */
-  autoplay: Scalars['Boolean']['output'];
-  /** Seconds to display each testimonial (if autoplay enabled) */
-  autoplayDuration?: Maybe<Scalars['Int']['output']>;
-  /** Only show testimonials where targetAudience matches current audience */
-  filterByAudience: Scalars['Boolean']['output'];
-  /** The unique identifier */
-  id: Scalars['ID']['output'];
-  /** System Locale field */
-  locale: Locale;
-  /** Get the other localizations for this document */
-  localizations: Array<TestimonialCarousel>;
-  /** System stage field */
-  stage: Stage;
-  /** Select testimonials to show. Use variants for audience-specific testimonials. */
-  testimonials: Array<Testimonial>;
-  /** Section title (optional) */
-  title?: Maybe<Scalars['String']['output']>;
-  /** System updatedAt field */
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-/** Carousel of customer testimonials */
-export type TestimonialCarouselLocalizationsArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  locales?: Array<Locale>;
-};
-
-
-/** Carousel of customer testimonials */
-export type TestimonialCarouselTestimonialsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<TestimonialOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<TestimonialWhereInput>;
-};
-
-
-/** Carousel of customer testimonials */
-export type TestimonialCarouselUpdatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-export type TestimonialCarouselConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: TestimonialCarouselWhereUniqueInput;
-};
-
-/** A connection to a list of items. */
-export type TestimonialCarouselConnection = {
-  __typename?: 'TestimonialCarouselConnection';
-  aggregate: Aggregate;
-  /** A list of edges. */
-  edges: Array<TestimonialCarouselEdge>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type TestimonialCarouselCreateInput = {
-  autoplay: Scalars['Boolean']['input'];
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
-  filterByAudience: Scalars['Boolean']['input'];
-  /** Inline mutations for managing document localizations excluding the default locale */
-  localizations?: InputMaybe<TestimonialCarouselCreateLocalizationsInput>;
-  testimonials: TestimonialCreateManyInlineInput;
-  /** title input for default locale (en) */
-  title?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type TestimonialCarouselCreateLocalizationDataInput = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type TestimonialCarouselCreateLocalizationInput = {
-  /** Localization input */
-  data: TestimonialCarouselCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialCarouselCreateLocalizationsInput = {
-  /** Create localizations for the newly-created document */
-  create?: InputMaybe<Array<TestimonialCarouselCreateLocalizationInput>>;
-};
-
-export type TestimonialCarouselCreateManyInlineInput = {
-  /** Create and connect multiple existing TestimonialCarousel documents */
-  create?: InputMaybe<Array<TestimonialCarouselCreateInput>>;
-};
-
-export type TestimonialCarouselCreateOneInlineInput = {
-  /** Create and connect one TestimonialCarousel document */
-  create?: InputMaybe<TestimonialCarouselCreateInput>;
-};
-
-export type TestimonialCarouselCreateWithPositionInput = {
-  /** Document to create */
-  data: TestimonialCarouselCreateInput;
-  /** Position in the list of existing component instances, will default to appending at the end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-};
-
-/** An edge in a connection. */
-export type TestimonialCarouselEdge = {
-  __typename?: 'TestimonialCarouselEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: TestimonialCarousel;
-};
-
-/** Identifies documents */
-export type TestimonialCarouselManyWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialCarouselWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialCarouselWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialCarouselWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  autoplayDuration_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  autoplayDuration_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  autoplayDuration_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  autoplayDuration_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  autoplayDuration_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplayDuration_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  autoplayDuration_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplay_not?: InputMaybe<Scalars['Boolean']['input']>;
-  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  filterByAudience_not?: InputMaybe<Scalars['Boolean']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-};
-
-export type TestimonialCarouselOrderByInput =
-  | 'autoplayDuration_ASC'
-  | 'autoplayDuration_DESC'
-  | 'autoplay_ASC'
-  | 'autoplay_DESC'
-  | 'filterByAudience_ASC'
-  | 'filterByAudience_DESC'
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'title_ASC'
-  | 'title_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC';
-
-export type TestimonialCarouselParent = Page | PageVariant;
-
-export type TestimonialCarouselParentConnectInput = {
-  Page?: InputMaybe<PageConnectInput>;
-  PageVariant?: InputMaybe<PageVariantConnectInput>;
-};
-
-export type TestimonialCarouselParentCreateInput = {
-  Page?: InputMaybe<PageCreateInput>;
-  PageVariant?: InputMaybe<PageVariantCreateInput>;
-};
-
-export type TestimonialCarouselParentCreateManyInlineInput = {
-  /** Connect multiple existing TestimonialCarouselParent documents */
-  connect?: InputMaybe<Array<TestimonialCarouselParentWhereUniqueInput>>;
-  /** Create and connect multiple existing TestimonialCarouselParent documents */
-  create?: InputMaybe<Array<TestimonialCarouselParentCreateInput>>;
-};
-
-export type TestimonialCarouselParentCreateOneInlineInput = {
-  /** Connect one existing TestimonialCarouselParent document */
-  connect?: InputMaybe<TestimonialCarouselParentWhereUniqueInput>;
-  /** Create and connect one TestimonialCarouselParent document */
-  create?: InputMaybe<TestimonialCarouselParentCreateInput>;
-};
-
-export type TestimonialCarouselParentUpdateInput = {
-  Page?: InputMaybe<PageUpdateInput>;
-  PageVariant?: InputMaybe<PageVariantUpdateInput>;
-};
-
-export type TestimonialCarouselParentUpdateManyInlineInput = {
-  /** Connect multiple existing TestimonialCarouselParent documents */
-  connect?: InputMaybe<Array<TestimonialCarouselParentConnectInput>>;
-  /** Create and connect multiple TestimonialCarouselParent documents */
-  create?: InputMaybe<Array<TestimonialCarouselParentCreateInput>>;
-  /** Delete multiple TestimonialCarouselParent documents */
-  delete?: InputMaybe<Array<TestimonialCarouselParentWhereUniqueInput>>;
-  /** Disconnect multiple TestimonialCarouselParent documents */
-  disconnect?: InputMaybe<Array<TestimonialCarouselParentWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing TestimonialCarouselParent documents */
-  set?: InputMaybe<Array<TestimonialCarouselParentWhereUniqueInput>>;
-  /** Update multiple TestimonialCarouselParent documents */
-  update?: InputMaybe<Array<TestimonialCarouselParentUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple TestimonialCarouselParent documents */
-  upsert?: InputMaybe<Array<TestimonialCarouselParentUpsertWithNestedWhereUniqueInput>>;
-};
-
-export type TestimonialCarouselParentUpdateManyWithNestedWhereInput = {
-  Page?: InputMaybe<PageUpdateManyWithNestedWhereInput>;
-  PageVariant?: InputMaybe<PageVariantUpdateManyWithNestedWhereInput>;
-};
-
-export type TestimonialCarouselParentUpdateOneInlineInput = {
-  /** Connect existing TestimonialCarouselParent document */
-  connect?: InputMaybe<TestimonialCarouselParentWhereUniqueInput>;
-  /** Create and connect one TestimonialCarouselParent document */
-  create?: InputMaybe<TestimonialCarouselParentCreateInput>;
-  /** Delete currently connected TestimonialCarouselParent document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Disconnect currently connected TestimonialCarouselParent document */
-  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single TestimonialCarouselParent document */
-  update?: InputMaybe<TestimonialCarouselParentUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single TestimonialCarouselParent document */
-  upsert?: InputMaybe<TestimonialCarouselParentUpsertWithNestedWhereUniqueInput>;
-};
-
-export type TestimonialCarouselParentUpdateWithNestedWhereUniqueInput = {
-  Page?: InputMaybe<PageUpdateWithNestedWhereUniqueInput>;
-  PageVariant?: InputMaybe<PageVariantUpdateWithNestedWhereUniqueInput>;
-};
-
-export type TestimonialCarouselParentUpsertWithNestedWhereUniqueInput = {
-  Page?: InputMaybe<PageUpsertWithNestedWhereUniqueInput>;
-  PageVariant?: InputMaybe<PageVariantUpsertWithNestedWhereUniqueInput>;
-};
-
-export type TestimonialCarouselParentWhereInput = {
-  Page?: InputMaybe<PageWhereInput>;
-  PageVariant?: InputMaybe<PageVariantWhereInput>;
-};
-
-export type TestimonialCarouselParentWhereUniqueInput = {
-  Page?: InputMaybe<PageWhereUniqueInput>;
-  PageVariant?: InputMaybe<PageVariantWhereUniqueInput>;
-};
-
-export type TestimonialCarouselUpdateInput = {
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
-  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Manage document localizations */
-  localizations?: InputMaybe<TestimonialCarouselUpdateLocalizationsInput>;
-  testimonials?: InputMaybe<TestimonialUpdateManyInlineInput>;
-  /** title input for default locale (en) */
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialCarouselUpdateLocalizationDataInput = {
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialCarouselUpdateLocalizationInput = {
-  data: TestimonialCarouselUpdateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialCarouselUpdateLocalizationsInput = {
-  /** Localizations to create */
-  create?: InputMaybe<Array<TestimonialCarouselCreateLocalizationInput>>;
-  /** Localizations to delete */
-  delete?: InputMaybe<Array<Locale>>;
-  /** Localizations to update */
-  update?: InputMaybe<Array<TestimonialCarouselUpdateLocalizationInput>>;
-  upsert?: InputMaybe<Array<TestimonialCarouselUpsertLocalizationInput>>;
-};
-
-export type TestimonialCarouselUpdateManyInlineInput = {
-  /** Create and connect multiple TestimonialCarousel component instances */
-  create?: InputMaybe<Array<TestimonialCarouselCreateWithPositionInput>>;
-  /** Delete multiple TestimonialCarousel documents */
-  delete?: InputMaybe<Array<TestimonialCarouselWhereUniqueInput>>;
-  /** Update multiple TestimonialCarousel component instances */
-  update?: InputMaybe<Array<TestimonialCarouselUpdateWithNestedWhereUniqueAndPositionInput>>;
-  /** Upsert multiple TestimonialCarousel component instances */
-  upsert?: InputMaybe<Array<TestimonialCarouselUpsertWithNestedWhereUniqueAndPositionInput>>;
-};
-
-export type TestimonialCarouselUpdateManyInput = {
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
-  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Optional updates to localizations */
-  localizations?: InputMaybe<TestimonialCarouselUpdateManyLocalizationsInput>;
-  /** title input for default locale (en) */
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialCarouselUpdateManyLocalizationDataInput = {
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TestimonialCarouselUpdateManyLocalizationInput = {
-  data: TestimonialCarouselUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type TestimonialCarouselUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: InputMaybe<Array<TestimonialCarouselUpdateManyLocalizationInput>>;
-};
-
-export type TestimonialCarouselUpdateManyWithNestedWhereInput = {
-  /** Update many input */
-  data: TestimonialCarouselUpdateManyInput;
-  /** Document search */
-  where: TestimonialCarouselWhereInput;
-};
-
-export type TestimonialCarouselUpdateOneInlineInput = {
-  /** Create and connect one TestimonialCarousel document */
-  create?: InputMaybe<TestimonialCarouselCreateInput>;
-  /** Delete currently connected TestimonialCarousel document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single TestimonialCarousel document */
-  update?: InputMaybe<TestimonialCarouselUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single TestimonialCarousel document */
-  upsert?: InputMaybe<TestimonialCarouselUpsertWithNestedWhereUniqueInput>;
-};
-
-export type TestimonialCarouselUpdateWithNestedWhereUniqueAndPositionInput = {
-  /** Document to update */
-  data?: InputMaybe<TestimonialCarouselUpdateInput>;
-  /** Position in the list of existing component instances, will default to appending at the end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Unique component instance search */
-  where: TestimonialCarouselWhereUniqueInput;
-};
-
-export type TestimonialCarouselUpdateWithNestedWhereUniqueInput = {
-  /** Document to update */
-  data: TestimonialCarouselUpdateInput;
-  /** Unique document search */
-  where: TestimonialCarouselWhereUniqueInput;
-};
-
-export type TestimonialCarouselUpsertInput = {
-  /** Create document if it didn't exist */
-  create: TestimonialCarouselCreateInput;
-  /** Update document if it exists */
-  update: TestimonialCarouselUpdateInput;
-};
-
-export type TestimonialCarouselUpsertLocalizationInput = {
-  create: TestimonialCarouselCreateLocalizationDataInput;
-  locale: Locale;
-  update: TestimonialCarouselUpdateLocalizationDataInput;
-};
-
-export type TestimonialCarouselUpsertWithNestedWhereUniqueAndPositionInput = {
-  /** Document to upsert */
-  data?: InputMaybe<TestimonialCarouselUpsertInput>;
-  /** Position in the list of existing component instances, will default to appending at the end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Unique component instance search */
-  where: TestimonialCarouselWhereUniqueInput;
-};
-
-export type TestimonialCarouselUpsertWithNestedWhereUniqueInput = {
-  /** Upsert data */
-  data: TestimonialCarouselUpsertInput;
-  /** Unique document search */
-  where: TestimonialCarouselWhereUniqueInput;
-};
-
-/** Identifies documents */
-export type TestimonialCarouselWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<TestimonialCarouselWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<TestimonialCarouselWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<TestimonialCarouselWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  autoplayDuration_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  autoplayDuration_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  autoplayDuration_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  autoplayDuration_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  autoplayDuration_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplayDuration_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  autoplayDuration_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplay_not?: InputMaybe<Scalars['Boolean']['input']>;
-  filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  filterByAudience_not?: InputMaybe<Scalars['Boolean']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  testimonials_every?: InputMaybe<TestimonialWhereInput>;
-  testimonials_none?: InputMaybe<TestimonialWhereInput>;
-  testimonials_some?: InputMaybe<TestimonialWhereInput>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  title_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  title_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  title_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  title_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  title_starts_with?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-};
-
-/** References TestimonialCarousel record uniquely */
-export type TestimonialCarouselWhereUniqueInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
 export type TestimonialConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
@@ -16976,7 +19489,7 @@ export type TestimonialCreateInput = {
   rating: Scalars['Int']['input'];
   /** role input for default locale (en) */
   role?: InputMaybe<Scalars['String']['input']>;
-  testimonialCarousels?: InputMaybe<TestimonialCarouselCreateManyInlineInput>;
+  testimonialCarousels?: InputMaybe<EditorialSectionCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   variants?: InputMaybe<TestimonialVariantCreateManyInlineInput>;
 };
@@ -17180,7 +19693,7 @@ export type TestimonialUpdateInput = {
   rating?: InputMaybe<Scalars['Int']['input']>;
   /** role input for default locale (en) */
   role?: InputMaybe<Scalars['String']['input']>;
-  testimonialCarousels?: InputMaybe<TestimonialCarouselUpdateManyInlineInput>;
+  testimonialCarousels?: InputMaybe<EditorialSectionUpdateManyInlineInput>;
   variants?: InputMaybe<TestimonialVariantUpdateManyInlineInput>;
 };
 
@@ -18569,6 +21082,30 @@ export type _SystemDateTimeFieldVariation =
   | 'combined'
   | 'localization';
 
+export type GetBlogPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBlogPostsQuery = { __typename?: 'Query', blogPosts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> };
+
+export type GetBlogPostQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type GetBlogPostQuery = { __typename?: 'Query', blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null, body: { __typename?: 'RichText', html: string } } | null };
+
+export type GetJobsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetJobsQuery = { __typename?: 'Query', jobs: Array<{ __typename?: 'Job', id: string, slug: string, title: string, department: string, location: string, jobType: string, summary: string }> };
+
+export type GetJobQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type GetJobQuery = { __typename?: 'Query', job?: { __typename?: 'Job', id: string, slug: string, title: string, department: string, location: string, jobType: string, summary: string, responsibilities: Array<string>, requirements: Array<string>, niceToHave: Array<string>, description: { __typename?: 'RichText', html: string } } | null };
+
 export type GetNavigationQueryVariables = Exact<{
   identifier: Scalars['String']['input'];
   locale: Locale;
@@ -18584,15 +21121,15 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'TestimonialCarousel', id: string, title?: string | null, testimonials: Array<{ __typename?: 'Testimonial', id: string, quote: string, author: string, role?: string | null, rating: number, avatar?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'TestimonialCarousel', id: string, title?: string | null, testimonials: Array<{ __typename?: 'Testimonial', id: string, quote: string, author: string, role?: string | null, rating: number, avatar?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, imageUrl?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, bodyText?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, imageUrl?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
-export type GetProductQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
+export type GetProductBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
   locale: Locale;
 }>;
 
 
-export type GetProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, baseProductId: string, color: ProductColor, size: ProductSize, externalProductId?: number | null, description: { __typename?: 'RichText', text: string, html: string }, images: Array<{ __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }>, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', name?: string | null, weight?: number | null, motor?: string | null, battery?: string | null, range?: string | null, frame?: string | null, brakes?: string | null, gears?: string | null, suspension?: string | null, wheelSize?: WheelSize | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', id: number, name: string, sku: string, calculated_price: number, inventory_level: number, availability: string, description?: string | null, variants: Array<{ __typename?: 'BigCommerce_BigCommerceVariant', id: number, sku: string, calculated_price: number, inventory_level: number, option_values: Array<{ __typename?: 'BigCommerce_BigCommerceOptionValue', label: string, option_display_name: string }> }> } } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
 
 export type GetProductLineQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -18608,15 +21145,14 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string, baseProductId: string, color: ProductColor, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, images: Array<{ __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }>, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', id: number, name: string, sku: string, calculated_price: number, inventory_level: number, availability: string, variants: Array<{ __typename?: 'BigCommerce_BigCommerceVariant', id: number, sku: string, calculated_price: number, inventory_level: number, option_values: Array<{ __typename?: 'BigCommerce_BigCommerceOptionValue', label: string, option_display_name: string }> }> } } | null }> };
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
-export type GetProductsByCategoryQueryVariables = Exact<{
+export type GetFeaturedProductsQueryVariables = Exact<{
   locale: Locale;
-  categoryValue: Scalars['String']['input'];
 }>;
 
 
-export type GetProductsByCategoryQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string, baseProductId: string, color: ProductColor, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, images: Array<{ __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }>, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', id: number, name: string, sku: string, calculated_price: number, inventory_level: number, availability: string, variants: Array<{ __typename?: 'BigCommerce_BigCommerceVariant', id: number, sku: string, calculated_price: number, inventory_level: number, option_values: Array<{ __typename?: 'BigCommerce_BigCommerceOptionValue', label: string, option_display_name: string }> }> } } | null }> };
+export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetSiteSettingsQueryVariables = Exact<{
   locale: Locale;
@@ -18626,6 +21162,69 @@ export type GetSiteSettingsQueryVariables = Exact<{
 export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, footerText: { __typename?: 'RichText', text: string }, logo: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }> }> };
 
 
+export const GetBlogPostsDocument = gql`
+    query GetBlogPosts {
+  blogPosts(stage: DRAFT, orderBy: publishedDate_DESC, first: 20) {
+    id
+    slug
+    title
+    category
+    publishedDate
+    readTime
+    summary
+    imageUrl
+  }
+}
+    `;
+export const GetBlogPostDocument = gql`
+    query GetBlogPost($slug: String!) {
+  blogPost(where: {slug: $slug}, stage: DRAFT) {
+    id
+    slug
+    title
+    category
+    publishedDate
+    readTime
+    summary
+    imageUrl
+    body {
+      html
+    }
+  }
+}
+    `;
+export const GetJobsDocument = gql`
+    query GetJobs {
+  jobs(stage: DRAFT, first: 20) {
+    id
+    slug
+    title
+    department
+    location
+    jobType
+    summary
+  }
+}
+    `;
+export const GetJobDocument = gql`
+    query GetJob($slug: String!) {
+  job(where: {slug: $slug}, stage: DRAFT) {
+    id
+    slug
+    title
+    department
+    location
+    jobType
+    summary
+    description {
+      html
+    }
+    responsibilities
+    requirements
+    niceToHave
+  }
+}
+    `;
 export const GetNavigationDocument = gql`
     query GetNavigation($identifier: String!, $locale: Locale!) {
   navigations(
@@ -18679,6 +21278,7 @@ export const GetPageDocument = gql`
         id
         headline
         subheadline
+        imageUrl
         backgroundMedia {
           id
           url
@@ -18719,22 +21319,16 @@ export const GetPageDocument = gql`
           }
         }
       }
-      ... on TestimonialCarousel {
+      ... on EditorialSection {
         id
-        title
-        testimonials {
-          id
-          quote
-          author
-          role
-          rating
-          avatar {
-            id
-            url
-            width
-            height
-          }
-        }
+        eyebrow
+        editorialHeadline: headline
+        bodyText
+        imageUrl
+        imageRight
+        ctaLabel
+        ctaHref
+        specItemsJson
       }
       ... on CTABlock {
         id
@@ -18778,6 +21372,7 @@ export const GetPageDocument = gql`
         statsLayout: layout
         backgroundColor
         stats {
+          id
           value
           label
           icon {
@@ -18796,6 +21391,7 @@ export const GetPageDocument = gql`
           id
           headline
           subheadline
+          imageUrl
           backgroundMedia {
             id
             url
@@ -18836,22 +21432,16 @@ export const GetPageDocument = gql`
             }
           }
         }
-        ... on TestimonialCarousel {
+        ... on EditorialSection {
           id
-          title
-          testimonials {
-            id
-            quote
-            author
-            role
-            rating
-            avatar {
-              id
-              url
-              width
-              height
-            }
-          }
+          eyebrow
+          editorialHeadline: headline
+          bodyText
+          imageUrl
+          imageRight
+          ctaLabel
+          ctaHref
+          specItemsJson
         }
         ... on CTABlock {
           id
@@ -18895,6 +21485,7 @@ export const GetPageDocument = gql`
           statsLayout: layout
           backgroundColor
           stats {
+            id
             value
             label
             icon {
@@ -18920,59 +21511,30 @@ export const GetPageDocument = gql`
   }
 }
     `;
-export const GetProductDocument = gql`
-    query GetProduct($id: ID!, $locale: Locale!) {
-  product(where: {id: $id}, locales: [$locale, en], stage: DRAFT) {
+export const GetProductBySlugDocument = gql`
+    query GetProductBySlug($slug: String!, $locale: Locale!) {
+  product(where: {slug: $slug}, locales: [$locale, en], stage: DRAFT) {
     id
+    slug
     name
-    baseProductId
-    color
-    size
-    description {
-      text
-      html
-    }
-    images {
-      id
-      url
-      width
-      height
-    }
-    category {
-      value
-    }
+    tagline
+    bikeCategory
+    imageUrl
+    productFeatures
+    featured
     specifications {
-      name
-      weight
-      motor
-      battery
-      range
       frame
-      brakes
-      gears
-      suspension
-      wheelSize
+      weight
+      groupset
+      wheels
     }
     externalProductId
     externalProduct {
       data {
-        id
-        name
-        sku
         calculated_price
+        sale_price
         inventory_level
         availability
-        description
-        variants {
-          id
-          sku
-          calculated_price
-          inventory_level
-          option_values {
-            label
-            option_display_name
-          }
-        }
       }
     }
   }
@@ -19049,82 +21611,58 @@ export const GetProductsDocument = gql`
     query GetProducts($locale: Locale!) {
   products(locales: [$locale, en], stage: DRAFT, first: 20) {
     id
+    slug
     name
-    baseProductId
-    color
-    description {
-      text
-    }
-    images {
-      id
-      url
-      width
-      height
+    tagline
+    bikeCategory
+    imageUrl
+    productFeatures
+    featured
+    specifications {
+      frame
+      weight
+      groupset
+      wheels
     }
     externalProductId
     externalProduct {
       data {
-        id
-        name
-        sku
         calculated_price
+        sale_price
         inventory_level
         availability
-        variants {
-          id
-          sku
-          calculated_price
-          inventory_level
-          option_values {
-            label
-            option_display_name
-          }
-        }
       }
     }
   }
 }
     `;
-export const GetProductsByCategoryDocument = gql`
-    query GetProductsByCategory($locale: Locale!, $categoryValue: String!) {
+export const GetFeaturedProductsDocument = gql`
+    query GetFeaturedProducts($locale: Locale!) {
   products(
     locales: [$locale, en]
     stage: DRAFT
-    first: 20
-    where: {category: {value: $categoryValue}}
+    first: 4
+    where: {featured: true}
   ) {
     id
+    slug
     name
-    baseProductId
-    color
-    description {
-      text
+    tagline
+    bikeCategory
+    imageUrl
+    productFeatures
+    specifications {
+      frame
+      weight
+      groupset
+      wheels
     }
-    images {
-      id
-      url
-      width
-      height
-    }
-    externalProductId
     externalProduct {
       data {
-        id
-        name
-        sku
         calculated_price
+        sale_price
         inventory_level
         availability
-        variants {
-          id
-          sku
-          calculated_price
-          inventory_level
-          option_values {
-            label
-            option_display_name
-          }
-        }
       }
     }
   }
@@ -19163,14 +21701,26 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    GetBlogPosts(variables?: GetBlogPostsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetBlogPostsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetBlogPostsQuery>({ document: GetBlogPostsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetBlogPosts', 'query', variables);
+    },
+    GetBlogPost(variables: GetBlogPostQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetBlogPostQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetBlogPostQuery>({ document: GetBlogPostDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetBlogPost', 'query', variables);
+    },
+    GetJobs(variables?: GetJobsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetJobsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetJobsQuery>({ document: GetJobsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetJobs', 'query', variables);
+    },
+    GetJob(variables: GetJobQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetJobQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetJobQuery>({ document: GetJobDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetJob', 'query', variables);
+    },
     GetNavigation(variables: GetNavigationQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetNavigationQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetNavigationQuery>({ document: GetNavigationDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetNavigation', 'query', variables);
     },
     GetPage(variables: GetPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetPageQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPageQuery>({ document: GetPageDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetPage', 'query', variables);
     },
-    GetProduct(variables: GetProductQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProductQuery>({ document: GetProductDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProduct', 'query', variables);
+    GetProductBySlug(variables: GetProductBySlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductBySlugQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductBySlugQuery>({ document: GetProductBySlugDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProductBySlug', 'query', variables);
     },
     GetProductLine(variables: GetProductLineQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductLineQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductLineQuery>({ document: GetProductLineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProductLine', 'query', variables);
@@ -19178,8 +21728,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     GetProducts(variables: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductsQuery>({ document: GetProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProducts', 'query', variables);
     },
-    GetProductsByCategory(variables: GetProductsByCategoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductsByCategoryQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsByCategoryQuery>({ document: GetProductsByCategoryDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProductsByCategory', 'query', variables);
+    GetFeaturedProducts(variables: GetFeaturedProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetFeaturedProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetFeaturedProductsQuery>({ document: GetFeaturedProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetFeaturedProducts', 'query', variables);
     },
     GetSiteSettings(variables: GetSiteSettingsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetSiteSettingsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSiteSettingsQuery>({ document: GetSiteSettingsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetSiteSettings', 'query', variables);

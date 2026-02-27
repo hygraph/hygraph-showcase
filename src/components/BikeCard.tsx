@@ -1,0 +1,73 @@
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import type { Bike } from '@/types/hybike';
+import { formatBikeCategory, formatPrice } from '@/types/hybike';
+
+interface BikeCardProps {
+  bike: Bike;
+  locale: string;
+}
+
+export default function BikeCard({ bike, locale }: BikeCardProps) {
+  const price = bike.externalProduct?.data?.calculated_price;
+  const category = formatBikeCategory(bike.bikeCategory);
+
+  return (
+    <Link
+      href={`/${locale}/product/${bike.slug}`}
+      className="group block border border-[#121212] bg-[#F9F9F7] hover:bg-[#121212] transition-colors duration-300"
+    >
+      {/* Image */}
+      <div className="aspect-square overflow-hidden border-b border-[#121212]">
+        {bike.imageUrl ? (
+          <img
+            src={bike.imageUrl}
+            alt={bike.name}
+            className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full bg-[#E8E8E4] flex items-center justify-center">
+            <span className="text-[#6B6B6B] text-sm uppercase tracking-widest">No image</span>
+          </div>
+        )}
+      </div>
+
+      {/* Info */}
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-4 mb-3">
+          <div>
+            <p
+              className="uppercase tracking-[0.15em] text-[#6B6B6B] group-hover:text-[#F9F9F7]/50 mb-1 transition-colors"
+              style={{ fontSize: '0.65rem', fontWeight: 700 }}
+            >
+              {category}
+            </p>
+            <h3 className="group-hover:text-[#F9F9F7] transition-colors">{bike.name}</h3>
+          </div>
+          <p
+            className="text-[#121212] group-hover:text-[#FF4F00] transition-colors whitespace-nowrap mt-1"
+            style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            {formatPrice(price)}
+          </p>
+        </div>
+
+        {bike.tagline && (
+          <p
+            className="text-[#6B6B6B] group-hover:text-[#F9F9F7]/60 transition-colors mb-4"
+            style={{ lineHeight: 1.6 }}
+          >
+            {bike.tagline}
+          </p>
+        )}
+
+        <div className="flex items-center gap-2 text-[#FF4F00]">
+          <span className="uppercase tracking-[0.1em]" style={{ fontSize: '0.7rem', fontWeight: 700 }}>
+            View Details
+          </span>
+          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+        </div>
+      </div>
+    </Link>
+  );
+}

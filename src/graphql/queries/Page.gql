@@ -9,6 +9,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         id
         headline
         subheadline
+        imageUrl
         backgroundMedia {
           id
           url
@@ -49,22 +50,16 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           }
         }
       }
-      ... on TestimonialCarousel {
+      ... on EditorialSection {
         id
-        title
-        testimonials {
-          id
-          quote
-          author
-          role
-          rating
-          avatar {
-            id
-            url
-            width
-            height
-          }
-        }
+        eyebrow
+        editorialHeadline: headline
+        bodyText
+        imageUrl
+        imageRight
+        ctaLabel
+        ctaHref
+        specItemsJson
       }
       ... on CTABlock {
         id
@@ -108,6 +103,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         statsLayout: layout
         backgroundColor
         stats {
+          id
           value
           label
           icon {
@@ -126,6 +122,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           id
           headline
           subheadline
+          imageUrl
           backgroundMedia {
             id
             url
@@ -166,22 +163,16 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             }
           }
         }
-        ... on TestimonialCarousel {
+        ... on EditorialSection {
           id
-          title
-          testimonials {
-            id
-            quote
-            author
-            role
-            rating
-            avatar {
-              id
-              url
-              width
-              height
-            }
-          }
+          eyebrow
+          editorialHeadline: headline
+          bodyText
+          imageUrl
+          imageRight
+          ctaLabel
+          ctaHref
+          specItemsJson
         }
         ... on CTABlock {
           id
@@ -225,6 +216,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           statsLayout: layout
           backgroundColor
           stats {
+            id
             value
             label
             icon {

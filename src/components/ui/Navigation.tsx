@@ -1,71 +1,104 @@
-/**
- * Navigation Component - Site header with main navigation
- * Fetches navigation data from Hygraph
- */
+'use client';
 
-import { hygraphRequest } from '@/lib/hygraph/client';
-import {
-  GetNavigationDocument,
-  GetSiteSettingsDocument,
-  type GetNavigationQuery,
-  type GetNavigationQueryVariables,
-  type GetSiteSettingsQuery,
-  type GetSiteSettingsQueryVariables,
-} from '@/types/hygraph-generated';
-import LocaleSwitcher from './LocaleSwitcher';
-import NavigationItems from './NavigationItems';
-import Logo from './Logo';
-import DarkModeToggle from './DarkModeToggle';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ShoppingBag, Menu, X } from 'lucide-react';
+import { useState } from 'react';
 import type { Locale } from '@/lib/utils/locale';
+
+const navItems = [
+  { label: 'Collection', path: 'collection' },
+  { label: 'Journal', path: 'blog' },
+  { label: 'Careers', path: 'careers' },
+  { label: 'About', path: 'about' },
+  { label: 'Contact', path: 'contact' },
+];
 
 interface NavigationProps {
   locale: Locale;
 }
 
-export default async function Navigation({ locale }: NavigationProps) {
-  // Fetch navigation and site settings
-  let navData: GetNavigationQuery | null = null;
-  let siteSettings: GetSiteSettingsQuery['allSiteSettings'][0] | null = null;
-
-  try {
-    const [nav, settings] = await Promise.all([
-      hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
-        identifier: 'main-nav',
-        locale,
-      } as GetNavigationQueryVariables),
-      hygraphRequest<GetSiteSettingsQuery>(GetSiteSettingsDocument, {
-        locale,
-      } as GetSiteSettingsQueryVariables),
-    ]);
-
-    navData = nav;
-    siteSettings = (settings.allSiteSettings && settings.allSiteSettings.length > 0)
-      ? settings.allSiteSettings[0]
-      : null;
-  } catch (error) {
-    console.error('Failed to fetch navigation:', error);
-  }
+export default function Navigation({ locale }: NavigationProps) {
+  const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-soft dark:shadow-none">
-      <div className="container mx-auto flex items-center justify-between px-4 py-4">
+    <nav className="sticky top-0 z-50 bg-[#F9F9F7] border-b border-t border-[#121212]">
+      <div className="flex items-stretch h-[56px]">
         {/* Logo */}
-        <Logo locale={locale} siteName={siteSettings?.siteName || 'HyBike'} />
+        <Link
+          href={`/${locale}`}
+          className="flex items-center px-6 border-r border-[#121212] hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors"
+        >
+          <span className="uppercase" style={{ fontWeight: 900, fontSize: '1rem' }}>
+            HyBikes<span className="text-[#FF4F00]">.</span>
+          </span>
+        </Link>
 
-        {/* Navigation Items */}
-        <div className="hidden items-center gap-1 md:flex">
-          <NavigationItems
-            items={navData?.navigations?.[0]?.items || []}
-            locale={locale}
-          />
+        {/* Desktop Nav Links */}
+        <div className="hidden md:flex items-stretch">
+          {navItems.map((item) => {
+            const href = `/${locale}/${item.path}`;
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={item.path}
+                href={href}
+                className={`flex items-center px-6 border-r border-[#121212] transition-colors hover:bg-[#121212] hover:text-[#F9F9F7] ${
+                  isActive ? 'bg-[#121212] text-[#F9F9F7]' : ''
+                }`}
+                style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Right side: Dark Mode Toggle + Locale Switcher */}
-        <div className="flex items-center gap-3">
-          <DarkModeToggle />
-          <LocaleSwitcher />
-        </div>
+        {/* Spacer */}
+        <div className="flex-1" />
+
+        {/* Cart */}
+        <Link
+          href={`/${locale}/collection`}
+          className="flex items-center px-6 border-l border-[#121212] hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors gap-2"
+          style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+        >
+          <ShoppingBag size={16} strokeWidth={1.5} />
+          <span className="hidden sm:inline">Cart (0)</span>
+        </Link>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden flex items-center px-5 border-l border-[#121212] hover:bg-[#121212] hover:text-[#F9F9F7] transition-colors"
+        >
+          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-[#121212]">
+          {navItems.map((item) => {
+            const href = `/${locale}/${item.path}`;
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={item.path}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className={`block px-6 py-4 border-b border-[#121212] transition-colors hover:bg-[#121212] hover:text-[#F9F9F7] ${
+                  isActive ? 'bg-[#121212] text-[#F9F9F7]' : ''
+                }`}
+                style={{ fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </nav>
   );
 }

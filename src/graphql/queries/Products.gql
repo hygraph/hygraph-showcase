@@ -1,85 +1,57 @@
 query GetProducts($locale: Locale!) {
-  products(
-    locales: [$locale, en]
-    stage: DRAFT
-    first: 20
-  ) {
+  products(locales: [$locale, en], stage: DRAFT, first: 20) {
     id
+    slug
     name
-    baseProductId
-    color
-    description {
-      text
-    }
-    images {
-      id
-      url
-      width
-      height
+    tagline
+    bikeCategory
+    imageUrl
+    productFeatures
+    featured
+    specifications {
+      frame
+      weight
+      groupset
+      wheels
     }
     externalProductId
     externalProduct {
       data {
-        id
-        name
-        sku
         calculated_price
+        sale_price
         inventory_level
         availability
-        variants {
-          id
-          sku
-          calculated_price
-          inventory_level
-          option_values {
-            label
-            option_display_name
-          }
-        }
       }
     }
   }
 }
 
-query GetProductsByCategory($locale: Locale!, $categoryValue: String!) {
+query GetFeaturedProducts($locale: Locale!) {
   products(
     locales: [$locale, en]
     stage: DRAFT
-    first: 20
-    where: { category: { value: $categoryValue } }
+    first: 4
+    where: { featured: true }
   ) {
     id
+    slug
     name
-    baseProductId
-    color
-    description {
-      text
+    tagline
+    bikeCategory
+    imageUrl
+    productFeatures
+    specifications {
+      frame
+      weight
+      groupset
+      wheels
     }
-    images {
-      id
-      url
-      width
-      height
-    }
-    externalProductId
     externalProduct {
       data {
-        id
-        name
-        sku
         calculated_price
+        sale_price
         inventory_level
         availability
-        variants {
-          id
-          sku
-          calculated_price
-          inventory_level
-          option_values {
-            label
-            option_display_name
-          }
-        }
       }
     }
   }

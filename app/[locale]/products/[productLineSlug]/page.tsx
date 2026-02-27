@@ -13,9 +13,9 @@ import {
   type GetProductLineQueryVariables,
 } from '@/types/hygraph-generated';
 import {
-  GetProductsByCategoryDocument,
-  type GetProductsByCategoryQuery,
-  type GetProductsByCategoryQueryVariables,
+  GetProductsDocument,
+  type GetProductsQuery,
+  type GetProductsQueryVariables,
 } from '@/types/hygraph-generated';
 import { type Locale } from '@/lib/utils/locale';
 import { notFound } from 'next/navigation';
@@ -24,11 +24,11 @@ import type { Metadata } from 'next';
 /**
  * Type guard for products with federated data
  */
-type ProductWithFederation = GetProductsByCategoryQuery['products'][0] & {
-  externalProduct: NonNullable<GetProductsByCategoryQuery['products'][0]['externalProduct']>;
+type ProductWithFederation = GetProductsQuery['products'][0] & {
+  externalProduct: NonNullable<GetProductsQuery['products'][0]['externalProduct']>;
 };
 
-function hasFederatedData(product: GetProductsByCategoryQuery['products'][0]): product is ProductWithFederation {
+function hasFederatedData(product: GetProductsQuery['products'][0]): product is ProductWithFederation {
   return product.externalProduct !== undefined && product.externalProduct !== null;
 }
 
@@ -125,33 +125,32 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
   const displayDescription = variant?.description || productLine.description;
   const displayHeroImage = variant?.heroImage || productLine.heroImage;
 
-  // Map ProductLine slug to category taxonomy value
-  // Note: ProductCategory taxonomy has: MountainEbikes, UrbanEbikes, RoadBikes, GravelBikes
+  // Map ProductLine slug to BikeCategory enum value
   const categoryMap: Record<string, string> = {
-    'electric-trailblazer-series': 'MountainEbikes',
-    'urban-commuter-series': 'UrbanEbikes',
-    'comfort-series': 'UrbanEbikes', // Comfort products also use UrbanEbikes taxonomy
+    'electric-trailblazer-series': 'ELECTRIC',
+    'urban-commuter-series': 'URBAN',
+    'comfort-series': 'URBAN',
+    'road-racing-series': 'ROAD',
+    'gravel-series': 'GRAVEL',
   };
 
-  const categoryValue = categoryMap[productLineSlug];
+  const bikeCategoryValue = categoryMap[productLineSlug];
 
-  // Fetch products filtered by category
-  let productsData: GetProductsByCategoryQuery | null = null;
+  // Fetch all products and filter by bikeCategory
+  let allProducts: GetProductsQuery['products'] = [];
   try {
-    if (categoryValue) {
-      productsData = await hygraphRequest<GetProductsByCategoryQuery>(
-        GetProductsByCategoryDocument,
-        {
-          locale,
-          categoryValue,
-        } as GetProductsByCategoryQueryVariables
-      );
-    }
+    const productsData = await hygraphRequest<GetProductsQuery>(
+      GetProductsDocument,
+      { locale } as GetProductsQueryVariables,
+    );
+    allProducts = productsData.products ?? [];
   } catch (error) {
     console.error('Failed to fetch products:', error);
   }
 
-  const products = productsData?.products || [];
+  const products = bikeCategoryValue
+    ? allProducts.filter((p) => p.bikeCategory === bikeCategoryValue)
+    : allProducts;
 
   return (
     <div>
@@ -248,9 +247,9 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
                   >
                     {/* Product Image */}
                     <div className="relative aspect-square bg-gray-100">
-                      {product.images[0] && (
+                      {product.imageUrl && (
                         <Image
-                          src={product.images[0].url}
+                          src={product.imageUrl}
                           alt={product.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -278,7 +277,7 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
                             </p>
                           )}
                           <p className="text-xs text-gray-500">
-                            {federatedData?.sku || product.baseProductId}
+                            {product.slug}
                           </p>
                           {federatedData && (
                             <p className="text-xs text-gray-600 mt-1">
@@ -289,7 +288,7 @@ export default async function ProductLinePage({ params }: ProductLinePageProps) 
 
                         {inStock && (
                           <Link
-                            href={`/${locale}/product/${product.id}`}
+                            href={`/${locale}/product/${product.slug}`}
                             className="px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-hover transition-colors text-sm font-medium"
                           >
                             View Details
