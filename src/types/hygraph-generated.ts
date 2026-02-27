@@ -180,6 +180,7 @@ export type AssetCreateInput = {
   featureIcon?: InputMaybe<FeatureCreateManyInlineInput>;
   fileName?: InputMaybe<Scalars['String']['input']>;
   heroSectionBackgroundMedia?: InputMaybe<HeroSectionCreateManyInlineInput>;
+  imageEditorialSection?: InputMaybe<EditorialSectionCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
   productImages?: InputMaybe<ProductCreateManyInlineInput>;
@@ -368,6 +369,7 @@ export type AssetUpdateInput = {
   featureIcon?: InputMaybe<FeatureUpdateManyInlineInput>;
   fileName?: InputMaybe<Scalars['String']['input']>;
   heroSectionBackgroundMedia?: InputMaybe<HeroSectionUpdateManyInlineInput>;
+  imageEditorialSection?: InputMaybe<EditorialSectionUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
   productImages?: InputMaybe<ProductUpdateManyInlineInput>;
@@ -2786,13 +2788,7 @@ export type DocumentVersion = {
 /** Split-layout editorial section: image + text + optional spec grid */
 export type EditorialSection = Entity & {
   __typename?: 'EditorialSection';
-  /** Auto-advance carousel */
-  autoplay: Scalars['Boolean']['output'];
-  /** Seconds to display each testimonial (if autoplay enabled) */
-  autoplayDuration?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<RichText>;
-  /** Plain text body content for the editorial section */
-  bodyText?: Maybe<Scalars['String']['output']>;
   ctaHref?: Maybe<Scalars['String']['output']>;
   ctaLabel?: Maybe<Scalars['String']['output']>;
   eyebrow?: Maybe<Scalars['String']['output']>;
@@ -2801,8 +2797,8 @@ export type EditorialSection = Entity & {
   headline?: Maybe<Scalars['String']['output']>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  image: Asset;
   imageRight?: Maybe<Scalars['Boolean']['output']>;
-  imageUrl?: Maybe<Scalars['String']['output']>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -2814,6 +2810,14 @@ export type EditorialSection = Entity & {
   title?: Maybe<Scalars['String']['output']>;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+/** Split-layout editorial section: image + text + optional spec grid */
+export type EditorialSectionImageArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  where?: InputMaybe<AssetSingleRelationWhereInput>;
 };
 
 
@@ -2847,17 +2851,14 @@ export type EditorialSectionConnection = {
 };
 
 export type EditorialSectionCreateInput = {
-  autoplay: Scalars['Boolean']['input'];
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
   body?: InputMaybe<Scalars['RichTextAST']['input']>;
-  bodyText?: InputMaybe<Scalars['String']['input']>;
   ctaHref?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
   eyebrow?: InputMaybe<Scalars['String']['input']>;
   filterByAudience: Scalars['Boolean']['input'];
   headline?: InputMaybe<Scalars['String']['input']>;
+  image: AssetCreateOneInlineInput;
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<EditorialSectionCreateLocalizationsInput>;
   specItemsJson?: InputMaybe<Scalars['Json']['input']>;
@@ -2918,43 +2919,6 @@ export type EditorialSectionManyWhereInput = {
   OR?: InputMaybe<Array<EditorialSectionWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  autoplayDuration_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  autoplayDuration_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  autoplayDuration_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  autoplayDuration_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  autoplayDuration_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplayDuration_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  autoplayDuration_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplay_not?: InputMaybe<Scalars['Boolean']['input']>;
-  bodyText?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  bodyText_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  bodyText_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  bodyText_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  bodyText_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  bodyText_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  bodyText_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  bodyText_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  bodyText_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  bodyText_starts_with?: InputMaybe<Scalars['String']['input']>;
   ctaHref?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   ctaHref_contains?: InputMaybe<Scalars['String']['input']>;
@@ -3053,28 +3017,10 @@ export type EditorialSectionManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  image?: InputMaybe<AssetWhereInput>;
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given json path. */
   specItemsJson_json_path_exists?: InputMaybe<Scalars['String']['input']>;
   /**
@@ -3102,12 +3048,6 @@ export type EditorialSectionManyWhereInput = {
 };
 
 export type EditorialSectionOrderByInput =
-  | 'autoplayDuration_ASC'
-  | 'autoplayDuration_DESC'
-  | 'autoplay_ASC'
-  | 'autoplay_DESC'
-  | 'bodyText_ASC'
-  | 'bodyText_DESC'
   | 'ctaHref_ASC'
   | 'ctaHref_DESC'
   | 'ctaLabel_ASC'
@@ -3122,8 +3062,6 @@ export type EditorialSectionOrderByInput =
   | 'id_DESC'
   | 'imageRight_ASC'
   | 'imageRight_DESC'
-  | 'imageUrl_ASC'
-  | 'imageUrl_DESC'
   | 'title_ASC'
   | 'title_DESC'
   | 'updatedAt_ASC'
@@ -3218,17 +3156,14 @@ export type EditorialSectionParentWhereUniqueInput = {
 };
 
 export type EditorialSectionUpdateInput = {
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
   body?: InputMaybe<Scalars['RichTextAST']['input']>;
-  bodyText?: InputMaybe<Scalars['String']['input']>;
   ctaHref?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
   eyebrow?: InputMaybe<Scalars['String']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
   headline?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<AssetUpdateOneInlineInput>;
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<EditorialSectionUpdateLocalizationsInput>;
   specItemsJson?: InputMaybe<Scalars['Json']['input']>;
@@ -3267,17 +3202,13 @@ export type EditorialSectionUpdateManyInlineInput = {
 };
 
 export type EditorialSectionUpdateManyInput = {
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
   body?: InputMaybe<Scalars['RichTextAST']['input']>;
-  bodyText?: InputMaybe<Scalars['String']['input']>;
   ctaHref?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
   eyebrow?: InputMaybe<Scalars['String']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
   headline?: InputMaybe<Scalars['String']['input']>;
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<EditorialSectionUpdateManyLocalizationsInput>;
   specItemsJson?: InputMaybe<Scalars['Json']['input']>;
@@ -3372,43 +3303,6 @@ export type EditorialSectionWhereInput = {
   OR?: InputMaybe<Array<EditorialSectionWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  autoplay?: InputMaybe<Scalars['Boolean']['input']>;
-  autoplayDuration?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  autoplayDuration_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  autoplayDuration_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  autoplayDuration_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  autoplayDuration_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  autoplayDuration_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplayDuration_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  autoplayDuration_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  autoplay_not?: InputMaybe<Scalars['Boolean']['input']>;
-  bodyText?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  bodyText_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  bodyText_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  bodyText_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  bodyText_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  bodyText_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  bodyText_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  bodyText_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  bodyText_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  bodyText_starts_with?: InputMaybe<Scalars['String']['input']>;
   ctaHref?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   ctaHref_contains?: InputMaybe<Scalars['String']['input']>;
@@ -3507,28 +3401,10 @@ export type EditorialSectionWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  image?: InputMaybe<AssetWhereInput>;
   imageRight?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given json path. */
   specItemsJson_json_path_exists?: InputMaybe<Scalars['String']['input']>;
   /**
@@ -19403,7 +19279,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageUrl?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, specItemsJson?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -19590,7 +19466,12 @@ export const GetPageDocument = gql`
         body {
           html
         }
-        imageUrl
+        image {
+          id
+          url
+          width
+          height
+        }
         imageRight
         ctaLabel
         ctaHref
@@ -19705,7 +19586,12 @@ export const GetPageDocument = gql`
           body {
             html
           }
-          imageUrl
+          image {
+            id
+            url
+            width
+            height
+          }
           imageRight
           ctaLabel
           ctaHref

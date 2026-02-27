@@ -54,8 +54,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         id
         eyebrow
         editorialHeadline: headline
-        bodyText
-        imageUrl
+        body {
+          html
+        }
+        image {
+          id
+          url
+          width
+          height
+        }
         imageRight
         ctaLabel
         ctaHref
@@ -167,8 +174,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           id
           eyebrow
           editorialHeadline: headline
-          bodyText
-          imageUrl
+          body {
+            html
+          }
+          image {
+            id
+            url
+            width
+            height
+          }
           imageRight
           ctaLabel
           ctaHref
