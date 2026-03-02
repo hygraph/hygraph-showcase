@@ -14,10 +14,18 @@ export interface Bike {
   category?: { value: string } | null; // TaxonomyNode: RoadBikes | UrbanEbikes | MountainEbikes | GravelBikes
   imageUrl?: string | null;
   productFeatures?: string[] | null;
+  description?: { text: string } | null;
   specifications?: {
     frame?: string | null;
-    weight?: string | null;
+    motor?: string | null;
+    battery?: string | null;
+    range?: string | null;
+    weight?: number | null;
     groupset?: string | null;
+    gears?: string | null;
+    brakes?: string | null;
+    suspension?: string | null;
+    wheelSize?: string | null;
     wheels?: string | null;
   } | null;
   externalProduct?: {
@@ -61,12 +69,12 @@ export interface Job {
  *  e.g. "RoadBikes" → "Road Bikes", "UrbanEbikes" → "Urban Ebikes"
  */
 export function formatCategoryValue(value: string | null | undefined): string {
-  if (!value) return '';
-  return value.replace(/([a-z])([A-Z])/g, '$1 $2');
+  if (!value) return "";
+  return value.replace(/([a-z])([A-Z])/g, "$1 $2");
 }
 
 /** Formats a price number as a Euro string. Returns '—' if price is null/undefined. */
 export function formatPrice(price: number | null | undefined): string {
-  if (price == null) return '—';
-  return `€${Number(price).toLocaleString('en-EU')}`;
+  if (price == null) return "—";
+  return `€${Number(price).toLocaleString("en-EU")}`;
 }

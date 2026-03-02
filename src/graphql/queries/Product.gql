@@ -5,6 +5,9 @@ query GetProductBySlug($slug: String!, $locale: Locale!) {
     name
     tagline
     bikeCategory
+    description {
+      text
+    }
     category {
       value
     }
@@ -13,8 +16,15 @@ query GetProductBySlug($slug: String!, $locale: Locale!) {
     featured
     specifications {
       frame
+      motor
+      battery
+      range
       weight
       groupset
+      gears
+      brakes
+      suspension
+      wheelSize
       wheels
     }
     externalProductId

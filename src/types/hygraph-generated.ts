@@ -23913,7 +23913,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
 
 export type GetProductLineQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -23929,14 +23929,14 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetFeaturedProductsQueryVariables = Exact<{
   locale: Locale;
 }>;
 
 
-export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, weight?: number | null, groupset?: string | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetProductCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -24469,6 +24469,9 @@ export const GetProductBySlugDocument = gql`
     name
     tagline
     bikeCategory
+    description {
+      text
+    }
     category {
       value
     }
@@ -24477,8 +24480,15 @@ export const GetProductBySlugDocument = gql`
     featured
     specifications {
       frame
+      motor
+      battery
+      range
       weight
       groupset
+      gears
+      brakes
+      suspension
+      wheelSize
       wheels
     }
     externalProductId
@@ -24563,8 +24573,15 @@ export const GetProductsDocument = gql`
     featured
     specifications {
       frame
+      motor
+      battery
+      range
       weight
       groupset
+      gears
+      brakes
+      suspension
+      wheelSize
       wheels
     }
     externalProductId
@@ -24599,8 +24616,15 @@ export const GetFeaturedProductsDocument = gql`
     productFeatures
     specifications {
       frame
+      motor
+      battery
+      range
       weight
       groupset
+      gears
+      brakes
+      suspension
+      wheelSize
       wheels
     }
     externalProduct {

@@ -13,8 +13,15 @@ query GetProducts($locale: Locale!) {
     featured
     specifications {
       frame
+      motor
+      battery
+      range
       weight
       groupset
+      gears
+      brakes
+      suspension
+      wheelSize
       wheels
     }
     externalProductId
@@ -48,8 +55,15 @@ query GetFeaturedProducts($locale: Locale!) {
     productFeatures
     specifications {
       frame
+      motor
+      battery
+      range
       weight
       groupset
+      gears
+      brakes
+      suspension
+      wheelSize
       wheels
     }
     externalProduct {

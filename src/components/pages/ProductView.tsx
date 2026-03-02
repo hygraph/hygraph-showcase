@@ -30,13 +30,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
   const category = formatCategoryValue(bike.category?.value);
   const price = bike.externalProduct?.data?.calculated_price;
 
-  const specs = bike.specifications
-    ? Object.entries({
-        Frame: bike.specifications.frame,
-        Weight: bike.specifications.weight,
-        Groupset: bike.specifications.groupset,
-        Wheels: bike.specifications.wheels,
-      }).filter(([, v]) => v)
+  const specs: [string, string][] = bike.specifications
+    ? Object.entries(bike.specifications)
+        .filter(([, value]) => value != null)
+        .map(([key, value]) => [key, String(value)])
     : [];
 
   return (
@@ -249,16 +246,9 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                   className="uppercase tracking-[0.2em] text-muted mb-4"
                   style={{ fontSize: "0.65rem", fontWeight: 700 }}
                 >
-                  Features
+                  Description
                 </p>
-                {bike.tagline && (
-                  <p
-                    className="text-primary mb-6"
-                    style={{ lineHeight: 1.7, maxWidth: "540px" }}
-                  >
-                    {bike.tagline}
-                  </p>
-                )}
+                <p className="mb-6 max-w-[540px]">{bike.description?.text}</p>
                 <div className="space-y-3">
                   {bike.productFeatures.map((feature) => (
                     <div key={feature} className="flex items-center gap-3">
@@ -274,13 +264,7 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
             {/* Specs */}
             {specs.length > 0 && (
-              <div
-                className={`${
-                  bike.productFeatures?.length
-                    ? "lg:col-span-5"
-                    : "lg:col-span-12"
-                } p-8 md:p-12 lg:p-16`}
-              >
+              <div className="lg:col-span-5 p-8 md:p-12 lg:p-16">
                 <p
                   className="uppercase tracking-[0.2em] text-muted mb-6"
                   style={{ fontSize: "0.65rem", fontWeight: 700 }}
