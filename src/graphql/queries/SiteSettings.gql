@@ -10,12 +10,6 @@ query GetSiteSettings($locale: Locale!) {
     footerText {
       text
     }
-    logo {
-      id
-      url
-      width
-      height
-    }
     socialLinks {
       id
       platform

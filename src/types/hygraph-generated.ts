@@ -188,7 +188,6 @@ export type AssetCreateInput = {
   productLineHeroImageVariant?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
   seoOgImage?: InputMaybe<SeoCreateManyInlineInput>;
   siteSettingsDefaultMetaImage?: InputMaybe<SiteSettingsCreateManyInlineInput>;
-  siteSettingsLogo?: InputMaybe<SiteSettingsCreateManyInlineInput>;
   statIcons?: InputMaybe<StatCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
@@ -379,7 +378,6 @@ export type AssetUpdateInput = {
   reUpload?: InputMaybe<Scalars['Boolean']['input']>;
   seoOgImage?: InputMaybe<SeoUpdateManyInlineInput>;
   siteSettingsDefaultMetaImage?: InputMaybe<SiteSettingsUpdateManyInlineInput>;
-  siteSettingsLogo?: InputMaybe<SiteSettingsUpdateManyInlineInput>;
   statIcons?: InputMaybe<StatUpdateManyInlineInput>;
   /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
   uploadUrl?: InputMaybe<Scalars['String']['input']>;
@@ -20343,8 +20341,6 @@ export type SiteSettings = Entity & Node & {
   locale: Locale;
   /** Get the other localizations for this document */
   localizations: Array<SiteSettings>;
-  /** Site logo displayed in header/footer (recommended: SVG, transparent background) */
-  logo: Asset;
   /** Primary site navigation (header) */
   mainNavigation?: Maybe<Navigation>;
   /** The time the document was published. Null on documents in draft stage. */
@@ -20413,14 +20409,6 @@ export type SiteSettingsHistoryArgs = {
 export type SiteSettingsLocalizationsArgs = {
   includeCurrent?: Scalars['Boolean']['input'];
   locales?: Array<Locale>;
-};
-
-
-/** Global site configuration (singleton) */
-export type SiteSettingsLogoArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  where?: InputMaybe<AssetSingleRelationWhereInput>;
 };
 
 
@@ -20513,7 +20501,6 @@ export type SiteSettingsCreateInput = {
   footerText: Scalars['RichTextAST']['input'];
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<SiteSettingsCreateLocalizationsInput>;
-  logo: AssetCreateOneInlineInput;
   mainNavigation?: InputMaybe<NavigationCreateOneInlineInput>;
   /** siteName input for default locale (en) */
   siteName: Scalars['String']['input'];
@@ -20633,7 +20620,6 @@ export type SiteSettingsManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  logo?: InputMaybe<AssetWhereInput>;
   mainNavigation?: InputMaybe<NavigationWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
@@ -20703,7 +20689,6 @@ export type SiteSettingsUpdateInput = {
   footerText?: InputMaybe<Scalars['RichTextAST']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<SiteSettingsUpdateLocalizationsInput>;
-  logo?: InputMaybe<AssetUpdateOneInlineInput>;
   mainNavigation?: InputMaybe<NavigationUpdateOneInlineInput>;
   /** siteName input for default locale (en) */
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -20923,7 +20908,6 @@ export type SiteSettingsWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  logo?: InputMaybe<AssetWhereInput>;
   mainNavigation?: InputMaybe<NavigationWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
@@ -23925,7 +23909,7 @@ export type GetSiteSettingsQueryVariables = Exact<{
 }>;
 
 
-export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, announcement?: { __typename?: 'RichText', html: string } | null, footerText: { __typename?: 'RichText', text: string }, logo: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }>, mainNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null, footerNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null }> };
+export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, announcement?: { __typename?: 'RichText', html: string } | null, footerText: { __typename?: 'RichText', text: string }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }>, mainNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null, footerNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null }> };
 
 
 export const GetBlogPostsDocument = gql`
@@ -24636,12 +24620,6 @@ export const GetSiteSettingsDocument = gql`
     }
     footerText {
       text
-    }
-    logo {
-      id
-      url
-      width
-      height
     }
     socialLinks {
       id
