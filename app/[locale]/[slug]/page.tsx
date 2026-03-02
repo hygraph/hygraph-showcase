@@ -193,40 +193,40 @@ export default async function Page({ params }: PageProps) {
         return <PageHeader key={section.id} section={section} />;
       }
       if (isBlogList(section)) {
-        return <BlogList key={section.id} section={section as any} />;
+        return <BlogList key={section.id} section={section} />;
       }
       if (isFeaturedArticle(section)) {
         return (
           <FeaturedArticle
             key={section.id}
-            section={section as any}
+            section={section}
             locale={locale as Locale}
           />
         );
       }
       if (isJobList(section)) {
-        return <JobList key={section.id} section={section as any} />;
+        return <JobList key={section.id} section={section} />;
       }
       if (isHeroSection(section)) {
         return (
           <HeroSection
             key={section.id}
-            section={section as any}
+            section={section}
             locale={locale as Locale}
           />
         );
       }
       if (isFeatureGrid(section)) {
-        return <FeatureGrid key={section.id} section={section as any} />;
+        return <FeatureGrid key={section.id} section={section} />;
       }
       if (isEditorialSection(section)) {
-        return <EditorialSection key={section.id} section={section as any} />;
+        return <EditorialSection key={section.id} section={section} />;
       }
       if (isCTABlock(section)) {
         return (
           <CTABlock
             key={section.id}
-            section={section as any}
+            section={section}
             locale={locale as Locale}
           />
         );
@@ -235,25 +235,25 @@ export default async function Page({ params }: PageProps) {
         return (
           <ProductShowcase
             key={section.id}
-            section={section as any}
+            section={section}
             locale={locale as Locale}
           />
         );
       }
       if (isSectionHeader(section)) {
-        return <SectionHeader key={section.id} section={section as any} />;
+        return <SectionHeader key={section.id} section={section} />;
       }
       if (isTimeline(section)) {
-        return <Timeline key={section.id} section={section as any} />;
+        return <Timeline key={section.id} section={section} />;
       }
       if (isContactSection(section)) {
-        return <ContactSection key={section.id} section={section as any} />;
+        return <ContactSection key={section.id} section={section} />;
       }
       if (isStatsBar(section)) {
         return (
           <StatsBar
             key={section.id}
-            section={section as any}
+            section={section}
             locale={locale as Locale}
           />
         );
