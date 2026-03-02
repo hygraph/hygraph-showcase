@@ -1,16 +1,23 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/lib/utils/locale";
-import { buildHref, type NavItem } from "@/lib/utils/navigation";
+import { buildHref } from "@/lib/utils/navigation";
 import { formatCategoryValue } from "@/types/hybike";
+import type { GetSiteSettingsQuery } from "@/types/hygraph-generated";
 
 interface FooterProps {
   locale: Locale;
-  navItems: NavItem[];
+  siteSettings: GetSiteSettingsQuery["allSiteSettings"][0] | null;
   bikeCategories: string[];
 }
 
-export default function Footer({ locale, navItems, bikeCategories }: FooterProps) {
+export default function Footer({
+  locale,
+  siteSettings,
+  bikeCategories,
+}: FooterProps) {
+  const footerNavItems = siteSettings?.footerNavigation?.items ?? [];
+  const socialLinks = siteSettings?.socialLinks ?? [];
   return (
     <footer className="border-t border-secondary/20 bg-primary text-secondary">
       {/* Newsletter + Links */}
@@ -67,7 +74,7 @@ export default function Footer({ locale, navItems, bikeCategories }: FooterProps
               Company
             </p>
             <div className="space-y-3">
-              {navItems.map((item) => (
+              {footerNavItems.map((item) => (
                 <Link
                   key={item.id}
                   href={buildHref(item, locale)}
@@ -83,20 +90,24 @@ export default function Footer({ locale, navItems, bikeCategories }: FooterProps
           {/* Social */}
           <div className="p-8 col-span-2 sm:col-span-1">
             <p
-              className="uppercase tracking-[0.15em] text-secondary/40 mb-6"
+              className="tracking-[0.15em] text-secondary/40 mb-6"
               style={{ fontSize: "0.65rem", fontWeight: 700 }}
             >
               Social
             </p>
             <div className="space-y-3">
-              {["Instagram", "Twitter", "YouTube"].map((s) => (
+              {socialLinks.map((link) => (
                 <a
-                  key={s}
-                  href="#"
+                  key={link.id}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-1 text-secondary/70 hover:text-accent transition-colors"
                   style={{ fontSize: "0.8rem" }}
                 >
-                  {s}
+                  <span className="lowercase [&::first-letter]:uppercase">
+                    {link.platform}
+                  </span>
                   <ArrowUpRight size={12} />
                 </a>
               ))}

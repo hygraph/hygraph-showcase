@@ -19,5 +19,18 @@ query GetSiteSettings($locale: Locale!) {
       url
       handle
     }
+    footerNavigation {
+      id
+      items {
+        id
+        label
+        linkType
+        externalUrl
+        pageLink {
+          id
+          slug
+        }
+      }
+    }
   }
 }

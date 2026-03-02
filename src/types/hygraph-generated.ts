@@ -23925,7 +23925,7 @@ export type GetSiteSettingsQueryVariables = Exact<{
 }>;
 
 
-export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, footerText: { __typename?: 'RichText', text: string }, logo: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }> }> };
+export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, footerText: { __typename?: 'RichText', text: string }, logo: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }>, footerNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null }> };
 
 
 export const GetBlogPostsDocument = gql`
@@ -24645,6 +24645,19 @@ export const GetSiteSettingsDocument = gql`
       platform
       url
       handle
+    }
+    footerNavigation {
+      id
+      items {
+        id
+        label
+        linkType
+        externalUrl
+        pageLink {
+          id
+          slug
+        }
+      }
     }
   }
 }

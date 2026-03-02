@@ -13,10 +13,13 @@ import SegmentSwitcher from "@/components/ui/SegmentSwitcher";
 import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetNavigationDocument,
+  GetSiteSettingsDocument,
   GetSegmentsDocument,
   GetProductCategoriesDocument,
   type GetNavigationQuery,
   type GetNavigationQueryVariables,
+  type GetSiteSettingsQuery,
+  type GetSiteSettingsQueryVariables,
   type GetSegmentsQuery,
   type GetProductCategoriesQuery,
 } from "@/types/hygraph-generated";
@@ -40,21 +43,20 @@ export default async function LocaleLayout({
   }
 
   let navItems: GetNavigationQuery["navigations"][0]["items"] = [];
-  let footerItems: GetNavigationQuery["navigations"][0]["items"] = [];
+  let siteSettings: GetSiteSettingsQuery["allSiteSettings"][0] | null = null;
   let segments: GetSegmentsQuery["segments"] = [];
   let bikeCategories: string[] = [];
 
   try {
-    const [mainNavData, footerNavData, segmentsData, categoriesData] =
+    const [mainNavData, siteSettingsData, segmentsData, categoriesData] =
       await Promise.all([
         hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
           identifier: "main-nav",
           locale,
         } as GetNavigationQueryVariables),
-        hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
-          identifier: "footer-nav",
+        hygraphRequest<GetSiteSettingsQuery>(GetSiteSettingsDocument, {
           locale,
-        } as GetNavigationQueryVariables),
+        } as GetSiteSettingsQueryVariables),
         hygraphRequest<GetSegmentsQuery>(GetSegmentsDocument, {}),
         hygraphRequest<GetProductCategoriesQuery>(
           GetProductCategoriesDocument,
@@ -62,7 +64,7 @@ export default async function LocaleLayout({
         ),
       ]);
     navItems = mainNavData.navigations?.[0]?.items ?? [];
-    footerItems = footerNavData.navigations?.[0]?.items ?? [];
+    siteSettings = siteSettingsData.allSiteSettings?.[0] ?? null;
     segments = segmentsData.segments ?? [];
     bikeCategories = [
       ...new Set(categoriesData.products.map((p) => p.category?.value)),
@@ -78,7 +80,7 @@ export default async function LocaleLayout({
         <main className="flex-1">{children}</main>
         <Footer
           locale={locale as Locale}
-          navItems={footerItems}
+          siteSettings={siteSettings}
           bikeCategories={bikeCategories}
         />
         <SegmentSwitcher segments={segments} />
