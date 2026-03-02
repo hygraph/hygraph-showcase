@@ -27,12 +27,14 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
           {/* Left: Typography */}
           <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col border-b lg:border-b-0 lg:border-r border-primary">
             <div>
-              <p
-                className="uppercase tracking-[0.2em] text-muted mb-8"
-                style={{ fontSize: "0.65rem", fontWeight: 700 }}
-              >
-                Premium Cycling &mdash; Since 2019
-              </p>
+              {section.label && (
+                <p
+                  className="uppercase tracking-[0.2em] text-muted mb-8"
+                  style={{ fontSize: "0.65rem", fontWeight: 700 }}
+                >
+                  {section.label}
+                </p>
+              )}
               <h1 className="relative z-10">
                 {section.headline.replace(/\.$/, "")}
                 <span className="text-accent">.</span>
@@ -107,12 +109,14 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
   return (
     <section className="border-b border-primary bg-primary min-h-[60vh] flex items-center">
       <div className="p-8 md:p-16 lg:p-24 w-full">
-        <p
-          className="uppercase tracking-[0.2em] text-secondary/50 mb-6"
-          style={{ fontSize: "0.65rem", fontWeight: 700 }}
-        >
-          Premium Cycling &mdash; Since 2019
-        </p>
+        {section.label && (
+          <p
+            className="uppercase tracking-[0.2em] text-secondary/50 mb-6"
+            style={{ fontSize: "0.65rem", fontWeight: 700 }}
+          >
+            {section.label}
+          </p>
+        )}
         <h1 className="text-secondary mb-8 max-w-3xl">
           {section.headline.replace(/\.$/, "")}
           <span className="text-accent">.</span>
