@@ -149,7 +149,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         displayFilters
         showPrices
         showStock
-        itemsPerRow
       }
       ... on StatsBar {
         id
@@ -345,7 +344,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           displayFilters
           showPrices
           showStock
-          itemsPerRow
         }
         ... on StatsBar {
           id

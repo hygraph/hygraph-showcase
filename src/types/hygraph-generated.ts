@@ -14972,8 +14972,6 @@ export type ProductShowcase = Entity & {
   filterByAudience: Scalars['Boolean']['output'];
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  /** Number of products per row (desktop) */
-  itemsPerRow?: Maybe<Scalars['Int']['output']>;
   /** Display layout for products */
   layout: DisplayLayout;
   /** Show all products from this product line. Variant-enabled to show different product lines per audience. */
@@ -15030,7 +15028,6 @@ export type ProductShowcaseConnection = {
 export type ProductShowcaseCreateInput = {
   displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience: Scalars['Boolean']['input'];
-  itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
   layout: DisplayLayout;
   productLine?: InputMaybe<ProductLineCreateOneInlineInput>;
   products?: InputMaybe<ProductCreateManyInlineInput>;
@@ -15100,21 +15097,6 @@ export type ProductShowcaseManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  itemsPerRow_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  itemsPerRow_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  itemsPerRow_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  itemsPerRow_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  itemsPerRow_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  itemsPerRow_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  itemsPerRow_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   layout?: InputMaybe<DisplayLayout>;
   /** All values that are contained in given list. */
   layout_in?: InputMaybe<Array<InputMaybe<DisplayLayout>>>;
@@ -15156,8 +15138,6 @@ export type ProductShowcaseOrderByInput =
   | 'filterByAudience_DESC'
   | 'id_ASC'
   | 'id_DESC'
-  | 'itemsPerRow_ASC'
-  | 'itemsPerRow_DESC'
   | 'layout_ASC'
   | 'layout_DESC'
   | 'showPrices_ASC'
@@ -15258,7 +15238,6 @@ export type ProductShowcaseParentWhereUniqueInput = {
 export type ProductShowcaseUpdateInput = {
   displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
-  itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
   layout?: InputMaybe<DisplayLayout>;
   productLine?: InputMaybe<ProductLineUpdateOneInlineInput>;
   products?: InputMaybe<ProductUpdateManyInlineInput>;
@@ -15280,7 +15259,6 @@ export type ProductShowcaseUpdateManyInlineInput = {
 export type ProductShowcaseUpdateManyInput = {
   displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
-  itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
   layout?: InputMaybe<DisplayLayout>;
   showPrices?: InputMaybe<Scalars['Boolean']['input']>;
   showStock?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15378,21 +15356,6 @@ export type ProductShowcaseWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than the given value. */
-  itemsPerRow_gt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values greater than or equal the given value. */
-  itemsPerRow_gte?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are contained in given list. */
-  itemsPerRow_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** All values less than the given value. */
-  itemsPerRow_lt?: InputMaybe<Scalars['Int']['input']>;
-  /** All values less than or equal the given value. */
-  itemsPerRow_lte?: InputMaybe<Scalars['Int']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  itemsPerRow_not?: InputMaybe<Scalars['Int']['input']>;
-  /** All values that are not contained in given list. */
-  itemsPerRow_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   layout?: InputMaybe<DisplayLayout>;
   /** All values that are contained in given list. */
   layout_in?: InputMaybe<Array<InputMaybe<DisplayLayout>>>;
@@ -23468,7 +23431,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string, blogListHeadline?: string | null, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, label?: string | null, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductShowcase', id: string, layout: DisplayLayout, filterByAudience: boolean, displayFilters?: boolean | null, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeader', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductShowcase', id: string, layout: DisplayLayout, filterByAudience: boolean, displayFilters?: boolean | null, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeader', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string, blogListHeadline?: string | null, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, label?: string | null, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductShowcase', id: string, layout: DisplayLayout, filterByAudience: boolean, displayFilters?: boolean | null, showPrices: boolean, showStock: boolean, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeader', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductShowcase', id: string, layout: DisplayLayout, filterByAudience: boolean, displayFilters?: boolean | null, showPrices: boolean, showStock: boolean, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeader', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -23752,7 +23715,6 @@ export const GetPageDocument = gql`
         displayFilters
         showPrices
         showStock
-        itemsPerRow
       }
       ... on StatsBar {
         id
@@ -23948,7 +23910,6 @@ export const GetPageDocument = gql`
           displayFilters
           showPrices
           showStock
-          itemsPerRow
         }
         ... on StatsBar {
           id

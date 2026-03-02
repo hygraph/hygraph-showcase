@@ -1,8 +1,6 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import ProductFilters from "@/components/ProductFilters";
 import type { GetPageQuery } from "@/types/hygraph-generated";
@@ -47,10 +45,13 @@ export default function ProductShowcase({
       ? products.filter((b) => b.category?.value === activeCategory)
       : products;
 
-  const cols =
-    section.itemsPerRow === 2
-      ? "grid-cols-1 md:grid-cols-2"
-      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+  const colsMap: Record<string, string> = {
+    GRID_2COL: "grid-cols-1 md:grid-cols-2",
+    GRID_3COL: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    GRID_4COL: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+  };
+
+  const cols = colsMap[section.layout] ?? "grid-cols-1 md:grid-cols-2";
 
   return (
     <section className="border-b border-primary">
@@ -58,11 +59,7 @@ export default function ProductShowcase({
         <ProductFilters categories={categories} products={products} />
       )}
 
-      <div
-        className={`grid ${
-          section.displayFilters ? "grid-cols-1 md:grid-cols-2" : cols
-        }`}
-      >
+      <div className={`grid ${cols}`}>
         {displayed.map((product) => (
           <div
             key={product.id}
