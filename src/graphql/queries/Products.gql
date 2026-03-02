@@ -4,7 +4,6 @@ query GetProducts($locale: Locale!) {
     slug
     name
     tagline
-    bikeCategory
     category {
       value
     }
@@ -47,7 +46,6 @@ query GetFeaturedProducts($locale: Locale!) {
     slug
     name
     tagline
-    bikeCategory
     category {
       value
     }

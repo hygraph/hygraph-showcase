@@ -934,13 +934,6 @@ export type BigCommerce_BigCommerceVariant = {
   sku: Scalars['String']['output'];
 };
 
-/** hybikes product category (Road, Urban, Electric, Gravel) */
-export type BikeCategory =
-  | 'ELECTRIC'
-  | 'GRAVEL'
-  | 'ROAD'
-  | 'URBAN';
-
 export type BlogList = Entity & {
   __typename?: 'BlogList';
   headline?: Maybe<Scalars['String']['output']>;
@@ -13259,8 +13252,6 @@ export type Product = Entity & Node & {
   __typename?: 'Product';
   /** Base product identifier from BigCommerce/CommerceTools (e.g., "ATH-NVA-700") */
   baseProductId: Scalars['String']['output'];
-  /** hybikes product category */
-  bikeCategory?: Maybe<BikeCategory>;
   /** Product category from native Hygraph taxonomy */
   category: TaxonomyNode;
   /** Product color (SKU code, e.g., RE for Red). Used in remote field URL: ${baseProductId}-${color}-${size} */
@@ -13435,7 +13426,6 @@ export type ProductConnection = {
 
 export type ProductCreateInput = {
   baseProductId: Scalars['String']['input'];
-  bikeCategory?: InputMaybe<BikeCategory>;
   category: TaxonomyNodeInput;
   color: ProductColor;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -15114,13 +15104,6 @@ export type ProductManyWhereInput = {
   baseProductId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   baseProductId_starts_with?: InputMaybe<Scalars['String']['input']>;
-  bikeCategory?: InputMaybe<BikeCategory>;
-  /** All values that are contained in given list. */
-  bikeCategory_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  bikeCategory_not?: InputMaybe<BikeCategory>;
-  /** All values that are not contained in given list. */
-  bikeCategory_not_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
   category?: InputMaybe<TaxonomyNodeWhereInput>;
   /** Matches if the field value is a descendant of the provided taxonomy nodes */
   category_descendants_of?: InputMaybe<Array<TaxonomyNodeWhereInput>>;
@@ -15302,8 +15285,6 @@ export type ProductManyWhereInput = {
 export type ProductOrderByInput =
   | 'baseProductId_ASC'
   | 'baseProductId_DESC'
-  | 'bikeCategory_ASC'
-  | 'bikeCategory_DESC'
   | 'color_ASC'
   | 'color_DESC'
   | 'createdAt_ASC'
@@ -16764,7 +16745,6 @@ export type ProductSpecificationWhereUniqueInput = {
 
 export type ProductUpdateInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
-  bikeCategory?: InputMaybe<BikeCategory>;
   category?: InputMaybe<TaxonomyNodeInput>;
   color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
@@ -16826,7 +16806,6 @@ export type ProductUpdateManyInlineInput = {
 
 export type ProductUpdateManyInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
-  bikeCategory?: InputMaybe<BikeCategory>;
   category?: InputMaybe<TaxonomyNodeInput>;
   color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
@@ -16945,13 +16924,6 @@ export type ProductWhereInput = {
   baseProductId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   baseProductId_starts_with?: InputMaybe<Scalars['String']['input']>;
-  bikeCategory?: InputMaybe<BikeCategory>;
-  /** All values that are contained in given list. */
-  bikeCategory_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  bikeCategory_not?: InputMaybe<BikeCategory>;
-  /** All values that are not contained in given list. */
-  bikeCategory_not_in?: InputMaybe<Array<InputMaybe<BikeCategory>>>;
   category?: InputMaybe<TaxonomyNodeWhereInput>;
   /** Matches if the field value is a descendant of the provided taxonomy nodes */
   category_descendants_of?: InputMaybe<Array<TaxonomyNodeWhereInput>>;
@@ -23913,7 +23885,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
 
 export type GetProductLineQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -23929,14 +23901,14 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetFeaturedProductsQueryVariables = Exact<{
   locale: Locale;
 }>;
 
 
-export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, bikeCategory?: BikeCategory | null, imageUrl?: string | null, productFeatures: Array<string>, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, imageUrl?: string | null, productFeatures: Array<string>, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetProductCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -24468,7 +24440,6 @@ export const GetProductBySlugDocument = gql`
     slug
     name
     tagline
-    bikeCategory
     description {
       text
     }
@@ -24564,7 +24535,6 @@ export const GetProductsDocument = gql`
     slug
     name
     tagline
-    bikeCategory
     category {
       value
     }
@@ -24608,7 +24578,6 @@ export const GetFeaturedProductsDocument = gql`
     slug
     name
     tagline
-    bikeCategory
     category {
       value
     }
