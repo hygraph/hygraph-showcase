@@ -17,25 +17,35 @@ interface FeatureGridProps {
 export default function FeatureGrid({ section }: FeatureGridProps) {
   const features = section.features;
 
+  const colsMap: Record<string, string> = {
+    GRID_2COL: "grid-cols-1 md:grid-cols-2",
+    GRID_3COL: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    GRID_4COL: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+  };
+  const cols = colsMap[section.layout] ?? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+
+  const numCols = section.layout === "GRID_4COL" ? 4 : section.layout === "GRID_3COL" ? 3 : 2;
+  const numRows = Math.ceil(features.length / numCols);
+
+  function getBorderClasses(i: number): string {
+    const col = i % numCols;
+    const row = Math.floor(i / numCols);
+    const hasRight = col < numCols - 1;
+    const hasBottom = row < numRows - 1;
+    return [
+      i < features.length - 1 ? "border-b border-primary" : "",
+      hasRight ? "md:border-r md:border-primary" : "md:border-r-0",
+      hasBottom ? "md:border-b md:border-primary" : "md:border-b-0",
+    ].join(" ");
+  }
+
   return (
     <section className="border-b border-primary">
-      <div
-        className={`grid grid-cols-1 md:grid-cols-2 ${
-          features.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
-        }`}
-      >
+      <div className={`grid ${cols}`}>
         {features.map((feature, i) => (
           <div
             key={feature.id}
-            className={[
-              "p-8 md:p-10",
-              i < features.length - 1
-                ? "border-b md:border-b-0 md:border-r border-primary"
-                : "",
-              i === 1 && features.length === 4
-                ? "md:border-b lg:border-b-0"
-                : "",
-            ].join(" ")}
+            className={`p-8 md:p-10 ${getBorderClasses(i)}`}
           >
             <p
               className="text-accent mb-4 uppercase tracking-[0.2em]"
