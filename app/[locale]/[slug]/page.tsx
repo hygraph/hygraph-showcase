@@ -7,10 +7,8 @@ import { cookies } from "next/headers";
 import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetPageDocument,
-  GetJobsDocument,
   type GetPageQuery,
   type GetPageQueryVariables,
-  type GetJobsQuery,
 } from "@/types/hygraph-generated";
 import { type Locale } from "@/lib/utils/locale";
 import HeroSection from "@/components/sections/HeroSection";
@@ -28,7 +26,6 @@ import ContactSection from "@/components/sections/ContactSection";
 import PageHeader from "@/components/sections/PageHeader";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import type { Job } from "@/types/hybike";
 
 // Type guards for section types
 type PageSection = GetPageQuery["pages"][0]["sections"][0];
@@ -166,21 +163,14 @@ export default async function Page({ params }: PageProps) {
   const segmentName =
     audienceCookie && audienceCookie !== "Default" ? audienceCookie : undefined;
 
-  // Fetch page + additional listing data in parallel based on slug
   let data: GetPageQuery | null = null;
-  let jobs: GetJobsQuery | null = null;
 
   try {
-    [data, jobs] = await Promise.all([
-      hygraphRequest<GetPageQuery>(GetPageDocument, {
-        slug,
-        locale,
-        segmentName,
-      } as GetPageQueryVariables),
-      slug === "careers"
-        ? hygraphRequest<GetJobsQuery>(GetJobsDocument, {})
-        : Promise.resolve(null),
-    ]);
+    data = await hygraphRequest<GetPageQuery>(GetPageDocument, {
+      slug,
+      locale,
+      segmentName,
+    } as GetPageQueryVariables);
   } catch (error) {
     console.error("Failed to fetch page:", error);
     notFound();
@@ -196,8 +186,6 @@ export default async function Page({ params }: PageProps) {
   const variant =
     page.variants && page.variants.length > 0 ? page.variants[0] : null;
   const displaySections = variant?.sections || page.sections;
-
-  const jobList = (jobs?.jobs ?? []) as unknown as Job[];
 
   function renderSections() {
     return displaySections.map((section) => {
@@ -217,7 +205,7 @@ export default async function Page({ params }: PageProps) {
         );
       }
       if (isJobList(section)) {
-        return <JobList key={section.id} jobs={jobList} />;
+        return <JobList key={section.id} section={section as any} />;
       }
       if (isHeroSection(section)) {
         return (

@@ -47,6 +47,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
       }
       ... on JobList {
         id
+        jobs {
+          id
+          slug
+          title
+          department
+          location
+          jobType
+          summary
+        }
       }
       ... on HeroSection {
         id
@@ -260,6 +269,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         }
         ... on JobList {
           id
+          jobs {
+            id
+            slug
+            title
+            department
+            location
+            jobType
+            summary
+          }
         }
         ... on HeroSection {
           id

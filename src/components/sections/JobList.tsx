@@ -3,13 +3,19 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useParams } from "next/navigation";
-import type { Job } from "@/types/hybike";
+import type { GetPageQuery } from "@/types/hygraph-generated";
+
+type JobListSection = Extract<
+  GetPageQuery["pages"][0]["sections"][0],
+  { __typename?: "JobList" }
+>;
 
 interface JobListProps {
-  jobs: Job[];
+  section: JobListSection;
 }
 
-export default function JobList({ jobs }: JobListProps) {
+export default function JobList({ section }: JobListProps) {
+  const jobs = section.jobs;
   const params = useParams();
   const locale = (params.locale as string) || "en";
 
@@ -17,19 +23,6 @@ export default function JobList({ jobs }: JobListProps) {
     <div>
       {/* Job listings */}
       <section className="border-b border-primary">
-        <div className="p-8 md:p-12 lg:px-16 border-b border-primary">
-          <p
-            className="uppercase tracking-[0.2em] text-muted mb-3"
-            style={{ fontSize: "0.65rem", fontWeight: 700 }}
-          >
-            Open positions
-          </p>
-          <h2>
-            {jobs.length} role{jobs.length !== 1 ? "s" : ""}
-            <span className="text-accent">.</span>
-          </h2>
-        </div>
-
         <div>
           {jobs.map((job, i) => (
             <Link
@@ -122,8 +115,8 @@ export default function JobList({ jobs }: JobListProps) {
             className="text-secondary/60 mb-10 max-w-[400px]"
             style={{ lineHeight: 1.7 }}
           >
-            We&apos;re always open to meeting exceptional people. Send us a
-            note and tell us what you&apos;d build here.
+            We&apos;re always open to meeting exceptional people. Send us a note
+            and tell us what you&apos;d build here.
           </p>
           <a
             href="mailto:careers@hybikes.com"
