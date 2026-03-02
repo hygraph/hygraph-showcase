@@ -12,12 +12,9 @@ import { AudienceProvider } from "@/lib/context/AudienceContext";
 import SegmentSwitcher from "@/components/ui/SegmentSwitcher";
 import { hygraphRequest } from "@/lib/hygraph/client";
 import {
-  GetNavigationDocument,
   GetSiteSettingsDocument,
   GetSegmentsDocument,
   GetProductCategoriesDocument,
-  type GetNavigationQuery,
-  type GetNavigationQueryVariables,
   type GetSiteSettingsQuery,
   type GetSiteSettingsQueryVariables,
   type GetSegmentsQuery,
@@ -42,28 +39,21 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  let navItems: GetNavigationQuery["navigations"][0]["items"] = [];
   let siteSettings: GetSiteSettingsQuery["allSiteSettings"][0] | null = null;
   let segments: GetSegmentsQuery["segments"] = [];
   let bikeCategories: string[] = [];
 
   try {
-    const [mainNavData, siteSettingsData, segmentsData, categoriesData] =
-      await Promise.all([
-        hygraphRequest<GetNavigationQuery>(GetNavigationDocument, {
-          identifier: "main-nav",
-          locale,
-        } as GetNavigationQueryVariables),
-        hygraphRequest<GetSiteSettingsQuery>(GetSiteSettingsDocument, {
-          locale,
-        } as GetSiteSettingsQueryVariables),
-        hygraphRequest<GetSegmentsQuery>(GetSegmentsDocument, {}),
-        hygraphRequest<GetProductCategoriesQuery>(
-          GetProductCategoriesDocument,
-          {}
-        ),
-      ]);
-    navItems = mainNavData.navigations?.[0]?.items ?? [];
+    const [siteSettingsData, segmentsData, categoriesData] = await Promise.all([
+      hygraphRequest<GetSiteSettingsQuery>(GetSiteSettingsDocument, {
+        locale,
+      } as GetSiteSettingsQueryVariables),
+      hygraphRequest<GetSegmentsQuery>(GetSegmentsDocument, {}),
+      hygraphRequest<GetProductCategoriesQuery>(
+        GetProductCategoriesDocument,
+        {}
+      ),
+    ]);
     siteSettings = siteSettingsData.allSiteSettings?.[0] ?? null;
     segments = segmentsData.segments ?? [];
     bikeCategories = [
@@ -76,7 +66,7 @@ export default async function LocaleLayout({
   return (
     <AudienceProvider>
       <div className="flex min-h-screen flex-col">
-        <Navigation locale={locale as Locale} navItems={navItems} />
+        <Navigation locale={locale as Locale} siteSettings={siteSettings} />
         <main className="flex-1">{children}</main>
         <Footer
           locale={locale as Locale}

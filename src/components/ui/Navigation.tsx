@@ -9,14 +9,16 @@ import {
   LOCALE_NAMES,
   type Locale,
 } from "@/lib/utils/locale";
-import { buildHref, type NavItem } from "@/lib/utils/navigation";
+import { buildHref } from "@/lib/utils/navigation";
+import type { GetSiteSettingsQuery } from "@/types/hygraph-generated";
 
 interface NavigationProps {
   locale: Locale;
-  navItems: NavItem[];
+  siteSettings: GetSiteSettingsQuery["allSiteSettings"][0] | null;
 }
 
-export default function Navigation({ locale, navItems }: NavigationProps) {
+export default function Navigation({ locale, siteSettings }: NavigationProps) {
+  const navItems = siteSettings?.mainNavigation?.items ?? [];
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [localeOpen, setLocaleOpen] = useState(false);
