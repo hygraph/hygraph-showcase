@@ -122,7 +122,8 @@ export default function Footer({
           className="tracking-[-0.05em] uppercase opacity-20 leading-[0.9]"
           style={{ fontWeight: 900, fontSize: "16rem" }}
         >
-          HyBikes<span className="text-accent">.</span>
+          {siteSettings?.siteName}
+          <span className="text-accent">.</span>
         </span>
         <p className="text-secondary/40" style={{ fontSize: "0.8rem" }}>
           {siteSettings?.footerText?.text}

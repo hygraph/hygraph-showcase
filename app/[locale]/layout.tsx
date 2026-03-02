@@ -10,6 +10,7 @@ import Navigation from "@/components/ui/Navigation";
 import Footer from "@/components/ui/Footer";
 import AnnouncementBanner from "@/components/ui/AnnouncementBanner";
 import { AudienceProvider } from "@/lib/context/AudienceContext";
+import { SiteSettingsProvider } from "@/lib/context/SiteSettingsContext";
 import SegmentSwitcher from "@/components/ui/SegmentSwitcher";
 import { hygraphRequest } from "@/lib/hygraph/client";
 import {
@@ -65,21 +66,23 @@ export default async function LocaleLayout({
   }
 
   return (
-    <AudienceProvider>
-      <div className="flex min-h-screen flex-col">
-        {siteSettings?.announcement?.html && (
-          <AnnouncementBanner html={siteSettings.announcement.html} />
-        )}
-        <Navigation locale={locale as Locale} siteSettings={siteSettings} />
-        <main className="flex-1">{children}</main>
-        <Footer
-          locale={locale as Locale}
-          siteSettings={siteSettings}
-          bikeCategories={bikeCategories}
-        />
-        <SegmentSwitcher segments={segments} />
-      </div>
-    </AudienceProvider>
+    <SiteSettingsProvider siteSettings={siteSettings}>
+      <AudienceProvider>
+        <div className="flex min-h-screen flex-col">
+          {siteSettings?.announcement?.html && (
+            <AnnouncementBanner html={siteSettings.announcement.html} />
+          )}
+          <Navigation locale={locale as Locale} siteSettings={siteSettings} />
+          <main className="flex-1">{children}</main>
+          <Footer
+            locale={locale as Locale}
+            siteSettings={siteSettings}
+            bikeCategories={bikeCategories}
+          />
+          <SegmentSwitcher segments={segments} />
+        </div>
+      </AudienceProvider>
+    </SiteSettingsProvider>
   );
 }
 

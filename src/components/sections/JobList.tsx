@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import type { GetPageQuery } from "@/types/hygraph-generated";
+import { useSiteSettings } from "@/lib/context/SiteSettingsContext";
 
 type JobListSection = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -18,6 +19,8 @@ export default function JobList({ section }: JobListProps) {
   const jobs = section.jobs;
   const params = useParams();
   const locale = (params.locale as string) || "en";
+  const siteSettings = useSiteSettings();
+  const contactEmail = siteSettings?.contactEmail;
 
   return (
     <div>
@@ -119,11 +122,11 @@ export default function JobList({ section }: JobListProps) {
             and tell us what you&apos;d build here.
           </p>
           <a
-            href="mailto:careers@hybikes.com"
+            href={`mailto:${contactEmail}`}
             className="inline-flex items-center gap-3 bg-accent text-white px-10 py-5 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
             style={{ fontSize: "0.75rem", fontWeight: 700 }}
           >
-            careers@hybikes.com
+            {contactEmail}
             <ArrowRight size={14} />
           </a>
         </div>

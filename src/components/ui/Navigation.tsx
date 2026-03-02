@@ -52,7 +52,8 @@ export default function Navigation({ locale, siteSettings }: NavigationProps) {
             className="uppercase"
             style={{ fontWeight: 900, fontSize: "1rem" }}
           >
-            HyBikes<span className="text-accent">.</span>
+            {siteSettings?.siteName}
+            <span className="text-accent">.</span>
           </span>
         </Link>
 
