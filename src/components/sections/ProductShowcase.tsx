@@ -17,7 +17,10 @@ interface ProductShowcaseProps {
   locale: Locale;
 }
 
-export default function ProductShowcase({ section, locale }: ProductShowcaseProps) {
+export default function ProductShowcase({
+  section,
+  locale,
+}: ProductShowcaseProps) {
   const searchParams = useSearchParams();
   const products = section.products;
 
@@ -59,7 +62,12 @@ export default function ProductShowcase({ section, locale }: ProductShowcaseProp
             key={product.id}
             className={section.displayFilters ? "border-b border-primary" : ""}
           >
-            <ProductCard bike={product as unknown as Bike} locale={locale} />
+            <ProductCard
+              bike={product as Bike}
+              locale={locale}
+              showPrices={section.showPrices}
+              showStock={section.showStock}
+            />
           </div>
         ))}
       </div>

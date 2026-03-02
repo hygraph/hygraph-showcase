@@ -6,10 +6,15 @@ import { formatCategoryValue, formatPrice } from '@/types/hybike';
 interface ProductCardProps {
   bike: Bike;
   locale: string;
+  showPrices?: boolean;
+  showStock?: boolean;
 }
 
-export default function ProductCard({ bike, locale }: ProductCardProps) {
+export default function ProductCard({ bike, locale, showPrices = true, showStock = false }: ProductCardProps) {
   const price = bike.externalProduct?.data?.calculated_price;
+  const availability = bike.externalProduct?.data?.availability;
+  const inventoryLevel = bike.externalProduct?.data?.inventory_level;
+  const inStock = availability === 'available' && (inventoryLevel ?? 0) > 0;
   const category = formatCategoryValue(bike.category?.value);
 
   return (
@@ -44,13 +49,23 @@ export default function ProductCard({ bike, locale }: ProductCardProps) {
             </p>
             <h3 className="group-hover:text-secondary transition-colors">{bike.name}</h3>
           </div>
-          <p
-            className="text-primary group-hover:text-accent transition-colors whitespace-nowrap mt-1"
-            style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
-          >
-            {formatPrice(price)}
-          </p>
+          {showPrices && (
+            <p
+              className="text-primary group-hover:text-accent transition-colors whitespace-nowrap mt-1"
+              style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              {formatPrice(price)}
+            </p>
+          )}
         </div>
+        {showStock && (
+          <p
+            className={`uppercase tracking-[0.15em] mb-3 transition-colors ${inStock ? 'text-green-600' : 'text-muted'}`}
+            style={{ fontSize: '0.65rem', fontWeight: 700 }}
+          >
+            {inStock ? 'In Stock' : 'Out of Stock'}
+          </p>
+        )}
 
         {bike.tagline && (
           <p
