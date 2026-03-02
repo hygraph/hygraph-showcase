@@ -4,6 +4,9 @@ query GetSiteSettings($locale: Locale!) {
     siteName
     brandColor
     contactEmail
+    announcement {
+      html
+    }
     footerText {
       text
     }

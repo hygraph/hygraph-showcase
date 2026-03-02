@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { isValidLocale, type Locale } from "@/lib/utils/locale";
 import Navigation from "@/components/ui/Navigation";
 import Footer from "@/components/ui/Footer";
+import AnnouncementBanner from "@/components/ui/AnnouncementBanner";
 import { AudienceProvider } from "@/lib/context/AudienceContext";
 import SegmentSwitcher from "@/components/ui/SegmentSwitcher";
 import { hygraphRequest } from "@/lib/hygraph/client";
@@ -66,6 +67,9 @@ export default async function LocaleLayout({
   return (
     <AudienceProvider>
       <div className="flex min-h-screen flex-col">
+        {siteSettings?.announcement?.html && (
+          <AnnouncementBanner html={siteSettings.announcement.html} />
+        )}
         <Navigation locale={locale as Locale} siteSettings={siteSettings} />
         <main className="flex-1">{children}</main>
         <Footer
