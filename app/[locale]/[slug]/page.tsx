@@ -27,15 +27,22 @@ import EditorialSection from "@/components/sections/EditorialSection";
 import CTABlock from "@/components/sections/CTABlock";
 import ProductShowcase from "@/components/sections/ProductShowcase";
 import StatsBar from "@/components/sections/StatsBar";
-import BlogView from "@/components/pages/BlogView";
-import CareersView from "@/components/pages/CareersView";
-import CollectionView from "@/components/pages/CollectionView";
+import BlogList from "@/components/sections/BlogList";
+import JobList from "@/components/sections/JobList";
+import PageHeader from "@/components/sections/PageHeader";
+import ProductGrid from "@/components/sections/ProductGrid";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import type { Post, Job, Bike } from "@/types/hybike";
 
 // Type guards for section types
 type PageSection = GetPageQuery["pages"][0]["sections"][0];
+
+function isPageHeader(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "PageHeader" }> {
+  return section.__typename === "PageHeader";
+}
 
 function isHeroSection(
   section: PageSection
@@ -71,6 +78,24 @@ function isStatsBar(
   section: PageSection
 ): section is Extract<PageSection, { __typename?: "StatsBar" }> {
   return section.__typename === "StatsBar";
+}
+
+function isProductGrid(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "ProductGrid" }> {
+  return section.__typename === "ProductGrid";
+}
+
+function isBlogList(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "BlogList" }> {
+  return section.__typename === "BlogList";
+}
+
+function isJobList(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "JobList" }> {
+  return section.__typename === "JobList";
 }
 
 interface PageProps {
@@ -177,9 +202,24 @@ export default async function Page({ params }: PageProps) {
   const displaySections = variant?.sections || page.sections;
 
   const products = featuredProducts?.products || [];
+  const bikes = (allProducts?.products ?? []) as unknown as Bike[];
+  const posts = (blogPosts?.blogPosts ?? []) as unknown as Post[];
+  const jobList = (jobs?.jobs ?? []) as unknown as Job[];
 
   function renderSections() {
     return displaySections.map((section) => {
+      if (isPageHeader(section)) {
+        return <PageHeader key={section.id} section={section} />;
+      }
+      if (isProductGrid(section)) {
+        return <ProductGrid key={section.id} bikes={bikes} />;
+      }
+      if (isBlogList(section)) {
+        return <BlogList key={section.id} posts={posts} />;
+      }
+      if (isJobList(section)) {
+        return <JobList key={section.id} jobs={jobList} />;
+      }
       if (isHeroSection(section)) {
         return (
           <HeroSection
@@ -231,36 +271,6 @@ export default async function Page({ params }: PageProps) {
       );
       return null;
     });
-  }
-
-  if (slug === "blog") {
-    const posts = (blogPosts?.blogPosts ?? []) as unknown as Post[];
-    return (
-      <div>
-        {renderSections()}
-        <BlogView posts={posts} />
-      </div>
-    );
-  }
-
-  if (slug === "careers") {
-    const jobList = (jobs?.jobs ?? []) as unknown as Job[];
-    return (
-      <div>
-        {renderSections()}
-        <CareersView jobs={jobList} />
-      </div>
-    );
-  }
-
-  if (slug === "collection") {
-    const bikes = (allProducts?.products ?? []) as unknown as Bike[];
-    return (
-      <div>
-        {renderSections()}
-        <CollectionView bikes={bikes} />
-      </div>
-    );
   }
 
   return <div>{renderSections()}</div>;

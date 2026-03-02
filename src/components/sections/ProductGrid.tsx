@@ -5,11 +5,11 @@ import BikeCard from "@/components/BikeCard";
 import type { Bike } from "@/types/hybike";
 import { formatCategoryValue } from "@/types/hybike";
 
-interface CollectionViewProps {
+interface ProductGridProps {
   bikes: Bike[];
 }
 
-export default function CollectionView({ bikes }: CollectionViewProps) {
+export default function ProductGrid({ bikes }: ProductGridProps) {
   const params = useParams();
   const locale = (params.locale as string) || "en";
   const searchParams = useSearchParams();
@@ -18,10 +18,10 @@ export default function CollectionView({ bikes }: CollectionViewProps) {
   const categoryValues = [
     ...new Set(bikes.map((b) => b.category?.value).filter(Boolean) as string[]),
   ];
-  const CATEGORIES = ["All", ...categoryValues];
+  const categories = ["All", ...categoryValues];
 
   const param = searchParams.get("category") ?? "All";
-  const activeCategory = CATEGORIES.includes(param) ? param : "All";
+  const activeCategory = categories.includes(param) ? param : "All";
 
   const filtered =
     activeCategory === "All"
@@ -37,26 +37,11 @@ export default function CollectionView({ bikes }: CollectionViewProps) {
   }
 
   return (
-    <div>
-      {/* Header */}
-      <section className="border-b border-primary">
-        <div className="p-8 md:p-12 lg:px-16 lg:py-20">
-          <p
-            className="uppercase tracking-[0.2em] text-muted mb-4"
-            style={{ fontSize: "0.65rem", fontWeight: 700 }}
-          >
-            Shop
-          </p>
-          <h1>
-            Collection<span className="text-accent">.</span>
-          </h1>
-        </div>
-      </section>
-
+    <>
       {/* Filter Bar */}
       <section className="border-b border-primary">
         <div className="flex items-stretch overflow-x-auto">
-          {CATEGORIES.map((cat, i) => {
+          {categories.map((cat, i) => {
             const count =
               cat === "All"
                 ? bikes.length
@@ -67,7 +52,7 @@ export default function CollectionView({ bikes }: CollectionViewProps) {
                 key={cat}
                 onClick={() => selectCategory(cat)}
                 className={`px-6 py-4 uppercase tracking-[0.1em] transition-colors whitespace-nowrap ${
-                  i < CATEGORIES.length - 1 ? "border-r border-primary" : ""
+                  i < categories.length - 1 ? "border-r border-primary" : ""
                 } ${
                   activeCategory === cat
                     ? "bg-primary text-secondary"
@@ -105,6 +90,6 @@ export default function CollectionView({ bikes }: CollectionViewProps) {
           </div>
         )}
       </section>
-    </div>
+    </>
   );
 }

@@ -1,43 +1,37 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import type { Post } from '@/types/hybike';
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { useParams } from "next/navigation";
+import type { Post } from "@/types/hybike";
 
-interface BlogViewProps {
+interface BlogListProps {
   posts: Post[];
 }
 
-export default function BlogView({ posts }: BlogViewProps) {
+export default function BlogList({ posts }: BlogListProps) {
   const params = useParams();
-  const locale = (params.locale as string) || 'en';
+  const locale = (params.locale as string) || "en";
 
   const [featured, ...rest] = posts;
 
+  if (posts.length === 0) {
+    return (
+      <div className="p-16 text-center">
+        <p className="text-muted">No articles yet.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
-      {/* Hero */}
-      <section className="border-b border-primary">
-        <div className="p-8 md:p-12 lg:p-16">
-          <p className="uppercase tracking-[0.2em] text-muted mb-6" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
-            Journal
-          </p>
-          <h1>
-            Stories &amp;
-            <br />
-            ideas<span className="text-accent">.</span>
-          </h1>
-          <p className="text-muted mt-8 max-w-[480px]" style={{ lineHeight: 1.7 }}>
-            Engineering deep-dives, riding culture, and the thinking behind the bikes we build.
-          </p>
-        </div>
-      </section>
-
       {/* Featured article */}
       {featured && (
         <section className="border-b border-primary">
-          <Link href={`/${locale}/blog/${featured.slug}`} className="grid grid-cols-1 lg:grid-cols-12 group">
+          <Link
+            href={`/${locale}/blog/${featured.slug}`}
+            className="grid grid-cols-1 lg:grid-cols-12 group"
+          >
             <div className="lg:col-span-7 overflow-hidden border-b lg:border-b-0 lg:border-r border-primary">
               {featured.imageUrl ? (
                 <img
@@ -54,11 +48,14 @@ export default function BlogView({ posts }: BlogViewProps) {
                 <div className="flex items-center gap-4 mb-6">
                   <span
                     className="bg-accent text-white px-3 py-1 uppercase tracking-[0.15em]"
-                    style={{ fontSize: '0.6rem', fontWeight: 700 }}
+                    style={{ fontSize: "0.6rem", fontWeight: 700 }}
                   >
                     {featured.category}
                   </span>
-                  <span className="uppercase tracking-[0.15em] text-muted" style={{ fontSize: '0.6rem', fontWeight: 700 }}>
+                  <span
+                    className="uppercase tracking-[0.15em] text-muted"
+                    style={{ fontSize: "0.6rem", fontWeight: 700 }}
+                  >
                     {featured.publishedDate}
                   </span>
                 </div>
@@ -71,7 +68,9 @@ export default function BlogView({ posts }: BlogViewProps) {
                 </p>
               </div>
               <div className="mt-10 flex items-center gap-3 text-accent uppercase tracking-[0.1em] group-hover:gap-4 transition-all self-start">
-                <span style={{ fontSize: '0.75rem', fontWeight: 700 }}>Read article</span>
+                <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>
+                  Read article
+                </span>
                 <ArrowRight size={14} />
               </div>
             </div>
@@ -83,7 +82,10 @@ export default function BlogView({ posts }: BlogViewProps) {
       {rest.length > 0 && (
         <section className="border-b border-primary">
           <div className="p-8 md:p-12 lg:px-16 border-b border-primary">
-            <p className="uppercase tracking-[0.2em] text-muted" style={{ fontSize: '0.65rem', fontWeight: 700 }}>
+            <p
+              className="uppercase tracking-[0.2em] text-muted"
+              style={{ fontSize: "0.65rem", fontWeight: 700 }}
+            >
               More articles
             </p>
           </div>
@@ -92,7 +94,7 @@ export default function BlogView({ posts }: BlogViewProps) {
               <Link
                 key={post.id}
                 href={`/${locale}/blog/${post.slug}`}
-                className={`group flex flex-col ${i === 0 ? 'md:border-r border-primary' : ''}`}
+                className={`group flex flex-col ${i === 0 ? "md:border-r border-primary" : ""}`}
               >
                 <div className="overflow-hidden border-b border-primary">
                   {post.imageUrl ? (
@@ -109,11 +111,14 @@ export default function BlogView({ posts }: BlogViewProps) {
                   <div className="flex items-center gap-4 mb-5">
                     <span
                       className="bg-primary text-secondary px-3 py-1 uppercase tracking-[0.15em]"
-                      style={{ fontSize: '0.6rem', fontWeight: 700 }}
+                      style={{ fontSize: "0.6rem", fontWeight: 700 }}
                     >
                       {post.category}
                     </span>
-                    <span className="uppercase tracking-[0.15em] text-muted" style={{ fontSize: '0.6rem', fontWeight: 700 }}>
+                    <span
+                      className="uppercase tracking-[0.15em] text-muted"
+                      style={{ fontSize: "0.6rem", fontWeight: 700 }}
+                    >
                       {post.publishedDate}
                     </span>
                   </div>
@@ -125,7 +130,9 @@ export default function BlogView({ posts }: BlogViewProps) {
                     {post.summary}
                   </p>
                   <div className="flex items-center gap-2 text-accent uppercase tracking-[0.1em] group-hover:gap-3 transition-all self-start">
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>Read article</span>
+                    <span style={{ fontSize: "0.7rem", fontWeight: 700 }}>
+                      Read article
+                    </span>
                     <ArrowRight size={13} />
                   </div>
                 </div>
@@ -133,12 +140,6 @@ export default function BlogView({ posts }: BlogViewProps) {
             ))}
           </div>
         </section>
-      )}
-
-      {posts.length === 0 && (
-        <div className="p-16 text-center">
-          <p className="text-muted">No articles yet.</p>
-        </div>
       )}
     </div>
   );

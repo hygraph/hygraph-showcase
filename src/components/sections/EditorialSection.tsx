@@ -19,7 +19,7 @@ interface EditorialSectionProps {
 }
 
 export default function EditorialSection({ section }: EditorialSectionProps) {
-  const imageUrl = section.image.url;
+  const imageUrl = section.image?.url || "";
   const headline = section.editorialHeadline || "";
   const hasStats = section.stats && section.stats.length > 0;
 
