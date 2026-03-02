@@ -125,7 +125,7 @@ export default function Footer({
           HyBikes<span className="text-accent">.</span>
         </span>
         <p className="text-secondary/40" style={{ fontSize: "0.8rem" }}>
-          &copy; 2026. All rights reserved. Designed in Berlin.
+          {siteSettings?.footerText?.text}
         </p>
       </div>
     </footer>
