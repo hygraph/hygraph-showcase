@@ -21,6 +21,31 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
       }
       ... on BlogList {
         id
+        posts {
+          id
+          slug
+          title
+          category
+          publishedDate
+          readTime
+          summary
+          imageUrl
+        }
+      }
+      ... on FeaturedArticle {
+        id
+        ctaLabel
+        imageRight
+        blogPost {
+          id
+          slug
+          title
+          category
+          publishedDate
+          readTime
+          summary
+          imageUrl
+        }
       }
       ... on JobList {
         id
@@ -160,6 +185,31 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         }
         ... on BlogList {
           id
+          posts {
+            id
+            slug
+            title
+            category
+            publishedDate
+            readTime
+            summary
+            imageUrl
+          }
+        }
+        ... on FeaturedArticle {
+          id
+          ctaLabel
+          imageRight
+          blogPost {
+            id
+            slug
+            title
+            category
+            publishedDate
+            readTime
+            summary
+            imageUrl
+          }
         }
         ... on JobList {
           id

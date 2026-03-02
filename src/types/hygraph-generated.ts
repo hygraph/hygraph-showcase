@@ -945,10 +945,24 @@ export type BlogList = Entity & {
   __typename?: 'BlogList';
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  posts: Array<BlogPost>;
   /** System stage field */
   stage: Stage;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type BlogListPostsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<BlogPostOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<BlogPostWhereInput>;
 };
 
 export type BlogListConnectInput = {
@@ -969,6 +983,7 @@ export type BlogListConnection = {
 };
 
 export type BlogListCreateInput = {
+  posts?: InputMaybe<BlogPostCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -1027,6 +1042,9 @@ export type BlogListManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  posts_every?: InputMaybe<BlogPostWhereInput>;
+  posts_none?: InputMaybe<BlogPostWhereInput>;
+  posts_some?: InputMaybe<BlogPostWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1139,8 +1157,7 @@ export type BlogListParentWhereUniqueInput = {
 };
 
 export type BlogListUpdateInput = {
-  /** No fields in update input */
-  _?: InputMaybe<Scalars['String']['input']>;
+  posts?: InputMaybe<BlogPostUpdateManyInlineInput>;
 };
 
 export type BlogListUpdateManyInlineInput = {
@@ -1245,6 +1262,9 @@ export type BlogListWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  posts_every?: InputMaybe<BlogPostWhereInput>;
+  posts_none?: InputMaybe<BlogPostWhereInput>;
+  posts_some?: InputMaybe<BlogPostWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1400,6 +1420,8 @@ export type BlogPostConnection = {
 export type BlogPostCreateInput = {
   body: Scalars['RichTextAST']['input'];
   category: Scalars['String']['input'];
+  cmm8y2yzs0hd307ui5smd13ya?: InputMaybe<FeaturedArticleCreateManyInlineInput>;
+  cmm8z85sg001u08vzfkqu2nyw?: InputMaybe<BlogListCreateManyInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Inline mutations for managing document localizations excluding the default locale */
@@ -1658,6 +1680,8 @@ export type BlogPostOrderByInput =
 export type BlogPostUpdateInput = {
   body?: InputMaybe<Scalars['RichTextAST']['input']>;
   category?: InputMaybe<Scalars['String']['input']>;
+  cmm8y2yzs0hd307ui5smd13ya?: InputMaybe<FeaturedArticleUpdateManyInlineInput>;
+  cmm8z85sg001u08vzfkqu2nyw?: InputMaybe<BlogListUpdateManyInlineInput>;
   imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<BlogPostUpdateLocalizationsInput>;
@@ -3807,6 +3831,8 @@ export type EntityTypeName =
   | 'Feature'
   /** Grid display of product features */
   | 'FeatureGrid'
+  /** Split-layout feature article section */
+  | 'FeaturedArticle'
   /** Hero banner with headline, media, and CTAs */
   | 'HeroSection'
   /** Job listings for the Careers page */
@@ -4889,6 +4915,459 @@ export type FeatureWhereStageInput = {
 
 /** References Feature record uniquely */
 export type FeatureWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+/** Split-layout feature article section */
+export type FeaturedArticle = Entity & {
+  __typename?: 'FeaturedArticle';
+  blogPost?: Maybe<BlogPost>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  /** The unique identifier */
+  id: Scalars['ID']['output'];
+  imageRight?: Maybe<Scalars['Boolean']['output']>;
+  /** System Locale field */
+  locale: Locale;
+  /** Get the other localizations for this document */
+  localizations: Array<FeaturedArticle>;
+  /** System stage field */
+  stage: Stage;
+  /** System updatedAt field */
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+/** Split-layout feature article section */
+export type FeaturedArticleBlogPostArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Split-layout feature article section */
+export type FeaturedArticleLocalizationsArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  locales?: Array<Locale>;
+};
+
+
+/** Split-layout feature article section */
+export type FeaturedArticleUpdatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+export type FeaturedArticleConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: FeaturedArticleWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type FeaturedArticleConnection = {
+  __typename?: 'FeaturedArticleConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<FeaturedArticleEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type FeaturedArticleCreateInput = {
+  blogPost?: InputMaybe<BlogPostCreateOneInlineInput>;
+  /** ctaLabel input for default locale (en) */
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Inline mutations for managing document localizations excluding the default locale */
+  localizations?: InputMaybe<FeaturedArticleCreateLocalizationsInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type FeaturedArticleCreateLocalizationDataInput = {
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type FeaturedArticleCreateLocalizationInput = {
+  /** Localization input */
+  data: FeaturedArticleCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type FeaturedArticleCreateLocalizationsInput = {
+  /** Create localizations for the newly-created document */
+  create?: InputMaybe<Array<FeaturedArticleCreateLocalizationInput>>;
+};
+
+export type FeaturedArticleCreateManyInlineInput = {
+  /** Create and connect multiple existing FeaturedArticle documents */
+  create?: InputMaybe<Array<FeaturedArticleCreateInput>>;
+};
+
+export type FeaturedArticleCreateOneInlineInput = {
+  /** Create and connect one FeaturedArticle document */
+  create?: InputMaybe<FeaturedArticleCreateInput>;
+};
+
+export type FeaturedArticleCreateWithPositionInput = {
+  /** Document to create */
+  data: FeaturedArticleCreateInput;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+};
+
+/** An edge in a connection. */
+export type FeaturedArticleEdge = {
+  __typename?: 'FeaturedArticleEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: FeaturedArticle;
+};
+
+/** Identifies documents */
+export type FeaturedArticleManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<FeaturedArticleWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<FeaturedArticleWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<FeaturedArticleWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  blogPost?: InputMaybe<BlogPostWhereInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+};
+
+export type FeaturedArticleOrderByInput =
+  | 'ctaLabel_ASC'
+  | 'ctaLabel_DESC'
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'imageRight_ASC'
+  | 'imageRight_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
+
+export type FeaturedArticleParent = Page | PageVariant;
+
+export type FeaturedArticleParentConnectInput = {
+  Page?: InputMaybe<PageConnectInput>;
+  PageVariant?: InputMaybe<PageVariantConnectInput>;
+};
+
+export type FeaturedArticleParentCreateInput = {
+  Page?: InputMaybe<PageCreateInput>;
+  PageVariant?: InputMaybe<PageVariantCreateInput>;
+};
+
+export type FeaturedArticleParentCreateManyInlineInput = {
+  /** Connect multiple existing FeaturedArticleParent documents */
+  connect?: InputMaybe<Array<FeaturedArticleParentWhereUniqueInput>>;
+  /** Create and connect multiple existing FeaturedArticleParent documents */
+  create?: InputMaybe<Array<FeaturedArticleParentCreateInput>>;
+};
+
+export type FeaturedArticleParentCreateOneInlineInput = {
+  /** Connect one existing FeaturedArticleParent document */
+  connect?: InputMaybe<FeaturedArticleParentWhereUniqueInput>;
+  /** Create and connect one FeaturedArticleParent document */
+  create?: InputMaybe<FeaturedArticleParentCreateInput>;
+};
+
+export type FeaturedArticleParentUpdateInput = {
+  Page?: InputMaybe<PageUpdateInput>;
+  PageVariant?: InputMaybe<PageVariantUpdateInput>;
+};
+
+export type FeaturedArticleParentUpdateManyInlineInput = {
+  /** Connect multiple existing FeaturedArticleParent documents */
+  connect?: InputMaybe<Array<FeaturedArticleParentConnectInput>>;
+  /** Create and connect multiple FeaturedArticleParent documents */
+  create?: InputMaybe<Array<FeaturedArticleParentCreateInput>>;
+  /** Delete multiple FeaturedArticleParent documents */
+  delete?: InputMaybe<Array<FeaturedArticleParentWhereUniqueInput>>;
+  /** Disconnect multiple FeaturedArticleParent documents */
+  disconnect?: InputMaybe<Array<FeaturedArticleParentWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing FeaturedArticleParent documents */
+  set?: InputMaybe<Array<FeaturedArticleParentWhereUniqueInput>>;
+  /** Update multiple FeaturedArticleParent documents */
+  update?: InputMaybe<Array<FeaturedArticleParentUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple FeaturedArticleParent documents */
+  upsert?: InputMaybe<Array<FeaturedArticleParentUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type FeaturedArticleParentUpdateManyWithNestedWhereInput = {
+  Page?: InputMaybe<PageUpdateManyWithNestedWhereInput>;
+  PageVariant?: InputMaybe<PageVariantUpdateManyWithNestedWhereInput>;
+};
+
+export type FeaturedArticleParentUpdateOneInlineInput = {
+  /** Connect existing FeaturedArticleParent document */
+  connect?: InputMaybe<FeaturedArticleParentWhereUniqueInput>;
+  /** Create and connect one FeaturedArticleParent document */
+  create?: InputMaybe<FeaturedArticleParentCreateInput>;
+  /** Delete currently connected FeaturedArticleParent document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Disconnect currently connected FeaturedArticleParent document */
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single FeaturedArticleParent document */
+  update?: InputMaybe<FeaturedArticleParentUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single FeaturedArticleParent document */
+  upsert?: InputMaybe<FeaturedArticleParentUpsertWithNestedWhereUniqueInput>;
+};
+
+export type FeaturedArticleParentUpdateWithNestedWhereUniqueInput = {
+  Page?: InputMaybe<PageUpdateWithNestedWhereUniqueInput>;
+  PageVariant?: InputMaybe<PageVariantUpdateWithNestedWhereUniqueInput>;
+};
+
+export type FeaturedArticleParentUpsertWithNestedWhereUniqueInput = {
+  Page?: InputMaybe<PageUpsertWithNestedWhereUniqueInput>;
+  PageVariant?: InputMaybe<PageVariantUpsertWithNestedWhereUniqueInput>;
+};
+
+export type FeaturedArticleParentWhereInput = {
+  Page?: InputMaybe<PageWhereInput>;
+  PageVariant?: InputMaybe<PageVariantWhereInput>;
+};
+
+export type FeaturedArticleParentWhereUniqueInput = {
+  Page?: InputMaybe<PageWhereUniqueInput>;
+  PageVariant?: InputMaybe<PageVariantWhereUniqueInput>;
+};
+
+export type FeaturedArticleUpdateInput = {
+  blogPost?: InputMaybe<BlogPostUpdateOneInlineInput>;
+  /** ctaLabel input for default locale (en) */
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Manage document localizations */
+  localizations?: InputMaybe<FeaturedArticleUpdateLocalizationsInput>;
+};
+
+export type FeaturedArticleUpdateLocalizationDataInput = {
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FeaturedArticleUpdateLocalizationInput = {
+  data: FeaturedArticleUpdateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type FeaturedArticleUpdateLocalizationsInput = {
+  /** Localizations to create */
+  create?: InputMaybe<Array<FeaturedArticleCreateLocalizationInput>>;
+  /** Localizations to delete */
+  delete?: InputMaybe<Array<Locale>>;
+  /** Localizations to update */
+  update?: InputMaybe<Array<FeaturedArticleUpdateLocalizationInput>>;
+  upsert?: InputMaybe<Array<FeaturedArticleUpsertLocalizationInput>>;
+};
+
+export type FeaturedArticleUpdateManyInlineInput = {
+  /** Create and connect multiple FeaturedArticle component instances */
+  create?: InputMaybe<Array<FeaturedArticleCreateWithPositionInput>>;
+  /** Delete multiple FeaturedArticle documents */
+  delete?: InputMaybe<Array<FeaturedArticleWhereUniqueInput>>;
+  /** Update multiple FeaturedArticle component instances */
+  update?: InputMaybe<Array<FeaturedArticleUpdateWithNestedWhereUniqueAndPositionInput>>;
+  /** Upsert multiple FeaturedArticle component instances */
+  upsert?: InputMaybe<Array<FeaturedArticleUpsertWithNestedWhereUniqueAndPositionInput>>;
+};
+
+export type FeaturedArticleUpdateManyInput = {
+  /** ctaLabel input for default locale (en) */
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Optional updates to localizations */
+  localizations?: InputMaybe<FeaturedArticleUpdateManyLocalizationsInput>;
+};
+
+export type FeaturedArticleUpdateManyLocalizationDataInput = {
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FeaturedArticleUpdateManyLocalizationInput = {
+  data: FeaturedArticleUpdateManyLocalizationDataInput;
+  locale: Locale;
+};
+
+export type FeaturedArticleUpdateManyLocalizationsInput = {
+  /** Localizations to update */
+  update?: InputMaybe<Array<FeaturedArticleUpdateManyLocalizationInput>>;
+};
+
+export type FeaturedArticleUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: FeaturedArticleUpdateManyInput;
+  /** Document search */
+  where: FeaturedArticleWhereInput;
+};
+
+export type FeaturedArticleUpdateOneInlineInput = {
+  /** Create and connect one FeaturedArticle document */
+  create?: InputMaybe<FeaturedArticleCreateInput>;
+  /** Delete currently connected FeaturedArticle document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single FeaturedArticle document */
+  update?: InputMaybe<FeaturedArticleUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single FeaturedArticle document */
+  upsert?: InputMaybe<FeaturedArticleUpsertWithNestedWhereUniqueInput>;
+};
+
+export type FeaturedArticleUpdateWithNestedWhereUniqueAndPositionInput = {
+  /** Document to update */
+  data?: InputMaybe<FeaturedArticleUpdateInput>;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Unique component instance search */
+  where: FeaturedArticleWhereUniqueInput;
+};
+
+export type FeaturedArticleUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: FeaturedArticleUpdateInput;
+  /** Unique document search */
+  where: FeaturedArticleWhereUniqueInput;
+};
+
+export type FeaturedArticleUpsertInput = {
+  /** Create document if it didn't exist */
+  create: FeaturedArticleCreateInput;
+  /** Update document if it exists */
+  update: FeaturedArticleUpdateInput;
+};
+
+export type FeaturedArticleUpsertLocalizationInput = {
+  create: FeaturedArticleCreateLocalizationDataInput;
+  locale: Locale;
+  update: FeaturedArticleUpdateLocalizationDataInput;
+};
+
+export type FeaturedArticleUpsertWithNestedWhereUniqueAndPositionInput = {
+  /** Document to upsert */
+  data?: InputMaybe<FeaturedArticleUpsertInput>;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Unique component instance search */
+  where: FeaturedArticleWhereUniqueInput;
+};
+
+export type FeaturedArticleUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: FeaturedArticleUpsertInput;
+  /** Unique document search */
+  where: FeaturedArticleWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type FeaturedArticleWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<FeaturedArticleWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<FeaturedArticleWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<FeaturedArticleWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  blogPost?: InputMaybe<BlogPostWhereInput>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  ctaLabel_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  ctaLabel_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  ctaLabel_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  ctaLabel_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  ctaLabel_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  ctaLabel_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  ctaLabel_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  ctaLabel_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  ctaLabel_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageRight?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  imageRight_not?: InputMaybe<Scalars['Boolean']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+};
+
+/** References FeaturedArticle record uniquely */
+export type FeaturedArticleWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -11200,13 +11679,14 @@ export type PageWhereUniqueInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PagesectionsUnion = BlogList | CtaBlock | EditorialSection | FeatureGrid | HeroSection | JobList | PageHeader | ProductGrid | ProductShowcase | StatsBar;
+export type PagesectionsUnion = BlogList | CtaBlock | EditorialSection | FeatureGrid | FeaturedArticle | HeroSection | JobList | PageHeader | ProductGrid | ProductShowcase | StatsBar;
 
 export type PagesectionsUnionConnectInput = {
   BlogList?: InputMaybe<BlogListConnectInput>;
   CTABlock?: InputMaybe<CtaBlockConnectInput>;
   EditorialSection?: InputMaybe<EditorialSectionConnectInput>;
   FeatureGrid?: InputMaybe<FeatureGridConnectInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleConnectInput>;
   HeroSection?: InputMaybe<HeroSectionConnectInput>;
   JobList?: InputMaybe<JobListConnectInput>;
   PageHeader?: InputMaybe<PageHeaderConnectInput>;
@@ -11220,6 +11700,7 @@ export type PagesectionsUnionCreateInput = {
   CTABlock?: InputMaybe<CtaBlockCreateInput>;
   EditorialSection?: InputMaybe<EditorialSectionCreateInput>;
   FeatureGrid?: InputMaybe<FeatureGridCreateInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleCreateInput>;
   HeroSection?: InputMaybe<HeroSectionCreateInput>;
   JobList?: InputMaybe<JobListCreateInput>;
   PageHeader?: InputMaybe<PageHeaderCreateInput>;
@@ -11243,6 +11724,7 @@ export type PagesectionsUnionCreateWithPositionInput = {
   CTABlock?: InputMaybe<CtaBlockCreateWithPositionInput>;
   EditorialSection?: InputMaybe<EditorialSectionCreateWithPositionInput>;
   FeatureGrid?: InputMaybe<FeatureGridCreateWithPositionInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleCreateWithPositionInput>;
   HeroSection?: InputMaybe<HeroSectionCreateWithPositionInput>;
   JobList?: InputMaybe<JobListCreateWithPositionInput>;
   PageHeader?: InputMaybe<PageHeaderCreateWithPositionInput>;
@@ -11256,6 +11738,7 @@ export type PagesectionsUnionUpdateInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateInput>;
   EditorialSection?: InputMaybe<EditorialSectionUpdateInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleUpdateInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateInput>;
   JobList?: InputMaybe<JobListUpdateInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateInput>;
@@ -11280,6 +11763,7 @@ export type PagesectionsUnionUpdateManyWithNestedWhereInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateManyWithNestedWhereInput>;
   EditorialSection?: InputMaybe<EditorialSectionUpdateManyWithNestedWhereInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateManyWithNestedWhereInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleUpdateManyWithNestedWhereInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateManyWithNestedWhereInput>;
   JobList?: InputMaybe<JobListUpdateManyWithNestedWhereInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateManyWithNestedWhereInput>;
@@ -11304,6 +11788,7 @@ export type PagesectionsUnionUpdateWithNestedWhereUniqueAndPositionInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateWithNestedWhereUniqueAndPositionInput>;
   EditorialSection?: InputMaybe<EditorialSectionUpdateWithNestedWhereUniqueAndPositionInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateWithNestedWhereUniqueAndPositionInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleUpdateWithNestedWhereUniqueAndPositionInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateWithNestedWhereUniqueAndPositionInput>;
   JobList?: InputMaybe<JobListUpdateWithNestedWhereUniqueAndPositionInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateWithNestedWhereUniqueAndPositionInput>;
@@ -11317,6 +11802,7 @@ export type PagesectionsUnionUpdateWithNestedWhereUniqueInput = {
   CTABlock?: InputMaybe<CtaBlockUpdateWithNestedWhereUniqueInput>;
   EditorialSection?: InputMaybe<EditorialSectionUpdateWithNestedWhereUniqueInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpdateWithNestedWhereUniqueInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleUpdateWithNestedWhereUniqueInput>;
   HeroSection?: InputMaybe<HeroSectionUpdateWithNestedWhereUniqueInput>;
   JobList?: InputMaybe<JobListUpdateWithNestedWhereUniqueInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateWithNestedWhereUniqueInput>;
@@ -11330,6 +11816,7 @@ export type PagesectionsUnionUpsertWithNestedWhereUniqueAndPositionInput = {
   CTABlock?: InputMaybe<CtaBlockUpsertWithNestedWhereUniqueAndPositionInput>;
   EditorialSection?: InputMaybe<EditorialSectionUpsertWithNestedWhereUniqueAndPositionInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpsertWithNestedWhereUniqueAndPositionInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleUpsertWithNestedWhereUniqueAndPositionInput>;
   HeroSection?: InputMaybe<HeroSectionUpsertWithNestedWhereUniqueAndPositionInput>;
   JobList?: InputMaybe<JobListUpsertWithNestedWhereUniqueAndPositionInput>;
   PageHeader?: InputMaybe<PageHeaderUpsertWithNestedWhereUniqueAndPositionInput>;
@@ -11343,6 +11830,7 @@ export type PagesectionsUnionUpsertWithNestedWhereUniqueInput = {
   CTABlock?: InputMaybe<CtaBlockUpsertWithNestedWhereUniqueInput>;
   EditorialSection?: InputMaybe<EditorialSectionUpsertWithNestedWhereUniqueInput>;
   FeatureGrid?: InputMaybe<FeatureGridUpsertWithNestedWhereUniqueInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleUpsertWithNestedWhereUniqueInput>;
   HeroSection?: InputMaybe<HeroSectionUpsertWithNestedWhereUniqueInput>;
   JobList?: InputMaybe<JobListUpsertWithNestedWhereUniqueInput>;
   PageHeader?: InputMaybe<PageHeaderUpsertWithNestedWhereUniqueInput>;
@@ -11356,6 +11844,7 @@ export type PagesectionsUnionWhereInput = {
   CTABlock?: InputMaybe<CtaBlockWhereInput>;
   EditorialSection?: InputMaybe<EditorialSectionWhereInput>;
   FeatureGrid?: InputMaybe<FeatureGridWhereInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleWhereInput>;
   HeroSection?: InputMaybe<HeroSectionWhereInput>;
   JobList?: InputMaybe<JobListWhereInput>;
   PageHeader?: InputMaybe<PageHeaderWhereInput>;
@@ -11369,6 +11858,7 @@ export type PagesectionsUnionWhereUniqueInput = {
   CTABlock?: InputMaybe<CtaBlockWhereUniqueInput>;
   EditorialSection?: InputMaybe<EditorialSectionWhereUniqueInput>;
   FeatureGrid?: InputMaybe<FeatureGridWhereUniqueInput>;
+  FeaturedArticle?: InputMaybe<FeaturedArticleWhereUniqueInput>;
   HeroSection?: InputMaybe<HeroSectionWhereUniqueInput>;
   JobList?: InputMaybe<JobListWhereUniqueInput>;
   PageHeader?: InputMaybe<PageHeaderWhereUniqueInput>;
@@ -20805,7 +21295,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, title?: string | null, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -20961,6 +21451,31 @@ export const GetPageDocument = gql`
       }
       ... on BlogList {
         id
+        posts {
+          id
+          slug
+          title
+          category
+          publishedDate
+          readTime
+          summary
+          imageUrl
+        }
+      }
+      ... on FeaturedArticle {
+        id
+        ctaLabel
+        imageRight
+        blogPost {
+          id
+          slug
+          title
+          category
+          publishedDate
+          readTime
+          summary
+          imageUrl
+        }
       }
       ... on JobList {
         id
@@ -21100,6 +21615,31 @@ export const GetPageDocument = gql`
         }
         ... on BlogList {
           id
+          posts {
+            id
+            slug
+            title
+            category
+            publishedDate
+            readTime
+            summary
+            imageUrl
+          }
+        }
+        ... on FeaturedArticle {
+          id
+          ctaLabel
+          imageRight
+          blogPost {
+            id
+            slug
+            title
+            category
+            publishedDate
+            readTime
+            summary
+            imageUrl
+          }
         }
         ... on JobList {
           id

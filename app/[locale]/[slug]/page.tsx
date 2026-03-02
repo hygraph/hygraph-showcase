@@ -9,7 +9,6 @@ import {
   GetPageDocument,
   GetFeaturedProductsDocument,
   GetProductsDocument,
-  GetBlogPostsDocument,
   GetJobsDocument,
   type GetPageQuery,
   type GetPageQueryVariables,
@@ -17,7 +16,6 @@ import {
   type GetFeaturedProductsQueryVariables,
   type GetProductsQuery,
   type GetProductsQueryVariables,
-  type GetBlogPostsQuery,
   type GetJobsQuery,
 } from "@/types/hygraph-generated";
 import { type Locale } from "@/lib/utils/locale";
@@ -28,12 +26,13 @@ import CTABlock from "@/components/sections/CTABlock";
 import ProductShowcase from "@/components/sections/ProductShowcase";
 import StatsBar from "@/components/sections/StatsBar";
 import BlogList from "@/components/sections/BlogList";
+import FeaturedArticle from "@/components/sections/FeaturedArticle";
 import JobList from "@/components/sections/JobList";
 import PageHeader from "@/components/sections/PageHeader";
 import ProductGrid from "@/components/sections/ProductGrid";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import type { Post, Job, Bike } from "@/types/hybike";
+import type { Job, Bike } from "@/types/hybike";
 
 // Type guards for section types
 type PageSection = GetPageQuery["pages"][0]["sections"][0];
@@ -98,6 +97,12 @@ function isJobList(
   return section.__typename === "JobList";
 }
 
+function isFeaturedArticle(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "FeaturedArticle" }> {
+  return section.__typename === "FeaturedArticle";
+}
+
 interface PageProps {
   params: Promise<{
     locale: string;
@@ -157,11 +162,10 @@ export default async function Page({ params }: PageProps) {
   let data: GetPageQuery | null = null;
   let featuredProducts: GetFeaturedProductsQuery | null = null;
   let allProducts: GetProductsQuery | null = null;
-  let blogPosts: GetBlogPostsQuery | null = null;
   let jobs: GetJobsQuery | null = null;
 
   try {
-    [data, featuredProducts, allProducts, blogPosts, jobs] = await Promise.all([
+    [data, featuredProducts, allProducts, jobs] = await Promise.all([
       hygraphRequest<GetPageQuery>(GetPageDocument, {
         slug,
         locale,
@@ -177,9 +181,6 @@ export default async function Page({ params }: PageProps) {
         ? hygraphRequest<GetProductsQuery>(GetProductsDocument, {
             locale,
           } as GetProductsQueryVariables)
-        : Promise.resolve(null),
-      slug === "blog"
-        ? hygraphRequest<GetBlogPostsQuery>(GetBlogPostsDocument, {})
         : Promise.resolve(null),
       slug === "careers"
         ? hygraphRequest<GetJobsQuery>(GetJobsDocument, {})
@@ -203,7 +204,6 @@ export default async function Page({ params }: PageProps) {
 
   const products = featuredProducts?.products || [];
   const bikes = (allProducts?.products ?? []) as unknown as Bike[];
-  const posts = (blogPosts?.blogPosts ?? []) as unknown as Post[];
   const jobList = (jobs?.jobs ?? []) as unknown as Job[];
 
   function renderSections() {
@@ -215,7 +215,16 @@ export default async function Page({ params }: PageProps) {
         return <ProductGrid key={section.id} bikes={bikes} />;
       }
       if (isBlogList(section)) {
-        return <BlogList key={section.id} posts={posts} />;
+        return <BlogList key={section.id} section={section as any} />;
+      }
+      if (isFeaturedArticle(section)) {
+        return (
+          <FeaturedArticle
+            key={section.id}
+            section={section as any}
+            locale={locale as Locale}
+          />
+        );
       }
       if (isJobList(section)) {
         return <JobList key={section.id} jobs={jobList} />;
