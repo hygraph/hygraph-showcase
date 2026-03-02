@@ -18,7 +18,7 @@ export default function BlogList({ section }: BlogListProps) {
   const params = useParams();
   const locale = (params.locale as string) || "en";
 
-  const { posts } = section;
+  const { posts, blogListHeadline } = section;
 
   if (posts.length === 0) {
     return (
@@ -36,7 +36,7 @@ export default function BlogList({ section }: BlogListProps) {
             className="uppercase tracking-[0.2em] text-muted"
             style={{ fontSize: "0.65rem", fontWeight: 700 }}
           >
-            More articles
+            {blogListHeadline || "More articles"}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
