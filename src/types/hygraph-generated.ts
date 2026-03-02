@@ -13438,6 +13438,7 @@ export type ProductConnection = {
 export type ProductCreateInput = {
   baseProductId: Scalars['String']['input'];
   category: TaxonomyNodeInput;
+  cmm96ph4400m408vz8nd54r8q?: InputMaybe<ProductGridCreateManyInlineInput>;
   color: ProductColor;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
@@ -13505,10 +13506,24 @@ export type ProductGrid = Entity & {
   __typename?: 'ProductGrid';
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  products: Array<Product>;
   /** System stage field */
   stage: Stage;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type ProductGridProductsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<ProductOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProductWhereInput>;
 };
 
 export type ProductGridConnectInput = {
@@ -13529,6 +13544,7 @@ export type ProductGridConnection = {
 };
 
 export type ProductGridCreateInput = {
+  products?: InputMaybe<ProductCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -13587,6 +13603,9 @@ export type ProductGridManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  products_every?: InputMaybe<ProductWhereInput>;
+  products_none?: InputMaybe<ProductWhereInput>;
+  products_some?: InputMaybe<ProductWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -13699,8 +13718,7 @@ export type ProductGridParentWhereUniqueInput = {
 };
 
 export type ProductGridUpdateInput = {
-  /** No fields in update input */
-  _?: InputMaybe<Scalars['String']['input']>;
+  products?: InputMaybe<ProductUpdateManyInlineInput>;
 };
 
 export type ProductGridUpdateManyInlineInput = {
@@ -13805,6 +13823,9 @@ export type ProductGridWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  products_every?: InputMaybe<ProductWhereInput>;
+  products_none?: InputMaybe<ProductWhereInput>;
+  products_some?: InputMaybe<ProductWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -16733,6 +16754,7 @@ export type ProductSpecificationWhereUniqueInput = {
 export type ProductUpdateInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
   category?: InputMaybe<TaxonomyNodeInput>;
+  cmm96ph4400m408vz8nd54r8q?: InputMaybe<ProductGridUpdateManyInlineInput>;
   color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
@@ -23827,7 +23849,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string, blogListHeadline?: string | null, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, label?: string | null, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeading', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeading', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string, blogListHeadline?: string | null, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, label?: string | null, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string, products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeading', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string, products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeading', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -23980,6 +24002,29 @@ export const GetPageDocument = gql`
       }
       ... on ProductGrid {
         id
+        products {
+          id
+          slug
+          name
+          tagline
+          category {
+            value
+          }
+          image {
+            url
+            width
+            height
+          }
+          externalProductId
+          externalProduct {
+            data {
+              calculated_price
+              sale_price
+              inventory_level
+              availability
+            }
+          }
+        }
       }
       ... on BlogList {
         id
@@ -24181,6 +24226,29 @@ export const GetPageDocument = gql`
         }
         ... on ProductGrid {
           id
+          products {
+            id
+            slug
+            name
+            tagline
+            category {
+              value
+            }
+            image {
+              url
+              width
+              height
+            }
+            externalProductId
+            externalProduct {
+              data {
+                calculated_price
+                sale_price
+                inventory_level
+                availability
+              }
+            }
+          }
         }
         ... on BlogList {
           id

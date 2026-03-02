@@ -2,14 +2,20 @@
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import BikeCard from "@/components/BikeCard";
-import type { Bike } from "@/types/hybike";
 import { formatCategoryValue } from "@/types/hybike";
+import type { GetPageQuery } from "@/types/hygraph-generated";
+
+type ProductGridSection = Extract<
+  GetPageQuery["pages"][0]["sections"][0],
+  { __typename?: "ProductGrid" }
+>;
 
 interface ProductGridProps {
-  bikes: Bike[];
+  section: ProductGridSection;
 }
 
-export default function ProductGrid({ bikes }: ProductGridProps) {
+export default function ProductGrid({ section }: ProductGridProps) {
+  const bikes = section.products ?? [];
   const params = useParams();
   const locale = (params.locale as string) || "en";
   const searchParams = useSearchParams();

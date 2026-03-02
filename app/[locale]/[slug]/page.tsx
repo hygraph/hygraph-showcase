@@ -8,14 +8,11 @@ import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetPageDocument,
   GetFeaturedProductsDocument,
-  GetProductsDocument,
   GetJobsDocument,
   type GetPageQuery,
   type GetPageQueryVariables,
   type GetFeaturedProductsQuery,
   type GetFeaturedProductsQueryVariables,
-  type GetProductsQuery,
-  type GetProductsQueryVariables,
   type GetJobsQuery,
 } from "@/types/hygraph-generated";
 import { type Locale } from "@/lib/utils/locale";
@@ -35,7 +32,7 @@ import PageHeader from "@/components/sections/PageHeader";
 import ProductGrid from "@/components/sections/ProductGrid";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import type { Job, Bike } from "@/types/hybike";
+import type { Job } from "@/types/hybike";
 
 // Type guards for section types
 type PageSection = GetPageQuery["pages"][0]["sections"][0];
@@ -182,11 +179,10 @@ export default async function Page({ params }: PageProps) {
   // Fetch page + additional listing data in parallel based on slug
   let data: GetPageQuery | null = null;
   let featuredProducts: GetFeaturedProductsQuery | null = null;
-  let allProducts: GetProductsQuery | null = null;
   let jobs: GetJobsQuery | null = null;
 
   try {
-    [data, featuredProducts, allProducts, jobs] = await Promise.all([
+    [data, featuredProducts, jobs] = await Promise.all([
       hygraphRequest<GetPageQuery>(GetPageDocument, {
         slug,
         locale,
@@ -197,11 +193,6 @@ export default async function Page({ params }: PageProps) {
             GetFeaturedProductsDocument,
             { locale } as GetFeaturedProductsQueryVariables
           )
-        : Promise.resolve(null),
-      slug === "collection"
-        ? hygraphRequest<GetProductsQuery>(GetProductsDocument, {
-            locale,
-          } as GetProductsQueryVariables)
         : Promise.resolve(null),
       slug === "careers"
         ? hygraphRequest<GetJobsQuery>(GetJobsDocument, {})
@@ -224,7 +215,6 @@ export default async function Page({ params }: PageProps) {
   const displaySections = variant?.sections || page.sections;
 
   const products = featuredProducts?.products || [];
-  const bikes = (allProducts?.products ?? []) as unknown as Bike[];
   const jobList = (jobs?.jobs ?? []) as unknown as Job[];
 
   function renderSections() {
@@ -233,7 +223,7 @@ export default async function Page({ params }: PageProps) {
         return <PageHeader key={section.id} section={section} />;
       }
       if (isProductGrid(section)) {
-        return <ProductGrid key={section.id} bikes={bikes} />;
+        return <ProductGrid key={section.id} section={section as any} />;
       }
       if (isBlogList(section)) {
         return <BlogList key={section.id} section={section as any} />;

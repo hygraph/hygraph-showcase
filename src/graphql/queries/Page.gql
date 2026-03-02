@@ -18,6 +18,29 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
       }
       ... on ProductGrid {
         id
+        products {
+          id
+          slug
+          name
+          tagline
+          category {
+            value
+          }
+          image {
+            url
+            width
+            height
+          }
+          externalProductId
+          externalProduct {
+            data {
+              calculated_price
+              sale_price
+              inventory_level
+              availability
+            }
+          }
+        }
       }
       ... on BlogList {
         id
@@ -219,6 +242,29 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         }
         ... on ProductGrid {
           id
+          products {
+            id
+            slug
+            name
+            tagline
+            category {
+              value
+            }
+            image {
+              url
+              width
+              height
+            }
+            externalProductId
+            externalProduct {
+              data {
+                calculated_price
+                sale_price
+                inventory_level
+                availability
+              }
+            }
+          }
         }
         ... on BlogList {
           id
