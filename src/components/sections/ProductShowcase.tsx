@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import ProductFilters from "@/components/ProductFilters";
 import type { GetPageQuery } from "@/types/hygraph-generated";
-import type { GetProductsQuery } from "@/types/hygraph-generated";
 import type { Locale } from "@/lib/utils/locale";
 import type { Bike } from "@/types/hybike";
 
@@ -12,20 +11,15 @@ type ProductShowcaseType = Extract<
   GetPageQuery["pages"][0]["sections"][0],
   { __typename?: "ProductShowcase" }
 >;
-type Product = GetProductsQuery["products"][0];
 
 interface ProductShowcaseProps {
   section: ProductShowcaseType;
   locale: Locale;
-  products: Product[];
 }
 
-export default function ProductShowcase({
-  section,
-  locale,
-  products,
-}: ProductShowcaseProps) {
+export default function ProductShowcase({ section, locale }: ProductShowcaseProps) {
   const searchParams = useSearchParams();
+  const products = section.products;
 
   if (products.length === 0) {
     return null;

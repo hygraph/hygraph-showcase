@@ -7,15 +7,9 @@ import { cookies } from "next/headers";
 import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetPageDocument,
-  GetFeaturedProductsDocument,
-  GetProductsDocument,
   GetJobsDocument,
   type GetPageQuery,
   type GetPageQueryVariables,
-  type GetFeaturedProductsQuery,
-  type GetFeaturedProductsQueryVariables,
-  type GetProductsQuery,
-  type GetProductsQueryVariables,
   type GetJobsQuery,
 } from "@/types/hygraph-generated";
 import { type Locale } from "@/lib/utils/locale";
@@ -174,29 +168,15 @@ export default async function Page({ params }: PageProps) {
 
   // Fetch page + additional listing data in parallel based on slug
   let data: GetPageQuery | null = null;
-  let allProducts: GetProductsQuery | null = null;
-  let featuredProducts: GetFeaturedProductsQuery | null = null;
   let jobs: GetJobsQuery | null = null;
 
   try {
-    [data, allProducts, featuredProducts, jobs] = await Promise.all([
+    [data, jobs] = await Promise.all([
       hygraphRequest<GetPageQuery>(GetPageDocument, {
         slug,
         locale,
         segmentName,
       } as GetPageQueryVariables),
-      slug === "collection"
-        ? hygraphRequest<GetProductsQuery>(
-            GetProductsDocument,
-            { locale } as GetProductsQueryVariables
-          )
-        : Promise.resolve(null),
-      slug !== "collection"
-        ? hygraphRequest<GetFeaturedProductsQuery>(
-            GetFeaturedProductsDocument,
-            { locale } as GetFeaturedProductsQueryVariables
-          )
-        : Promise.resolve(null),
       slug === "careers"
         ? hygraphRequest<GetJobsQuery>(GetJobsDocument, {})
         : Promise.resolve(null),
@@ -217,7 +197,6 @@ export default async function Page({ params }: PageProps) {
     page.variants && page.variants.length > 0 ? page.variants[0] : null;
   const displaySections = variant?.sections || page.sections;
 
-  const products = allProducts?.products || featuredProducts?.products || [];
   const jobList = (jobs?.jobs ?? []) as unknown as Job[];
 
   function renderSections() {
@@ -270,7 +249,6 @@ export default async function Page({ params }: PageProps) {
             key={section.id}
             section={section as any}
             locale={locale as Locale}
-            products={products as any}
           />
         );
       }
