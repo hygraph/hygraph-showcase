@@ -7,7 +7,11 @@ query GetProducts($locale: Locale!) {
     category {
       value
     }
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
     productFeatures
     featured
     specifications {
@@ -49,7 +53,11 @@ query GetFeaturedProducts($locale: Locale!) {
     category {
       value
     }
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
     productFeatures
     specifications {
       frame

@@ -19,9 +19,9 @@ export default function BikeCard({ bike, locale }: BikeCardProps) {
     >
       {/* Image */}
       <div className="aspect-square overflow-hidden border-b border-primary">
-        {bike.imageUrl ? (
+        {bike.image?.url ? (
           <img
-            src={bike.imageUrl}
+            src={bike.image?.url}
             alt={bike.name}
             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
           />

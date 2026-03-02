@@ -10,7 +10,11 @@ query GetProductBySlug($slug: String!, $locale: Locale!) {
     category {
       value
     }
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
     productFeatures
     featured
     specifications {

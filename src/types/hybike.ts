@@ -10,8 +10,8 @@ export interface Bike {
   slug: string;
   name: string;
   tagline?: string | null;
-category?: { value: string } | null; // TaxonomyNode: RoadBikes | UrbanEbikes | MountainEbikes | GravelBikes
-  imageUrl?: string | null;
+  category?: { value: string } | null; // TaxonomyNode: RoadBikes | UrbanEbikes | MountainEbikes | GravelBikes
+  image?: { url: string; width?: number | null; height?: number | null } | null;
   productFeatures?: string[] | null;
   description?: { text: string } | null;
   specifications?: {

@@ -49,6 +49,7 @@ export type Asset = Entity & Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  imageProduct: Array<Product>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -103,6 +104,20 @@ export type AssetHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+/** Asset system model */
+export type AssetImageProductArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<ProductOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProductWhereInput>;
 };
 
 
@@ -181,9 +196,9 @@ export type AssetCreateInput = {
   fileName?: InputMaybe<Scalars['String']['input']>;
   heroSectionBackgroundMedia?: InputMaybe<HeroSectionCreateManyInlineInput>;
   imageEditorialSection?: InputMaybe<EditorialSectionCreateManyInlineInput>;
+  imageProduct?: InputMaybe<ProductCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
-  productImages?: InputMaybe<ProductCreateManyInlineInput>;
   productLineHeroImage?: InputMaybe<ProductLineCreateManyInlineInput>;
   productLineHeroImageVariant?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
   seoOgImage?: InputMaybe<SeoCreateManyInlineInput>;
@@ -284,6 +299,9 @@ export type AssetManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageProduct_every?: InputMaybe<ProductWhereInput>;
+  imageProduct_none?: InputMaybe<ProductWhereInput>;
+  imageProduct_some?: InputMaybe<ProductWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -369,9 +387,9 @@ export type AssetUpdateInput = {
   fileName?: InputMaybe<Scalars['String']['input']>;
   heroSectionBackgroundMedia?: InputMaybe<HeroSectionUpdateManyInlineInput>;
   imageEditorialSection?: InputMaybe<EditorialSectionUpdateManyInlineInput>;
+  imageProduct?: InputMaybe<ProductUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
-  productImages?: InputMaybe<ProductUpdateManyInlineInput>;
   productLineHeroImage?: InputMaybe<ProductLineUpdateManyInlineInput>;
   productLineHeroImageVariant?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
   /** Use this to define if its a reupload for the asset */
@@ -696,6 +714,9 @@ export type AssetWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imageProduct_every?: InputMaybe<ProductWhereInput>;
+  imageProduct_none?: InputMaybe<ProductWhereInput>;
+  imageProduct_some?: InputMaybe<ProductWhereInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   mimeType_contains?: InputMaybe<Scalars['String']['input']>;
@@ -13271,9 +13292,7 @@ export type Product = Entity & Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  imageUrl?: Maybe<Scalars['String']['output']>;
-  /** Product images (lifestyle shots, detail views, etc.) */
-  images: Array<Asset>;
+  image?: Maybe<Asset>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -13334,16 +13353,10 @@ export type ProductHistoryArgs = {
 
 
 /** Individual product with marketing content in Hygraph and live pricing/stock from BigCommerce/CommerceTools */
-export type ProductImagesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
+export type ProductImageArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
   locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<AssetOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<AssetWhereInput>;
+  where?: InputMaybe<AssetSingleRelationWhereInput>;
 };
 
 
@@ -13431,8 +13444,7 @@ export type ProductCreateInput = {
   description: Scalars['RichTextAST']['input'];
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
   featured: Scalars['Boolean']['input'];
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
-  images: AssetCreateManyInlineInput;
+  image?: InputMaybe<AssetCreateOneInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<ProductCreateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -15174,28 +15186,7 @@ export type ProductManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
-  images_every?: InputMaybe<AssetWhereInput>;
-  images_none?: InputMaybe<AssetWhereInput>;
-  images_some?: InputMaybe<AssetWhereInput>;
+  image?: InputMaybe<AssetWhereInput>;
   /** Matches if the field array contains *all* items provided to the filter and order does match */
   productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Matches if the field array contains *all* items provided to the filter */
@@ -15293,8 +15284,6 @@ export type ProductOrderByInput =
   | 'featured_DESC'
   | 'id_ASC'
   | 'id_DESC'
-  | 'imageUrl_ASC'
-  | 'imageUrl_DESC'
   | 'name_ASC'
   | 'name_DESC'
   | 'productFeatures_ASC'
@@ -16749,8 +16738,7 @@ export type ProductUpdateInput = {
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
   featured?: InputMaybe<Scalars['Boolean']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
-  images?: InputMaybe<AssetUpdateManyInlineInput>;
+  image?: InputMaybe<AssetUpdateOneInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<ProductUpdateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -16810,7 +16798,6 @@ export type ProductUpdateManyInput = {
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
   featured?: InputMaybe<Scalars['Boolean']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<ProductUpdateManyLocalizationsInput>;
   /** name input for default locale (en) */
@@ -16994,28 +16981,7 @@ export type ProductWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  imageUrl?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  imageUrl_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  imageUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  imageUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  imageUrl_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  imageUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  imageUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  imageUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  imageUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  imageUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
-  images_every?: InputMaybe<AssetWhereInput>;
-  images_none?: InputMaybe<AssetWhereInput>;
-  images_some?: InputMaybe<AssetWhereInput>;
+  image?: InputMaybe<AssetWhereInput>;
   name?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']['input']>;
@@ -23869,7 +23835,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
 
 export type GetProductLineQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -23885,14 +23851,14 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, imageUrl?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetFeaturedProductsQueryVariables = Exact<{
   locale: Locale;
 }>;
 
 
-export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, imageUrl?: string | null, productFeatures: Array<string>, category: { __typename?: 'TaxonomyNode', value: string }, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
+export type GetFeaturedProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> };
 
 export type GetProductCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -24430,7 +24396,11 @@ export const GetProductBySlugDocument = gql`
     category {
       value
     }
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
     productFeatures
     featured
     specifications {
@@ -24522,7 +24492,11 @@ export const GetProductsDocument = gql`
     category {
       value
     }
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
     productFeatures
     featured
     specifications {
@@ -24565,7 +24539,11 @@ export const GetFeaturedProductsDocument = gql`
     category {
       value
     }
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
     productFeatures
     specifications {
       frame

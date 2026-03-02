@@ -75,9 +75,9 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
           {/* Image */}
           <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-primary">
             <div className="aspect-[4/3] lg:aspect-auto relative">
-              {bike.imageUrl ? (
+              {bike.image?.url ? (
                 <img
-                  src={bike.imageUrl}
+                  src={bike.image?.url}
                   alt={bike.name}
                   className="w-full lg:max-h-[calc(100vh-107px)] object-cover"
                 />
@@ -327,9 +327,9 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                   className="group block hover:bg-primary transition-colors duration-300"
                 >
                   <div className="aspect-square overflow-hidden border-b border-primary">
-                    {related.imageUrl ? (
+                    {related.image?.url ? (
                       <img
-                        src={related.imageUrl}
+                        src={related.image?.url}
                         alt={related.name}
                         className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                       />
