@@ -3,12 +3,12 @@ import { ArrowRight } from 'lucide-react';
 import type { Bike } from '@/types/hybike';
 import { formatCategoryValue, formatPrice } from '@/types/hybike';
 
-interface BikeCardProps {
+interface ProductCardProps {
   bike: Bike;
   locale: string;
 }
 
-export default function BikeCard({ bike, locale }: BikeCardProps) {
+export default function ProductCard({ bike, locale }: ProductCardProps) {
   const price = bike.externalProduct?.data?.calculated_price;
   const category = formatCategoryValue(bike.category?.value);
 

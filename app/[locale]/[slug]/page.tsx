@@ -8,11 +8,14 @@ import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetPageDocument,
   GetFeaturedProductsDocument,
+  GetProductsDocument,
   GetJobsDocument,
   type GetPageQuery,
   type GetPageQueryVariables,
   type GetFeaturedProductsQuery,
   type GetFeaturedProductsQueryVariables,
+  type GetProductsQuery,
+  type GetProductsQueryVariables,
   type GetJobsQuery,
 } from "@/types/hygraph-generated";
 import { type Locale } from "@/lib/utils/locale";
@@ -25,11 +28,10 @@ import StatsBar from "@/components/sections/StatsBar";
 import BlogList from "@/components/sections/BlogList";
 import FeaturedArticle from "@/components/sections/FeaturedArticle";
 import JobList from "@/components/sections/JobList";
-import SectionHeading from "@/components/sections/SectionHeading";
+import SectionHeader from "@/components/sections/SectionHeader";
 import Timeline from "@/components/sections/Timeline";
 import ContactSection from "@/components/sections/ContactSection";
 import PageHeader from "@/components/sections/PageHeader";
-import ProductGrid from "@/components/sections/ProductGrid";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import type { Job } from "@/types/hybike";
@@ -79,12 +81,6 @@ function isStatsBar(
   return section.__typename === "StatsBar";
 }
 
-function isProductGrid(
-  section: PageSection
-): section is Extract<PageSection, { __typename?: "ProductGrid" }> {
-  return section.__typename === "ProductGrid";
-}
-
 function isBlogList(
   section: PageSection
 ): section is Extract<PageSection, { __typename?: "BlogList" }> {
@@ -103,10 +99,10 @@ function isFeaturedArticle(
   return section.__typename === "FeaturedArticle";
 }
 
-function isSectionHeading(
+function isSectionHeader(
   section: PageSection
-): section is Extract<PageSection, { __typename?: "SectionHeading" }> {
-  return section.__typename === "SectionHeading";
+): section is Extract<PageSection, { __typename?: "SectionHeader" }> {
+  return section.__typename === "SectionHeader";
 }
 
 function isTimeline(
@@ -178,16 +174,23 @@ export default async function Page({ params }: PageProps) {
 
   // Fetch page + additional listing data in parallel based on slug
   let data: GetPageQuery | null = null;
+  let allProducts: GetProductsQuery | null = null;
   let featuredProducts: GetFeaturedProductsQuery | null = null;
   let jobs: GetJobsQuery | null = null;
 
   try {
-    [data, featuredProducts, jobs] = await Promise.all([
+    [data, allProducts, featuredProducts, jobs] = await Promise.all([
       hygraphRequest<GetPageQuery>(GetPageDocument, {
         slug,
         locale,
         segmentName,
       } as GetPageQueryVariables),
+      slug === "collection"
+        ? hygraphRequest<GetProductsQuery>(
+            GetProductsDocument,
+            { locale } as GetProductsQueryVariables
+          )
+        : Promise.resolve(null),
       slug !== "collection"
         ? hygraphRequest<GetFeaturedProductsQuery>(
             GetFeaturedProductsDocument,
@@ -214,16 +217,13 @@ export default async function Page({ params }: PageProps) {
     page.variants && page.variants.length > 0 ? page.variants[0] : null;
   const displaySections = variant?.sections || page.sections;
 
-  const products = featuredProducts?.products || [];
+  const products = allProducts?.products || featuredProducts?.products || [];
   const jobList = (jobs?.jobs ?? []) as unknown as Job[];
 
   function renderSections() {
     return displaySections.map((section) => {
       if (isPageHeader(section)) {
         return <PageHeader key={section.id} section={section} />;
-      }
-      if (isProductGrid(section)) {
-        return <ProductGrid key={section.id} section={section as any} />;
       }
       if (isBlogList(section)) {
         return <BlogList key={section.id} section={section as any} />;
@@ -274,8 +274,8 @@ export default async function Page({ params }: PageProps) {
           />
         );
       }
-      if (isSectionHeading(section)) {
-        return <SectionHeading key={section.id} section={section as any} />;
+      if (isSectionHeader(section)) {
+        return <SectionHeader key={section.id} section={section as any} />;
       }
       if (isTimeline(section)) {
         return <Timeline key={section.id} section={section as any} />;

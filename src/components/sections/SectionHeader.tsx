@@ -1,15 +1,15 @@
 import type { GetPageQuery } from "@/types/hygraph-generated";
 
-type SectionHeadingSection = Extract<
+type SectionHeaderSection = Extract<
   GetPageQuery["pages"][0]["sections"][0],
-  { __typename?: "SectionHeading" }
+  { __typename?: "SectionHeader" }
 >;
 
-interface SectionHeadingProps {
-  section: SectionHeadingSection;
+interface SectionHeaderProps {
+  section: SectionHeaderSection;
 }
 
-export default function SectionHeading({ section }: SectionHeadingProps) {
+export default function SectionHeader({ section }: SectionHeaderProps) {
   const { label, sectionHeadingHeadline } = section;
 
   return (

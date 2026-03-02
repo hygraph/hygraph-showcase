@@ -16,32 +16,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         eyebrow
         pageHeaderTitle: title
       }
-      ... on ProductGrid {
-        id
-        products {
-          id
-          slug
-          name
-          tagline
-          category {
-            value
-          }
-          image {
-            url
-            width
-            height
-          }
-          externalProductId
-          externalProduct {
-            data {
-              calculated_price
-              sale_price
-              inventory_level
-              availability
-            }
-          }
-        }
-      }
       ... on BlogList {
         id
         blogListHeadline: headline
@@ -165,7 +139,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
       }
       ... on ProductShowcase {
         id
-        title
         layout
         productLine {
           id
@@ -173,6 +146,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           name
         }
         filterByAudience
+        displayFilters
         showPrices
         showStock
         itemsPerRow
@@ -194,7 +168,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           }
         }
       }
-      ... on SectionHeading {
+      ... on SectionHeader {
         id
         label
         sectionHeadingHeadline: headline
@@ -239,32 +213,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           eyebrow
           pageHeaderTitle: title
           subtitle
-        }
-        ... on ProductGrid {
-          id
-          products {
-            id
-            slug
-            name
-            tagline
-            category {
-              value
-            }
-            image {
-              url
-              width
-              height
-            }
-            externalProductId
-            externalProduct {
-              data {
-                calculated_price
-                sale_price
-                inventory_level
-                availability
-              }
-            }
-          }
         }
         ... on BlogList {
           id
@@ -387,7 +335,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         }
         ... on ProductShowcase {
           id
-          title
           layout
           productLine {
             id
@@ -395,6 +342,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             name
           }
           filterByAudience
+          displayFilters
           showPrices
           showStock
           itemsPerRow
@@ -416,7 +364,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             }
           }
         }
-        ... on SectionHeading {
+        ... on SectionHeader {
           id
           label
           sectionHeadingHeadline: headline

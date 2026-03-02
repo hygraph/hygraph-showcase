@@ -4751,7 +4751,6 @@ export type EntityTypeName =
   | 'PageVariant'
   /** Individual product with marketing content in Hygraph and live pricing/stock from BigCommerce/CommerceTools */
   | 'Product'
-  | 'ProductGrid'
   /** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
   | 'ProductLine'
   /** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
@@ -4767,7 +4766,7 @@ export type EntityTypeName =
   /** Scheduled Release system model */
   | 'ScheduledRelease'
   /** Standalone label + headline block used as a section divider */
-  | 'SectionHeading'
+  | 'SectionHeader'
   /** Segment system model */
   | 'Segment'
   /** Global site configuration (singleton) */
@@ -13045,7 +13044,7 @@ export type PageWhereUniqueInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PagesectionsUnion = BlogList | CtaBlock | ContactSection | EditorialSection | FeatureGrid | FeaturedArticle | HeroSection | JobList | PageHeader | ProductGrid | ProductShowcase | SectionHeading | StatsBar | Timeline;
+export type PagesectionsUnion = BlogList | CtaBlock | ContactSection | EditorialSection | FeatureGrid | FeaturedArticle | HeroSection | JobList | PageHeader | ProductShowcase | SectionHeader | StatsBar | Timeline;
 
 export type PagesectionsUnionConnectInput = {
   BlogList?: InputMaybe<BlogListConnectInput>;
@@ -13057,9 +13056,8 @@ export type PagesectionsUnionConnectInput = {
   HeroSection?: InputMaybe<HeroSectionConnectInput>;
   JobList?: InputMaybe<JobListConnectInput>;
   PageHeader?: InputMaybe<PageHeaderConnectInput>;
-  ProductGrid?: InputMaybe<ProductGridConnectInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseConnectInput>;
-  SectionHeading?: InputMaybe<SectionHeadingConnectInput>;
+  SectionHeader?: InputMaybe<SectionHeaderConnectInput>;
   StatsBar?: InputMaybe<StatsBarConnectInput>;
   Timeline?: InputMaybe<TimelineConnectInput>;
 };
@@ -13074,9 +13072,8 @@ export type PagesectionsUnionCreateInput = {
   HeroSection?: InputMaybe<HeroSectionCreateInput>;
   JobList?: InputMaybe<JobListCreateInput>;
   PageHeader?: InputMaybe<PageHeaderCreateInput>;
-  ProductGrid?: InputMaybe<ProductGridCreateInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseCreateInput>;
-  SectionHeading?: InputMaybe<SectionHeadingCreateInput>;
+  SectionHeader?: InputMaybe<SectionHeaderCreateInput>;
   StatsBar?: InputMaybe<StatsBarCreateInput>;
   Timeline?: InputMaybe<TimelineCreateInput>;
 };
@@ -13101,9 +13098,8 @@ export type PagesectionsUnionCreateWithPositionInput = {
   HeroSection?: InputMaybe<HeroSectionCreateWithPositionInput>;
   JobList?: InputMaybe<JobListCreateWithPositionInput>;
   PageHeader?: InputMaybe<PageHeaderCreateWithPositionInput>;
-  ProductGrid?: InputMaybe<ProductGridCreateWithPositionInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseCreateWithPositionInput>;
-  SectionHeading?: InputMaybe<SectionHeadingCreateWithPositionInput>;
+  SectionHeader?: InputMaybe<SectionHeaderCreateWithPositionInput>;
   StatsBar?: InputMaybe<StatsBarCreateWithPositionInput>;
   Timeline?: InputMaybe<TimelineCreateWithPositionInput>;
 };
@@ -13118,9 +13114,8 @@ export type PagesectionsUnionUpdateInput = {
   HeroSection?: InputMaybe<HeroSectionUpdateInput>;
   JobList?: InputMaybe<JobListUpdateInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateInput>;
-  ProductGrid?: InputMaybe<ProductGridUpdateInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateInput>;
-  SectionHeading?: InputMaybe<SectionHeadingUpdateInput>;
+  SectionHeader?: InputMaybe<SectionHeaderUpdateInput>;
   StatsBar?: InputMaybe<StatsBarUpdateInput>;
   Timeline?: InputMaybe<TimelineUpdateInput>;
 };
@@ -13146,9 +13141,8 @@ export type PagesectionsUnionUpdateManyWithNestedWhereInput = {
   HeroSection?: InputMaybe<HeroSectionUpdateManyWithNestedWhereInput>;
   JobList?: InputMaybe<JobListUpdateManyWithNestedWhereInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateManyWithNestedWhereInput>;
-  ProductGrid?: InputMaybe<ProductGridUpdateManyWithNestedWhereInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateManyWithNestedWhereInput>;
-  SectionHeading?: InputMaybe<SectionHeadingUpdateManyWithNestedWhereInput>;
+  SectionHeader?: InputMaybe<SectionHeaderUpdateManyWithNestedWhereInput>;
   StatsBar?: InputMaybe<StatsBarUpdateManyWithNestedWhereInput>;
   Timeline?: InputMaybe<TimelineUpdateManyWithNestedWhereInput>;
 };
@@ -13174,9 +13168,8 @@ export type PagesectionsUnionUpdateWithNestedWhereUniqueAndPositionInput = {
   HeroSection?: InputMaybe<HeroSectionUpdateWithNestedWhereUniqueAndPositionInput>;
   JobList?: InputMaybe<JobListUpdateWithNestedWhereUniqueAndPositionInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateWithNestedWhereUniqueAndPositionInput>;
-  ProductGrid?: InputMaybe<ProductGridUpdateWithNestedWhereUniqueAndPositionInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateWithNestedWhereUniqueAndPositionInput>;
-  SectionHeading?: InputMaybe<SectionHeadingUpdateWithNestedWhereUniqueAndPositionInput>;
+  SectionHeader?: InputMaybe<SectionHeaderUpdateWithNestedWhereUniqueAndPositionInput>;
   StatsBar?: InputMaybe<StatsBarUpdateWithNestedWhereUniqueAndPositionInput>;
   Timeline?: InputMaybe<TimelineUpdateWithNestedWhereUniqueAndPositionInput>;
 };
@@ -13191,9 +13184,8 @@ export type PagesectionsUnionUpdateWithNestedWhereUniqueInput = {
   HeroSection?: InputMaybe<HeroSectionUpdateWithNestedWhereUniqueInput>;
   JobList?: InputMaybe<JobListUpdateWithNestedWhereUniqueInput>;
   PageHeader?: InputMaybe<PageHeaderUpdateWithNestedWhereUniqueInput>;
-  ProductGrid?: InputMaybe<ProductGridUpdateWithNestedWhereUniqueInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpdateWithNestedWhereUniqueInput>;
-  SectionHeading?: InputMaybe<SectionHeadingUpdateWithNestedWhereUniqueInput>;
+  SectionHeader?: InputMaybe<SectionHeaderUpdateWithNestedWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarUpdateWithNestedWhereUniqueInput>;
   Timeline?: InputMaybe<TimelineUpdateWithNestedWhereUniqueInput>;
 };
@@ -13208,9 +13200,8 @@ export type PagesectionsUnionUpsertWithNestedWhereUniqueAndPositionInput = {
   HeroSection?: InputMaybe<HeroSectionUpsertWithNestedWhereUniqueAndPositionInput>;
   JobList?: InputMaybe<JobListUpsertWithNestedWhereUniqueAndPositionInput>;
   PageHeader?: InputMaybe<PageHeaderUpsertWithNestedWhereUniqueAndPositionInput>;
-  ProductGrid?: InputMaybe<ProductGridUpsertWithNestedWhereUniqueAndPositionInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpsertWithNestedWhereUniqueAndPositionInput>;
-  SectionHeading?: InputMaybe<SectionHeadingUpsertWithNestedWhereUniqueAndPositionInput>;
+  SectionHeader?: InputMaybe<SectionHeaderUpsertWithNestedWhereUniqueAndPositionInput>;
   StatsBar?: InputMaybe<StatsBarUpsertWithNestedWhereUniqueAndPositionInput>;
   Timeline?: InputMaybe<TimelineUpsertWithNestedWhereUniqueAndPositionInput>;
 };
@@ -13225,9 +13216,8 @@ export type PagesectionsUnionUpsertWithNestedWhereUniqueInput = {
   HeroSection?: InputMaybe<HeroSectionUpsertWithNestedWhereUniqueInput>;
   JobList?: InputMaybe<JobListUpsertWithNestedWhereUniqueInput>;
   PageHeader?: InputMaybe<PageHeaderUpsertWithNestedWhereUniqueInput>;
-  ProductGrid?: InputMaybe<ProductGridUpsertWithNestedWhereUniqueInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseUpsertWithNestedWhereUniqueInput>;
-  SectionHeading?: InputMaybe<SectionHeadingUpsertWithNestedWhereUniqueInput>;
+  SectionHeader?: InputMaybe<SectionHeaderUpsertWithNestedWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarUpsertWithNestedWhereUniqueInput>;
   Timeline?: InputMaybe<TimelineUpsertWithNestedWhereUniqueInput>;
 };
@@ -13242,9 +13232,8 @@ export type PagesectionsUnionWhereInput = {
   HeroSection?: InputMaybe<HeroSectionWhereInput>;
   JobList?: InputMaybe<JobListWhereInput>;
   PageHeader?: InputMaybe<PageHeaderWhereInput>;
-  ProductGrid?: InputMaybe<ProductGridWhereInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseWhereInput>;
-  SectionHeading?: InputMaybe<SectionHeadingWhereInput>;
+  SectionHeader?: InputMaybe<SectionHeaderWhereInput>;
   StatsBar?: InputMaybe<StatsBarWhereInput>;
   Timeline?: InputMaybe<TimelineWhereInput>;
 };
@@ -13259,9 +13248,8 @@ export type PagesectionsUnionWhereUniqueInput = {
   HeroSection?: InputMaybe<HeroSectionWhereUniqueInput>;
   JobList?: InputMaybe<JobListWhereUniqueInput>;
   PageHeader?: InputMaybe<PageHeaderWhereUniqueInput>;
-  ProductGrid?: InputMaybe<ProductGridWhereUniqueInput>;
   ProductShowcase?: InputMaybe<ProductShowcaseWhereUniqueInput>;
-  SectionHeading?: InputMaybe<SectionHeadingWhereUniqueInput>;
+  SectionHeader?: InputMaybe<SectionHeaderWhereUniqueInput>;
   StatsBar?: InputMaybe<StatsBarWhereUniqueInput>;
   Timeline?: InputMaybe<TimelineWhereUniqueInput>;
 };
@@ -13438,7 +13426,6 @@ export type ProductConnection = {
 export type ProductCreateInput = {
   baseProductId: Scalars['String']['input'];
   category: TaxonomyNodeInput;
-  cmm96ph4400m408vz8nd54r8q?: InputMaybe<ProductGridCreateManyInlineInput>;
   color: ProductColor;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
@@ -13451,6 +13438,7 @@ export type ProductCreateInput = {
   /** name input for default locale (en) */
   name: Scalars['String']['input'];
   productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
+  productShowcases?: InputMaybe<ProductShowcaseCreateManyInlineInput>;
   size: ProductSize;
   slug: Scalars['String']['input'];
   specifications?: InputMaybe<ProductSpecificationCreateOneInlineInput>;
@@ -13500,352 +13488,6 @@ export type ProductEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
   node: Product;
-};
-
-export type ProductGrid = Entity & {
-  __typename?: 'ProductGrid';
-  /** The unique identifier */
-  id: Scalars['ID']['output'];
-  products: Array<Product>;
-  /** System stage field */
-  stage: Stage;
-  /** System updatedAt field */
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-export type ProductGridProductsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<ProductOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ProductWhereInput>;
-};
-
-export type ProductGridConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: ProductGridWhereUniqueInput;
-};
-
-/** A connection to a list of items. */
-export type ProductGridConnection = {
-  __typename?: 'ProductGridConnection';
-  aggregate: Aggregate;
-  /** A list of edges. */
-  edges: Array<ProductGridEdge>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type ProductGridCreateInput = {
-  products?: InputMaybe<ProductCreateManyInlineInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type ProductGridCreateManyInlineInput = {
-  /** Create and connect multiple existing ProductGrid documents */
-  create?: InputMaybe<Array<ProductGridCreateInput>>;
-};
-
-export type ProductGridCreateOneInlineInput = {
-  /** Create and connect one ProductGrid document */
-  create?: InputMaybe<ProductGridCreateInput>;
-};
-
-export type ProductGridCreateWithPositionInput = {
-  /** Document to create */
-  data: ProductGridCreateInput;
-  /** Position in the list of existing component instances, will default to appending at the end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-};
-
-/** An edge in a connection. */
-export type ProductGridEdge = {
-  __typename?: 'ProductGridEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: ProductGrid;
-};
-
-/** Identifies documents */
-export type ProductGridManyWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductGridWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductGridWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductGridWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  products_every?: InputMaybe<ProductWhereInput>;
-  products_none?: InputMaybe<ProductWhereInput>;
-  products_some?: InputMaybe<ProductWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-};
-
-export type ProductGridOrderByInput =
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC';
-
-export type ProductGridParent = Page | PageVariant;
-
-export type ProductGridParentConnectInput = {
-  Page?: InputMaybe<PageConnectInput>;
-  PageVariant?: InputMaybe<PageVariantConnectInput>;
-};
-
-export type ProductGridParentCreateInput = {
-  Page?: InputMaybe<PageCreateInput>;
-  PageVariant?: InputMaybe<PageVariantCreateInput>;
-};
-
-export type ProductGridParentCreateManyInlineInput = {
-  /** Connect multiple existing ProductGridParent documents */
-  connect?: InputMaybe<Array<ProductGridParentWhereUniqueInput>>;
-  /** Create and connect multiple existing ProductGridParent documents */
-  create?: InputMaybe<Array<ProductGridParentCreateInput>>;
-};
-
-export type ProductGridParentCreateOneInlineInput = {
-  /** Connect one existing ProductGridParent document */
-  connect?: InputMaybe<ProductGridParentWhereUniqueInput>;
-  /** Create and connect one ProductGridParent document */
-  create?: InputMaybe<ProductGridParentCreateInput>;
-};
-
-export type ProductGridParentUpdateInput = {
-  Page?: InputMaybe<PageUpdateInput>;
-  PageVariant?: InputMaybe<PageVariantUpdateInput>;
-};
-
-export type ProductGridParentUpdateManyInlineInput = {
-  /** Connect multiple existing ProductGridParent documents */
-  connect?: InputMaybe<Array<ProductGridParentConnectInput>>;
-  /** Create and connect multiple ProductGridParent documents */
-  create?: InputMaybe<Array<ProductGridParentCreateInput>>;
-  /** Delete multiple ProductGridParent documents */
-  delete?: InputMaybe<Array<ProductGridParentWhereUniqueInput>>;
-  /** Disconnect multiple ProductGridParent documents */
-  disconnect?: InputMaybe<Array<ProductGridParentWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing ProductGridParent documents */
-  set?: InputMaybe<Array<ProductGridParentWhereUniqueInput>>;
-  /** Update multiple ProductGridParent documents */
-  update?: InputMaybe<Array<ProductGridParentUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple ProductGridParent documents */
-  upsert?: InputMaybe<Array<ProductGridParentUpsertWithNestedWhereUniqueInput>>;
-};
-
-export type ProductGridParentUpdateManyWithNestedWhereInput = {
-  Page?: InputMaybe<PageUpdateManyWithNestedWhereInput>;
-  PageVariant?: InputMaybe<PageVariantUpdateManyWithNestedWhereInput>;
-};
-
-export type ProductGridParentUpdateOneInlineInput = {
-  /** Connect existing ProductGridParent document */
-  connect?: InputMaybe<ProductGridParentWhereUniqueInput>;
-  /** Create and connect one ProductGridParent document */
-  create?: InputMaybe<ProductGridParentCreateInput>;
-  /** Delete currently connected ProductGridParent document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Disconnect currently connected ProductGridParent document */
-  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single ProductGridParent document */
-  update?: InputMaybe<ProductGridParentUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single ProductGridParent document */
-  upsert?: InputMaybe<ProductGridParentUpsertWithNestedWhereUniqueInput>;
-};
-
-export type ProductGridParentUpdateWithNestedWhereUniqueInput = {
-  Page?: InputMaybe<PageUpdateWithNestedWhereUniqueInput>;
-  PageVariant?: InputMaybe<PageVariantUpdateWithNestedWhereUniqueInput>;
-};
-
-export type ProductGridParentUpsertWithNestedWhereUniqueInput = {
-  Page?: InputMaybe<PageUpsertWithNestedWhereUniqueInput>;
-  PageVariant?: InputMaybe<PageVariantUpsertWithNestedWhereUniqueInput>;
-};
-
-export type ProductGridParentWhereInput = {
-  Page?: InputMaybe<PageWhereInput>;
-  PageVariant?: InputMaybe<PageVariantWhereInput>;
-};
-
-export type ProductGridParentWhereUniqueInput = {
-  Page?: InputMaybe<PageWhereUniqueInput>;
-  PageVariant?: InputMaybe<PageVariantWhereUniqueInput>;
-};
-
-export type ProductGridUpdateInput = {
-  products?: InputMaybe<ProductUpdateManyInlineInput>;
-};
-
-export type ProductGridUpdateManyInlineInput = {
-  /** Create and connect multiple ProductGrid component instances */
-  create?: InputMaybe<Array<ProductGridCreateWithPositionInput>>;
-  /** Delete multiple ProductGrid documents */
-  delete?: InputMaybe<Array<ProductGridWhereUniqueInput>>;
-  /** Update multiple ProductGrid component instances */
-  update?: InputMaybe<Array<ProductGridUpdateWithNestedWhereUniqueAndPositionInput>>;
-  /** Upsert multiple ProductGrid component instances */
-  upsert?: InputMaybe<Array<ProductGridUpsertWithNestedWhereUniqueAndPositionInput>>;
-};
-
-export type ProductGridUpdateManyInput = {
-  /** No fields in updateMany data input */
-  _?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductGridUpdateManyWithNestedWhereInput = {
-  /** Update many input */
-  data: ProductGridUpdateManyInput;
-  /** Document search */
-  where: ProductGridWhereInput;
-};
-
-export type ProductGridUpdateOneInlineInput = {
-  /** Create and connect one ProductGrid document */
-  create?: InputMaybe<ProductGridCreateInput>;
-  /** Delete currently connected ProductGrid document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single ProductGrid document */
-  update?: InputMaybe<ProductGridUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single ProductGrid document */
-  upsert?: InputMaybe<ProductGridUpsertWithNestedWhereUniqueInput>;
-};
-
-export type ProductGridUpdateWithNestedWhereUniqueAndPositionInput = {
-  /** Document to update */
-  data?: InputMaybe<ProductGridUpdateInput>;
-  /** Position in the list of existing component instances, will default to appending at the end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Unique component instance search */
-  where: ProductGridWhereUniqueInput;
-};
-
-export type ProductGridUpdateWithNestedWhereUniqueInput = {
-  /** Document to update */
-  data: ProductGridUpdateInput;
-  /** Unique document search */
-  where: ProductGridWhereUniqueInput;
-};
-
-export type ProductGridUpsertInput = {
-  /** Create document if it didn't exist */
-  create: ProductGridCreateInput;
-  /** Update document if it exists */
-  update: ProductGridUpdateInput;
-};
-
-export type ProductGridUpsertWithNestedWhereUniqueAndPositionInput = {
-  /** Document to upsert */
-  data?: InputMaybe<ProductGridUpsertInput>;
-  /** Position in the list of existing component instances, will default to appending at the end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Unique component instance search */
-  where: ProductGridWhereUniqueInput;
-};
-
-export type ProductGridUpsertWithNestedWhereUniqueInput = {
-  /** Upsert data */
-  data: ProductGridUpsertInput;
-  /** Unique document search */
-  where: ProductGridWhereUniqueInput;
-};
-
-/** Identifies documents */
-export type ProductGridWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductGridWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductGridWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductGridWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  products_every?: InputMaybe<ProductWhereInput>;
-  products_none?: InputMaybe<ProductWhereInput>;
-  products_some?: InputMaybe<ProductWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-};
-
-/** References ProductGrid record uniquely */
-export type ProductGridWhereUniqueInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
@@ -15325,6 +14967,7 @@ export type ProductOrderByInput =
 /** Displays products with live PIM data - demonstrates Content Federation */
 export type ProductShowcase = Entity & {
   __typename?: 'ProductShowcase';
+  displayFilters?: Maybe<Scalars['Boolean']['output']>;
   /** When enabled, only show products where targetAudiences includes current audience */
   filterByAudience: Scalars['Boolean']['output'];
   /** The unique identifier */
@@ -15333,29 +14976,17 @@ export type ProductShowcase = Entity & {
   itemsPerRow?: Maybe<Scalars['Int']['output']>;
   /** Display layout for products */
   layout: DisplayLayout;
-  /** System Locale field */
-  locale: Locale;
-  /** Get the other localizations for this document */
-  localizations: Array<ProductShowcase>;
   /** Show all products from this product line. Variant-enabled to show different product lines per audience. */
   productLine?: Maybe<ProductLine>;
+  products: Array<Product>;
   /** Display product prices fetched from PIM */
   showPrices: Scalars['Boolean']['output'];
   /** Display stock status fetched from PIM */
   showStock: Scalars['Boolean']['output'];
   /** System stage field */
   stage: Stage;
-  /** Section title (optional) */
-  title?: Maybe<Scalars['String']['output']>;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-/** Displays products with live PIM data - demonstrates Content Federation */
-export type ProductShowcaseLocalizationsArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  locales?: Array<Locale>;
 };
 
 
@@ -15367,8 +14998,16 @@ export type ProductShowcaseProductLineArgs = {
 
 
 /** Displays products with live PIM data - demonstrates Content Federation */
-export type ProductShowcaseUpdatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
+export type ProductShowcaseProductsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<ProductOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProductWhereInput>;
 };
 
 export type ProductShowcaseConnectInput = {
@@ -15389,33 +15028,15 @@ export type ProductShowcaseConnection = {
 };
 
 export type ProductShowcaseCreateInput = {
+  displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience: Scalars['Boolean']['input'];
   itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
   layout: DisplayLayout;
-  /** Inline mutations for managing document localizations excluding the default locale */
-  localizations?: InputMaybe<ProductShowcaseCreateLocalizationsInput>;
   productLine?: InputMaybe<ProductLineCreateOneInlineInput>;
+  products?: InputMaybe<ProductCreateManyInlineInput>;
   showPrices: Scalars['Boolean']['input'];
   showStock: Scalars['Boolean']['input'];
-  /** title input for default locale (en) */
-  title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type ProductShowcaseCreateLocalizationDataInput = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type ProductShowcaseCreateLocalizationInput = {
-  /** Localization input */
-  data: ProductShowcaseCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductShowcaseCreateLocalizationsInput = {
-  /** Create localizations for the newly-created document */
-  create?: InputMaybe<Array<ProductShowcaseCreateLocalizationInput>>;
 };
 
 export type ProductShowcaseCreateManyInlineInput = {
@@ -15454,6 +15075,9 @@ export type ProductShowcaseManyWhereInput = {
   OR?: InputMaybe<Array<ProductShowcaseWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
+  displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  displayFilters_not?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   filterByAudience_not?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15499,6 +15123,9 @@ export type ProductShowcaseManyWhereInput = {
   /** All values that are not contained in given list. */
   layout_not_in?: InputMaybe<Array<InputMaybe<DisplayLayout>>>;
   productLine?: InputMaybe<ProductLineWhereInput>;
+  products_every?: InputMaybe<ProductWhereInput>;
+  products_none?: InputMaybe<ProductWhereInput>;
+  products_some?: InputMaybe<ProductWhereInput>;
   showPrices?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   showPrices_not?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15523,6 +15150,8 @@ export type ProductShowcaseManyWhereInput = {
 };
 
 export type ProductShowcaseOrderByInput =
+  | 'displayFilters_ASC'
+  | 'displayFilters_DESC'
   | 'filterByAudience_ASC'
   | 'filterByAudience_DESC'
   | 'id_ASC'
@@ -15535,8 +15164,6 @@ export type ProductShowcaseOrderByInput =
   | 'showPrices_DESC'
   | 'showStock_ASC'
   | 'showStock_DESC'
-  | 'title_ASC'
-  | 'title_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
@@ -15629,35 +15256,14 @@ export type ProductShowcaseParentWhereUniqueInput = {
 };
 
 export type ProductShowcaseUpdateInput = {
+  displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
   itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
   layout?: InputMaybe<DisplayLayout>;
-  /** Manage document localizations */
-  localizations?: InputMaybe<ProductShowcaseUpdateLocalizationsInput>;
   productLine?: InputMaybe<ProductLineUpdateOneInlineInput>;
+  products?: InputMaybe<ProductUpdateManyInlineInput>;
   showPrices?: InputMaybe<Scalars['Boolean']['input']>;
   showStock?: InputMaybe<Scalars['Boolean']['input']>;
-  /** title input for default locale (en) */
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductShowcaseUpdateLocalizationDataInput = {
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductShowcaseUpdateLocalizationInput = {
-  data: ProductShowcaseUpdateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductShowcaseUpdateLocalizationsInput = {
-  /** Localizations to create */
-  create?: InputMaybe<Array<ProductShowcaseCreateLocalizationInput>>;
-  /** Localizations to delete */
-  delete?: InputMaybe<Array<Locale>>;
-  /** Localizations to update */
-  update?: InputMaybe<Array<ProductShowcaseUpdateLocalizationInput>>;
-  upsert?: InputMaybe<Array<ProductShowcaseUpsertLocalizationInput>>;
 };
 
 export type ProductShowcaseUpdateManyInlineInput = {
@@ -15672,29 +15278,12 @@ export type ProductShowcaseUpdateManyInlineInput = {
 };
 
 export type ProductShowcaseUpdateManyInput = {
+  displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
   itemsPerRow?: InputMaybe<Scalars['Int']['input']>;
   layout?: InputMaybe<DisplayLayout>;
-  /** Optional updates to localizations */
-  localizations?: InputMaybe<ProductShowcaseUpdateManyLocalizationsInput>;
   showPrices?: InputMaybe<Scalars['Boolean']['input']>;
   showStock?: InputMaybe<Scalars['Boolean']['input']>;
-  /** title input for default locale (en) */
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductShowcaseUpdateManyLocalizationDataInput = {
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductShowcaseUpdateManyLocalizationInput = {
-  data: ProductShowcaseUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductShowcaseUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: InputMaybe<Array<ProductShowcaseUpdateManyLocalizationInput>>;
 };
 
 export type ProductShowcaseUpdateManyWithNestedWhereInput = {
@@ -15738,12 +15327,6 @@ export type ProductShowcaseUpsertInput = {
   update: ProductShowcaseUpdateInput;
 };
 
-export type ProductShowcaseUpsertLocalizationInput = {
-  create: ProductShowcaseCreateLocalizationDataInput;
-  locale: Locale;
-  update: ProductShowcaseUpdateLocalizationDataInput;
-};
-
 export type ProductShowcaseUpsertWithNestedWhereUniqueAndPositionInput = {
   /** Document to upsert */
   data?: InputMaybe<ProductShowcaseUpsertInput>;
@@ -15770,6 +15353,9 @@ export type ProductShowcaseWhereInput = {
   OR?: InputMaybe<Array<ProductShowcaseWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
+  displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  displayFilters_not?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   filterByAudience_not?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15815,31 +15401,15 @@ export type ProductShowcaseWhereInput = {
   /** All values that are not contained in given list. */
   layout_not_in?: InputMaybe<Array<InputMaybe<DisplayLayout>>>;
   productLine?: InputMaybe<ProductLineWhereInput>;
+  products_every?: InputMaybe<ProductWhereInput>;
+  products_none?: InputMaybe<ProductWhereInput>;
+  products_some?: InputMaybe<ProductWhereInput>;
   showPrices?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   showPrices_not?: InputMaybe<Scalars['Boolean']['input']>;
   showStock?: InputMaybe<Scalars['Boolean']['input']>;
   /** Any other value that exists and is not equal to the given value. */
   showStock_not?: InputMaybe<Scalars['Boolean']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  title_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  title_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  title_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  title_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  title_starts_with?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -16754,7 +16324,6 @@ export type ProductSpecificationWhereUniqueInput = {
 export type ProductUpdateInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
   category?: InputMaybe<TaxonomyNodeInput>;
-  cmm96ph4400m408vz8nd54r8q?: InputMaybe<ProductGridUpdateManyInlineInput>;
   color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
@@ -16766,6 +16335,7 @@ export type ProductUpdateInput = {
   /** name input for default locale (en) */
   name?: InputMaybe<Scalars['String']['input']>;
   productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
+  productShowcases?: InputMaybe<ProductShowcaseUpdateManyInlineInput>;
   size?: InputMaybe<ProductSize>;
   slug?: InputMaybe<Scalars['String']['input']>;
   specifications?: InputMaybe<ProductSpecificationUpdateOneInlineInput>;
@@ -19397,97 +18967,116 @@ export type ScheduledReleaseWhereUniqueInput = {
 };
 
 /** Standalone label + headline block used as a section divider */
-export type SectionHeading = Entity & {
-  __typename?: 'SectionHeading';
+export type SectionHeader = Entity & {
+  __typename?: 'SectionHeader';
   headline: Scalars['String']['output'];
   /** The unique identifier */
   id: Scalars['ID']['output'];
   /** Small uppercase label above the headline */
   label?: Maybe<Scalars['String']['output']>;
+  /** System Locale field */
+  locale: Locale;
+  /** Get the other localizations for this document */
+  localizations: Array<SectionHeader>;
   /** System stage field */
   stage: Stage;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type SectionHeadingConnectInput = {
+
+/** Standalone label + headline block used as a section divider */
+export type SectionHeaderLocalizationsArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  locales?: Array<Locale>;
+};
+
+
+/** Standalone label + headline block used as a section divider */
+export type SectionHeaderUpdatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+export type SectionHeaderConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
   /** Document to connect */
-  where: SectionHeadingWhereUniqueInput;
+  where: SectionHeaderWhereUniqueInput;
 };
 
 /** A connection to a list of items. */
-export type SectionHeadingConnection = {
-  __typename?: 'SectionHeadingConnection';
+export type SectionHeaderConnection = {
+  __typename?: 'SectionHeaderConnection';
   aggregate: Aggregate;
   /** A list of edges. */
-  edges: Array<SectionHeadingEdge>;
+  edges: Array<SectionHeaderEdge>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
 };
 
-export type SectionHeadingCreateInput = {
+export type SectionHeaderCreateInput = {
+  /** headline input for default locale (en) */
+  headline: Scalars['String']['input'];
+  /** label input for default locale (en) */
+  label?: InputMaybe<Scalars['String']['input']>;
+  /** Inline mutations for managing document localizations excluding the default locale */
+  localizations?: InputMaybe<SectionHeaderCreateLocalizationsInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type SectionHeaderCreateLocalizationDataInput = {
   headline: Scalars['String']['input'];
   label?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type SectionHeadingCreateManyInlineInput = {
-  /** Create and connect multiple existing SectionHeading documents */
-  create?: InputMaybe<Array<SectionHeadingCreateInput>>;
+export type SectionHeaderCreateLocalizationInput = {
+  /** Localization input */
+  data: SectionHeaderCreateLocalizationDataInput;
+  locale: Locale;
 };
 
-export type SectionHeadingCreateOneInlineInput = {
-  /** Create and connect one SectionHeading document */
-  create?: InputMaybe<SectionHeadingCreateInput>;
+export type SectionHeaderCreateLocalizationsInput = {
+  /** Create localizations for the newly-created document */
+  create?: InputMaybe<Array<SectionHeaderCreateLocalizationInput>>;
 };
 
-export type SectionHeadingCreateWithPositionInput = {
+export type SectionHeaderCreateManyInlineInput = {
+  /** Create and connect multiple existing SectionHeader documents */
+  create?: InputMaybe<Array<SectionHeaderCreateInput>>;
+};
+
+export type SectionHeaderCreateOneInlineInput = {
+  /** Create and connect one SectionHeader document */
+  create?: InputMaybe<SectionHeaderCreateInput>;
+};
+
+export type SectionHeaderCreateWithPositionInput = {
   /** Document to create */
-  data: SectionHeadingCreateInput;
+  data: SectionHeaderCreateInput;
   /** Position in the list of existing component instances, will default to appending at the end of list */
   position?: InputMaybe<ConnectPositionInput>;
 };
 
 /** An edge in a connection. */
-export type SectionHeadingEdge = {
-  __typename?: 'SectionHeadingEdge';
+export type SectionHeaderEdge = {
+  __typename?: 'SectionHeaderEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: SectionHeading;
+  node: SectionHeader;
 };
 
 /** Identifies documents */
-export type SectionHeadingManyWhereInput = {
+export type SectionHeaderManyWhereInput = {
   /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<SectionHeadingWhereInput>>;
+  AND?: InputMaybe<Array<SectionHeaderWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<SectionHeadingWhereInput>>;
+  NOT?: InputMaybe<Array<SectionHeaderWhereInput>>;
   /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<SectionHeadingWhereInput>>;
+  OR?: InputMaybe<Array<SectionHeaderWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  headline?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  headline_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  headline_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  headline_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  headline_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  headline_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  headline_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  headline_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  headline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  headline_starts_with?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -19507,25 +19096,6 @@ export type SectionHeadingManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  label_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  label_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  label_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  label_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  label_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  label_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  label_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  label_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  label_starts_with?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -19543,7 +19113,7 @@ export type SectionHeadingManyWhereInput = {
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
 };
 
-export type SectionHeadingOrderByInput =
+export type SectionHeaderOrderByInput =
   | 'headline_ASC'
   | 'headline_DESC'
   | 'id_ASC'
@@ -19553,180 +19123,229 @@ export type SectionHeadingOrderByInput =
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
-export type SectionHeadingParent = Page | PageVariant;
+export type SectionHeaderParent = Page | PageVariant;
 
-export type SectionHeadingParentConnectInput = {
+export type SectionHeaderParentConnectInput = {
   Page?: InputMaybe<PageConnectInput>;
   PageVariant?: InputMaybe<PageVariantConnectInput>;
 };
 
-export type SectionHeadingParentCreateInput = {
+export type SectionHeaderParentCreateInput = {
   Page?: InputMaybe<PageCreateInput>;
   PageVariant?: InputMaybe<PageVariantCreateInput>;
 };
 
-export type SectionHeadingParentCreateManyInlineInput = {
-  /** Connect multiple existing SectionHeadingParent documents */
-  connect?: InputMaybe<Array<SectionHeadingParentWhereUniqueInput>>;
-  /** Create and connect multiple existing SectionHeadingParent documents */
-  create?: InputMaybe<Array<SectionHeadingParentCreateInput>>;
+export type SectionHeaderParentCreateManyInlineInput = {
+  /** Connect multiple existing SectionHeaderParent documents */
+  connect?: InputMaybe<Array<SectionHeaderParentWhereUniqueInput>>;
+  /** Create and connect multiple existing SectionHeaderParent documents */
+  create?: InputMaybe<Array<SectionHeaderParentCreateInput>>;
 };
 
-export type SectionHeadingParentCreateOneInlineInput = {
-  /** Connect one existing SectionHeadingParent document */
-  connect?: InputMaybe<SectionHeadingParentWhereUniqueInput>;
-  /** Create and connect one SectionHeadingParent document */
-  create?: InputMaybe<SectionHeadingParentCreateInput>;
+export type SectionHeaderParentCreateOneInlineInput = {
+  /** Connect one existing SectionHeaderParent document */
+  connect?: InputMaybe<SectionHeaderParentWhereUniqueInput>;
+  /** Create and connect one SectionHeaderParent document */
+  create?: InputMaybe<SectionHeaderParentCreateInput>;
 };
 
-export type SectionHeadingParentUpdateInput = {
+export type SectionHeaderParentUpdateInput = {
   Page?: InputMaybe<PageUpdateInput>;
   PageVariant?: InputMaybe<PageVariantUpdateInput>;
 };
 
-export type SectionHeadingParentUpdateManyInlineInput = {
-  /** Connect multiple existing SectionHeadingParent documents */
-  connect?: InputMaybe<Array<SectionHeadingParentConnectInput>>;
-  /** Create and connect multiple SectionHeadingParent documents */
-  create?: InputMaybe<Array<SectionHeadingParentCreateInput>>;
-  /** Delete multiple SectionHeadingParent documents */
-  delete?: InputMaybe<Array<SectionHeadingParentWhereUniqueInput>>;
-  /** Disconnect multiple SectionHeadingParent documents */
-  disconnect?: InputMaybe<Array<SectionHeadingParentWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing SectionHeadingParent documents */
-  set?: InputMaybe<Array<SectionHeadingParentWhereUniqueInput>>;
-  /** Update multiple SectionHeadingParent documents */
-  update?: InputMaybe<Array<SectionHeadingParentUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple SectionHeadingParent documents */
-  upsert?: InputMaybe<Array<SectionHeadingParentUpsertWithNestedWhereUniqueInput>>;
+export type SectionHeaderParentUpdateManyInlineInput = {
+  /** Connect multiple existing SectionHeaderParent documents */
+  connect?: InputMaybe<Array<SectionHeaderParentConnectInput>>;
+  /** Create and connect multiple SectionHeaderParent documents */
+  create?: InputMaybe<Array<SectionHeaderParentCreateInput>>;
+  /** Delete multiple SectionHeaderParent documents */
+  delete?: InputMaybe<Array<SectionHeaderParentWhereUniqueInput>>;
+  /** Disconnect multiple SectionHeaderParent documents */
+  disconnect?: InputMaybe<Array<SectionHeaderParentWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing SectionHeaderParent documents */
+  set?: InputMaybe<Array<SectionHeaderParentWhereUniqueInput>>;
+  /** Update multiple SectionHeaderParent documents */
+  update?: InputMaybe<Array<SectionHeaderParentUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple SectionHeaderParent documents */
+  upsert?: InputMaybe<Array<SectionHeaderParentUpsertWithNestedWhereUniqueInput>>;
 };
 
-export type SectionHeadingParentUpdateManyWithNestedWhereInput = {
+export type SectionHeaderParentUpdateManyWithNestedWhereInput = {
   Page?: InputMaybe<PageUpdateManyWithNestedWhereInput>;
   PageVariant?: InputMaybe<PageVariantUpdateManyWithNestedWhereInput>;
 };
 
-export type SectionHeadingParentUpdateOneInlineInput = {
-  /** Connect existing SectionHeadingParent document */
-  connect?: InputMaybe<SectionHeadingParentWhereUniqueInput>;
-  /** Create and connect one SectionHeadingParent document */
-  create?: InputMaybe<SectionHeadingParentCreateInput>;
-  /** Delete currently connected SectionHeadingParent document */
+export type SectionHeaderParentUpdateOneInlineInput = {
+  /** Connect existing SectionHeaderParent document */
+  connect?: InputMaybe<SectionHeaderParentWhereUniqueInput>;
+  /** Create and connect one SectionHeaderParent document */
+  create?: InputMaybe<SectionHeaderParentCreateInput>;
+  /** Delete currently connected SectionHeaderParent document */
   delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Disconnect currently connected SectionHeadingParent document */
+  /** Disconnect currently connected SectionHeaderParent document */
   disconnect?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single SectionHeadingParent document */
-  update?: InputMaybe<SectionHeadingParentUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single SectionHeadingParent document */
-  upsert?: InputMaybe<SectionHeadingParentUpsertWithNestedWhereUniqueInput>;
+  /** Update single SectionHeaderParent document */
+  update?: InputMaybe<SectionHeaderParentUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single SectionHeaderParent document */
+  upsert?: InputMaybe<SectionHeaderParentUpsertWithNestedWhereUniqueInput>;
 };
 
-export type SectionHeadingParentUpdateWithNestedWhereUniqueInput = {
+export type SectionHeaderParentUpdateWithNestedWhereUniqueInput = {
   Page?: InputMaybe<PageUpdateWithNestedWhereUniqueInput>;
   PageVariant?: InputMaybe<PageVariantUpdateWithNestedWhereUniqueInput>;
 };
 
-export type SectionHeadingParentUpsertWithNestedWhereUniqueInput = {
+export type SectionHeaderParentUpsertWithNestedWhereUniqueInput = {
   Page?: InputMaybe<PageUpsertWithNestedWhereUniqueInput>;
   PageVariant?: InputMaybe<PageVariantUpsertWithNestedWhereUniqueInput>;
 };
 
-export type SectionHeadingParentWhereInput = {
+export type SectionHeaderParentWhereInput = {
   Page?: InputMaybe<PageWhereInput>;
   PageVariant?: InputMaybe<PageVariantWhereInput>;
 };
 
-export type SectionHeadingParentWhereUniqueInput = {
+export type SectionHeaderParentWhereUniqueInput = {
   Page?: InputMaybe<PageWhereUniqueInput>;
   PageVariant?: InputMaybe<PageVariantWhereUniqueInput>;
 };
 
-export type SectionHeadingUpdateInput = {
+export type SectionHeaderUpdateInput = {
+  /** headline input for default locale (en) */
+  headline?: InputMaybe<Scalars['String']['input']>;
+  /** label input for default locale (en) */
+  label?: InputMaybe<Scalars['String']['input']>;
+  /** Manage document localizations */
+  localizations?: InputMaybe<SectionHeaderUpdateLocalizationsInput>;
+};
+
+export type SectionHeaderUpdateLocalizationDataInput = {
   headline?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type SectionHeadingUpdateManyInlineInput = {
-  /** Create and connect multiple SectionHeading component instances */
-  create?: InputMaybe<Array<SectionHeadingCreateWithPositionInput>>;
-  /** Delete multiple SectionHeading documents */
-  delete?: InputMaybe<Array<SectionHeadingWhereUniqueInput>>;
-  /** Update multiple SectionHeading component instances */
-  update?: InputMaybe<Array<SectionHeadingUpdateWithNestedWhereUniqueAndPositionInput>>;
-  /** Upsert multiple SectionHeading component instances */
-  upsert?: InputMaybe<Array<SectionHeadingUpsertWithNestedWhereUniqueAndPositionInput>>;
+export type SectionHeaderUpdateLocalizationInput = {
+  data: SectionHeaderUpdateLocalizationDataInput;
+  locale: Locale;
 };
 
-export type SectionHeadingUpdateManyInput = {
+export type SectionHeaderUpdateLocalizationsInput = {
+  /** Localizations to create */
+  create?: InputMaybe<Array<SectionHeaderCreateLocalizationInput>>;
+  /** Localizations to delete */
+  delete?: InputMaybe<Array<Locale>>;
+  /** Localizations to update */
+  update?: InputMaybe<Array<SectionHeaderUpdateLocalizationInput>>;
+  upsert?: InputMaybe<Array<SectionHeaderUpsertLocalizationInput>>;
+};
+
+export type SectionHeaderUpdateManyInlineInput = {
+  /** Create and connect multiple SectionHeader component instances */
+  create?: InputMaybe<Array<SectionHeaderCreateWithPositionInput>>;
+  /** Delete multiple SectionHeader documents */
+  delete?: InputMaybe<Array<SectionHeaderWhereUniqueInput>>;
+  /** Update multiple SectionHeader component instances */
+  update?: InputMaybe<Array<SectionHeaderUpdateWithNestedWhereUniqueAndPositionInput>>;
+  /** Upsert multiple SectionHeader component instances */
+  upsert?: InputMaybe<Array<SectionHeaderUpsertWithNestedWhereUniqueAndPositionInput>>;
+};
+
+export type SectionHeaderUpdateManyInput = {
+  /** headline input for default locale (en) */
+  headline?: InputMaybe<Scalars['String']['input']>;
+  /** label input for default locale (en) */
+  label?: InputMaybe<Scalars['String']['input']>;
+  /** Optional updates to localizations */
+  localizations?: InputMaybe<SectionHeaderUpdateManyLocalizationsInput>;
+};
+
+export type SectionHeaderUpdateManyLocalizationDataInput = {
   headline?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type SectionHeadingUpdateManyWithNestedWhereInput = {
+export type SectionHeaderUpdateManyLocalizationInput = {
+  data: SectionHeaderUpdateManyLocalizationDataInput;
+  locale: Locale;
+};
+
+export type SectionHeaderUpdateManyLocalizationsInput = {
+  /** Localizations to update */
+  update?: InputMaybe<Array<SectionHeaderUpdateManyLocalizationInput>>;
+};
+
+export type SectionHeaderUpdateManyWithNestedWhereInput = {
   /** Update many input */
-  data: SectionHeadingUpdateManyInput;
+  data: SectionHeaderUpdateManyInput;
   /** Document search */
-  where: SectionHeadingWhereInput;
+  where: SectionHeaderWhereInput;
 };
 
-export type SectionHeadingUpdateOneInlineInput = {
-  /** Create and connect one SectionHeading document */
-  create?: InputMaybe<SectionHeadingCreateInput>;
-  /** Delete currently connected SectionHeading document */
+export type SectionHeaderUpdateOneInlineInput = {
+  /** Create and connect one SectionHeader document */
+  create?: InputMaybe<SectionHeaderCreateInput>;
+  /** Delete currently connected SectionHeader document */
   delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single SectionHeading document */
-  update?: InputMaybe<SectionHeadingUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single SectionHeading document */
-  upsert?: InputMaybe<SectionHeadingUpsertWithNestedWhereUniqueInput>;
+  /** Update single SectionHeader document */
+  update?: InputMaybe<SectionHeaderUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single SectionHeader document */
+  upsert?: InputMaybe<SectionHeaderUpsertWithNestedWhereUniqueInput>;
 };
 
-export type SectionHeadingUpdateWithNestedWhereUniqueAndPositionInput = {
+export type SectionHeaderUpdateWithNestedWhereUniqueAndPositionInput = {
   /** Document to update */
-  data?: InputMaybe<SectionHeadingUpdateInput>;
+  data?: InputMaybe<SectionHeaderUpdateInput>;
   /** Position in the list of existing component instances, will default to appending at the end of list */
   position?: InputMaybe<ConnectPositionInput>;
   /** Unique component instance search */
-  where: SectionHeadingWhereUniqueInput;
+  where: SectionHeaderWhereUniqueInput;
 };
 
-export type SectionHeadingUpdateWithNestedWhereUniqueInput = {
+export type SectionHeaderUpdateWithNestedWhereUniqueInput = {
   /** Document to update */
-  data: SectionHeadingUpdateInput;
+  data: SectionHeaderUpdateInput;
   /** Unique document search */
-  where: SectionHeadingWhereUniqueInput;
+  where: SectionHeaderWhereUniqueInput;
 };
 
-export type SectionHeadingUpsertInput = {
+export type SectionHeaderUpsertInput = {
   /** Create document if it didn't exist */
-  create: SectionHeadingCreateInput;
+  create: SectionHeaderCreateInput;
   /** Update document if it exists */
-  update: SectionHeadingUpdateInput;
+  update: SectionHeaderUpdateInput;
 };
 
-export type SectionHeadingUpsertWithNestedWhereUniqueAndPositionInput = {
+export type SectionHeaderUpsertLocalizationInput = {
+  create: SectionHeaderCreateLocalizationDataInput;
+  locale: Locale;
+  update: SectionHeaderUpdateLocalizationDataInput;
+};
+
+export type SectionHeaderUpsertWithNestedWhereUniqueAndPositionInput = {
   /** Document to upsert */
-  data?: InputMaybe<SectionHeadingUpsertInput>;
+  data?: InputMaybe<SectionHeaderUpsertInput>;
   /** Position in the list of existing component instances, will default to appending at the end of list */
   position?: InputMaybe<ConnectPositionInput>;
   /** Unique component instance search */
-  where: SectionHeadingWhereUniqueInput;
+  where: SectionHeaderWhereUniqueInput;
 };
 
-export type SectionHeadingUpsertWithNestedWhereUniqueInput = {
+export type SectionHeaderUpsertWithNestedWhereUniqueInput = {
   /** Upsert data */
-  data: SectionHeadingUpsertInput;
+  data: SectionHeaderUpsertInput;
   /** Unique document search */
-  where: SectionHeadingWhereUniqueInput;
+  where: SectionHeaderWhereUniqueInput;
 };
 
 /** Identifies documents */
-export type SectionHeadingWhereInput = {
+export type SectionHeaderWhereInput = {
   /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<SectionHeadingWhereInput>>;
+  AND?: InputMaybe<Array<SectionHeaderWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<SectionHeadingWhereInput>>;
+  NOT?: InputMaybe<Array<SectionHeaderWhereInput>>;
   /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<SectionHeadingWhereInput>>;
+  OR?: InputMaybe<Array<SectionHeaderWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
   headline?: InputMaybe<Scalars['String']['input']>;
@@ -19803,8 +19422,8 @@ export type SectionHeadingWhereInput = {
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
 };
 
-/** References SectionHeading record uniquely */
-export type SectionHeadingWhereUniqueInput = {
+/** References SectionHeader record uniquely */
+export type SectionHeaderWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -23849,7 +23468,7 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string, blogListHeadline?: string | null, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, label?: string | null, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string, products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeading', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductGrid', id: string, products: Array<{ __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, externalProductId?: number | null, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null }> } | { __typename: 'ProductShowcase', id: string, title?: string | null, layout: DisplayLayout, filterByAudience: boolean, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeading', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
+export type GetPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', id: string, title: string, slug: string, sections: Array<{ __typename: 'BlogList', id: string, blogListHeadline?: string | null, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, label?: string | null, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, subtitle?: string | null, eyebrow?: string | null, pageHeaderTitle: string } | { __typename: 'ProductShowcase', id: string, layout: DisplayLayout, filterByAudience: boolean, displayFilters?: boolean | null, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeader', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }>, variants: Array<{ __typename?: 'PageVariant', sections: Array<{ __typename: 'BlogList', id: string, posts: Array<{ __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null }> } | { __typename: 'CTABlock', id: string, headline: string, backgroundColor: BackgroundColor, description?: { __typename?: 'RichText', text: string } | null, primaryButton: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean }, secondaryButton?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'ContactSection', id: string, topics: Array<string>, nameLabel?: string | null, namePlaceholder?: string | null, emailLabel?: string | null, emailPlaceholder?: string | null, topicLabel?: string | null, topicPlaceholder?: string | null, messageLabel?: string | null, messagePlaceholder?: string | null, submitLabel?: string | null, successHeadline?: string | null, successBody?: string | null, offices: Array<{ __typename?: 'Office', id: string, city: string, role: string, address: string, email: string, phone: string }> } | { __typename: 'EditorialSection', id: string, eyebrow?: string | null, imageRight?: boolean | null, ctaLabel?: string | null, ctaHref?: string | null, editorialHeadline?: string | null, body?: { __typename?: 'RichText', html: string } | null, image: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null }, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string }> } | { __typename: 'FeatureGrid', id: string, layout: DisplayLayout, features: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'FeaturedArticle', id: string, ctaLabel?: string | null, imageRight?: boolean | null, blogPost?: { __typename?: 'BlogPost', id: string, slug: string, title: string, category: string, publishedDate: string, readTime?: string | null, summary: string, imageUrl?: string | null } | null } | { __typename: 'HeroSection', id: string, headline: string, subheadline?: string | null, mediaText?: string | null, textAlignment: TextAlignment, backgroundMedia?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, primaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null, secondaryCTA?: { __typename?: 'Button', id: string, label: string, href: string, variant: ButtonVariant, openInNewTab: boolean } | null } | { __typename: 'JobList', id: string } | { __typename: 'PageHeader', id: string, eyebrow?: string | null, subtitle?: string | null, pageHeaderTitle: string } | { __typename: 'ProductShowcase', id: string, layout: DisplayLayout, filterByAudience: boolean, displayFilters?: boolean | null, showPrices: boolean, showStock: boolean, itemsPerRow?: number | null, productLine?: { __typename?: 'ProductLine', id: string, slug: string, name: string } | null } | { __typename: 'SectionHeader', id: string, label?: string | null, sectionHeadingHeadline: string } | { __typename: 'StatsBar', id: string, title?: string | null, backgroundColor: BackgroundColor, statsLayout: StatsLayout, stats: Array<{ __typename?: 'Stat', id: string, value: string, label: string, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }> } | { __typename: 'Timeline', id: string, entries: Array<{ __typename?: 'TimelineEntry', id: string, year: string, event: string }> }> }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null }> };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -24000,32 +23619,6 @@ export const GetPageDocument = gql`
         eyebrow
         pageHeaderTitle: title
       }
-      ... on ProductGrid {
-        id
-        products {
-          id
-          slug
-          name
-          tagline
-          category {
-            value
-          }
-          image {
-            url
-            width
-            height
-          }
-          externalProductId
-          externalProduct {
-            data {
-              calculated_price
-              sale_price
-              inventory_level
-              availability
-            }
-          }
-        }
-      }
       ... on BlogList {
         id
         blogListHeadline: headline
@@ -24149,7 +23742,6 @@ export const GetPageDocument = gql`
       }
       ... on ProductShowcase {
         id
-        title
         layout
         productLine {
           id
@@ -24157,6 +23749,7 @@ export const GetPageDocument = gql`
           name
         }
         filterByAudience
+        displayFilters
         showPrices
         showStock
         itemsPerRow
@@ -24178,7 +23771,7 @@ export const GetPageDocument = gql`
           }
         }
       }
-      ... on SectionHeading {
+      ... on SectionHeader {
         id
         label
         sectionHeadingHeadline: headline
@@ -24223,32 +23816,6 @@ export const GetPageDocument = gql`
           eyebrow
           pageHeaderTitle: title
           subtitle
-        }
-        ... on ProductGrid {
-          id
-          products {
-            id
-            slug
-            name
-            tagline
-            category {
-              value
-            }
-            image {
-              url
-              width
-              height
-            }
-            externalProductId
-            externalProduct {
-              data {
-                calculated_price
-                sale_price
-                inventory_level
-                availability
-              }
-            }
-          }
         }
         ... on BlogList {
           id
@@ -24371,7 +23938,6 @@ export const GetPageDocument = gql`
         }
         ... on ProductShowcase {
           id
-          title
           layout
           productLine {
             id
@@ -24379,6 +23945,7 @@ export const GetPageDocument = gql`
             name
           }
           filterByAudience
+          displayFilters
           showPrices
           showStock
           itemsPerRow
@@ -24400,7 +23967,7 @@ export const GetPageDocument = gql`
             }
           }
         }
-        ... on SectionHeading {
+        ... on SectionHeader {
           id
           label
           sectionHeadingHeadline: headline
