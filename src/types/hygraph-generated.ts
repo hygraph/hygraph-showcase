@@ -19912,6 +19912,8 @@ export type SiteSettings = Entity & Node & {
   documentInStages: Array<SiteSettings>;
   /** Footer site navigation */
   footerNavigation?: Maybe<Navigation>;
+  footerSubscribeSubtitle?: Maybe<Scalars['String']['output']>;
+  footerSubscribeTitle?: Maybe<Scalars['String']['output']>;
   /** Footer legal/copyright text */
   footerText: RichText;
   /** List of SiteSettings versions */
@@ -20078,6 +20080,10 @@ export type SiteSettingsCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   defaultMetaImage?: InputMaybe<AssetCreateOneInlineInput>;
   footerNavigation?: InputMaybe<NavigationCreateOneInlineInput>;
+  /** footerSubscribeSubtitle input for default locale (en) */
+  footerSubscribeSubtitle?: InputMaybe<Scalars['String']['input']>;
+  /** footerSubscribeTitle input for default locale (en) */
+  footerSubscribeTitle?: InputMaybe<Scalars['String']['input']>;
   /** footerText input for default locale (en) */
   footerText: Scalars['RichTextAST']['input'];
   /** Inline mutations for managing document localizations excluding the default locale */
@@ -20093,6 +20099,8 @@ export type SiteSettingsCreateLocalizationDataInput = {
   announcement?: InputMaybe<Scalars['RichTextAST']['input']>;
   contactEmail: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  footerSubscribeSubtitle?: InputMaybe<Scalars['String']['input']>;
+  footerSubscribeTitle?: InputMaybe<Scalars['String']['input']>;
   footerText: Scalars['RichTextAST']['input'];
   siteName: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -20249,6 +20257,10 @@ export type SiteSettingsOrderByInput =
   | 'contactEmail_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
+  | 'footerSubscribeSubtitle_ASC'
+  | 'footerSubscribeSubtitle_DESC'
+  | 'footerSubscribeTitle_ASC'
+  | 'footerSubscribeTitle_DESC'
   | 'id_ASC'
   | 'id_DESC'
   | 'publishedAt_ASC'
@@ -20266,6 +20278,10 @@ export type SiteSettingsUpdateInput = {
   contactEmail?: InputMaybe<Scalars['String']['input']>;
   defaultMetaImage?: InputMaybe<AssetUpdateOneInlineInput>;
   footerNavigation?: InputMaybe<NavigationUpdateOneInlineInput>;
+  /** footerSubscribeSubtitle input for default locale (en) */
+  footerSubscribeSubtitle?: InputMaybe<Scalars['String']['input']>;
+  /** footerSubscribeTitle input for default locale (en) */
+  footerSubscribeTitle?: InputMaybe<Scalars['String']['input']>;
   /** footerText input for default locale (en) */
   footerText?: InputMaybe<Scalars['RichTextAST']['input']>;
   /** Manage document localizations */
@@ -20279,6 +20295,8 @@ export type SiteSettingsUpdateInput = {
 export type SiteSettingsUpdateLocalizationDataInput = {
   announcement?: InputMaybe<Scalars['RichTextAST']['input']>;
   contactEmail?: InputMaybe<Scalars['String']['input']>;
+  footerSubscribeSubtitle?: InputMaybe<Scalars['String']['input']>;
+  footerSubscribeTitle?: InputMaybe<Scalars['String']['input']>;
   footerText?: InputMaybe<Scalars['RichTextAST']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -20321,6 +20339,10 @@ export type SiteSettingsUpdateManyInput = {
   brandColor?: InputMaybe<Scalars['String']['input']>;
   /** contactEmail input for default locale (en) */
   contactEmail?: InputMaybe<Scalars['String']['input']>;
+  /** footerSubscribeSubtitle input for default locale (en) */
+  footerSubscribeSubtitle?: InputMaybe<Scalars['String']['input']>;
+  /** footerSubscribeTitle input for default locale (en) */
+  footerSubscribeTitle?: InputMaybe<Scalars['String']['input']>;
   /** footerText input for default locale (en) */
   footerText?: InputMaybe<Scalars['RichTextAST']['input']>;
   /** Optional updates to localizations */
@@ -20332,6 +20354,8 @@ export type SiteSettingsUpdateManyInput = {
 export type SiteSettingsUpdateManyLocalizationDataInput = {
   announcement?: InputMaybe<Scalars['RichTextAST']['input']>;
   contactEmail?: InputMaybe<Scalars['String']['input']>;
+  footerSubscribeSubtitle?: InputMaybe<Scalars['String']['input']>;
+  footerSubscribeTitle?: InputMaybe<Scalars['String']['input']>;
   footerText?: InputMaybe<Scalars['RichTextAST']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -20470,6 +20494,44 @@ export type SiteSettingsWhereInput = {
   documentInStages_none?: InputMaybe<SiteSettingsWhereStageInput>;
   documentInStages_some?: InputMaybe<SiteSettingsWhereStageInput>;
   footerNavigation?: InputMaybe<NavigationWhereInput>;
+  footerSubscribeSubtitle?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  footerSubscribeSubtitle_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  footerSubscribeSubtitle_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  footerSubscribeSubtitle_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  footerSubscribeSubtitle_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  footerSubscribeSubtitle_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  footerSubscribeSubtitle_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  footerSubscribeSubtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  footerSubscribeSubtitle_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  footerSubscribeSubtitle_starts_with?: InputMaybe<Scalars['String']['input']>;
+  footerSubscribeTitle?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  footerSubscribeTitle_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  footerSubscribeTitle_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  footerSubscribeTitle_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  footerSubscribeTitle_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  footerSubscribeTitle_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  footerSubscribeTitle_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  footerSubscribeTitle_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  footerSubscribeTitle_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  footerSubscribeTitle_starts_with?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -23490,7 +23552,7 @@ export type GetSiteSettingsQueryVariables = Exact<{
 }>;
 
 
-export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, announcement?: { __typename?: 'RichText', html: string } | null, footerText: { __typename?: 'RichText', text: string }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }>, mainNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null, footerNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null }> };
+export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, footerSubscribeTitle?: string | null, footerSubscribeSubtitle?: string | null, announcement?: { __typename?: 'RichText', html: string } | null, footerText: { __typename?: 'RichText', text: string }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }>, mainNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null, footerNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null }> };
 
 
 export const GetBlogPostsDocument = gql`
@@ -24282,6 +24344,8 @@ export const GetSiteSettingsDocument = gql`
     footerText {
       text
     }
+    footerSubscribeTitle
+    footerSubscribeSubtitle
     socialLinks {
       id
       platform

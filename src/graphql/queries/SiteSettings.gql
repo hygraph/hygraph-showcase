@@ -10,6 +10,8 @@ query GetSiteSettings($locale: Locale!) {
     footerText {
       text
     }
+    footerSubscribeTitle
+    footerSubscribeSubtitle
     socialLinks {
       id
       platform

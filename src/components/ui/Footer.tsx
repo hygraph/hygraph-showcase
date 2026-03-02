@@ -23,9 +23,9 @@ export default function Footer({
       {/* Newsletter + Links */}
       <div className="grid grid-cols-1 md:grid-cols-12 border-b border-secondary/20">
         <div className="md:col-span-5 p-8 md:p-12 border-b md:border-b-0 md:border-r border-secondary/20">
-          <h3 className="text-secondary mb-4">Stay in the loop</h3>
+          <h3 className="text-secondary mb-4">{siteSettings?.footerSubscribeTitle}</h3>
           <p className="text-secondary/60 mb-6" style={{ lineHeight: 1.6 }}>
-            New releases, engineering stories, and riding culture. No spam.
+            {siteSettings?.footerSubscribeSubtitle}
           </p>
           <div className="flex">
             <input
