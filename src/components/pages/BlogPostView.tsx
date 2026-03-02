@@ -36,10 +36,10 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
       </div>
 
       {/* Cover */}
-      {post.imageUrl && (
+      {post.image?.url && (
         <section className="border-b border-primary">
           <img
-            src={post.imageUrl}
+            src={post.image?.url}
             alt={post.title}
             className="w-full object-cover max-h-[520px]"
           />
@@ -123,9 +123,9 @@ export default function BlogPostView({ post, allPosts }: BlogPostViewProps) {
                       href={`/${locale}/blog/${other.slug}`}
                       className="group block border border-primary hover:bg-primary hover:text-secondary transition-colors overflow-hidden"
                     >
-                      {other.imageUrl && (
+                      {other.image?.url && (
                         <img
-                          src={other.imageUrl}
+                          src={other.image?.url}
                           alt={other.title}
                           className="w-full h-[120px] object-cover group-hover:opacity-80 transition-opacity"
                         />

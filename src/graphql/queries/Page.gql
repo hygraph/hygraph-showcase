@@ -27,7 +27,11 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           publishedDate
           readTime
           summary
-          imageUrl
+          image {
+            url
+            width
+            height
+          }
         }
       }
       ... on FeaturedArticle {
@@ -42,7 +46,11 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           publishedDate
           readTime
           summary
-          imageUrl
+          image {
+            url
+            width
+            height
+          }
         }
       }
       ... on JobList {
@@ -249,7 +257,11 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             publishedDate
             readTime
             summary
-            imageUrl
+            image {
+            url
+            width
+            height
+          }
           }
         }
         ... on FeaturedArticle {
@@ -264,7 +276,11 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             publishedDate
             readTime
             summary
-            imageUrl
+            image {
+            url
+            width
+            height
+          }
           }
         }
         ... on JobList {

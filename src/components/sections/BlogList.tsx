@@ -47,9 +47,9 @@ export default function BlogList({ section }: BlogListProps) {
               className={`group flex flex-col ${i === 0 ? "md:border-r border-primary" : ""}`}
             >
               <div className="overflow-hidden border-b border-primary">
-                {post.imageUrl ? (
+                {post.image?.url ? (
                   <img
-                    src={post.imageUrl}
+                    src={post.image?.url}
                     alt={post.title}
                     className="w-full object-cover h-[260px] group-hover:scale-[1.02] transition-transform duration-500"
                   />

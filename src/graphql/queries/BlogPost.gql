@@ -7,7 +7,11 @@ query GetBlogPosts {
     publishedDate
     readTime
     summary
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
   }
 }
 
@@ -20,7 +24,11 @@ query GetBlogPost($slug: String!) {
     publishedDate
     readTime
     summary
-    imageUrl
+    image {
+      url
+      width
+      height
+    }
     body {
       html
     }

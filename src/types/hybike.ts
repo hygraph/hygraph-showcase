@@ -46,7 +46,7 @@ export interface Post {
   publishedDate: string;
   readTime?: string | null;
   summary: string;
-  imageUrl?: string | null;
+  image?: { url: string; width?: number | null; height?: number | null } | null;
   body?: { html: string } | null;
 }
 

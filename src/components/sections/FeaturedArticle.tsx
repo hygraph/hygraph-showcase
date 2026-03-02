@@ -58,9 +58,9 @@ export default function FeaturedArticle({ section, locale }: FeaturedArticleProp
             </div>
           </div>
           <div className="lg:col-span-7 overflow-hidden">
-            {blogPost.imageUrl ? (
+            {blogPost.image?.url ? (
               <img
-                src={blogPost.imageUrl}
+                src={blogPost.image?.url}
                 alt={blogPost.title}
                 className="w-full h-full object-cover min-h-[360px] lg:min-h-[480px] group-hover:scale-[1.02] transition-transform duration-500"
               />
@@ -81,9 +81,9 @@ export default function FeaturedArticle({ section, locale }: FeaturedArticleProp
         className="grid grid-cols-1 lg:grid-cols-12 group"
       >
         <div className="lg:col-span-7 overflow-hidden border-b lg:border-b-0 lg:border-r border-primary">
-          {blogPost.imageUrl ? (
+          {blogPost.image?.url ? (
             <img
-              src={blogPost.imageUrl}
+              src={blogPost.image?.url}
               alt={blogPost.title}
               className="w-full h-full object-cover min-h-[360px] lg:min-h-[480px] group-hover:scale-[1.02] transition-transform duration-500"
             />
