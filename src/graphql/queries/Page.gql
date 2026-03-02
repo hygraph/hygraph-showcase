@@ -81,7 +81,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
       }
       ... on FeatureGrid {
         id
-        title
         layout
         features {
           id
@@ -172,6 +171,42 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           }
         }
       }
+      ... on SectionHeading {
+        id
+        label
+        sectionHeadingHeadline: headline
+      }
+      ... on Timeline {
+        id
+        entries {
+          id
+          year
+          event
+        }
+      }
+      ... on ContactSection {
+        id
+        topics
+        nameLabel
+        namePlaceholder
+        emailLabel
+        emailPlaceholder
+        topicLabel
+        topicPlaceholder
+        messageLabel
+        messagePlaceholder
+        submitLabel
+        successHeadline
+        successBody
+        offices {
+          id
+          city
+          role
+          address
+          email
+          phone
+        }
+      }
     }
     variants(where: { segments_some: { name: $segmentName } }) {
       sections {
@@ -245,7 +280,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         }
         ... on FeatureGrid {
           id
-          title
           layout
           features {
             id
@@ -334,6 +368,42 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
               width
               height
             }
+          }
+        }
+        ... on SectionHeading {
+          id
+          label
+          sectionHeadingHeadline: headline
+        }
+        ... on Timeline {
+          id
+          entries {
+            id
+            year
+            event
+          }
+        }
+        ... on ContactSection {
+          id
+          topics
+          nameLabel
+          namePlaceholder
+          emailLabel
+          emailPlaceholder
+          topicLabel
+          topicPlaceholder
+          messageLabel
+          messagePlaceholder
+          submitLabel
+          successHeadline
+          successBody
+          offices {
+            id
+            city
+            role
+            address
+            email
+            phone
           }
         }
       }

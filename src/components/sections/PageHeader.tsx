@@ -21,7 +21,7 @@ export default function PageHeader({ section }: PageHeaderProps) {
             {section.eyebrow}
           </p>
         )}
-        <h1>
+        <h1 className="md:max-w-[60vw]">
           {section.pageHeaderTitle}
           <span className="text-accent">.</span>
         </h1>

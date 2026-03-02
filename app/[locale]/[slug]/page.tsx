@@ -28,6 +28,9 @@ import StatsBar from "@/components/sections/StatsBar";
 import BlogList from "@/components/sections/BlogList";
 import FeaturedArticle from "@/components/sections/FeaturedArticle";
 import JobList from "@/components/sections/JobList";
+import SectionHeading from "@/components/sections/SectionHeading";
+import Timeline from "@/components/sections/Timeline";
+import ContactSection from "@/components/sections/ContactSection";
 import PageHeader from "@/components/sections/PageHeader";
 import ProductGrid from "@/components/sections/ProductGrid";
 import { notFound } from "next/navigation";
@@ -101,6 +104,24 @@ function isFeaturedArticle(
   section: PageSection
 ): section is Extract<PageSection, { __typename?: "FeaturedArticle" }> {
   return section.__typename === "FeaturedArticle";
+}
+
+function isSectionHeading(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "SectionHeading" }> {
+  return section.__typename === "SectionHeading";
+}
+
+function isTimeline(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "Timeline" }> {
+  return section.__typename === "Timeline";
+}
+
+function isContactSection(
+  section: PageSection
+): section is Extract<PageSection, { __typename?: "ContactSection" }> {
+  return section.__typename === "ContactSection";
 }
 
 interface PageProps {
@@ -262,6 +283,15 @@ export default async function Page({ params }: PageProps) {
             products={products as any}
           />
         );
+      }
+      if (isSectionHeading(section)) {
+        return <SectionHeading key={section.id} section={section as any} />;
+      }
+      if (isTimeline(section)) {
+        return <Timeline key={section.id} section={section as any} />;
+      }
+      if (isContactSection(section)) {
+        return <ContactSection key={section.id} section={section as any} />;
       }
       if (isStatsBar(section)) {
         return (
