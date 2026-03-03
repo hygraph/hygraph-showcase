@@ -102,12 +102,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           description {
             text
           }
-          icon {
-            id
-            url
-            width
-            height
-          }
         }
       }
       ... on EditorialSection {
@@ -193,12 +187,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           id
           value
           label
-          icon {
-            id
-            url
-            width
-            height
-          }
         }
       }
       ... on SectionHeader {
@@ -258,10 +246,10 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             readTime
             summary
             image {
-            url
-            width
-            height
-          }
+              url
+              width
+              height
+            }
           }
         }
         ... on FeaturedArticle {
@@ -277,10 +265,10 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             readTime
             summary
             image {
-            url
-            width
-            height
-          }
+              url
+              width
+              height
+            }
           }
         }
         ... on JobList {
@@ -330,12 +318,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             title
             description {
               text
-            }
-            icon {
-              id
-              url
-              width
-              height
             }
           }
         }
@@ -422,12 +404,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             id
             value
             label
-            icon {
-              id
-              url
-              width
-              height
-            }
           }
         }
         ... on SectionHeader {
