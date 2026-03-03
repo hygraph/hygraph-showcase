@@ -7,13 +7,44 @@ import { useParams } from "next/navigation";
 import type { Bike } from "@/types/hybike";
 import { formatCategoryValue, formatPrice } from "@/types/hybike";
 
-const colorOptions = [
-  { name: "Matte Black", hex: "#121212" },
-  { name: "Ivory", hex: "#F9F9F7" },
-  { name: "Signal Orange", hex: "#FF4F00" },
-];
+interface OptionValue {
+  id: number;
+  label: string;
+  option_id: number;
+  option_display_name: string;
+}
 
-const sizes = ["S", "M", "L", "XL"];
+interface OptionGroup {
+  option_id: number;
+  display_name: string;
+  values: OptionValue[];
+}
+
+function buildOptionGroups(bike: Bike): OptionGroup[] {
+  const variants = bike.externalProduct?.data?.variants;
+  if (!variants?.length) return [];
+  const map = new Map<number, OptionGroup>();
+  for (const variant of variants) {
+    for (const ov of variant.option_values ?? []) {
+      if (!map.has(ov.option_id)) {
+        map.set(ov.option_id, { option_id: ov.option_id, display_name: ov.option_display_name, values: [] });
+      }
+      const group = map.get(ov.option_id)!;
+      if (!group.values.some((v) => v.id === ov.id)) {
+        group.values.push(ov);
+      }
+    }
+  }
+  return Array.from(map.values());
+}
+
+function findSelectedVariant(bike: Bike, selectedOptions: Record<number, number>) {
+  const variants = bike.externalProduct?.data?.variants;
+  if (!variants?.length) return null;
+  return variants.find((v) =>
+    (v.option_values ?? []).every((ov) => selectedOptions[ov.option_id] === ov.id)
+  ) ?? null;
+}
 
 interface ProductViewProps {
   bike: Bike;
@@ -23,12 +54,18 @@ interface ProductViewProps {
 export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
   const params = useParams();
   const locale = (params.locale as string) || "en";
-  const [selectedColor, setSelectedColor] = useState(0);
-  const [selectedSize, setSelectedSize] = useState(1);
+
+  const optionGroups = buildOptionGroups(bike);
+  const initialSelected = Object.fromEntries(
+    optionGroups.map((g) => [g.option_id, g.values[0]?.id])
+  ) as Record<number, number>;
+
+  const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>(initialSelected);
   const [quantity, setQuantity] = useState(1);
 
+  const selectedVariant = findSelectedVariant(bike, selectedOptions);
   const category = formatCategoryValue(bike.category?.value);
-  const price = bike.externalProduct?.data?.calculated_price;
+  const price = selectedVariant?.calculated_price ?? bike.externalProduct?.data?.calculated_price;
 
   const specs: [string, string][] = bike.specifications
     ? Object.entries(bike.specifications)
@@ -132,55 +169,55 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
               {formatPrice(price)}
             </p>
 
-            {/* Color */}
-            <div className="mb-6">
-              <p
-                className="uppercase tracking-[0.15em] text-muted mb-3"
-                style={{ fontSize: "0.65rem", fontWeight: 700 }}
-              >
-                Color &mdash; {colorOptions[selectedColor].name}
-              </p>
-              <div className="flex gap-3">
-                {colorOptions.map((color, i) => (
-                  <button
-                    key={color.name}
-                    onClick={() => setSelectedColor(i)}
-                    className={`w-10 h-10 border-2 transition-all ${
-                      selectedColor === i
-                        ? "border-accent scale-110"
-                        : "border-primary/20 hover:border-primary"
-                    }`}
-                    style={{ backgroundColor: color.hex }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Size */}
-            <div className="mb-6">
-              <p
-                className="uppercase tracking-[0.15em] text-muted mb-3"
-                style={{ fontSize: "0.65rem", fontWeight: 700 }}
-              >
-                Frame Size
-              </p>
-              <div className="flex gap-2">
-                {sizes.map((size, i) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(i)}
-                    className={`w-12 h-12 border transition-colors uppercase tracking-[0.05em] ${
-                      selectedSize === i
-                        ? "bg-primary text-secondary border-primary"
-                        : "border-primary hover:bg-primary hover:text-secondary"
-                    }`}
-                    style={{ fontSize: "0.8rem", fontWeight: 700 }}
+            {/* Dynamic option pickers */}
+            {optionGroups.map((group) => {
+              const isColorGroup = group.display_name.toLowerCase() === "color";
+              return (
+                <div key={group.option_id} className="mb-6">
+                  <p
+                    className="uppercase tracking-[0.15em] text-muted mb-3"
+                    style={{ fontSize: "0.65rem", fontWeight: 700 }}
                   >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
+                    {group.display_name} &mdash; {group.values.find((v) => v.id === selectedOptions[group.option_id])?.label}
+                  </p>
+                  <div className="flex gap-3 flex-wrap">
+                    {group.values.map((value) => {
+                      const isSelected = selectedOptions[group.option_id] === value.id;
+                      if (isColorGroup) {
+                        const cssColor = value.label.split(" ").pop()!.toLowerCase();
+                        return (
+                          <button
+                            key={value.id}
+                            title={value.label}
+                            onClick={() => setSelectedOptions((prev) => ({ ...prev, [group.option_id]: value.id }))}
+                            className={`w-10 h-10 border-2 transition-all ${
+                              isSelected
+                                ? "border-accent scale-110"
+                                : "border-primary/20 hover:border-primary"
+                            }`}
+                            style={{ backgroundColor: cssColor }}
+                          />
+                        );
+                      }
+                      return (
+                        <button
+                          key={value.id}
+                          onClick={() => setSelectedOptions((prev) => ({ ...prev, [group.option_id]: value.id }))}
+                          className={`h-12 px-4 border transition-colors uppercase tracking-[0.05em] ${
+                            isSelected
+                              ? "bg-primary text-secondary border-primary"
+                              : "border-primary hover:bg-primary hover:text-secondary"
+                          }`}
+                          style={{ fontSize: "0.8rem", fontWeight: 700 }}
+                        >
+                          {value.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
 
             {/* Quantity */}
             <div className="mb-8">

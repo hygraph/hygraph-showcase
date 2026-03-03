@@ -37,6 +37,15 @@ query GetProductBySlug($slug: String!, $locale: Locale!) {
         sale_price
         inventory_level
         availability
+        variants {
+          calculated_price
+          option_values {
+            id
+            label
+            option_id
+            option_display_name
+          }
+        }
       }
     }
   }

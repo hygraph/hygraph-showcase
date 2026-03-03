@@ -33,6 +33,15 @@ export interface Bike {
       sale_price?: number | null;
       inventory_level?: number | null;
       availability?: string | null;
+      variants?: {
+        calculated_price?: number | null;
+        option_values?: {
+          id: number;
+          label: string;
+          option_id: number;
+          option_display_name: string;
+        }[] | null;
+      }[] | null;
     } | null;
   } | null;
   featured?: boolean | null;

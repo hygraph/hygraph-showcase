@@ -6190,8 +6190,6 @@ export type HeroSection = Entity & {
   textAlignment: TextAlignment;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  /** Visual styling variant (maps to design system) */
-  variant: SectionVariant;
 };
 
 
@@ -6262,7 +6260,6 @@ export type HeroSectionCreateInput = {
   subheadline?: InputMaybe<Scalars['String']['input']>;
   textAlignment: TextAlignment;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  variant: SectionVariant;
 };
 
 export type HeroSectionCreateLocalizationDataInput = {
@@ -6364,13 +6361,6 @@ export type HeroSectionManyWhereInput = {
   updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  variant?: InputMaybe<SectionVariant>;
-  /** All values that are contained in given list. */
-  variant_in?: InputMaybe<Array<InputMaybe<SectionVariant>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  variant_not?: InputMaybe<SectionVariant>;
-  /** All values that are not contained in given list. */
-  variant_not_in?: InputMaybe<Array<InputMaybe<SectionVariant>>>;
 };
 
 export type HeroSectionOrderByInput =
@@ -6387,9 +6377,7 @@ export type HeroSectionOrderByInput =
   | 'textAlignment_ASC'
   | 'textAlignment_DESC'
   | 'updatedAt_ASC'
-  | 'updatedAt_DESC'
-  | 'variant_ASC'
-  | 'variant_DESC';
+  | 'updatedAt_DESC';
 
 export type HeroSectionParent = Page | PageVariant;
 
@@ -6494,7 +6482,6 @@ export type HeroSectionUpdateInput = {
   /** subheadline input for default locale (en) */
   subheadline?: InputMaybe<Scalars['String']['input']>;
   textAlignment?: InputMaybe<TextAlignment>;
-  variant?: InputMaybe<SectionVariant>;
 };
 
 export type HeroSectionUpdateLocalizationDataInput = {
@@ -6542,7 +6529,6 @@ export type HeroSectionUpdateManyInput = {
   /** subheadline input for default locale (en) */
   subheadline?: InputMaybe<Scalars['String']['input']>;
   textAlignment?: InputMaybe<TextAlignment>;
-  variant?: InputMaybe<SectionVariant>;
 };
 
 export type HeroSectionUpdateManyLocalizationDataInput = {
@@ -6755,13 +6741,6 @@ export type HeroSectionWhereInput = {
   updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  variant?: InputMaybe<SectionVariant>;
-  /** All values that are contained in given list. */
-  variant_in?: InputMaybe<Array<InputMaybe<SectionVariant>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  variant_not?: InputMaybe<SectionVariant>;
-  /** All values that are not contained in given list. */
-  variant_not_in?: InputMaybe<Array<InputMaybe<SectionVariant>>>;
 };
 
 /** References HeroSection record uniquely */
@@ -19401,12 +19380,6 @@ export type SectionHeaderWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-/** Visual styling variants for page sections */
-export type SectionVariant =
-  | 'DARK_BACKGROUND'
-  | 'FEATURED_BACKGROUND'
-  | 'LIGHT_BACKGROUND';
-
 /** Segment system model */
 export type Segment = Entity & Node & {
   __typename?: 'Segment';
@@ -23512,7 +23485,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string } } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string, variants: Array<{ __typename?: 'BigCommerce_BigCommerceVariant', calculated_price: number, option_values: Array<{ __typename?: 'BigCommerce_BigCommerceOptionValue', id: number, label: string, option_id: number, option_display_name: string }> }> } } | null } | null };
 
 export type GetProductLineQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -24168,6 +24141,15 @@ export const GetProductBySlugDocument = gql`
         sale_price
         inventory_level
         availability
+        variants {
+          calculated_price
+          option_values {
+            id
+            label
+            option_id
+            option_display_name
+          }
+        }
       }
     }
   }
