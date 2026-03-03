@@ -149,6 +149,7 @@ export async function generateMetadata({
         : undefined,
     };
   } catch (error) {
+    console.log("EHRE:E:E:EE::");
     console.error("Failed to generate metadata:", error);
     return { title: "Page" };
   }
@@ -163,18 +164,11 @@ export default async function Page({ params }: PageProps) {
   const segmentName =
     audienceCookie && audienceCookie !== "Default" ? audienceCookie : undefined;
 
-  let data: GetPageQuery | null = null;
-
-  try {
-    data = await hygraphRequest<GetPageQuery>(GetPageDocument, {
-      slug,
-      locale,
-      segmentName,
-    } as GetPageQueryVariables);
-  } catch (error) {
-    console.error("Failed to fetch page:", error);
-    notFound();
-  }
+  const data = await hygraphRequest<GetPageQuery>(GetPageDocument, {
+    slug,
+    locale,
+    segmentName,
+  } as GetPageQueryVariables);
 
   const page = data?.pages?.[0];
 
