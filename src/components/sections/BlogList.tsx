@@ -40,17 +40,17 @@ export default function BlogList({ section }: BlogListProps) {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {posts.map((post, i) => (
+          {posts.map((article, i) => (
             <Link
-              key={post.id}
-              href={`/${locale}/blog/${post.slug}`}
+              key={article.id}
+              href={`/${locale}/blog/${article.slug}`}
               className={`group flex flex-col ${i === 0 ? "md:border-r border-primary" : ""}`}
             >
               <div className="overflow-hidden border-b border-primary">
-                {post.image?.url ? (
+                {article.image?.url ? (
                   <img
-                    src={post.image?.url}
-                    alt={post.title}
+                    src={article.image?.url}
+                    alt={article.title}
                     className="w-full object-cover h-[260px] group-hover:scale-[1.02] transition-transform duration-500"
                   />
                 ) : (
@@ -63,21 +63,21 @@ export default function BlogList({ section }: BlogListProps) {
                     className="bg-primary text-secondary px-3 py-1 uppercase tracking-[0.15em]"
                     style={{ fontSize: "0.6rem", fontWeight: 700 }}
                   >
-                    {post.category}
+                    {article.category}
                   </span>
                   <span
                     className="uppercase tracking-[0.15em] text-muted"
                     style={{ fontSize: "0.6rem", fontWeight: 700 }}
                   >
-                    {post.publishedDate}
+                    {article.publishedDate}
                   </span>
                 </div>
                 <h3 className="mb-4 group-hover:text-accent transition-colors">
-                  {post.title}
+                  {article.title}
                   <span className="text-accent">.</span>
                 </h3>
                 <p className="text-muted mb-6 flex-1" style={{ lineHeight: 1.7 }}>
-                  {post.summary}
+                  {article.summary}
                 </p>
                 <div className="flex items-center gap-2 text-accent uppercase tracking-[0.1em] group-hover:gap-3 transition-all self-start">
                   <span style={{ fontSize: "0.7rem", fontWeight: 700 }}>
