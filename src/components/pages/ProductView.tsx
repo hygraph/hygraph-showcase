@@ -7,6 +7,21 @@ import { useParams } from "next/navigation";
 import type { Bike } from "@/types/hybike";
 import { formatCategoryValue, formatPrice } from "@/types/hybike";
 
+const COLOR_HEX: Record<string, string> = {
+  "Signal Red": "#CC2200",
+  "Carbon Black": "#121212",
+  "Pearl White": "#F0EDE8",
+  "Midnight Black": "#121212",
+  "Steel Blue": "#1E4D8C",
+  "Chalk White": "#F0EDE8",
+  "Graphite Grey": "#5A5A5A",
+  "Forest Green": "#2D5A27",
+  "Storm Blue": "#1C3D5A",
+  "Titanium Silver": "#9E9E9E",
+  "Matte Black": "#121212",
+  Terracotta: "#C97B5A",
+};
+
 interface OptionValue {
   id: number;
   label: string;
@@ -27,7 +42,11 @@ function buildOptionGroups(bike: Bike): OptionGroup[] {
   for (const variant of variants) {
     for (const ov of variant.option_values ?? []) {
       if (!map.has(ov.option_id)) {
-        map.set(ov.option_id, { option_id: ov.option_id, display_name: ov.option_display_name, values: [] });
+        map.set(ov.option_id, {
+          option_id: ov.option_id,
+          display_name: ov.option_display_name,
+          values: [],
+        });
       }
       const group = map.get(ov.option_id)!;
       if (!group.values.some((v) => v.id === ov.id)) {
@@ -38,12 +57,19 @@ function buildOptionGroups(bike: Bike): OptionGroup[] {
   return Array.from(map.values());
 }
 
-function findSelectedVariant(bike: Bike, selectedOptions: Record<number, number>) {
+function findSelectedVariant(
+  bike: Bike,
+  selectedOptions: Record<number, number>
+) {
   const variants = bike.externalProduct?.data?.variants;
   if (!variants?.length) return null;
-  return variants.find((v) =>
-    (v.option_values ?? []).every((ov) => selectedOptions[ov.option_id] === ov.id)
-  ) ?? null;
+  return (
+    variants.find((v) =>
+      (v.option_values ?? []).every(
+        (ov) => selectedOptions[ov.option_id] === ov.id
+      )
+    ) ?? null
+  );
 }
 
 interface ProductViewProps {
@@ -60,12 +86,15 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
     optionGroups.map((g) => [g.option_id, g.values[0]?.id])
   ) as Record<number, number>;
 
-  const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>(initialSelected);
+  const [selectedOptions, setSelectedOptions] =
+    useState<Record<number, number>>(initialSelected);
   const [quantity, setQuantity] = useState(1);
 
   const selectedVariant = findSelectedVariant(bike, selectedOptions);
   const category = formatCategoryValue(bike.category?.value);
-  const price = selectedVariant?.calculated_price ?? bike.externalProduct?.data?.calculated_price;
+  const price =
+    selectedVariant?.calculated_price ??
+    bike.externalProduct?.data?.calculated_price;
 
   const specs: [string, string][] = bike.specifications
     ? Object.entries(bike.specifications)
@@ -178,18 +207,29 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                     className="uppercase tracking-[0.15em] text-muted mb-3"
                     style={{ fontSize: "0.65rem", fontWeight: 700 }}
                   >
-                    {group.display_name} &mdash; {group.values.find((v) => v.id === selectedOptions[group.option_id])?.label}
+                    {group.display_name} &mdash;{" "}
+                    {
+                      group.values.find(
+                        (v) => v.id === selectedOptions[group.option_id]
+                      )?.label
+                    }
                   </p>
                   <div className="flex gap-3 flex-wrap">
                     {group.values.map((value) => {
-                      const isSelected = selectedOptions[group.option_id] === value.id;
+                      const isSelected =
+                        selectedOptions[group.option_id] === value.id;
                       if (isColorGroup) {
-                        const cssColor = value.label.split(" ").pop()!.toLowerCase();
+                        const cssColor = COLOR_HEX[value.label] ?? "#cccccc";
                         return (
                           <button
                             key={value.id}
                             title={value.label}
-                            onClick={() => setSelectedOptions((prev) => ({ ...prev, [group.option_id]: value.id }))}
+                            onClick={() =>
+                              setSelectedOptions((prev) => ({
+                                ...prev,
+                                [group.option_id]: value.id,
+                              }))
+                            }
                             className={`w-10 h-10 border-2 transition-all ${
                               isSelected
                                 ? "border-accent scale-110"
@@ -202,7 +242,12 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                       return (
                         <button
                           key={value.id}
-                          onClick={() => setSelectedOptions((prev) => ({ ...prev, [group.option_id]: value.id }))}
+                          onClick={() =>
+                            setSelectedOptions((prev) => ({
+                              ...prev,
+                              [group.option_id]: value.id,
+                            }))
+                          }
                           className={`h-12 px-4 border transition-colors uppercase tracking-[0.05em] ${
                             isSelected
                               ? "bg-primary text-secondary border-primary"

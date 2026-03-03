@@ -215,8 +215,6 @@ export type AssetCreateInput = {
   imageProduct?: InputMaybe<ProductCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
-  productLineHeroImage?: InputMaybe<ProductLineCreateManyInlineInput>;
-  productLineHeroImageVariant?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
   seoOgImage?: InputMaybe<SeoCreateManyInlineInput>;
   siteSettingsDefaultMetaImage?: InputMaybe<SiteSettingsCreateManyInlineInput>;
   statIcons?: InputMaybe<StatCreateManyInlineInput>;
@@ -410,8 +408,6 @@ export type AssetUpdateInput = {
   imageProduct?: InputMaybe<ProductUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
-  productLineHeroImage?: InputMaybe<ProductLineUpdateManyInlineInput>;
-  productLineHeroImageVariant?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
   /** Use this to define if its a reupload for the asset */
   reUpload?: InputMaybe<Scalars['Boolean']['input']>;
   seoOgImage?: InputMaybe<SeoUpdateManyInlineInput>;
@@ -874,16 +870,11 @@ export type BigCommerce_BigCommerceMeta = {
   pagination?: Maybe<BigCommerce_BigCommercePagination>;
 };
 
-/** Option value (e.g., Color: Red, Size: Medium) */
 export type BigCommerce_BigCommerceOptionValue = {
   __typename?: 'BigCommerce_BigCommerceOptionValue';
-  /** Option value ID */
   id: Scalars['Int']['output'];
-  /** Value label (e.g., 'Red', 'Small') */
   label: Scalars['String']['output'];
-  /** Option display name (e.g., 'Color', 'Size') */
   option_display_name: Scalars['String']['output'];
-  /** Option ID */
   option_id: Scalars['Int']['output'];
 };
 
@@ -4741,10 +4732,6 @@ export type EntityTypeName =
   | 'PageVariant'
   /** Individual product with marketing content in Hygraph and live pricing/stock from BigCommerce/CommerceTools */
   | 'Product'
-  /** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-  | 'ProductLine'
-  /** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-  | 'ProductLineVariant'
   /** Displays products with live PIM data - demonstrates Content Federation */
   | 'ProductShowcase'
   /** Structured technical specifications for products */
@@ -4928,8 +4915,6 @@ export type FeatureCreateInput = {
   icon?: InputMaybe<AssetCreateOneInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<FeatureCreateLocalizationsInput>;
-  productLines?: InputMaybe<ProductLineCreateManyInlineInput>;
-  productLinesVariant?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
   /** title input for default locale (en) */
   title: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -5462,8 +5447,6 @@ export type FeatureUpdateInput = {
   icon?: InputMaybe<AssetUpdateOneInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<FeatureUpdateLocalizationsInput>;
-  productLines?: InputMaybe<ProductLineUpdateManyInlineInput>;
-  productLinesVariant?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
   /** title input for default locale (en) */
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -7969,8 +7952,6 @@ export type Mutation = {
   createPage?: Maybe<Page>;
   /** Create one product */
   createProduct?: Maybe<Product>;
-  /** Create one productLine */
-  createProductLine?: Maybe<ProductLine>;
   /** Create one scheduledRelease */
   createScheduledRelease?: Maybe<ScheduledRelease>;
   /** Create one segment */
@@ -8035,13 +8016,6 @@ export type Mutation = {
   /** Delete many Page documents, return deleted documents */
   deleteManyPagesConnection: PageConnection;
   /**
-   * Delete many ProductLine documents
-   * @deprecated Please use the new paginated many mutation (deleteManyProductLinesConnection)
-   */
-  deleteManyProductLines: BatchPayload;
-  /** Delete many ProductLine documents, return deleted documents */
-  deleteManyProductLinesConnection: ProductLineConnection;
-  /**
    * Delete many Product documents
    * @deprecated Please use the new paginated many mutation (deleteManyProductsConnection)
    */
@@ -8061,8 +8035,6 @@ export type Mutation = {
   deletePage?: Maybe<Page>;
   /** Delete one product from _all_ existing stages. Returns deleted document. */
   deleteProduct?: Maybe<Product>;
-  /** Delete one productLine from _all_ existing stages. Returns deleted document. */
-  deleteProductLine?: Maybe<ProductLine>;
   /** Delete and return scheduled operation */
   deleteScheduledOperation?: Maybe<ScheduledOperation>;
   /** Delete one scheduledRelease from _all_ existing stages. Returns deleted document. */
@@ -8130,15 +8102,6 @@ export type Mutation = {
   publishManyPages: BatchPayload;
   /** Publish many Page documents */
   publishManyPagesConnection: PageConnection;
-  /** Publish many ProductLineVariant documents */
-  publishManyProductLineVariantsConnection: ProductLineVariantConnection;
-  /**
-   * Publish many ProductLine documents
-   * @deprecated Please use the new paginated many mutation (publishManyProductLinesConnection)
-   */
-  publishManyProductLines: BatchPayload;
-  /** Publish many ProductLine documents */
-  publishManyProductLinesConnection: ProductLineConnection;
   /**
    * Publish many Product documents
    * @deprecated Please use the new paginated many mutation (publishManyProductsConnection)
@@ -8161,10 +8124,6 @@ export type Mutation = {
   publishPageVariant?: Maybe<PageVariant>;
   /** Publish one product */
   publishProduct?: Maybe<Product>;
-  /** Publish one productLine */
-  publishProductLine?: Maybe<ProductLine>;
-  /** Publish one productLineVariant */
-  publishProductLineVariant?: Maybe<ProductLineVariant>;
   /** Publish one segment */
   publishSegment?: Maybe<Segment>;
   /** Publish one siteSettings */
@@ -8185,10 +8144,6 @@ export type Mutation = {
   schedulePublishPageVariant?: Maybe<PageVariant>;
   /** Schedule to publish one product */
   schedulePublishProduct?: Maybe<Product>;
-  /** Schedule to publish one productLine */
-  schedulePublishProductLine?: Maybe<ProductLine>;
-  /** Schedule to publish one productLineVariant */
-  schedulePublishProductLineVariant?: Maybe<ProductLineVariant>;
   /** Schedule to publish one segment */
   schedulePublishSegment?: Maybe<Segment>;
   /** Schedule to publish one siteSettings */
@@ -8209,10 +8164,6 @@ export type Mutation = {
   scheduleUnpublishPageVariant?: Maybe<PageVariant>;
   /** Unpublish one product from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishProduct?: Maybe<Product>;
-  /** Unpublish one productLine from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  scheduleUnpublishProductLine?: Maybe<ProductLine>;
-  /** Unpublish one productLineVariant from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  scheduleUnpublishProductLineVariant?: Maybe<ProductLineVariant>;
   /** Unpublish one segment from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishSegment?: Maybe<Segment>;
   /** Unpublish one siteSettings from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -8276,15 +8227,6 @@ export type Mutation = {
   unpublishManyPages: BatchPayload;
   /** Find many Page documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyPagesConnection: PageConnection;
-  /** Find many ProductLineVariant documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyProductLineVariantsConnection: ProductLineVariantConnection;
-  /**
-   * Unpublish many ProductLine documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyProductLinesConnection)
-   */
-  unpublishManyProductLines: BatchPayload;
-  /** Find many ProductLine documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyProductLinesConnection: ProductLineConnection;
   /**
    * Unpublish many Product documents
    * @deprecated Please use the new paginated many mutation (unpublishManyProductsConnection)
@@ -8307,10 +8249,6 @@ export type Mutation = {
   unpublishPageVariant?: Maybe<PageVariant>;
   /** Unpublish one product from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishProduct?: Maybe<Product>;
-  /** Unpublish one productLine from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishProductLine?: Maybe<ProductLine>;
-  /** Unpublish one productLineVariant from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishProductLineVariant?: Maybe<ProductLineVariant>;
   /** Unpublish one segment from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishSegment?: Maybe<Segment>;
   /** Unpublish one siteSettings from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -8373,13 +8311,6 @@ export type Mutation = {
   /** Update many Page documents */
   updateManyPagesConnection: PageConnection;
   /**
-   * Update many productLines
-   * @deprecated Please use the new paginated many mutation (updateManyProductLinesConnection)
-   */
-  updateManyProductLines: BatchPayload;
-  /** Update many ProductLine documents */
-  updateManyProductLinesConnection: ProductLineConnection;
-  /**
    * Update many products
    * @deprecated Please use the new paginated many mutation (updateManyProductsConnection)
    */
@@ -8399,8 +8330,6 @@ export type Mutation = {
   updatePage?: Maybe<Page>;
   /** Update one product */
   updateProduct?: Maybe<Product>;
-  /** Update one productLine */
-  updateProductLine?: Maybe<ProductLine>;
   /** Update one scheduledRelease */
   updateScheduledRelease?: Maybe<ScheduledRelease>;
   /** Update one segment */
@@ -8421,8 +8350,6 @@ export type Mutation = {
   upsertPage?: Maybe<Page>;
   /** Upsert one product */
   upsertProduct?: Maybe<Product>;
-  /** Upsert one productLine */
-  upsertProductLine?: Maybe<ProductLine>;
   /** Upsert one segment */
   upsertSegment?: Maybe<Segment>;
   /** Upsert one siteSettings */
@@ -8462,11 +8389,6 @@ export type MutationCreatePageArgs = {
 
 export type MutationCreateProductArgs = {
   data: ProductCreateInput;
-};
-
-
-export type MutationCreateProductLineArgs = {
-  data: ProductLineCreateInput;
 };
 
 
@@ -8610,21 +8532,6 @@ export type MutationDeleteManyPagesConnectionArgs = {
 };
 
 
-export type MutationDeleteManyProductLinesArgs = {
-  where?: InputMaybe<ProductLineManyWhereInput>;
-};
-
-
-export type MutationDeleteManyProductLinesConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ProductLineManyWhereInput>;
-};
-
-
 export type MutationDeleteManyProductsArgs = {
   where?: InputMaybe<ProductManyWhereInput>;
 };
@@ -8667,11 +8574,6 @@ export type MutationDeletePageArgs = {
 
 export type MutationDeleteProductArgs = {
   where: ProductWhereUniqueInput;
-};
-
-
-export type MutationDeleteProductLineArgs = {
-  where: ProductLineWhereUniqueInput;
 };
 
 
@@ -8905,45 +8807,6 @@ export type MutationPublishManyPagesConnectionArgs = {
 };
 
 
-export type MutationPublishManyProductLineVariantsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: InputMaybe<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  to?: Array<Stage>;
-  where?: InputMaybe<ProductLineVariantManyWhereInput>;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishManyProductLinesArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  to?: Array<Stage>;
-  where?: InputMaybe<ProductLineManyWhereInput>;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishManyProductLinesConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: InputMaybe<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  to?: Array<Stage>;
-  where?: InputMaybe<ProductLineManyWhereInput>;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
 export type MutationPublishManyProductsArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9018,24 +8881,6 @@ export type MutationPublishProductArgs = {
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
   to?: Array<Stage>;
   where: ProductWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishProductLineArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  to?: Array<Stage>;
-  where: ProductLineWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationPublishProductLineVariantArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  to?: Array<Stage>;
-  where: ProductLineVariantWhereUniqueInput;
   withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -9140,28 +8985,6 @@ export type MutationSchedulePublishProductArgs = {
 };
 
 
-export type MutationSchedulePublishProductLineArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  to?: Array<Stage>;
-  where: ProductLineWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationSchedulePublishProductLineVariantArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-  publishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  to?: Array<Stage>;
-  where: ProductLineVariantWhereUniqueInput;
-  withDefaultLocale?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
 export type MutationSchedulePublishSegmentArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
   releaseId?: InputMaybe<Scalars['String']['input']>;
@@ -9256,26 +9079,6 @@ export type MutationScheduleUnpublishProductArgs = {
   releaseId?: InputMaybe<Scalars['String']['input']>;
   unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
   where: ProductWhereUniqueInput;
-};
-
-
-export type MutationScheduleUnpublishProductLineArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: ProductLineWhereUniqueInput;
-};
-
-
-export type MutationScheduleUnpublishProductLineVariantArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
-  releaseId?: InputMaybe<Scalars['String']['input']>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: ProductLineVariantWhereUniqueInput;
 };
 
 
@@ -9491,42 +9294,6 @@ export type MutationUnpublishManyPagesConnectionArgs = {
 };
 
 
-export type MutationUnpublishManyProductLineVariantsConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: Array<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: InputMaybe<Stage>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where?: InputMaybe<ProductLineVariantManyWhereInput>;
-};
-
-
-export type MutationUnpublishManyProductLinesArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where?: InputMaybe<ProductLineManyWhereInput>;
-};
-
-
-export type MutationUnpublishManyProductLinesConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  from?: Array<Stage>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: InputMaybe<Stage>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where?: InputMaybe<ProductLineManyWhereInput>;
-};
-
-
 export type MutationUnpublishManyProductsArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -9596,22 +9363,6 @@ export type MutationUnpublishProductArgs = {
   locales?: InputMaybe<Array<Locale>>;
   unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
   where: ProductWhereUniqueInput;
-};
-
-
-export type MutationUnpublishProductLineArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: ProductLineWhereUniqueInput;
-};
-
-
-export type MutationUnpublishProductLineVariantArgs = {
-  from?: Array<Stage>;
-  locales?: InputMaybe<Array<Locale>>;
-  unpublishBase?: InputMaybe<Scalars['Boolean']['input']>;
-  where: ProductLineVariantWhereUniqueInput;
 };
 
 
@@ -9772,23 +9523,6 @@ export type MutationUpdateManyPagesConnectionArgs = {
 };
 
 
-export type MutationUpdateManyProductLinesArgs = {
-  data: ProductLineUpdateManyInput;
-  where?: InputMaybe<ProductLineManyWhereInput>;
-};
-
-
-export type MutationUpdateManyProductLinesConnectionArgs = {
-  after?: InputMaybe<Scalars['ID']['input']>;
-  before?: InputMaybe<Scalars['ID']['input']>;
-  data: ProductLineUpdateManyInput;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ProductLineManyWhereInput>;
-};
-
-
 export type MutationUpdateManyProductsArgs = {
   data: ProductUpdateManyInput;
   where?: InputMaybe<ProductManyWhereInput>;
@@ -9838,12 +9572,6 @@ export type MutationUpdatePageArgs = {
 export type MutationUpdateProductArgs = {
   data: ProductUpdateInput;
   where: ProductWhereUniqueInput;
-};
-
-
-export type MutationUpdateProductLineArgs = {
-  data: ProductLineUpdateInput;
-  where: ProductLineWhereUniqueInput;
 };
 
 
@@ -9904,12 +9632,6 @@ export type MutationUpsertPageArgs = {
 export type MutationUpsertProductArgs = {
   upsert: ProductUpsertInput;
   where: ProductWhereUniqueInput;
-};
-
-
-export type MutationUpsertProductLineArgs = {
-  upsert: ProductLineUpsertInput;
-  where: ProductLineWhereUniqueInput;
 };
 
 
@@ -13416,1264 +13138,6 @@ export type ProductEdge = {
   node: Product;
 };
 
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLine = Entity & Node & {
-  __typename?: 'ProductLine';
-  /** The time the document was created */
-  createdAt: Scalars['DateTime']['output'];
-  /** User that created this document */
-  createdBy?: Maybe<User>;
-  /** Full marketing description (supports rich text formatting) */
-  description: RichText;
-  /** Get the document in other stages */
-  documentInStages: Array<ProductLine>;
-  /** Hero image for landing page (recommended: 1920x1080px) */
-  heroImage?: Maybe<Asset>;
-  /** List of ProductLine versions */
-  history: Array<Version>;
-  /** The unique identifier */
-  id: Scalars['ID']['output'];
-  /** Highlighted features for this product line */
-  keyFeatures: Array<Feature>;
-  /** System Locale field */
-  locale: Locale;
-  /** Get the other localizations for this document */
-  localizations: Array<ProductLine>;
-  /** Product line name */
-  name: Scalars['String']['output'];
-  /** The time the document was published. Null on documents in draft stage. */
-  publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  /** User that last published this document */
-  publishedBy?: Maybe<User>;
-  scheduledIn: Array<ScheduledOperation>;
-  /** SEO metadata for landing page */
-  seo?: Maybe<Seo>;
-  /** URL slug for landing page */
-  slug: Scalars['String']['output'];
-  /** System stage field */
-  stage: Stage;
-  /** Short marketing tagline - key personalization field */
-  tagline: Scalars['String']['output'];
-  /** The time the document was updated */
-  updatedAt: Scalars['DateTime']['output'];
-  /** User that last updated this document */
-  updatedBy?: Maybe<User>;
-  /**
-   *
-   *           This field links the variant model to the main model. It is used to fetch the variants of a model.
-   *
-   */
-  variants: Array<ProductLineVariant>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineCreatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineCreatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineDocumentInStagesArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  inheritLocale?: Scalars['Boolean']['input'];
-  stages?: Array<Stage>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineHeroImageArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  where?: InputMaybe<AssetSingleRelationWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineHistoryArgs = {
-  limit?: Scalars['Int']['input'];
-  skip?: Scalars['Int']['input'];
-  stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineKeyFeaturesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<FeatureOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<FeatureWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineLocalizationsArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  locales?: Array<Locale>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLinePublishedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLinePublishedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineScheduledInArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ScheduledOperationWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineSeoArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineUpdatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineUpdatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<ProductLineVariantOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ProductLineVariantWhereInput>;
-};
-
-export type ProductLineConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: ProductLineWhereUniqueInput;
-};
-
-/** A connection to a list of items. */
-export type ProductLineConnection = {
-  __typename?: 'ProductLineConnection';
-  aggregate: Aggregate;
-  /** A list of edges. */
-  edges: Array<ProductLineEdge>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type ProductLineCreateInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** description input for default locale (en) */
-  description: Scalars['RichTextAST']['input'];
-  heroImage?: InputMaybe<AssetCreateOneInlineInput>;
-  keyFeatures?: InputMaybe<FeatureCreateManyInlineInput>;
-  /** Inline mutations for managing document localizations excluding the default locale */
-  localizations?: InputMaybe<ProductLineCreateLocalizationsInput>;
-  /** name input for default locale (en) */
-  name: Scalars['String']['input'];
-  productShowcases?: InputMaybe<ProductShowcaseCreateManyInlineInput>;
-  seo?: InputMaybe<SeoCreateOneInlineInput>;
-  slug: Scalars['String']['input'];
-  /** tagline input for default locale (en) */
-  tagline: Scalars['String']['input'];
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  variants?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
-};
-
-export type ProductLineCreateLocalizationDataInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  description: Scalars['RichTextAST']['input'];
-  name: Scalars['String']['input'];
-  tagline: Scalars['String']['input'];
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type ProductLineCreateLocalizationInput = {
-  /** Localization input */
-  data: ProductLineCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductLineCreateLocalizationsInput = {
-  /** Create localizations for the newly-created document */
-  create?: InputMaybe<Array<ProductLineCreateLocalizationInput>>;
-};
-
-export type ProductLineCreateManyInlineInput = {
-  /** Connect multiple existing ProductLine documents */
-  connect?: InputMaybe<Array<ProductLineWhereUniqueInput>>;
-  /** Create and connect multiple existing ProductLine documents */
-  create?: InputMaybe<Array<ProductLineCreateInput>>;
-};
-
-export type ProductLineCreateOneInlineInput = {
-  /** Connect one existing ProductLine document */
-  connect?: InputMaybe<ProductLineWhereUniqueInput>;
-  /** Create and connect one ProductLine document */
-  create?: InputMaybe<ProductLineCreateInput>;
-};
-
-/** An edge in a connection. */
-export type ProductLineEdge = {
-  __typename?: 'ProductLineEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: ProductLine;
-};
-
-/** Identifies documents */
-export type ProductLineManyWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductLineWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductLineWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductLineWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<ProductLineWhereStageInput>;
-  documentInStages_none?: InputMaybe<ProductLineWhereStageInput>;
-  documentInStages_some?: InputMaybe<ProductLineWhereStageInput>;
-  heroImage?: InputMaybe<AssetWhereInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  keyFeatures_every?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_none?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_some?: InputMaybe<FeatureWhereInput>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  seo?: InputMaybe<SeoWhereInput>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  slug_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  slug_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-  variants_every?: InputMaybe<ProductLineVariantWhereInput>;
-  variants_none?: InputMaybe<ProductLineVariantWhereInput>;
-  variants_some?: InputMaybe<ProductLineVariantWhereInput>;
-};
-
-export type ProductLineOrderByInput =
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'publishedAt_ASC'
-  | 'publishedAt_DESC'
-  | 'slug_ASC'
-  | 'slug_DESC'
-  | 'tagline_ASC'
-  | 'tagline_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC';
-
-export type ProductLineUpdateInput = {
-  /** description input for default locale (en) */
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  heroImage?: InputMaybe<AssetUpdateOneInlineInput>;
-  keyFeatures?: InputMaybe<FeatureUpdateManyInlineInput>;
-  /** Manage document localizations */
-  localizations?: InputMaybe<ProductLineUpdateLocalizationsInput>;
-  /** name input for default locale (en) */
-  name?: InputMaybe<Scalars['String']['input']>;
-  productShowcases?: InputMaybe<ProductShowcaseUpdateManyInlineInput>;
-  seo?: InputMaybe<SeoUpdateOneInlineInput>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-  /** tagline input for default locale (en) */
-  tagline?: InputMaybe<Scalars['String']['input']>;
-  variants?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
-};
-
-export type ProductLineUpdateLocalizationDataInput = {
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  tagline?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductLineUpdateLocalizationInput = {
-  data: ProductLineUpdateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductLineUpdateLocalizationsInput = {
-  /** Localizations to create */
-  create?: InputMaybe<Array<ProductLineCreateLocalizationInput>>;
-  /** Localizations to delete */
-  delete?: InputMaybe<Array<Locale>>;
-  /** Localizations to update */
-  update?: InputMaybe<Array<ProductLineUpdateLocalizationInput>>;
-  upsert?: InputMaybe<Array<ProductLineUpsertLocalizationInput>>;
-};
-
-export type ProductLineUpdateManyInlineInput = {
-  /** Connect multiple existing ProductLine documents */
-  connect?: InputMaybe<Array<ProductLineConnectInput>>;
-  /** Create and connect multiple ProductLine documents */
-  create?: InputMaybe<Array<ProductLineCreateInput>>;
-  /** Delete multiple ProductLine documents */
-  delete?: InputMaybe<Array<ProductLineWhereUniqueInput>>;
-  /** Disconnect multiple ProductLine documents */
-  disconnect?: InputMaybe<Array<ProductLineWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing ProductLine documents */
-  set?: InputMaybe<Array<ProductLineWhereUniqueInput>>;
-  /** Update multiple ProductLine documents */
-  update?: InputMaybe<Array<ProductLineUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple ProductLine documents */
-  upsert?: InputMaybe<Array<ProductLineUpsertWithNestedWhereUniqueInput>>;
-};
-
-export type ProductLineUpdateManyInput = {
-  /** description input for default locale (en) */
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  /** Optional updates to localizations */
-  localizations?: InputMaybe<ProductLineUpdateManyLocalizationsInput>;
-  /** name input for default locale (en) */
-  name?: InputMaybe<Scalars['String']['input']>;
-  /** tagline input for default locale (en) */
-  tagline?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductLineUpdateManyLocalizationDataInput = {
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  tagline?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductLineUpdateManyLocalizationInput = {
-  data: ProductLineUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductLineUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: InputMaybe<Array<ProductLineUpdateManyLocalizationInput>>;
-};
-
-export type ProductLineUpdateManyWithNestedWhereInput = {
-  /** Update many input */
-  data: ProductLineUpdateManyInput;
-  /** Document search */
-  where: ProductLineWhereInput;
-};
-
-export type ProductLineUpdateOneInlineInput = {
-  /** Connect existing ProductLine document */
-  connect?: InputMaybe<ProductLineWhereUniqueInput>;
-  /** Create and connect one ProductLine document */
-  create?: InputMaybe<ProductLineCreateInput>;
-  /** Delete currently connected ProductLine document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Disconnect currently connected ProductLine document */
-  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single ProductLine document */
-  update?: InputMaybe<ProductLineUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single ProductLine document */
-  upsert?: InputMaybe<ProductLineUpsertWithNestedWhereUniqueInput>;
-};
-
-export type ProductLineUpdateWithNestedWhereUniqueInput = {
-  /** Document to update */
-  data: ProductLineUpdateInput;
-  /** Unique document search */
-  where: ProductLineWhereUniqueInput;
-};
-
-export type ProductLineUpsertInput = {
-  /** Create document if it didn't exist */
-  create: ProductLineCreateInput;
-  /** Update document if it exists */
-  update: ProductLineUpdateInput;
-};
-
-export type ProductLineUpsertLocalizationInput = {
-  create: ProductLineCreateLocalizationDataInput;
-  locale: Locale;
-  update: ProductLineUpdateLocalizationDataInput;
-};
-
-export type ProductLineUpsertWithNestedWhereUniqueInput = {
-  /** Upsert data */
-  data: ProductLineUpsertInput;
-  /** Unique document search */
-  where: ProductLineWhereUniqueInput;
-};
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariant = Entity & Node & {
-  __typename?: 'ProductLineVariant';
-  /** The time the document was created */
-  createdAt: Scalars['DateTime']['output'];
-  /** User that created this document */
-  createdBy?: Maybe<User>;
-  /** Full marketing description (supports rich text formatting) */
-  description: RichText;
-  /** Get the document in other stages */
-  documentInStages: Array<ProductLineVariant>;
-  /** Hero image for landing page (recommended: 1920x1080px) */
-  heroImage?: Maybe<Asset>;
-  /** List of ProductLineVariant versions */
-  history: Array<Version>;
-  /** The unique identifier */
-  id: Scalars['ID']['output'];
-  /** Highlighted features for this product line */
-  keyFeatures: Array<Feature>;
-  /** System Locale field */
-  locale: Locale;
-  /** Get the other localizations for this document */
-  localizations: Array<ProductLineVariant>;
-  /** The time the document was published. Null on documents in draft stage. */
-  publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  /** User that last published this document */
-  publishedBy?: Maybe<User>;
-  scheduledIn: Array<ScheduledOperation>;
-  /**
-   *
-   *           This field links the variant model to the segment model. It is used to fetch the segments of a variant.
-   *
-   */
-  segments: Array<Segment>;
-  /** System stage field */
-  stage: Stage;
-  /** Short marketing tagline - key personalization field */
-  tagline: Scalars['String']['output'];
-  /** The time the document was updated */
-  updatedAt: Scalars['DateTime']['output'];
-  /** User that last updated this document */
-  updatedBy?: Maybe<User>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantCreatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantCreatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantDocumentInStagesArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  inheritLocale?: Scalars['Boolean']['input'];
-  stages?: Array<Stage>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantHeroImageArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  where?: InputMaybe<AssetSingleRelationWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantHistoryArgs = {
-  limit?: Scalars['Int']['input'];
-  skip?: Scalars['Int']['input'];
-  stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantKeyFeaturesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<FeatureOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<FeatureWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantLocalizationsArgs = {
-  includeCurrent?: Scalars['Boolean']['input'];
-  locales?: Array<Locale>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantPublishedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantPublishedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantScheduledInArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ScheduledOperationWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantSegmentsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<SegmentOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<SegmentWhereInput>;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantUpdatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-/** Marketing wrapper around federated products (e.g., "Electric Trailblazer Series") */
-export type ProductLineVariantUpdatedByArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-export type ProductLineVariantConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: ProductLineVariantWhereUniqueInput;
-};
-
-/** A connection to a list of items. */
-export type ProductLineVariantConnection = {
-  __typename?: 'ProductLineVariantConnection';
-  aggregate: Aggregate;
-  /** A list of edges. */
-  edges: Array<ProductLineVariantEdge>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type ProductLineVariantCreateInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** description input for default locale (en) */
-  description: Scalars['RichTextAST']['input'];
-  heroImage?: InputMaybe<AssetCreateOneInlineInput>;
-  keyFeatures?: InputMaybe<FeatureCreateManyInlineInput>;
-  /** Inline mutations for managing document localizations excluding the default locale */
-  localizations?: InputMaybe<ProductLineVariantCreateLocalizationsInput>;
-  main?: InputMaybe<ProductLineCreateOneInlineInput>;
-  segments?: InputMaybe<SegmentCreateManyInlineInput>;
-  /** tagline input for default locale (en) */
-  tagline: Scalars['String']['input'];
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type ProductLineVariantCreateLocalizationDataInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  description: Scalars['RichTextAST']['input'];
-  tagline: Scalars['String']['input'];
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type ProductLineVariantCreateLocalizationInput = {
-  /** Localization input */
-  data: ProductLineVariantCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductLineVariantCreateLocalizationsInput = {
-  /** Create localizations for the newly-created document */
-  create?: InputMaybe<Array<ProductLineVariantCreateLocalizationInput>>;
-};
-
-export type ProductLineVariantCreateManyInlineInput = {
-  /** Create and connect multiple existing ProductLineVariant documents */
-  create?: InputMaybe<Array<ProductLineVariantCreateInput>>;
-};
-
-export type ProductLineVariantCreateOneInlineInput = {
-  /** Create and connect one ProductLineVariant document */
-  create?: InputMaybe<ProductLineVariantCreateInput>;
-};
-
-/** An edge in a connection. */
-export type ProductLineVariantEdge = {
-  __typename?: 'ProductLineVariantEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: ProductLineVariant;
-};
-
-/** Identifies documents */
-export type ProductLineVariantManyWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductLineVariantWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductLineVariantWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductLineVariantWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<ProductLineVariantWhereStageInput>;
-  documentInStages_none?: InputMaybe<ProductLineVariantWhereStageInput>;
-  documentInStages_some?: InputMaybe<ProductLineVariantWhereStageInput>;
-  heroImage?: InputMaybe<AssetWhereInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  keyFeatures_every?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_none?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_some?: InputMaybe<FeatureWhereInput>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  segments_every?: InputMaybe<SegmentWhereInput>;
-  segments_none?: InputMaybe<SegmentWhereInput>;
-  segments_some?: InputMaybe<SegmentWhereInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-};
-
-export type ProductLineVariantOrderByInput =
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'publishedAt_ASC'
-  | 'publishedAt_DESC'
-  | 'tagline_ASC'
-  | 'tagline_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC';
-
-export type ProductLineVariantUpdateInput = {
-  /** description input for default locale (en) */
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  heroImage?: InputMaybe<AssetUpdateOneInlineInput>;
-  keyFeatures?: InputMaybe<FeatureUpdateManyInlineInput>;
-  /** Manage document localizations */
-  localizations?: InputMaybe<ProductLineVariantUpdateLocalizationsInput>;
-  main?: InputMaybe<ProductLineUpdateOneInlineInput>;
-  segments?: InputMaybe<SegmentUpdateManyInlineInput>;
-  /** tagline input for default locale (en) */
-  tagline?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductLineVariantUpdateLocalizationDataInput = {
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  tagline?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductLineVariantUpdateLocalizationInput = {
-  data: ProductLineVariantUpdateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductLineVariantUpdateLocalizationsInput = {
-  /** Localizations to create */
-  create?: InputMaybe<Array<ProductLineVariantCreateLocalizationInput>>;
-  /** Localizations to delete */
-  delete?: InputMaybe<Array<Locale>>;
-  /** Localizations to update */
-  update?: InputMaybe<Array<ProductLineVariantUpdateLocalizationInput>>;
-  upsert?: InputMaybe<Array<ProductLineVariantUpsertLocalizationInput>>;
-};
-
-export type ProductLineVariantUpdateManyInlineInput = {
-  /** Create and connect multiple ProductLineVariant documents */
-  create?: InputMaybe<Array<ProductLineVariantCreateInput>>;
-  /** Delete multiple ProductLineVariant documents */
-  delete?: InputMaybe<Array<ProductLineVariantWhereUniqueInput>>;
-  /** Update multiple ProductLineVariant documents */
-  update?: InputMaybe<Array<ProductLineVariantUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple ProductLineVariant documents */
-  upsert?: InputMaybe<Array<ProductLineVariantUpsertWithNestedWhereUniqueInput>>;
-};
-
-export type ProductLineVariantUpdateManyInput = {
-  /** description input for default locale (en) */
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  /** Optional updates to localizations */
-  localizations?: InputMaybe<ProductLineVariantUpdateManyLocalizationsInput>;
-  /** tagline input for default locale (en) */
-  tagline?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductLineVariantUpdateManyLocalizationDataInput = {
-  description?: InputMaybe<Scalars['RichTextAST']['input']>;
-  tagline?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductLineVariantUpdateManyLocalizationInput = {
-  data: ProductLineVariantUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type ProductLineVariantUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: InputMaybe<Array<ProductLineVariantUpdateManyLocalizationInput>>;
-};
-
-export type ProductLineVariantUpdateManyWithNestedWhereInput = {
-  /** Update many input */
-  data: ProductLineVariantUpdateManyInput;
-  /** Document search */
-  where: ProductLineVariantWhereInput;
-};
-
-export type ProductLineVariantUpdateOneInlineInput = {
-  /** Create and connect one ProductLineVariant document */
-  create?: InputMaybe<ProductLineVariantCreateInput>;
-  /** Delete currently connected ProductLineVariant document */
-  delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single ProductLineVariant document */
-  update?: InputMaybe<ProductLineVariantUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single ProductLineVariant document */
-  upsert?: InputMaybe<ProductLineVariantUpsertWithNestedWhereUniqueInput>;
-};
-
-export type ProductLineVariantUpdateWithNestedWhereUniqueInput = {
-  /** Document to update */
-  data: ProductLineVariantUpdateInput;
-  /** Unique document search */
-  where: ProductLineVariantWhereUniqueInput;
-};
-
-export type ProductLineVariantUpsertInput = {
-  /** Create document if it didn't exist */
-  create: ProductLineVariantCreateInput;
-  /** Update document if it exists */
-  update: ProductLineVariantUpdateInput;
-};
-
-export type ProductLineVariantUpsertLocalizationInput = {
-  create: ProductLineVariantCreateLocalizationDataInput;
-  locale: Locale;
-  update: ProductLineVariantUpdateLocalizationDataInput;
-};
-
-export type ProductLineVariantUpsertWithNestedWhereUniqueInput = {
-  /** Upsert data */
-  data: ProductLineVariantUpsertInput;
-  /** Unique document search */
-  where: ProductLineVariantWhereUniqueInput;
-};
-
-/** This contains a set of filters that can be used to compare values internally */
-export type ProductLineVariantWhereComparatorInput = {
-  /** This field can be used to request to check if the entry is outdated by internal comparison */
-  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Identifies documents */
-export type ProductLineVariantWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductLineVariantWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductLineVariantWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductLineVariantWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<ProductLineVariantWhereStageInput>;
-  documentInStages_none?: InputMaybe<ProductLineVariantWhereStageInput>;
-  documentInStages_some?: InputMaybe<ProductLineVariantWhereStageInput>;
-  heroImage?: InputMaybe<AssetWhereInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  keyFeatures_every?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_none?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_some?: InputMaybe<FeatureWhereInput>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  segments_every?: InputMaybe<SegmentWhereInput>;
-  segments_none?: InputMaybe<SegmentWhereInput>;
-  segments_some?: InputMaybe<SegmentWhereInput>;
-  tagline?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  tagline_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  tagline_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  tagline_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  tagline_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  tagline_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  tagline_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  tagline_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  tagline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  tagline_starts_with?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-};
-
-/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
-export type ProductLineVariantWhereStageInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductLineVariantWhereStageInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductLineVariantWhereStageInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductLineVariantWhereStageInput>>;
-  /** This field contains fields which can be set as true or false to specify an internal comparison */
-  compareWithParent?: InputMaybe<ProductLineVariantWhereComparatorInput>;
-  /** Specify the stage to compare with */
-  stage?: InputMaybe<Stage>;
-};
-
-/** References ProductLineVariant record uniquely */
-export type ProductLineVariantWhereUniqueInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-/** This contains a set of filters that can be used to compare values internally */
-export type ProductLineWhereComparatorInput = {
-  /** This field can be used to request to check if the entry is outdated by internal comparison */
-  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Identifies documents */
-export type ProductLineWhereInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductLineWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductLineWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductLineWhereInput>>;
-  /** Contains search across all appropriate fields. */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  createdBy?: InputMaybe<UserWhereInput>;
-  documentInStages_every?: InputMaybe<ProductLineWhereStageInput>;
-  documentInStages_none?: InputMaybe<ProductLineWhereStageInput>;
-  documentInStages_some?: InputMaybe<ProductLineWhereStageInput>;
-  heroImage?: InputMaybe<AssetWhereInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  /** All values containing the given string. */
-  id_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values ending with the given string. */
-  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are contained in given list. */
-  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  id_not?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not containing the given string. */
-  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values that are not contained in given list. */
-  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** All values starting with the given string. */
-  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  keyFeatures_every?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_none?: InputMaybe<FeatureWhereInput>;
-  keyFeatures_some?: InputMaybe<FeatureWhereInput>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  name_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  name_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  name_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  name_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  name_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  name_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  name_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  name_starts_with?: InputMaybe<Scalars['String']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  publishedBy?: InputMaybe<UserWhereInput>;
-  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
-  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  seo?: InputMaybe<SeoWhereInput>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  slug_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  slug_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
-  tagline?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  tagline_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  tagline_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  tagline_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  tagline_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  tagline_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  tagline_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  tagline_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  tagline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  tagline_starts_with?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  /** Any other value that exists and is not equal to the given value. */
-  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
-  updatedBy?: InputMaybe<UserWhereInput>;
-  variants_every?: InputMaybe<ProductLineVariantWhereInput>;
-  variants_none?: InputMaybe<ProductLineVariantWhereInput>;
-  variants_some?: InputMaybe<ProductLineVariantWhereInput>;
-};
-
-/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
-export type ProductLineWhereStageInput = {
-  /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProductLineWhereStageInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProductLineWhereStageInput>>;
-  /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProductLineWhereStageInput>>;
-  /** This field contains fields which can be set as true or false to specify an internal comparison */
-  compareWithParent?: InputMaybe<ProductLineWhereComparatorInput>;
-  /** Specify the stage to compare with */
-  stage?: InputMaybe<Stage>;
-};
-
-/** References ProductLine record uniquely */
-export type ProductLineWhereUniqueInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** Identifies documents */
 export type ProductManyWhereInput = {
   /** Logical AND on all given filters. */
@@ -14881,8 +13345,6 @@ export type ProductShowcase = Entity & {
   /** The unique identifier */
   id: Scalars['ID']['output'];
   layout: DisplayLayout;
-  /** Show all products from this product line. Variant-enabled to show different product lines per audience. */
-  productLine?: Maybe<ProductLine>;
   products: Array<Product>;
   /** Display product prices fetched from PIM */
   showPrices: Scalars['Boolean']['output'];
@@ -14892,13 +13354,6 @@ export type ProductShowcase = Entity & {
   stage: Stage;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-/** Displays products with live PIM data - demonstrates Content Federation */
-export type ProductShowcaseProductLineArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -14936,7 +13391,6 @@ export type ProductShowcaseCreateInput = {
   displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience: Scalars['Boolean']['input'];
   layout: DisplayLayout;
-  productLine?: InputMaybe<ProductLineCreateOneInlineInput>;
   products?: InputMaybe<ProductCreateManyInlineInput>;
   showPrices: Scalars['Boolean']['input'];
   showStock: Scalars['Boolean']['input'];
@@ -15011,7 +13465,6 @@ export type ProductShowcaseManyWhereInput = {
   layout_not?: InputMaybe<DisplayLayout>;
   /** All values that are not contained in given list. */
   layout_not_in?: InputMaybe<Array<InputMaybe<DisplayLayout>>>;
-  productLine?: InputMaybe<ProductLineWhereInput>;
   products_every?: InputMaybe<ProductWhereInput>;
   products_none?: InputMaybe<ProductWhereInput>;
   products_some?: InputMaybe<ProductWhereInput>;
@@ -15146,7 +13599,6 @@ export type ProductShowcaseUpdateInput = {
   displayFilters?: InputMaybe<Scalars['Boolean']['input']>;
   filterByAudience?: InputMaybe<Scalars['Boolean']['input']>;
   layout?: InputMaybe<DisplayLayout>;
-  productLine?: InputMaybe<ProductLineUpdateOneInlineInput>;
   products?: InputMaybe<ProductUpdateManyInlineInput>;
   showPrices?: InputMaybe<Scalars['Boolean']['input']>;
   showStock?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15270,7 +13722,6 @@ export type ProductShowcaseWhereInput = {
   layout_not?: InputMaybe<DisplayLayout>;
   /** All values that are not contained in given list. */
   layout_not_in?: InputMaybe<Array<InputMaybe<DisplayLayout>>>;
-  productLine?: InputMaybe<ProductLineWhereInput>;
   products_every?: InputMaybe<ProductWhereInput>;
   products_none?: InputMaybe<ProductWhereInput>;
   products_some?: InputMaybe<ProductWhereInput>;
@@ -16629,14 +15080,6 @@ export type Query = {
   pagesConnection: PageConnection;
   /** Retrieve a single product */
   product?: Maybe<Product>;
-  /** Retrieve a single productLine */
-  productLine?: Maybe<ProductLine>;
-  /** Retrieve document version */
-  productLineVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple productLines */
-  productLines: Array<ProductLine>;
-  /** Retrieve multiple productLines using the Relay connection interface */
-  productLinesConnection: ProductLineConnection;
   /** Retrieve document version */
   productVersion?: Maybe<DocumentVersion>;
   /** Retrieve multiple products */
@@ -16947,44 +15390,6 @@ export type QueryProductArgs = {
   locales?: Array<Locale>;
   stage?: Stage;
   where: ProductWhereUniqueInput;
-};
-
-
-export type QueryProductLineArgs = {
-  locales?: Array<Locale>;
-  stage?: Stage;
-  where: ProductLineWhereUniqueInput;
-};
-
-
-export type QueryProductLineVersionArgs = {
-  where: VersionWhereInput;
-};
-
-
-export type QueryProductLinesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: Array<Locale>;
-  orderBy?: InputMaybe<ProductLineOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: Stage;
-  where?: InputMaybe<ProductLineWhereInput>;
-};
-
-
-export type QueryProductLinesConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: Array<Locale>;
-  orderBy?: InputMaybe<ProductLineOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  stage?: Stage;
-  where?: InputMaybe<ProductLineWhereInput>;
 };
 
 
@@ -17395,16 +15800,14 @@ export type SeoOrderByInput =
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
-export type SeoParent = Page | ProductLine;
+export type SeoParent = Page;
 
 export type SeoParentConnectInput = {
   Page?: InputMaybe<PageConnectInput>;
-  ProductLine?: InputMaybe<ProductLineConnectInput>;
 };
 
 export type SeoParentCreateInput = {
   Page?: InputMaybe<PageCreateInput>;
-  ProductLine?: InputMaybe<ProductLineCreateInput>;
 };
 
 export type SeoParentCreateManyInlineInput = {
@@ -17423,7 +15826,6 @@ export type SeoParentCreateOneInlineInput = {
 
 export type SeoParentUpdateInput = {
   Page?: InputMaybe<PageUpdateInput>;
-  ProductLine?: InputMaybe<ProductLineUpdateInput>;
 };
 
 export type SeoParentUpdateManyInlineInput = {
@@ -17445,7 +15847,6 @@ export type SeoParentUpdateManyInlineInput = {
 
 export type SeoParentUpdateManyWithNestedWhereInput = {
   Page?: InputMaybe<PageUpdateManyWithNestedWhereInput>;
-  ProductLine?: InputMaybe<ProductLineUpdateManyWithNestedWhereInput>;
 };
 
 export type SeoParentUpdateOneInlineInput = {
@@ -17465,22 +15866,18 @@ export type SeoParentUpdateOneInlineInput = {
 
 export type SeoParentUpdateWithNestedWhereUniqueInput = {
   Page?: InputMaybe<PageUpdateWithNestedWhereUniqueInput>;
-  ProductLine?: InputMaybe<ProductLineUpdateWithNestedWhereUniqueInput>;
 };
 
 export type SeoParentUpsertWithNestedWhereUniqueInput = {
   Page?: InputMaybe<PageUpsertWithNestedWhereUniqueInput>;
-  ProductLine?: InputMaybe<ProductLineUpsertWithNestedWhereUniqueInput>;
 };
 
 export type SeoParentWhereInput = {
   Page?: InputMaybe<PageWhereInput>;
-  ProductLine?: InputMaybe<ProductLineWhereInput>;
 };
 
 export type SeoParentWhereUniqueInput = {
   Page?: InputMaybe<PageWhereUniqueInput>;
-  ProductLine?: InputMaybe<ProductLineWhereUniqueInput>;
 };
 
 export type SeoUpdateInput = {
@@ -17883,7 +16280,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | BlogPost | Feature | Job | Navigation | Page | PageVariant | Product | ProductLine | ProductLineVariant | Segment | SiteSettings;
+export type ScheduledOperationAffectedDocument = Asset | BlogPost | Feature | Job | Navigation | Page | PageVariant | Product | Segment | SiteSettings;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -19376,7 +17773,6 @@ export type SegmentCreateInput = {
   name: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   variantsPage?: InputMaybe<PageVariantCreateManyInlineInput>;
-  variantsProductLine?: InputMaybe<ProductLineVariantCreateManyInlineInput>;
 };
 
 export type SegmentCreateManyInlineInput = {
@@ -19543,7 +17939,6 @@ export type SegmentUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   variantsPage?: InputMaybe<PageVariantUpdateManyInlineInput>;
-  variantsProductLine?: InputMaybe<ProductLineVariantUpdateManyInlineInput>;
 };
 
 export type SegmentUpdateManyInlineInput = {
