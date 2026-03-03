@@ -149,7 +149,6 @@ export async function generateMetadata({
         : undefined,
     };
   } catch (error) {
-    console.log("EHRE:E:E:EE::");
     console.error("Failed to generate metadata:", error);
     return { title: "Page" };
   }
