@@ -1,5 +1,6 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import type { GetPageQuery } from "@/types/hygraph-generated";
+import { createPreviewAttributes, createComponentChainLink } from "@hygraph/preview-sdk/core";
 import ContactForm from "./ContactForm";
 
 type ContactSectionData = Extract<
@@ -9,9 +10,10 @@ type ContactSectionData = Extract<
 
 interface ContactSectionProps {
   section: ContactSectionData;
+  pageId: string;
 }
 
-export default function ContactSection({ section }: ContactSectionProps) {
+export default function ContactSection({ section, pageId }: ContactSectionProps) {
   const {
     offices,
     topics,
@@ -27,6 +29,8 @@ export default function ContactSection({ section }: ContactSectionProps) {
     successHeadline,
     successBody,
   } = section;
+
+  const sectionChain = [createComponentChainLink("sections", section.id)];
 
   return (
     <section className="border-b border-primary">
@@ -51,71 +55,82 @@ export default function ContactSection({ section }: ContactSectionProps) {
 
         {/* Offices */}
         <div className="lg:col-span-5">
-          {offices.map((office, i) => (
-            <div
-              key={office.id}
-              className={`p-8 md:p-12 lg:p-16 ${i < offices.length - 1 ? "border-b border-primary" : ""}`}
-            >
-              <p
-                className="uppercase tracking-[0.2em] text-muted mb-1"
-                style={{ fontSize: "0.65rem", fontWeight: 700 }}
+          {offices.map((office, i) => {
+            const officeChain = [
+              ...sectionChain,
+              createComponentChainLink("offices", office.id),
+            ];
+            return (
+              <div
+                key={office.id}
+                className={`p-8 md:p-12 lg:p-16 ${i < offices.length - 1 ? "border-b border-primary" : ""}`}
               >
-                {office.role}
-              </p>
-              <h3
-                className="mb-6"
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontWeight: 700,
-                }}
-              >
-                {office.city}
-                <span className="text-accent">.</span>
-              </h3>
+                <p
+                  {...createPreviewAttributes({ entryId: pageId, fieldApiId: "role", componentChain: officeChain })}
+                  className="uppercase tracking-[0.2em] text-muted mb-1"
+                  style={{ fontSize: "0.65rem", fontWeight: 700 }}
+                >
+                  {office.role}
+                </p>
+                <h3
+                  {...createPreviewAttributes({ entryId: pageId, fieldApiId: "city", componentChain: officeChain })}
+                  className="mb-6"
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontWeight: 700,
+                  }}
+                >
+                  {office.city}
+                  <span className="text-accent">.</span>
+                </h3>
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin
-                    size={15}
-                    className="text-accent mt-0.5 shrink-0"
-                    strokeWidth={1.5}
-                  />
-                  <p
-                    className="text-muted"
-                    style={{ lineHeight: 1.7, whiteSpace: "pre-line" }}
-                  >
-                    {office.address}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Mail
-                    size={15}
-                    className="text-accent shrink-0"
-                    strokeWidth={1.5}
-                  />
-                  <a
-                    href={`mailto:${office.email}`}
-                    className="text-muted hover:text-accent transition-colors"
-                  >
-                    {office.email}
-                  </a>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Phone
-                    size={15}
-                    className="text-accent shrink-0"
-                    strokeWidth={1.5}
-                  />
-                  <a
-                    href={`tel:${office.phone.replace(/\s/g, "")}`}
-                    className="text-muted hover:text-accent transition-colors"
-                  >
-                    {office.phone}
-                  </a>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <MapPin
+                      size={15}
+                      className="text-accent mt-0.5 shrink-0"
+                      strokeWidth={1.5}
+                    />
+                    <p
+                      {...createPreviewAttributes({ entryId: pageId, fieldApiId: "address", componentChain: officeChain })}
+                      className="text-muted"
+                      style={{ lineHeight: 1.7, whiteSpace: "pre-line" }}
+                    >
+                      {office.address}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Mail
+                      size={15}
+                      className="text-accent shrink-0"
+                      strokeWidth={1.5}
+                    />
+                    <a
+                      {...createPreviewAttributes({ entryId: pageId, fieldApiId: "email", componentChain: officeChain })}
+                      href={`mailto:${office.email}`}
+                      className="text-muted hover:text-accent transition-colors"
+                    >
+                      {office.email}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone
+                      size={15}
+                      className="text-accent shrink-0"
+                      strokeWidth={1.5}
+                    />
+                    <a
+                      {...createPreviewAttributes({ entryId: pageId, fieldApiId: "phone", componentChain: officeChain })}
+                      href={`tel:${office.phone.replace(/\s/g, "")}`}
+                      className="text-muted hover:text-accent transition-colors"
+                    >
+                      {office.phone}
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -183,10 +183,10 @@ export default async function Page({ params }: PageProps) {
   function renderSections() {
     return displaySections.map((section) => {
       if (isPageHeader(section)) {
-        return <PageHeader key={section.id} section={section} />;
+        return <PageHeader key={section.id} section={section} pageId={page.id} />;
       }
       if (isArticleList(section)) {
-        return <ArticleList key={section.id} section={section} />;
+        return <ArticleList key={section.id} section={section} pageId={page.id} />;
       }
       if (isFeaturedArticle(section)) {
         return (
@@ -194,26 +194,23 @@ export default async function Page({ params }: PageProps) {
             key={section.id}
             section={section}
             locale={locale as Locale}
+            pageId={page.id}
           />
         );
       }
       if (isJobList(section)) {
-        return <JobList key={section.id} section={section} />;
+        return <JobList key={section.id} section={section} pageId={page.id} />;
       }
       if (isHeroSection(section)) {
         return (
-          <HeroSection
-            key={section.id}
-            section={section}
-            locale={locale as Locale}
-          />
+          <HeroSection key={section.id} section={section} pageId={page.id} />
         );
       }
       if (isFeatureGrid(section)) {
-        return <FeatureGrid key={section.id} section={section} />;
+        return <FeatureGrid key={section.id} section={section} pageId={page.id} />;
       }
       if (isEditorialSection(section)) {
-        return <EditorialSection key={section.id} section={section} />;
+        return <EditorialSection key={section.id} section={section} pageId={page.id} />;
       }
       if (isCTABlock(section)) {
         return (
@@ -221,6 +218,7 @@ export default async function Page({ params }: PageProps) {
             key={section.id}
             section={section}
             locale={locale as Locale}
+            pageId={page.id}
           />
         );
       }
@@ -234,13 +232,13 @@ export default async function Page({ params }: PageProps) {
         );
       }
       if (isSectionHeader(section)) {
-        return <SectionHeader key={section.id} section={section} />;
+        return <SectionHeader key={section.id} section={section} pageId={page.id} />;
       }
       if (isTimeline(section)) {
-        return <Timeline key={section.id} section={section} />;
+        return <Timeline key={section.id} section={section} pageId={page.id} />;
       }
       if (isContactSection(section)) {
-        return <ContactSection key={section.id} section={section} />;
+        return <ContactSection key={section.id} section={section} pageId={page.id} />;
       }
       if (isStatsBar(section)) {
         return (
@@ -248,6 +246,7 @@ export default async function Page({ params }: PageProps) {
             key={section.id}
             section={section}
             locale={locale as Locale}
+            pageId={page.id}
           />
         );
       }

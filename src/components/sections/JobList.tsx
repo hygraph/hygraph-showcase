@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import type { GetPageQuery } from "@/types/hygraph-generated";
 import { useSiteSettings } from "@/lib/context/SiteSettingsContext";
+import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
 
 type JobListSection = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -13,6 +14,7 @@ type JobListSection = Extract<
 
 interface JobListProps {
   section: JobListSection;
+  pageId: string;
 }
 
 export default function JobList({ section }: JobListProps) {
@@ -51,6 +53,7 @@ export default function JobList({ section }: JobListProps) {
               <div className="col-span-10 sm:col-span-11 p-6 md:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <h3
+                    {...createPreviewAttributes({ entryId: job.id, fieldApiId: "title" })}
                     className="mb-2"
                     style={{
                       fontFamily: "'Space Grotesk', sans-serif",
@@ -62,18 +65,21 @@ export default function JobList({ section }: JobListProps) {
                   </h3>
                   <div className="flex flex-wrap gap-4">
                     <span
+                      {...createPreviewAttributes({ entryId: job.id, fieldApiId: "department" })}
                       className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50"
                       style={{ fontSize: "0.65rem", fontWeight: 700 }}
                     >
                       {job.department}
                     </span>
                     <span
+                      {...createPreviewAttributes({ entryId: job.id, fieldApiId: "location" })}
                       className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50"
                       style={{ fontSize: "0.65rem", fontWeight: 700 }}
                     >
                       {job.location}
                     </span>
                     <span
+                      {...createPreviewAttributes({ entryId: job.id, fieldApiId: "jobType" })}
                       className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50"
                       style={{ fontSize: "0.65rem", fontWeight: 700 }}
                     >

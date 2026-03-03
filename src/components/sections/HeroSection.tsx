@@ -5,7 +5,10 @@
 
 import Link from "next/link";
 import type { GetPageQuery } from "@/types/hygraph-generated";
-import type { Locale } from "@/lib/utils/locale";
+import {
+  createPreviewAttributes,
+  createComponentChainLink,
+} from "@hygraph/preview-sdk/core";
 
 type HeroSectionType = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -14,11 +17,12 @@ type HeroSectionType = Extract<
 
 interface HeroSectionProps {
   section: HeroSectionType;
-  locale: Locale;
+  pageId: string;
 }
 
-export default function HeroSection({ section, locale }: HeroSectionProps) {
+export default function HeroSection({ section, pageId }: HeroSectionProps) {
   const mediaUrl = section.backgroundMedia?.url ?? null;
+  const chain = [createComponentChainLink("sections", section.id)];
 
   if (mediaUrl) {
     return (
@@ -29,13 +33,25 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
             <div>
               {section.label && (
                 <p
+                  {...createPreviewAttributes({
+                    entryId: pageId,
+                    fieldApiId: "label",
+                    componentChain: chain,
+                  })}
                   className="uppercase tracking-[0.2em] text-muted mb-8"
                   style={{ fontSize: "0.65rem", fontWeight: 700 }}
                 >
                   {section.label}
                 </p>
               )}
-              <h1 className="relative z-10">
+              <h1
+                {...createPreviewAttributes({
+                  entryId: pageId,
+                  fieldApiId: "headline",
+                  componentChain: chain,
+                })}
+                className="relative z-10"
+              >
                 {section.headline.replace(/\.$/, "")}
                 <span className="text-accent">.</span>
               </h1>
@@ -43,6 +59,11 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
             <div className="mt-12">
               {section.subheadline && (
                 <p
+                  {...createPreviewAttributes({
+                    entryId: pageId,
+                    fieldApiId: "subheadline",
+                    componentChain: chain,
+                  })}
                   className="text-muted max-w-[320px] mb-8"
                   style={{ lineHeight: 1.6 }}
                 >
@@ -92,6 +113,11 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
             {section.mediaText && (
               <div className="absolute bottom-0 left-0 bg-accent text-white px-6 py-3">
                 <p
+                  {...createPreviewAttributes({
+                    entryId: pageId,
+                    fieldApiId: "mediaText",
+                    componentChain: chain,
+                  })}
                   className="uppercase tracking-[0.15em]"
                   style={{ fontSize: "0.65rem", fontWeight: 700 }}
                 >
@@ -111,18 +137,35 @@ export default function HeroSection({ section, locale }: HeroSectionProps) {
       <div className="p-8 md:p-16 lg:p-24 w-full">
         {section.label && (
           <p
+            {...createPreviewAttributes({
+              entryId: pageId,
+              fieldApiId: "label",
+              componentChain: chain,
+            })}
             className="uppercase tracking-[0.2em] text-secondary/50 mb-6"
             style={{ fontSize: "0.65rem", fontWeight: 700 }}
           >
             {section.label}
           </p>
         )}
-        <h1 className="text-secondary mb-8 max-w-3xl">
+        <h1
+          {...createPreviewAttributes({
+            entryId: pageId,
+            fieldApiId: "headline",
+            componentChain: chain,
+          })}
+          className="text-secondary mb-8 max-w-3xl"
+        >
           {section.headline.replace(/\.$/, "")}
           <span className="text-accent">.</span>
         </h1>
         {section.subheadline && (
           <p
+            {...createPreviewAttributes({
+              entryId: pageId,
+              fieldApiId: "subheadline",
+              componentChain: chain,
+            })}
             className="text-secondary/70 max-w-lg mb-10"
             style={{ lineHeight: 1.6 }}
           >

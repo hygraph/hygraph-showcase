@@ -8,6 +8,7 @@
 import Link from "next/link";
 import { ArrowRight, ArrowDownRight } from "lucide-react";
 import type { GetPageQuery } from "@/types/hygraph-generated";
+import { createPreviewAttributes, createComponentChainLink } from "@hygraph/preview-sdk/core";
 
 type EditorialSectionType = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -16,12 +17,14 @@ type EditorialSectionType = Extract<
 
 interface EditorialSectionProps {
   section: EditorialSectionType;
+  pageId: string;
 }
 
-export default function EditorialSection({ section }: EditorialSectionProps) {
+export default function EditorialSection({ section, pageId }: EditorialSectionProps) {
   const imageUrl = section.image?.url || "";
   const headline = section.editorialHeadline || "";
   const hasStats = section.stats && section.stats.length > 0;
+  const chain = [createComponentChainLink("sections", section.id)];
 
   if (section.imageRight) {
     // Materials layout: text LEFT (5 cols), image RIGHT (7 cols)
@@ -32,18 +35,24 @@ export default function EditorialSection({ section }: EditorialSectionProps) {
           <div className="lg:col-span-5 p-8 md:p-12 lg:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-primary">
             {section.eyebrow && (
               <p
+                {...createPreviewAttributes({ entryId: pageId, fieldApiId: "eyebrow", componentChain: chain })}
                 className="uppercase tracking-[0.2em] text-muted mb-4"
                 style={{ fontSize: "0.65rem", fontWeight: 700 }}
               >
                 {section.eyebrow}
               </p>
             )}
-            <h2 className="mb-6">
+            <h2
+              {...createPreviewAttributes({ entryId: pageId, fieldApiId: "headline", componentChain: chain })}
+              className="mb-6"
+            >
               {headline.replace(/\.$/, "")}
               <span className="text-accent">.</span>
             </h2>
             {section.body?.html && (
               <div
+                {...createPreviewAttributes({ entryId: pageId, fieldApiId: "body", componentChain: chain })}
+                data-hygraph-rich-text-format="html"
                 className="text-muted mb-6 prose prose-sm max-w-none"
                 style={{ lineHeight: 1.7 }}
                 dangerouslySetInnerHTML={{ __html: section.body.html }}
@@ -51,17 +60,29 @@ export default function EditorialSection({ section }: EditorialSectionProps) {
             )}
             {hasStats && (
               <div className="grid grid-cols-2 gap-4 mt-4">
-                {section.stats.map((stat) => (
-                  <div key={stat.id} className="border border-primary p-4">
-                    <p
-                      className="uppercase tracking-[0.15em] text-muted mb-1"
-                      style={{ fontSize: "0.6rem", fontWeight: 700 }}
-                    >
-                      {stat.label}
-                    </p>
-                    <p style={{ fontWeight: 700 }}>{stat.value}</p>
-                  </div>
-                ))}
+                {section.stats.map((stat) => {
+                  const statChain = [
+                    ...chain,
+                    createComponentChainLink("stats", stat.id),
+                  ];
+                  return (
+                    <div key={stat.id} className="border border-primary p-4">
+                      <p
+                        {...createPreviewAttributes({ entryId: pageId, fieldApiId: "label", componentChain: statChain })}
+                        className="uppercase tracking-[0.15em] text-muted mb-1"
+                        style={{ fontSize: "0.6rem", fontWeight: 700 }}
+                      >
+                        {stat.label}
+                      </p>
+                      <p
+                        {...createPreviewAttributes({ entryId: pageId, fieldApiId: "value", componentChain: statChain })}
+                        style={{ fontWeight: 700 }}
+                      >
+                        {stat.value}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -97,18 +118,24 @@ export default function EditorialSection({ section }: EditorialSectionProps) {
           <ArrowDownRight size={32} className="text-accent mb-6" />
           {section.eyebrow && (
             <p
+              {...createPreviewAttributes({ entryId: pageId, fieldApiId: "eyebrow", componentChain: chain })}
               className="uppercase tracking-[0.2em] text-muted mb-4"
               style={{ fontSize: "0.65rem", fontWeight: 700 }}
             >
               {section.eyebrow}
             </p>
           )}
-          <h2 className="mb-6">
+          <h2
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "headline", componentChain: chain })}
+            className="mb-6"
+          >
             {headline.replace(/\.$/, "")}
             <span className="text-accent">.</span>
           </h2>
           {section.body?.html && (
             <div
+              {...createPreviewAttributes({ entryId: pageId, fieldApiId: "body", componentChain: chain })}
+              data-hygraph-rich-text-format="html"
               className="text-muted mb-8 prose prose-sm max-w-none"
               style={{ lineHeight: 1.7 }}
               dangerouslySetInnerHTML={{ __html: section.body.html }}

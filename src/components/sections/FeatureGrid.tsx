@@ -4,6 +4,7 @@
  */
 
 import type { GetPageQuery } from "@/types/hygraph-generated";
+import { createPreviewAttributes, createComponentChainLink } from "@hygraph/preview-sdk/core";
 
 type FeatureGridType = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -12,10 +13,12 @@ type FeatureGridType = Extract<
 
 interface FeatureGridProps {
   section: FeatureGridType;
+  pageId: string;
 }
 
-export default function FeatureGrid({ section }: FeatureGridProps) {
+export default function FeatureGrid({ section, pageId }: FeatureGridProps) {
   const features = section.features;
+  const sectionChain = [createComponentChainLink("sections", section.id)];
 
   const colsMap: Record<string, string> = {
     GRID_2COL: "grid-cols-1 md:grid-cols-2",
@@ -42,23 +45,38 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
   return (
     <section className="border-b border-primary">
       <div className={`grid ${cols}`}>
-        {features.map((feature, i) => (
-          <div
-            key={feature.id}
-            className={`p-8 md:p-10 ${getBorderClasses(i)}`}
-          >
-            <p
-              className="text-accent mb-4 uppercase tracking-[0.2em]"
-              style={{ fontSize: "0.65rem", fontWeight: 700 }}
+        {features.map((feature, i) => {
+          const featureChain = [
+            ...sectionChain,
+            createComponentChainLink("features", feature.id),
+          ];
+          return (
+            <div
+              key={feature.id}
+              className={`p-8 md:p-10 ${getBorderClasses(i)}`}
             >
-              0{i + 1}
-            </p>
-            <h3 className="mb-4">{feature.title}</h3>
-            <p className="text-muted" style={{ lineHeight: 1.7 }}>
-              {feature.description.text}
-            </p>
-          </div>
-        ))}
+              <p
+                className="text-accent mb-4 uppercase tracking-[0.2em]"
+                style={{ fontSize: "0.65rem", fontWeight: 700 }}
+              >
+                0{i + 1}
+              </p>
+              <h3
+                {...createPreviewAttributes({ entryId: pageId, fieldApiId: "title", componentChain: featureChain })}
+                className="mb-4"
+              >
+                {feature.title}
+              </h3>
+              <p
+                {...createPreviewAttributes({ entryId: pageId, fieldApiId: "description", componentChain: featureChain })}
+                className="text-muted"
+                style={{ lineHeight: 1.7 }}
+              >
+                {feature.description.text}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

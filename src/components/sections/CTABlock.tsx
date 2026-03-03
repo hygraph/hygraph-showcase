@@ -6,16 +6,19 @@
 import Link from 'next/link';
 import type { GetPageQuery } from '@/types/hygraph-generated';
 import type { Locale } from '@/lib/utils/locale';
+import { createPreviewAttributes, createComponentChainLink } from '@hygraph/preview-sdk/core';
 
 type CTABlockType = Extract<GetPageQuery['pages'][0]['sections'][0], { __typename?: 'CTABlock' }>;
 
 interface CTABlockProps {
   section: CTABlockType;
   locale: Locale;
+  pageId: string;
 }
 
-export default function CTABlock({ section }: CTABlockProps) {
+export default function CTABlock({ section, pageId }: CTABlockProps) {
   const isDark = section.backgroundColor === 'DARK' || section.backgroundColor === 'PRIMARY';
+  const chain = [createComponentChainLink('sections', section.id)];
 
   return (
     <section
@@ -34,6 +37,7 @@ export default function CTABlock({ section }: CTABlockProps) {
         </p>
 
         <h2
+          {...createPreviewAttributes({ entryId: pageId, fieldApiId: 'headline', componentChain: chain })}
           className="mb-8 max-w-3xl"
           style={{ color: isDark ? '#F9F9F7' : '#121212' }}
         >
@@ -43,6 +47,7 @@ export default function CTABlock({ section }: CTABlockProps) {
 
         {section.description && (
           <p
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: 'description', componentChain: chain })}
             className="max-w-lg mb-10"
             style={{ lineHeight: 1.7, color: isDark ? 'rgba(249,249,247,0.6)' : '#6B6B6B' }}
           >
