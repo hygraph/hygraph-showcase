@@ -1,4 +1,7 @@
-import type { GetNavigationQuery, GetSiteSettingsQuery } from "@/types/hygraph-generated";
+import type {
+  GetNavigationQuery,
+  GetSiteSettingsQuery,
+} from "@/types/hygraph-generated";
 import type { Locale } from "@/lib/utils/locale";
 
 type SiteSettingsNavItem = NonNullable<
@@ -10,18 +13,7 @@ export type NavItem =
   | SiteSettingsNavItem;
 
 export function buildHref(item: NavItem, locale: Locale): string {
-  if (item.linkType === "EXTERNAL" && item.externalUrl) {
-    if (
-      item.externalUrl.startsWith("http://") ||
-      item.externalUrl.startsWith("https://")
-    ) {
-      return item.externalUrl;
-    }
-
-    return `/${locale}/${item.externalUrl}`;
-  }
-
-  if (item.linkType === "PAGE" && item.pageLink) {
+  if (item.pageLink) {
     return `/${locale}/${item.pageLink.slug}`;
   }
 

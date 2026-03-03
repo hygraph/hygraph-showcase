@@ -10088,8 +10088,6 @@ export type NavigationEdge = {
 /** Individual navigation link (nestable for dropdown menus) */
 export type NavigationItem = Entity & {
   __typename?: 'NavigationItem';
-  /** External URL (required if linkType=EXTERNAL) */
-  externalUrl?: Maybe<Scalars['String']['output']>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
   /** Link text */
@@ -10146,8 +10144,6 @@ export type NavigationItemConnection = {
 };
 
 export type NavigationItemCreateInput = {
-  /** externalUrl input for default locale (en) */
-  externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** label input for default locale (en) */
   label: Scalars['String']['input'];
   linkType: LinkType;
@@ -10158,7 +10154,6 @@ export type NavigationItemCreateInput = {
 };
 
 export type NavigationItemCreateLocalizationDataInput = {
-  externalUrl?: InputMaybe<Scalars['String']['input']>;
   label: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -10255,8 +10250,6 @@ export type NavigationItemManyWhereInput = {
 };
 
 export type NavigationItemOrderByInput =
-  | 'externalUrl_ASC'
-  | 'externalUrl_DESC'
   | 'id_ASC'
   | 'id_DESC'
   | 'label_ASC'
@@ -10347,8 +10340,6 @@ export type NavigationItemParentWhereUniqueInput = {
 };
 
 export type NavigationItemUpdateInput = {
-  /** externalUrl input for default locale (en) */
-  externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** label input for default locale (en) */
   label?: InputMaybe<Scalars['String']['input']>;
   linkType?: InputMaybe<LinkType>;
@@ -10358,7 +10349,6 @@ export type NavigationItemUpdateInput = {
 };
 
 export type NavigationItemUpdateLocalizationDataInput = {
-  externalUrl?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -10389,8 +10379,6 @@ export type NavigationItemUpdateManyInlineInput = {
 };
 
 export type NavigationItemUpdateManyInput = {
-  /** externalUrl input for default locale (en) */
-  externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** label input for default locale (en) */
   label?: InputMaybe<Scalars['String']['input']>;
   linkType?: InputMaybe<LinkType>;
@@ -10399,7 +10387,6 @@ export type NavigationItemUpdateManyInput = {
 };
 
 export type NavigationItemUpdateManyLocalizationDataInput = {
-  externalUrl?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -10486,25 +10473,6 @@ export type NavigationItemWhereInput = {
   OR?: InputMaybe<Array<NavigationItemWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  externalUrl?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  externalUrl_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  externalUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  externalUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  externalUrl_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  externalUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  externalUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  externalUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  externalUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  externalUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -13252,8 +13220,6 @@ export type Product = Entity & Node & {
   baseProductId: Scalars['String']['output'];
   /** Product category from native Hygraph taxonomy */
   category: TaxonomyNode;
-  /** Product color (SKU code, e.g., RE for Red). Used in remote field URL: ${baseProductId}-${color}-${size} */
-  color: ProductColor;
   /** The time the document was created */
   createdAt: Scalars['DateTime']['output'];
   /** User that created this document */
@@ -13284,8 +13250,6 @@ export type Product = Entity & Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
-  /** Product size (SKU code, e.g., SM for Small). Used in remote field URL: ${baseProductId}-${color}-${size} */
-  size: ProductSize;
   /** URL slug for product detail page */
   slug: Scalars['String']['output'];
   /** Technical specifications (weight, motor, battery, range, frame, brakes, gears, suspension, wheel size) */
@@ -13391,12 +13355,6 @@ export type ProductUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-/** Product color options (SKU codes used for remote field URL building) */
-export type ProductColor =
-  | 'BL'
-  | 'GR'
-  | 'RE';
-
 export type ProductConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
@@ -13417,7 +13375,6 @@ export type ProductConnection = {
 export type ProductCreateInput = {
   baseProductId: Scalars['String']['input'];
   category: TaxonomyNodeInput;
-  color: ProductColor;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
   description: Scalars['RichTextAST']['input'];
@@ -13430,7 +13387,6 @@ export type ProductCreateInput = {
   name: Scalars['String']['input'];
   productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
   productShowcases?: InputMaybe<ProductShowcaseCreateManyInlineInput>;
-  size: ProductSize;
   slug: Scalars['String']['input'];
   specifications?: InputMaybe<ProductSpecificationCreateOneInlineInput>;
   /** tagline input for default locale (en) */
@@ -14777,13 +14733,6 @@ export type ProductManyWhereInput = {
   category_not?: InputMaybe<TaxonomyNodeWhereInput>;
   /** All values that are not contained in given list. */
   category_not_in?: InputMaybe<Array<InputMaybe<TaxonomyNodeWhereInput>>>;
-  color?: InputMaybe<ProductColor>;
-  /** All values that are contained in given list. */
-  color_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  color_not?: InputMaybe<ProductColor>;
-  /** All values that are not contained in given list. */
-  color_not_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -14870,13 +14819,6 @@ export type ProductManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  size?: InputMaybe<ProductSize>;
-  /** All values that are contained in given list. */
-  size_in?: InputMaybe<Array<InputMaybe<ProductSize>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  size_not?: InputMaybe<ProductSize>;
-  /** All values that are not contained in given list. */
-  size_not_in?: InputMaybe<Array<InputMaybe<ProductSize>>>;
   slug?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   slug_contains?: InputMaybe<Scalars['String']['input']>;
@@ -14928,8 +14870,6 @@ export type ProductManyWhereInput = {
 export type ProductOrderByInput =
   | 'baseProductId_ASC'
   | 'baseProductId_DESC'
-  | 'color_ASC'
-  | 'color_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
   | 'externalProductId_ASC'
@@ -14944,8 +14884,6 @@ export type ProductOrderByInput =
   | 'productFeatures_DESC'
   | 'publishedAt_ASC'
   | 'publishedAt_DESC'
-  | 'size_ASC'
-  | 'size_DESC'
   | 'slug_ASC'
   | 'slug_DESC'
   | 'tagline_ASC'
@@ -15384,12 +15322,6 @@ export type ProductShowcaseWhereInput = {
 export type ProductShowcaseWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
-
-/** Product size options (SKU codes used for remote field URL building) */
-export type ProductSize =
-  | 'LA'
-  | 'ME'
-  | 'SM';
 
 /** Structured technical specifications for products */
 export type ProductSpecification = Entity & {
@@ -16277,7 +16209,6 @@ export type ProductSpecificationWhereUniqueInput = {
 export type ProductUpdateInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
   category?: InputMaybe<TaxonomyNodeInput>;
-  color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
@@ -16289,7 +16220,6 @@ export type ProductUpdateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
   productShowcases?: InputMaybe<ProductShowcaseUpdateManyInlineInput>;
-  size?: InputMaybe<ProductSize>;
   slug?: InputMaybe<Scalars['String']['input']>;
   specifications?: InputMaybe<ProductSpecificationUpdateOneInlineInput>;
   /** tagline input for default locale (en) */
@@ -16338,7 +16268,6 @@ export type ProductUpdateManyInlineInput = {
 export type ProductUpdateManyInput = {
   baseProductId?: InputMaybe<Scalars['String']['input']>;
   category?: InputMaybe<TaxonomyNodeInput>;
-  color?: InputMaybe<ProductColor>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['RichTextAST']['input']>;
   externalProductId?: InputMaybe<Scalars['Int']['input']>;
@@ -16348,7 +16277,6 @@ export type ProductUpdateManyInput = {
   /** name input for default locale (en) */
   name?: InputMaybe<Scalars['String']['input']>;
   productFeatures?: InputMaybe<Array<Scalars['String']['input']>>;
-  size?: InputMaybe<ProductSize>;
   /** tagline input for default locale (en) */
   tagline?: InputMaybe<Scalars['String']['input']>;
   targetAudiences?: InputMaybe<Array<Audience>>;
@@ -16463,13 +16391,6 @@ export type ProductWhereInput = {
   category_not?: InputMaybe<TaxonomyNodeWhereInput>;
   /** All values that are not contained in given list. */
   category_not_in?: InputMaybe<Array<InputMaybe<TaxonomyNodeWhereInput>>>;
-  color?: InputMaybe<ProductColor>;
-  /** All values that are contained in given list. */
-  color_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  color_not?: InputMaybe<ProductColor>;
-  /** All values that are not contained in given list. */
-  color_not_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -16575,13 +16496,6 @@ export type ProductWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  size?: InputMaybe<ProductSize>;
-  /** All values that are contained in given list. */
-  size_in?: InputMaybe<Array<InputMaybe<ProductSize>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  size_not?: InputMaybe<ProductSize>;
-  /** All values that are not contained in given list. */
-  size_not_in?: InputMaybe<Array<InputMaybe<ProductSize>>>;
   slug?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   slug_contains?: InputMaybe<Scalars['String']['input']>;
@@ -23468,7 +23382,7 @@ export type GetNavigationQueryVariables = Exact<{
 }>;
 
 
-export type GetNavigationQuery = { __typename?: 'Query', navigations: Array<{ __typename?: 'Navigation', id: string, identifier: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> }> };
+export type GetNavigationQuery = { __typename?: 'Query', navigations: Array<{ __typename?: 'Navigation', id: string, identifier: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> }> };
 
 export type GetPageQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -23525,7 +23439,7 @@ export type GetSiteSettingsQueryVariables = Exact<{
 }>;
 
 
-export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, footerSubscribeTitle?: string | null, footerSubscribeSubtitle?: string | null, announcement?: { __typename?: 'RichText', html: string } | null, footerText: { __typename?: 'RichText', text: string }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }>, mainNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null, footerNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, linkType: LinkType, externalUrl?: string | null, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null }> };
+export type GetSiteSettingsQuery = { __typename?: 'Query', allSiteSettings: Array<{ __typename?: 'SiteSettings', id: string, siteName: string, brandColor: string, contactEmail: string, footerSubscribeTitle?: string | null, footerSubscribeSubtitle?: string | null, announcement?: { __typename?: 'RichText', html: string } | null, footerText: { __typename?: 'RichText', text: string }, socialLinks: Array<{ __typename?: 'SocialLink', id: string, platform: SocialPlatform, url: string, handle?: string | null }>, mainNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null, footerNavigation?: { __typename?: 'Navigation', id: string, items: Array<{ __typename?: 'NavigationItem', id: string, label: string, pageLink?: { __typename?: 'Page', id: string, slug: string } | null }> } | null }> };
 
 
 export const GetBlogPostsDocument = gql`
@@ -23612,8 +23526,6 @@ export const GetNavigationDocument = gql`
     items {
       id
       label
-      linkType
-      externalUrl
       pageLink {
         id
         slug
@@ -24339,8 +24251,6 @@ export const GetSiteSettingsDocument = gql`
       items {
         id
         label
-        linkType
-        externalUrl
         pageLink {
           id
           slug
@@ -24352,8 +24262,6 @@ export const GetSiteSettingsDocument = gql`
       items {
         id
         label
-        linkType
-        externalUrl
         pageLink {
           id
           slug

@@ -23,8 +23,6 @@ query GetSiteSettings($locale: Locale!) {
       items {
         id
         label
-        linkType
-        externalUrl
         pageLink {
           id
           slug
@@ -36,8 +34,6 @@ query GetSiteSettings($locale: Locale!) {
       items {
         id
         label
-        linkType
-        externalUrl
         pageLink {
           id
           slug

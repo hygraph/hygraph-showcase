@@ -10,8 +10,6 @@ query GetNavigation($identifier: String!, $locale: Locale!) {
     items {
       id
       label
-      linkType
-      externalUrl
       pageLink {
         id
         slug
