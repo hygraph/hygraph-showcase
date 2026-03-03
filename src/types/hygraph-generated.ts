@@ -10092,8 +10092,6 @@ export type NavigationItem = Entity & {
   id: Scalars['ID']['output'];
   /** Link text */
   label: Scalars['String']['output'];
-  /** Type of link (determines which link field is required) */
-  linkType: LinkType;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -10146,7 +10144,6 @@ export type NavigationItemConnection = {
 export type NavigationItemCreateInput = {
   /** label input for default locale (en) */
   label: Scalars['String']['input'];
-  linkType: LinkType;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<NavigationItemCreateLocalizationsInput>;
   pageLink?: InputMaybe<PageCreateOneInlineInput>;
@@ -10224,13 +10221,6 @@ export type NavigationItemManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  linkType?: InputMaybe<LinkType>;
-  /** All values that are contained in given list. */
-  linkType_in?: InputMaybe<Array<InputMaybe<LinkType>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  linkType_not?: InputMaybe<LinkType>;
-  /** All values that are not contained in given list. */
-  linkType_not_in?: InputMaybe<Array<InputMaybe<LinkType>>>;
   pageLink?: InputMaybe<PageWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
@@ -10254,8 +10244,6 @@ export type NavigationItemOrderByInput =
   | 'id_DESC'
   | 'label_ASC'
   | 'label_DESC'
-  | 'linkType_ASC'
-  | 'linkType_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
@@ -10342,7 +10330,6 @@ export type NavigationItemParentWhereUniqueInput = {
 export type NavigationItemUpdateInput = {
   /** label input for default locale (en) */
   label?: InputMaybe<Scalars['String']['input']>;
-  linkType?: InputMaybe<LinkType>;
   /** Manage document localizations */
   localizations?: InputMaybe<NavigationItemUpdateLocalizationsInput>;
   pageLink?: InputMaybe<PageUpdateOneInlineInput>;
@@ -10381,7 +10368,6 @@ export type NavigationItemUpdateManyInlineInput = {
 export type NavigationItemUpdateManyInput = {
   /** label input for default locale (en) */
   label?: InputMaybe<Scalars['String']['input']>;
-  linkType?: InputMaybe<LinkType>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<NavigationItemUpdateManyLocalizationsInput>;
 };
@@ -10511,13 +10497,6 @@ export type NavigationItemWhereInput = {
   label_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   label_starts_with?: InputMaybe<Scalars['String']['input']>;
-  linkType?: InputMaybe<LinkType>;
-  /** All values that are contained in given list. */
-  linkType_in?: InputMaybe<Array<InputMaybe<LinkType>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  linkType_not?: InputMaybe<LinkType>;
-  /** All values that are not contained in given list. */
-  linkType_not_in?: InputMaybe<Array<InputMaybe<LinkType>>>;
   pageLink?: InputMaybe<PageWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
@@ -23401,15 +23380,6 @@ export type GetProductBySlugQueryVariables = Exact<{
 
 export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string, variants: Array<{ __typename?: 'BigCommerce_BigCommerceVariant', calculated_price: number, option_values: Array<{ __typename?: 'BigCommerce_BigCommerceOptionValue', id: number, label: string, option_id: number, option_display_name: string }> }> } } | null } | null };
 
-export type GetProductLineQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
-  locale: Locale;
-  segmentName?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type GetProductLineQuery = { __typename?: 'Query', productLine?: { __typename?: 'ProductLine', id: string, name: string, slug: string, tagline: string, description: { __typename?: 'RichText', text: string }, heroImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null, keyFeatures: Array<{ __typename?: 'Feature', id: string, title: string, description: { __typename?: 'RichText', text: string }, icon?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }>, variants: Array<{ __typename?: 'ProductLineVariant', tagline: string, description: { __typename?: 'RichText', text: string }, heroImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null }>, seo?: { __typename?: 'SEO', metaTitle: string, metaDescription: string, ogImage?: { __typename?: 'Asset', id: string, url: string, width?: number | null, height?: number | null } | null } | null } | null };
-
 export type GetProductsQueryVariables = Exact<{
   locale: Locale;
 }>;
@@ -24067,60 +24037,6 @@ export const GetProductBySlugDocument = gql`
   }
 }
     `;
-export const GetProductLineDocument = gql`
-    query GetProductLine($slug: String!, $locale: Locale!, $segmentName: String) {
-  productLine(where: {slug: $slug}, locales: [$locale, en], stage: DRAFT) {
-    id
-    name
-    slug
-    tagline
-    description {
-      text
-    }
-    heroImage {
-      id
-      url
-      width
-      height
-    }
-    keyFeatures {
-      id
-      title
-      description {
-        text
-      }
-      icon {
-        id
-        url
-        width
-        height
-      }
-    }
-    variants(where: {segments_some: {name: $segmentName}}) {
-      tagline
-      description {
-        text
-      }
-      heroImage {
-        id
-        url
-        width
-        height
-      }
-    }
-    seo {
-      metaTitle
-      metaDescription
-      ogImage {
-        id
-        url
-        width
-        height
-      }
-    }
-  }
-}
-    `;
 export const GetProductsDocument = gql`
     query GetProducts($locale: Locale!) {
   products(locales: [$locale, en], stage: DRAFT, first: 20) {
@@ -24299,9 +24215,6 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetProductBySlug(variables: GetProductBySlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductBySlugQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductBySlugQuery>({ document: GetProductBySlugDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProductBySlug', 'query', variables);
-    },
-    GetProductLine(variables: GetProductLineQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductLineQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProductLineQuery>({ document: GetProductLineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProductLine', 'query', variables);
     },
     GetProducts(variables: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductsQuery>({ document: GetProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProducts', 'query', variables);
