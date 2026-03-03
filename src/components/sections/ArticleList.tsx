@@ -5,16 +5,16 @@ import { ArrowRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import type { GetPageQuery } from "@/types/hygraph-generated";
 
-type BlogListSection = Extract<
+type ArticleListSection = Extract<
   GetPageQuery["pages"][0]["sections"][0],
-  { __typename?: "BlogList" }
+  { __typename?: "ArticleList" }
 >;
 
-interface BlogListProps {
-  section: BlogListSection;
+interface ArticleListProps {
+  section: ArticleListSection;
 }
 
-export default function BlogList({ section }: BlogListProps) {
+export default function ArticleList({ section }: ArticleListProps) {
   const params = useParams();
   const locale = (params.locale as string) || "en";
 
