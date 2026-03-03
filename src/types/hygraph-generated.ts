@@ -22743,7 +22743,6 @@ export const GetPageDocument = gql`
       id
       title
       slug
-      something_does_not_exist
       sections {
         __typename
         ... on PageHeader {
