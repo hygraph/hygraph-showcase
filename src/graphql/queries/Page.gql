@@ -150,7 +150,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
       ... on ProductShowcase {
         id
         layout
-        filterByAudience
         displayFilters
         showPrices
         showStock
@@ -291,7 +290,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             width
             height
           }
-            primaryCTA {
+          primaryCTA {
             id
             label
             href
@@ -364,7 +363,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
         ... on ProductShowcase {
           id
           layout
-          filterByAudience
           displayFilters
           showPrices
           showStock
