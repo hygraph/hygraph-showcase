@@ -77,7 +77,6 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
           width
           height
         }
-        textAlignment
         primaryCTA {
           id
           label
@@ -292,8 +291,7 @@ query GetPage($slug: String!, $locale: Locale!, $segmentName: String) {
             width
             height
           }
-          textAlignment
-          primaryCTA {
+            primaryCTA {
             id
             label
             href

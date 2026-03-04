@@ -15,6 +15,7 @@ export interface Bike {
   productFeatures?: string[] | null;
   description?: { text: string } | null;
   specifications?: {
+    id: string;
     frame?: string | null;
     motor?: string | null;
     battery?: string | null;

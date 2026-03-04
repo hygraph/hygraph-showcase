@@ -4,6 +4,10 @@ import type { Locale } from "@/lib/utils/locale";
 import { buildHref } from "@/lib/utils/navigation";
 import { formatCategoryValue } from "@/types/hybike";
 import type { GetSiteSettingsQuery } from "@/types/hygraph-generated";
+import {
+  createPreviewAttributes,
+  createComponentChainLink,
+} from "@hygraph/preview-sdk/core";
 
 interface FooterProps {
   locale: Locale;
@@ -17,14 +21,25 @@ export default function Footer({
   bikeCategories,
 }: FooterProps) {
   const footerNavItems = siteSettings?.footerNavigation?.items ?? [];
+  const footerNavId = siteSettings?.footerNavigation?.id;
   const socialLinks = siteSettings?.socialLinks ?? [];
+  const settingsId = siteSettings?.id;
   return (
     <footer className="border-t border-secondary/20 bg-primary text-secondary">
       {/* Newsletter + Links */}
       <div className="grid grid-cols-1 md:grid-cols-12 border-b border-secondary/20">
         <div className="md:col-span-5 p-8 md:p-12 border-b md:border-b-0 md:border-r border-secondary/20">
-          <h3 className="text-secondary mb-4">{siteSettings?.footerSubscribeTitle}</h3>
-          <p className="text-secondary/60 mb-6" style={{ lineHeight: 1.6 }}>
+          <h3
+            {...(settingsId ? createPreviewAttributes({ entryId: settingsId, fieldApiId: "footerSubscribeTitle" }) : {})}
+            className="text-secondary mb-4"
+          >
+            {siteSettings?.footerSubscribeTitle}
+          </h3>
+          <p
+            {...(settingsId ? createPreviewAttributes({ entryId: settingsId, fieldApiId: "footerSubscribeSubtitle" }) : {})}
+            className="text-secondary/60 mb-6"
+            style={{ lineHeight: 1.6 }}
+          >
             {siteSettings?.footerSubscribeSubtitle}
           </p>
           <div className="flex">
@@ -81,7 +96,15 @@ export default function Footer({
                   className="block text-secondary/70 hover:text-accent transition-colors"
                   style={{ fontSize: "0.8rem" }}
                 >
-                  {item.label}
+                  <span
+                    {...(footerNavId ? createPreviewAttributes({
+                      entryId: footerNavId,
+                      fieldApiId: "label",
+                      componentChain: [createComponentChainLink("items", item.id)],
+                    }) : {})}
+                  >
+                    {item.label}
+                  </span>
                 </Link>
               ))}
             </div>
@@ -105,7 +128,14 @@ export default function Footer({
                   className="flex items-center gap-1 text-secondary/70 hover:text-accent transition-colors"
                   style={{ fontSize: "0.8rem" }}
                 >
-                  <span className="lowercase [&::first-letter]:uppercase">
+                  <span
+                    {...(settingsId ? createPreviewAttributes({
+                      entryId: settingsId,
+                      fieldApiId: "platform",
+                      componentChain: [createComponentChainLink("socialLinks", link.id)],
+                    }) : {})}
+                    className="lowercase [&::first-letter]:uppercase"
+                  >
                     {link.platform}
                   </span>
                   <ArrowUpRight size={12} />
@@ -119,13 +149,18 @@ export default function Footer({
       {/* Bottom watermark */}
       <div className="flex flex-col items-center justify-between px-8 md:px-12 py-6 gap-4">
         <span
+          {...(settingsId ? createPreviewAttributes({ entryId: settingsId, fieldApiId: "siteName" }) : {})}
           className="tracking-[-0.05em] uppercase opacity-20 leading-[0.9]"
-          style={{ fontWeight: 900, fontSize: "16rem" }}
+          style={{ fontWeight: 900, fontSize: "clamp(3rem, 20vw, 16rem)" }}
         >
           {siteSettings?.siteName}
           <span className="text-accent">.</span>
         </span>
-        <p className="text-secondary/40" style={{ fontSize: "0.8rem" }}>
+        <p
+          {...(settingsId ? createPreviewAttributes({ entryId: settingsId, fieldApiId: "footerText" }) : {})}
+          className="text-secondary/40"
+          style={{ fontSize: "0.8rem" }}
+        >
           {siteSettings?.footerText?.text}
         </p>
       </div>

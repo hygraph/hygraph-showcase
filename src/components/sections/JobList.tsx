@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import type { GetPageQuery } from "@/types/hygraph-generated";
 import { useSiteSettings } from "@/lib/context/SiteSettingsContext";
+import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
 
 type JobListSection = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -13,6 +14,7 @@ type JobListSection = Extract<
 
 interface JobListProps {
   section: JobListSection;
+  pageId: string;
 }
 
 export default function JobList({ section }: JobListProps) {
@@ -51,6 +53,10 @@ export default function JobList({ section }: JobListProps) {
               <div className="col-span-10 sm:col-span-11 p-6 md:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <h3
+                    {...createPreviewAttributes({
+                      entryId: job.id,
+                      fieldApiId: "title",
+                    })}
                     className="mb-2"
                     style={{
                       fontFamily: "'Space Grotesk', sans-serif",
@@ -62,18 +68,30 @@ export default function JobList({ section }: JobListProps) {
                   </h3>
                   <div className="flex flex-wrap gap-4">
                     <span
+                      {...createPreviewAttributes({
+                        entryId: job.id,
+                        fieldApiId: "department",
+                      })}
                       className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50"
                       style={{ fontSize: "0.65rem", fontWeight: 700 }}
                     >
                       {job.department}
                     </span>
                     <span
+                      {...createPreviewAttributes({
+                        entryId: job.id,
+                        fieldApiId: "location",
+                      })}
                       className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50"
                       style={{ fontSize: "0.65rem", fontWeight: 700 }}
                     >
                       {job.location}
                     </span>
                     <span
+                      {...createPreviewAttributes({
+                        entryId: job.id,
+                        fieldApiId: "jobType",
+                      })}
                       className="uppercase tracking-[0.15em] text-muted group-hover:text-secondary/50"
                       style={{ fontSize: "0.65rem", fontWeight: 700 }}
                     >
@@ -98,38 +116,6 @@ export default function JobList({ section }: JobListProps) {
             <p className="text-muted">No open positions at this time.</p>
           </div>
         )}
-      </section>
-
-      {/* CTA */}
-      <section className="bg-primary text-secondary">
-        <div className="p-8 md:p-12 lg:p-20 text-center flex flex-col items-center">
-          <p
-            className="uppercase tracking-[0.2em] text-secondary/40 mb-6"
-            style={{ fontSize: "0.65rem", fontWeight: 700 }}
-          >
-            Don&apos;t see your role?
-          </p>
-          <h2 className="text-secondary mb-8">
-            Reach out
-            <br />
-            anyway<span className="text-accent">.</span>
-          </h2>
-          <p
-            className="text-secondary/60 mb-10 max-w-[400px]"
-            style={{ lineHeight: 1.7 }}
-          >
-            We&apos;re always open to meeting exceptional people. Send us a note
-            and tell us what you&apos;d build here.
-          </p>
-          <a
-            href={`mailto:${contactEmail}`}
-            className="inline-flex items-center gap-3 bg-accent text-white px-10 py-5 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
-            style={{ fontSize: "0.75rem", fontWeight: 700 }}
-          >
-            {contactEmail}
-            <ArrowRight size={14} />
-          </a>
-        </div>
       </section>
     </div>
   );

@@ -70,7 +70,7 @@ export default async function LocaleLayout({
       <AudienceProvider>
         <div className="flex min-h-screen flex-col">
           {siteSettings?.announcement?.html && (
-            <AnnouncementBanner html={siteSettings.announcement.html} />
+            <AnnouncementBanner html={siteSettings.announcement.html} entryId={siteSettings.id} />
           )}
           <Navigation locale={locale as Locale} siteSettings={siteSettings} />
           <main className="flex-1">{children}</main>

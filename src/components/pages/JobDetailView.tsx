@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, MapPin, Clock, Briefcase } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useSiteSettings } from "@/lib/context/SiteSettingsContext";
 import type { Job } from "@/types/hybike";
+import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
 
 interface JobDetailViewProps {
   job: Job;
@@ -38,16 +39,29 @@ export default function JobDetailView({ job, otherJobs }: JobDetailViewProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="lg:col-span-8 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-primary">
             <p
+              {...createPreviewAttributes({
+                entryId: job.id,
+                fieldApiId: "department",
+              })}
               className="uppercase tracking-[0.2em] text-muted mb-6"
               style={{ fontSize: "0.65rem", fontWeight: 700 }}
             >
               {job.department}
             </p>
-            <h1>
+            <h1
+              {...createPreviewAttributes({
+                entryId: job.id,
+                fieldApiId: "title",
+              })}
+            >
               {job.title}
               <span className="text-accent">.</span>
             </h1>
             <p
+              {...createPreviewAttributes({
+                entryId: job.id,
+                fieldApiId: "summary",
+              })}
               className="text-muted mt-8 max-w-[560px]"
               style={{ lineHeight: 1.7 }}
             >
@@ -71,7 +85,15 @@ export default function JobDetailView({ job, otherJobs }: JobDetailViewProps) {
                   >
                     Location
                   </p>
-                  <p style={{ fontWeight: 600 }}>{job.location}</p>
+                  <p
+                    {...createPreviewAttributes({
+                      entryId: job.id,
+                      fieldApiId: "location",
+                    })}
+                    style={{ fontWeight: 600 }}
+                  >
+                    {job.location}
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -87,7 +109,15 @@ export default function JobDetailView({ job, otherJobs }: JobDetailViewProps) {
                   >
                     Type
                   </p>
-                  <p style={{ fontWeight: 600 }}>{job.jobType}</p>
+                  <p
+                    {...createPreviewAttributes({
+                      entryId: job.id,
+                      fieldApiId: "jobType",
+                    })}
+                    style={{ fontWeight: 600 }}
+                  >
+                    {job.jobType}
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -135,6 +165,11 @@ export default function JobDetailView({ job, otherJobs }: JobDetailViewProps) {
                   About the role
                 </p>
                 <div
+                  {...createPreviewAttributes({
+                    entryId: job.id,
+                    fieldApiId: "description",
+                  })}
+                  data-hygraph-rich-text-format="html"
                   className="text-muted prose max-w-none"
                   style={{ lineHeight: 1.8 }}
                   dangerouslySetInnerHTML={{ __html: job.description.html }}
@@ -151,7 +186,13 @@ export default function JobDetailView({ job, otherJobs }: JobDetailViewProps) {
                 >
                   What you&apos;ll do
                 </p>
-                <ul className="space-y-4">
+                <ul
+                  {...createPreviewAttributes({
+                    entryId: job.id,
+                    fieldApiId: "responsibilities",
+                  })}
+                  className="space-y-4"
+                >
                   {job.responsibilities.map((item, i) => (
                     <li key={i} className="flex items-start gap-4">
                       <span
@@ -182,7 +223,13 @@ export default function JobDetailView({ job, otherJobs }: JobDetailViewProps) {
                 >
                   What we need
                 </p>
-                <ul className="space-y-3">
+                <ul
+                  {...createPreviewAttributes({
+                    entryId: job.id,
+                    fieldApiId: "requirements",
+                  })}
+                  className="space-y-3"
+                >
                   {job.requirements.map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-accent" />
@@ -207,7 +254,13 @@ export default function JobDetailView({ job, otherJobs }: JobDetailViewProps) {
                 >
                   Nice to have
                 </p>
-                <ul className="space-y-3">
+                <ul
+                  {...createPreviewAttributes({
+                    entryId: job.id,
+                    fieldApiId: "niceToHave",
+                  })}
+                  className="space-y-3"
+                >
                   {job.niceToHave.map((item, i) => (
                     <li key={i} className="border border-primary p-4">
                       <p

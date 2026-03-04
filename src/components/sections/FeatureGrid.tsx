@@ -4,6 +4,7 @@
  */
 
 import type { GetPageQuery } from "@/types/hygraph-generated";
+import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
 
 type FeatureGridType = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -12,6 +13,7 @@ type FeatureGridType = Extract<
 
 interface FeatureGridProps {
   section: FeatureGridType;
+  pageId: string;
 }
 
 export default function FeatureGrid({ section }: FeatureGridProps) {
@@ -53,8 +55,17 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
             >
               0{i + 1}
             </p>
-            <h3 className="mb-4">{feature.title}</h3>
-            <p className="text-muted" style={{ lineHeight: 1.7 }}>
+            <h3
+              {...createPreviewAttributes({ entryId: feature.id, fieldApiId: "title" })}
+              className="mb-4"
+            >
+              {feature.title}
+            </h3>
+            <p
+              {...createPreviewAttributes({ entryId: feature.id, fieldApiId: "description" })}
+              className="text-muted"
+              style={{ lineHeight: 1.7 }}
+            >
               {feature.description.text}
             </p>
           </div>

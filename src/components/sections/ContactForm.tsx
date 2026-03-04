@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import {
+  createPreviewAttributes,
+  createComponentChainLink,
+} from "@hygraph/preview-sdk/core";
 
 interface ContactFormProps {
   topics: string[];
@@ -16,6 +20,8 @@ interface ContactFormProps {
   submitLabel: string;
   successHeadline: string;
   successBody: string;
+  pageId: string;
+  sectionChain: ReturnType<typeof createComponentChainLink>[];
 }
 
 export default function ContactForm({
@@ -31,6 +37,8 @@ export default function ContactForm({
   submitLabel,
   successHeadline,
   successBody,
+  pageId,
+  sectionChain,
 }: ContactFormProps) {
   const [submitted, setSubmitted] = useState(false);
 
@@ -53,11 +61,17 @@ export default function ContactForm({
         >
           ✓
         </span>
-        <h2>
+        <h2
+          {...createPreviewAttributes({ entryId: pageId, fieldApiId: "successHeadline", componentChain: sectionChain })}
+        >
           {successHeadline.replace(/\.$/, "")}
           <span className="text-accent">.</span>
         </h2>
-        <p className="text-muted" style={{ lineHeight: 1.7 }}>
+        <p
+          {...createPreviewAttributes({ entryId: pageId, fieldApiId: "successBody", componentChain: sectionChain })}
+          className="text-muted"
+          style={{ lineHeight: 1.7 }}
+        >
           {successBody}
         </p>
       </div>
@@ -69,12 +83,14 @@ export default function ContactForm({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "nameLabel", componentChain: sectionChain })}
             className="block uppercase tracking-[0.15em] text-muted mb-2"
             style={{ fontSize: "0.6rem", fontWeight: 700 }}
           >
             {nameLabel}
           </label>
           <input
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "namePlaceholder", componentChain: sectionChain })}
             type="text"
             required
             placeholder={namePlaceholder}
@@ -83,12 +99,14 @@ export default function ContactForm({
         </div>
         <div>
           <label
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "emailLabel", componentChain: sectionChain })}
             className="block uppercase tracking-[0.15em] text-muted mb-2"
             style={{ fontSize: "0.6rem", fontWeight: 700 }}
           >
             {emailLabel}
           </label>
           <input
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "emailPlaceholder", componentChain: sectionChain })}
             type="email"
             required
             placeholder={emailPlaceholder}
@@ -100,12 +118,14 @@ export default function ContactForm({
       {topics.length > 0 && (
         <div>
           <label
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "topicLabel", componentChain: sectionChain })}
             className="block uppercase tracking-[0.15em] text-muted mb-2"
             style={{ fontSize: "0.6rem", fontWeight: 700 }}
           >
             {topicLabel}
           </label>
           <select
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "topicPlaceholder", componentChain: sectionChain })}
             required
             defaultValue=""
             className="w-full border border-primary px-4 py-3 bg-secondary focus:outline-none focus:border-accent transition-colors appearance-none"
@@ -124,12 +144,14 @@ export default function ContactForm({
 
       <div>
         <label
+          {...createPreviewAttributes({ entryId: pageId, fieldApiId: "messageLabel", componentChain: sectionChain })}
           className="block uppercase tracking-[0.15em] text-muted mb-2"
           style={{ fontSize: "0.6rem", fontWeight: 700 }}
         >
           {messageLabel}
         </label>
         <textarea
+          {...createPreviewAttributes({ entryId: pageId, fieldApiId: "messagePlaceholder", componentChain: sectionChain })}
           required
           rows={6}
           placeholder={messagePlaceholder}
@@ -142,7 +164,9 @@ export default function ContactForm({
         className="inline-flex items-center gap-3 bg-primary text-secondary px-10 py-5 uppercase tracking-[0.1em] hover:bg-accent transition-colors"
         style={{ fontSize: "0.75rem", fontWeight: 700 }}
       >
-        {submitLabel}
+        <span {...createPreviewAttributes({ entryId: pageId, fieldApiId: "submitLabel", componentChain: sectionChain })}>
+          {submitLabel}
+        </span>
         <ArrowRight size={14} />
       </button>
     </form>

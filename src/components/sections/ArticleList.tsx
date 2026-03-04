@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import type { GetPageQuery } from "@/types/hygraph-generated";
+import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
 
 type ArticleListSection = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -12,6 +13,7 @@ type ArticleListSection = Extract<
 
 interface ArticleListProps {
   section: ArticleListSection;
+  pageId: string;
 }
 
 export default function ArticleList({ section }: ArticleListProps) {
@@ -46,7 +48,10 @@ export default function ArticleList({ section }: ArticleListProps) {
               href={`/${locale}/blog/${article.slug}`}
               className={`group flex flex-col ${i === 0 ? "md:border-r border-primary" : ""}`}
             >
-              <div className="overflow-hidden border-b border-primary">
+              <div
+                {...createPreviewAttributes({ entryId: article.id, fieldApiId: "image" })}
+                className="overflow-hidden border-b border-primary"
+              >
                 {article.image?.url ? (
                   <img
                     src={article.image?.url}
@@ -60,23 +65,32 @@ export default function ArticleList({ section }: ArticleListProps) {
               <div className="p-8 md:p-10 flex flex-col flex-1">
                 <div className="flex items-center gap-4 mb-5">
                   <span
+                    {...createPreviewAttributes({ entryId: article.id, fieldApiId: "category" })}
                     className="bg-primary text-secondary px-3 py-1 uppercase tracking-[0.15em]"
                     style={{ fontSize: "0.6rem", fontWeight: 700 }}
                   >
                     {article.category}
                   </span>
                   <span
+                    {...createPreviewAttributes({ entryId: article.id, fieldApiId: "publishedDate" })}
                     className="uppercase tracking-[0.15em] text-muted"
                     style={{ fontSize: "0.6rem", fontWeight: 700 }}
                   >
                     {article.publishedDate}
                   </span>
                 </div>
-                <h3 className="mb-4 group-hover:text-accent transition-colors">
+                <h3
+                  {...createPreviewAttributes({ entryId: article.id, fieldApiId: "title" })}
+                  className="mb-4 group-hover:text-accent transition-colors"
+                >
                   {article.title}
                   <span className="text-accent">.</span>
                 </h3>
-                <p className="text-muted mb-6 flex-1" style={{ lineHeight: 1.7 }}>
+                <p
+                  {...createPreviewAttributes({ entryId: article.id, fieldApiId: "summary" })}
+                  className="text-muted mb-6 flex-1"
+                  style={{ lineHeight: 1.7 }}
+                >
                   {article.summary}
                 </p>
                 <div className="flex items-center gap-2 text-accent uppercase tracking-[0.1em] group-hover:gap-3 transition-all self-start">

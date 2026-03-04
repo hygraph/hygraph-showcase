@@ -6,6 +6,10 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import type { Bike } from "@/types/hybike";
 import { formatCategoryValue, formatPrice } from "@/types/hybike";
+import {
+  createPreviewAttributes,
+  createComponentChainLink,
+} from "@hygraph/preview-sdk/core";
 
 const COLOR_HEX: Record<string, string> = {
   "Signal Red": "#CC2200",
@@ -98,7 +102,7 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
 
   const specs: [string, string][] = bike.specifications
     ? Object.entries(bike.specifications)
-        .filter(([, value]) => value != null)
+        .filter(([key, value]) => key !== "id" && value != null)
         .map(([key, value]) => [key, String(value)])
     : [];
 
@@ -140,7 +144,13 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12">
           {/* Image */}
           <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-primary">
-            <div className="aspect-[4/3] lg:aspect-auto relative">
+            <div
+              {...createPreviewAttributes({
+                entryId: bike.id,
+                fieldApiId: "image",
+              })}
+              className="aspect-[4/3] lg:aspect-auto relative"
+            >
               {bike.image?.url ? (
                 <img
                   src={bike.image?.url}
@@ -177,12 +187,25 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                 {category}
               </p>
             )}
-            <h2 className="mb-2">
+            <h2
+              {...createPreviewAttributes({
+                entryId: bike.id,
+                fieldApiId: "name",
+              })}
+              className="mb-2"
+            >
               {bike.name}
               <span className="text-accent">.</span>
             </h2>
             {bike.tagline && (
-              <p className="text-muted mb-6" style={{ lineHeight: 1.6 }}>
+              <p
+                {...createPreviewAttributes({
+                  entryId: bike.id,
+                  fieldApiId: "tagline",
+                })}
+                className="text-muted mb-6"
+                style={{ lineHeight: 1.6 }}
+              >
                 {bike.tagline}
               </p>
             )}
@@ -330,8 +353,22 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                 >
                   Description
                 </p>
-                <p className="mb-6 max-w-[540px]">{bike.description?.text}</p>
-                <div className="space-y-3">
+                <p
+                  {...createPreviewAttributes({
+                    entryId: bike.id,
+                    fieldApiId: "description",
+                  })}
+                  className="mb-6 max-w-[540px]"
+                >
+                  {bike.description?.text}
+                </p>
+                <div
+                  {...createPreviewAttributes({
+                    entryId: bike.id,
+                    fieldApiId: "productFeatures",
+                  })}
+                  className="space-y-3"
+                >
                   {bike.productFeatures.map((feature) => (
                     <div key={feature} className="flex items-center gap-3">
                       <div className="w-5 h-5 bg-accent flex items-center justify-center flex-shrink-0">
@@ -368,6 +405,16 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                         {key}
                       </span>
                       <span
+                        {...createPreviewAttributes({
+                          entryId: bike.id,
+                          fieldApiId: key,
+                          componentChain: [
+                            createComponentChainLink(
+                              "specifications",
+                              bike.specifications!.id
+                            ),
+                          ],
+                        })}
                         style={{
                           fontWeight: 700,
                           fontFamily: "'Space Grotesk', sans-serif",
@@ -408,7 +455,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                   href={`/${locale}/product/${related.slug}`}
                   className="group block hover:bg-primary transition-colors duration-300"
                 >
-                  <div className="aspect-square overflow-hidden border-b border-primary">
+                  <div
+                    {...createPreviewAttributes({ entryId: related.id, fieldApiId: "image" })}
+                    className="aspect-square overflow-hidden border-b border-primary"
+                  >
                     {related.image?.url ? (
                       <img
                         src={related.image?.url}
@@ -427,7 +477,13 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                       >
                         {formatCategoryValue(related.category?.value)}
                       </p>
-                      <h3 className="group-hover:text-secondary transition-colors">
+                      <h3
+                        {...createPreviewAttributes({
+                          entryId: related.id,
+                          fieldApiId: "name",
+                        })}
+                        className="group-hover:text-secondary transition-colors"
+                      >
                         {related.name}
                       </h3>
                     </div>
