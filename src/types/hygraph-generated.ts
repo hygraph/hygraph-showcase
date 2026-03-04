@@ -6151,8 +6151,6 @@ export type HeroSection = Entity & {
   stage: Stage;
   /** Supporting headline (optional) */
   subheadline?: Maybe<Scalars['String']['output']>;
-  /** Text alignment within hero section */
-  textAlignment: TextAlignment;
   /** System updatedAt field */
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -6223,7 +6221,6 @@ export type HeroSectionCreateInput = {
   secondaryCTA?: InputMaybe<ButtonCreateOneInlineInput>;
   /** subheadline input for default locale (en) */
   subheadline?: InputMaybe<Scalars['String']['input']>;
-  textAlignment: TextAlignment;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -6304,13 +6301,6 @@ export type HeroSectionManyWhereInput = {
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
   primaryCTA?: InputMaybe<ButtonWhereInput>;
   secondaryCTA?: InputMaybe<ButtonWhereInput>;
-  textAlignment?: InputMaybe<TextAlignment>;
-  /** All values that are contained in given list. */
-  textAlignment_in?: InputMaybe<Array<InputMaybe<TextAlignment>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  textAlignment_not?: InputMaybe<TextAlignment>;
-  /** All values that are not contained in given list. */
-  textAlignment_not_in?: InputMaybe<Array<InputMaybe<TextAlignment>>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6339,8 +6329,6 @@ export type HeroSectionOrderByInput =
   | 'mediaText_DESC'
   | 'subheadline_ASC'
   | 'subheadline_DESC'
-  | 'textAlignment_ASC'
-  | 'textAlignment_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
@@ -6446,7 +6434,6 @@ export type HeroSectionUpdateInput = {
   secondaryCTA?: InputMaybe<ButtonUpdateOneInlineInput>;
   /** subheadline input for default locale (en) */
   subheadline?: InputMaybe<Scalars['String']['input']>;
-  textAlignment?: InputMaybe<TextAlignment>;
 };
 
 export type HeroSectionUpdateLocalizationDataInput = {
@@ -6493,7 +6480,6 @@ export type HeroSectionUpdateManyInput = {
   mediaText?: InputMaybe<Scalars['String']['input']>;
   /** subheadline input for default locale (en) */
   subheadline?: InputMaybe<Scalars['String']['input']>;
-  textAlignment?: InputMaybe<TextAlignment>;
 };
 
 export type HeroSectionUpdateManyLocalizationDataInput = {
@@ -6684,13 +6670,6 @@ export type HeroSectionWhereInput = {
   subheadline_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   subheadline_starts_with?: InputMaybe<Scalars['String']['input']>;
-  textAlignment?: InputMaybe<TextAlignment>;
-  /** All values that are contained in given list. */
-  textAlignment_in?: InputMaybe<Array<InputMaybe<TextAlignment>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  textAlignment_not?: InputMaybe<TextAlignment>;
-  /** All values that are not contained in given list. */
-  textAlignment_not_in?: InputMaybe<Array<InputMaybe<TextAlignment>>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -20245,12 +20224,6 @@ export type TaxonomyPathNode = {
   __typename?: 'TaxonomyPathNode';
   value: Scalars['String']['output'];
 };
-
-/** Text alignment options */
-export type TextAlignment =
-  | 'CENTER'
-  | 'LEFT'
-  | 'RIGHT';
 
 /** Vertical list of year/event rows for history sections */
 export type Timeline = Entity & {
