@@ -77,7 +77,18 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
                     className="inline-flex items-center gap-3 bg-primary text-secondary px-8 py-4 uppercase tracking-[0.1em] hover:bg-accent transition-colors"
                     style={{ fontSize: "0.75rem", fontWeight: 700 }}
                   >
-                    {section.primaryCTA.label}
+                    <span
+                      {...createPreviewAttributes({
+                        entryId: pageId,
+                        fieldApiId: "label",
+                        componentChain: [
+                          ...chain,
+                          createComponentChainLink("primaryCTA", section.primaryCTA.id),
+                        ],
+                      })}
+                    >
+                      {section.primaryCTA.label}
+                    </span>
                     <svg
                       width="14"
                       height="14"
@@ -96,7 +107,18 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
                     className="inline-flex items-center gap-3 border border-primary px-8 py-4 uppercase tracking-[0.1em] hover:bg-primary hover:text-secondary transition-colors"
                     style={{ fontSize: "0.75rem", fontWeight: 700 }}
                   >
-                    {section.secondaryCTA.label}
+                    <span
+                      {...createPreviewAttributes({
+                        entryId: pageId,
+                        fieldApiId: "label",
+                        componentChain: [
+                          ...chain,
+                          createComponentChainLink("secondaryCTA", section.secondaryCTA.id),
+                        ],
+                      })}
+                    >
+                      {section.secondaryCTA.label}
+                    </span>
                   </Link>
                 )}
               </div>
@@ -182,7 +204,18 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
               className="inline-flex items-center gap-3 bg-accent text-white px-8 py-4 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
               style={{ fontSize: "0.75rem", fontWeight: 700 }}
             >
-              {section.primaryCTA.label}
+              <span
+                {...createPreviewAttributes({
+                  entryId: pageId,
+                  fieldApiId: "label",
+                  componentChain: [
+                    ...chain,
+                    createComponentChainLink("primaryCTA", section.primaryCTA.id),
+                  ],
+                })}
+              >
+                {section.primaryCTA.label}
+              </span>
             </Link>
           )}
           {section.secondaryCTA && (
@@ -191,7 +224,18 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
               className="inline-flex items-center gap-3 border border-secondary/40 text-secondary px-8 py-4 uppercase tracking-[0.1em] hover:border-secondary transition-colors"
               style={{ fontSize: "0.75rem", fontWeight: 700 }}
             >
-              {section.secondaryCTA.label}
+              <span
+                {...createPreviewAttributes({
+                  entryId: pageId,
+                  fieldApiId: "label",
+                  componentChain: [
+                    ...chain,
+                    createComponentChainLink("secondaryCTA", section.secondaryCTA.id),
+                  ],
+                })}
+              >
+                {section.secondaryCTA.label}
+              </span>
             </Link>
           )}
         </div>
