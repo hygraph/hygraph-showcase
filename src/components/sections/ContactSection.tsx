@@ -50,6 +50,8 @@ export default function ContactSection({ section, pageId }: ContactSectionProps)
             submitLabel={submitLabel ?? "Send message"}
             successHeadline={successHeadline ?? "Message received"}
             successBody={successBody ?? ""}
+            pageId={pageId}
+            sectionChain={sectionChain}
           />
         </div>
 

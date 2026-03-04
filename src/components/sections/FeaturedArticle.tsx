@@ -76,7 +76,10 @@ export default function FeaturedArticle({ section, locale, pageId }: FeaturedArt
               <ArrowRight size={14} />
             </div>
           </div>
-          <div className="lg:col-span-7 overflow-hidden">
+          <div
+            {...createPreviewAttributes({ entryId: postId, fieldApiId: "image" })}
+            className="lg:col-span-7 overflow-hidden"
+          >
             {blogPost.image?.url ? (
               <img
                 src={blogPost.image?.url}
@@ -99,7 +102,10 @@ export default function FeaturedArticle({ section, locale, pageId }: FeaturedArt
         href={`/${locale}/blog/${blogPost.slug}`}
         className="grid grid-cols-1 lg:grid-cols-12 group"
       >
-        <div className="lg:col-span-7 overflow-hidden border-b lg:border-b-0 lg:border-r border-primary">
+        <div
+          {...createPreviewAttributes({ entryId: postId, fieldApiId: "image" })}
+          className="lg:col-span-7 overflow-hidden border-b lg:border-b-0 lg:border-r border-primary"
+        >
           {blogPost.image?.url ? (
             <img
               src={blogPost.image?.url}

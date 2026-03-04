@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import type { Article } from "@/types/hybike";
+import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
 
 interface ArticleViewProps {
   article: Article;
@@ -38,11 +39,13 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
       {/* Cover */}
       {article.image?.url && (
         <section className="border-b border-primary">
-          <img
-            src={article.image?.url}
-            alt={article.title}
-            className="w-full object-cover max-h-[520px]"
-          />
+          <div {...createPreviewAttributes({ entryId: article.id, fieldApiId: "image" })}>
+            <img
+              src={article.image?.url}
+              alt={article.title}
+              className="w-full object-cover max-h-[520px]"
+            />
+          </div>
         </section>
       )}
 
@@ -124,11 +127,13 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
                       className="group block border border-primary hover:bg-primary hover:text-secondary transition-colors overflow-hidden"
                     >
                       {other.image?.url && (
-                        <img
-                          src={other.image?.url}
-                          alt={other.title}
-                          className="w-full h-[120px] object-cover group-hover:opacity-80 transition-opacity"
-                        />
+                        <div {...createPreviewAttributes({ entryId: other.id, fieldApiId: "image" })}>
+                          <img
+                            src={other.image?.url}
+                            alt={other.title}
+                            className="w-full h-[120px] object-cover group-hover:opacity-80 transition-opacity"
+                          />
+                        </div>
                       )}
                       <div className="p-4">
                         <span

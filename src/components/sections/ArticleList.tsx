@@ -48,7 +48,10 @@ export default function ArticleList({ section }: ArticleListProps) {
               href={`/${locale}/blog/${article.slug}`}
               className={`group flex flex-col ${i === 0 ? "md:border-r border-primary" : ""}`}
             >
-              <div className="overflow-hidden border-b border-primary">
+              <div
+                {...createPreviewAttributes({ entryId: article.id, fieldApiId: "image" })}
+                className="overflow-hidden border-b border-primary"
+              >
                 {article.image?.url ? (
                   <img
                     src={article.image?.url}
