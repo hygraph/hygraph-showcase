@@ -104,7 +104,10 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
           </div>
 
           {/* Right: Image */}
-          <div className="lg:col-span-5 relative w-full h-full lg:max-h-[calc(100vh-120px)]">
+          <div
+            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "backgroundMedia", componentChain: chain })}
+            className="lg:col-span-5 relative w-full h-full lg:max-h-[calc(100vh-120px)]"
+          >
             <img
               src={mediaUrl}
               alt={section.headline}
