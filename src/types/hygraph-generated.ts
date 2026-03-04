@@ -21608,7 +21608,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string, variants: Array<{ __typename?: 'BigCommerce_BigCommerceVariant', calculated_price: number, option_values: Array<{ __typename?: 'BigCommerce_BigCommerceOptionValue', id: number, label: string, option_id: number, option_display_name: string }> }> } } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, tagline?: string | null, productFeatures: Array<string>, featured: boolean, externalProductId?: number | null, description: { __typename?: 'RichText', text: string }, category: { __typename?: 'TaxonomyNode', value: string }, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, specifications?: { __typename?: 'ProductSpecification', id: string, frame?: string | null, motor?: string | null, battery?: string | null, range?: string | null, weight?: number | null, groupset?: string | null, gears?: string | null, brakes?: string | null, suspension?: string | null, wheelSize?: WheelSize | null, wheels?: string | null } | null, externalProduct?: { __typename?: 'BigCommerce_BigCommerceSingleProductResponse', data: { __typename?: 'BigCommerce_BigCommerceProduct', calculated_price: number, sale_price?: number | null, inventory_level: number, availability: string, variants: Array<{ __typename?: 'BigCommerce_BigCommerceVariant', calculated_price: number, option_values: Array<{ __typename?: 'BigCommerce_BigCommerceOptionValue', id: number, label: string, option_id: number, option_display_name: string }> }> } } | null } | null };
 
 export type GetProductsQueryVariables = Exact<{
   locale: Locale;
@@ -22204,6 +22204,7 @@ export const GetProductBySlugDocument = gql`
     productFeatures
     featured
     specifications {
+      id
       frame
       motor
       battery

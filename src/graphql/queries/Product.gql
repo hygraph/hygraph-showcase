@@ -18,6 +18,7 @@ query GetProductBySlug($slug: String!, $locale: Locale!) {
     productFeatures
     featured
     specifications {
+      id
       frame
       motor
       battery
