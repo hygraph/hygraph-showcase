@@ -3,12 +3,12 @@
  * hybikes design: big uppercase typography, orange accent, local image panel
  */
 
-import Link from "next/link";
 import type { GetPageQuery } from "@/types/hygraph-generated";
 import {
   createPreviewAttributes,
   createComponentChainLink,
 } from "@hygraph/preview-sdk/core";
+import Button from "@/components/ui/Button";
 
 type HeroSectionType = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -72,54 +72,32 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
               )}
               <div className="flex flex-wrap gap-3">
                 {section.primaryCTA && (
-                  <Link
-                    href={section.primaryCTA.href}
-                    className="inline-flex items-center gap-3 bg-primary text-secondary px-8 py-4 uppercase tracking-[0.1em] hover:bg-accent transition-colors"
-                    style={{ fontSize: "0.75rem", fontWeight: 700 }}
-                  >
-                    <span
-                      {...createPreviewAttributes({
-                        entryId: pageId,
-                        fieldApiId: "label",
-                        componentChain: [
-                          ...chain,
-                          createComponentChainLink("primaryCTA", section.primaryCTA.id),
-                        ],
-                      })}
-                    >
-                      {section.primaryCTA.label}
-                    </span>
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </Link>
+                  <Button
+                    cta={section.primaryCTA}
+                    entryId={pageId}
+                    componentChain={[
+                      ...chain,
+                      createComponentChainLink(
+                        "primaryCTA",
+                        section.primaryCTA.id
+                      ),
+                    ]}
+                    size="sm"
+                  />
                 )}
                 {section.secondaryCTA && (
-                  <Link
-                    href={section.secondaryCTA.href}
-                    className="inline-flex items-center gap-3 border border-primary px-8 py-4 uppercase tracking-[0.1em] hover:bg-primary hover:text-secondary transition-colors"
-                    style={{ fontSize: "0.75rem", fontWeight: 700 }}
-                  >
-                    <span
-                      {...createPreviewAttributes({
-                        entryId: pageId,
-                        fieldApiId: "label",
-                        componentChain: [
-                          ...chain,
-                          createComponentChainLink("secondaryCTA", section.secondaryCTA.id),
-                        ],
-                      })}
-                    >
-                      {section.secondaryCTA.label}
-                    </span>
-                  </Link>
+                  <Button
+                    cta={section.secondaryCTA}
+                    entryId={pageId}
+                    componentChain={[
+                      ...chain,
+                      createComponentChainLink(
+                        "secondaryCTA",
+                        section.secondaryCTA.id
+                      ),
+                    ]}
+                    size="sm"
+                  />
                 )}
               </div>
             </div>
@@ -127,7 +105,11 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
 
           {/* Right: Image */}
           <div
-            {...createPreviewAttributes({ entryId: pageId, fieldApiId: "backgroundMedia", componentChain: chain })}
+            {...createPreviewAttributes({
+              entryId: pageId,
+              fieldApiId: "backgroundMedia",
+              componentChain: chain,
+            })}
             className="lg:col-span-5 relative w-full h-full lg:max-h-[calc(100vh-120px)]"
           >
             <img
@@ -199,44 +181,29 @@ export default function HeroSection({ section, pageId }: HeroSectionProps) {
         )}
         <div className="flex flex-wrap gap-3">
           {section.primaryCTA && (
-            <Link
-              href={section.primaryCTA.href}
-              className="inline-flex items-center gap-3 bg-accent text-white px-8 py-4 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
-              style={{ fontSize: "0.75rem", fontWeight: 700 }}
-            >
-              <span
-                {...createPreviewAttributes({
-                  entryId: pageId,
-                  fieldApiId: "label",
-                  componentChain: [
-                    ...chain,
-                    createComponentChainLink("primaryCTA", section.primaryCTA.id),
-                  ],
-                })}
-              >
-                {section.primaryCTA.label}
-              </span>
-            </Link>
+            <Button
+              cta={section.primaryCTA}
+              entryId={pageId}
+              componentChain={[
+                ...chain,
+                createComponentChainLink("primaryCTA", section.primaryCTA.id),
+              ]}
+              size="sm"
+            />
           )}
           {section.secondaryCTA && (
-            <Link
-              href={section.secondaryCTA.href}
-              className="inline-flex items-center gap-3 border border-secondary/40 text-secondary px-8 py-4 uppercase tracking-[0.1em] hover:border-secondary transition-colors"
-              style={{ fontSize: "0.75rem", fontWeight: 700 }}
-            >
-              <span
-                {...createPreviewAttributes({
-                  entryId: pageId,
-                  fieldApiId: "label",
-                  componentChain: [
-                    ...chain,
-                    createComponentChainLink("secondaryCTA", section.secondaryCTA.id),
-                  ],
-                })}
-              >
-                {section.secondaryCTA.label}
-              </span>
-            </Link>
+            <Button
+              cta={section.secondaryCTA}
+              entryId={pageId}
+              componentChain={[
+                ...chain,
+                createComponentChainLink(
+                  "secondaryCTA",
+                  section.secondaryCTA.id
+                ),
+              ]}
+              size="sm"
+            />
           )}
         </div>
       </div>

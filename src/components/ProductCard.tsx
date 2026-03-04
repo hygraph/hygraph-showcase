@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { Bike } from '@/types/hybike';
 import { formatCategoryValue, formatPrice } from '@/types/hybike';
+import { createPreviewAttributes } from '@hygraph/preview-sdk/core';
 
 interface ProductCardProps {
   bike: Bike;
@@ -23,7 +24,10 @@ export default function ProductCard({ bike, locale, showPrices = true, showStock
       className="group block border border-primary bg-secondary hover:bg-primary transition-colors duration-300"
     >
       {/* Image */}
-      <div className="aspect-square overflow-hidden border-b border-primary">
+      <div
+        {...createPreviewAttributes({ entryId: bike.id, fieldApiId: "image" })}
+        className="aspect-square overflow-hidden border-b border-primary"
+      >
         {bike.image?.url ? (
           <img
             src={bike.image?.url}
@@ -47,7 +51,12 @@ export default function ProductCard({ bike, locale, showPrices = true, showStock
             >
               {category}
             </p>
-            <h3 className="group-hover:text-secondary transition-colors">{bike.name}</h3>
+            <h3
+              {...createPreviewAttributes({ entryId: bike.id, fieldApiId: "name" })}
+              className="group-hover:text-secondary transition-colors"
+            >
+              {bike.name}
+            </h3>
           </div>
           {showPrices && (
             <p
@@ -69,6 +78,7 @@ export default function ProductCard({ bike, locale, showPrices = true, showStock
 
         {bike.tagline && (
           <p
+            {...createPreviewAttributes({ entryId: bike.id, fieldApiId: "tagline" })}
             className="text-muted group-hover:text-secondary/60 transition-colors mb-4"
             style={{ lineHeight: 1.6 }}
           >

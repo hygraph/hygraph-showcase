@@ -455,7 +455,10 @@ export default function ProductView({ bike, relatedBikes }: ProductViewProps) {
                   href={`/${locale}/product/${related.slug}`}
                   className="group block hover:bg-primary transition-colors duration-300"
                 >
-                  <div className="aspect-square overflow-hidden border-b border-primary">
+                  <div
+                    {...createPreviewAttributes({ entryId: related.id, fieldApiId: "image" })}
+                    className="aspect-square overflow-hidden border-b border-primary"
+                  >
                     {related.image?.url ? (
                       <img
                         src={related.image?.url}

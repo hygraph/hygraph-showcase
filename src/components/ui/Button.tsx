@@ -1,81 +1,106 @@
 /**
- * Button Component - CTA button with brand theming
- * Maps ButtonVariant enum to Tailwind classes
- * Uses dynamic brand colors from CSS variables
+ * Button Component - CTA button with hybikes design
+ * Sharp corners, uppercase tracking, accent color system
  */
 
-import Link from 'next/link';
-import type { GetPageQuery } from '@/types/hygraph-generated';
+import Link from "next/link";
+import type { Button } from "@/types/hygraph-generated";
 
-// Extract Button type from HeroSection's primaryCTA
-type ButtonType = NonNullable<
-  Extract<GetPageQuery['pages'][0]['sections'][0], { __typename?: 'HeroSection' }>['primaryCTA']
->;
+import {
+  createPreviewAttributes,
+  createComponentChainLink,
+} from "@hygraph/preview-sdk/core";
 
 interface ButtonProps {
-  cta: ButtonType;
+  cta: Pick<Button, "id" | "label" | "href" | "variant" | "openInNewTab">;
+  entryId: string;
+  componentChain: ReturnType<typeof createComponentChainLink>[];
+  size?: "sm" | "md";
   className?: string;
+  style?: React.CSSProperties;
 }
 
-/**
- * Gets button style classes based on variant
- */
 function getVariantClasses(variant: string): string {
   switch (variant) {
-    case 'PRIMARY':
-      // Solid branded button - main CTA
-      return 'bg-brand text-white hover:bg-brand-hover active:bg-brand-active shadow-soft-md hover:shadow-soft-lg dark:shadow-glow hover:scale-105';
-
-    case 'SECONDARY':
-      // Soft outlined button - secondary actions
-      return 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-soft hover:shadow-soft-md hover:scale-105';
-
-    case 'GHOST':
-      // Transparent with border - perfect for dark backgrounds (hero sections)
-      return 'bg-transparent border-2 border-white text-white hover:bg-white/10 dark:hover:bg-white/20 hover:border-white/90 active:bg-white/20 shadow-soft hover:shadow-soft-md hover:scale-105';
-
-    case 'OUTLINE':
-      // Brand-colored outline - versatile for light backgrounds
-      return 'bg-transparent border-2 border-brand text-brand hover:bg-brand/5 dark:hover:bg-brand/10 hover:border-brand-hover active:bg-brand/10 shadow-soft hover:shadow-soft-md hover:scale-105';
-
-    case 'TEXT':
-      // Text-only, no background - subtle actions, links
-      return 'bg-transparent text-brand hover:text-brand-hover dark:hover:text-brand-light underline-offset-4 hover:underline';
-
+    case "PRIMARY":
+      return "bg-accent text-white hover:bg-accent/90 transition-colors";
+    case "SECONDARY":
+      return "bg-secondary text-primary border border-primary hover:bg-primary hover:text-secondary transition-colors";
+    case "GHOST":
+      return "border border-secondary/40 text-secondary hover:border-secondary transition-colors";
+    case "OUTLINE":
+      return "border border-primary hover:bg-primary hover:text-secondary transition-colors";
+    case "TEXT":
+      return "text-accent hover:underline transition-colors";
     default:
-      // Fallback to primary
-      return 'bg-brand text-white hover:bg-brand-hover shadow-soft-md hover:shadow-soft-lg dark:shadow-glow hover:scale-105';
+      return "bg-accent text-white hover:bg-accent/90 transition-colors";
   }
 }
 
-export default function Button({ cta, className = '' }: ButtonProps) {
+export default function Button({
+  cta,
+  entryId,
+  componentChain,
+  size = "md",
+  className = "",
+  style,
+}: ButtonProps) {
   const variantClasses = getVariantClasses(cta.variant);
-
-  // TEXT variant needs minimal styling, other variants get full button treatment
-  const baseClasses = cta.variant === 'TEXT'
-    ? 'inline-flex items-center justify-center font-semibold transition-all duration-250 focus:outline-none focus:ring-1 focus:ring-brand focus:ring-offset-1'
-    : 'inline-flex items-center justify-center rounded-lg px-8 py-4 font-semibold transition-all duration-250 transform focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2';
-
+  const paddingClasses = size === "sm" ? "px-8 py-4" : "px-10 py-5";
+  const baseClasses =
+    cta.variant === "TEXT"
+      ? "inline-flex items-center gap-3 uppercase tracking-[0.1em]"
+      : `inline-flex items-center gap-3 ${paddingClasses} uppercase tracking-[0.1em]`;
   const combinedClasses = `${baseClasses} ${variantClasses} ${className}`;
+  const labelStyle: React.CSSProperties = {
+    fontSize: "0.75rem",
+    fontWeight: 700,
+    ...style,
+  };
 
-  // Check if it's an external link or should open in new tab
+  const content = (
+    <>
+      <span
+        {...createPreviewAttributes({
+          entryId,
+          fieldApiId: "label",
+          componentChain,
+        })}
+      >
+        {cta.label}
+      </span>
+      {cta.variant === "PRIMARY" && (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      )}
+    </>
+  );
+
   if (cta.openInNewTab) {
     return (
       <a
         href={cta.href}
         className={combinedClasses}
+        style={labelStyle}
         target="_blank"
         rel="noopener noreferrer"
       >
-        {cta.label}
+        {content}
       </a>
     );
   }
 
-  // For internal links, use Next.js Link
   return (
-    <Link href={cta.href} className={combinedClasses}>
-      {cta.label}
+    <Link href={cta.href} className={combinedClasses} style={labelStyle}>
+      {content}
     </Link>
   );
 }
