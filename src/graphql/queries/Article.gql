@@ -15,7 +15,7 @@ query GetArticles {
   }
 }
 
-query GetArticle($slug: String!) {
+query GetArticle($slug: String!, $segmentId: ID) {
   article(where: { slug: $slug }, stage: DRAFT) {
     id
     slug
@@ -31,6 +31,13 @@ query GetArticle($slug: String!) {
     }
     body {
       html
+    }
+    variants(where: { segments_some: { id: $segmentId } }) {
+      title
+      summary
+      body {
+        html
+      }
     }
   }
 }
