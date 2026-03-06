@@ -71,17 +71,22 @@ export default async function LocaleLayout({
       <Suspense fallback={null}>
         <SegmentProvider>
           <div className="flex min-h-screen flex-col">
-          {siteSettings?.announcement?.html && (
-            <AnnouncementBanner html={siteSettings.announcement.html} entryId={siteSettings.id} />
-          )}
-          <Navigation locale={locale as Locale} siteSettings={siteSettings} />
-          <main className="flex-1">{children}</main>
-          <Footer
-            locale={locale as Locale}
-            siteSettings={siteSettings}
-            bikeCategories={bikeCategories}
-          />
-          <Suspense><SegmentSwitcher segments={segments} /></Suspense>
+            {siteSettings?.announcement?.html && (
+              <AnnouncementBanner
+                html={siteSettings.announcement.html}
+                entryId={siteSettings.id}
+              />
+            )}
+            <Navigation locale={locale as Locale} siteSettings={siteSettings} />
+            <main className="flex-1">{children}</main>
+            <Footer
+              locale={locale as Locale}
+              siteSettings={siteSettings}
+              bikeCategories={bikeCategories}
+            />
+            <Suspense>
+              <SegmentSwitcher segments={segments} />
+            </Suspense>
           </div>
         </SegmentProvider>
       </Suspense>
