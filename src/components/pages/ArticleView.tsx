@@ -11,14 +11,19 @@ interface ArticleViewProps {
   allArticles: Article[];
 }
 
-export default function ArticleView({ article, allArticles }: ArticleViewProps) {
+export default function ArticleView({
+  article,
+  allArticles,
+}: ArticleViewProps) {
   const params = useParams();
   const locale = (params.locale as string) || "en";
 
   const index = allArticles.findIndex((a) => a.slug === article.slug);
   const prev = index > 0 ? allArticles[index - 1] : null;
   const next =
-    index >= 0 && index < allArticles.length - 1 ? allArticles[index + 1] : null;
+    index >= 0 && index < allArticles.length - 1
+      ? allArticles[index + 1]
+      : null;
 
   return (
     <div>
@@ -31,23 +36,10 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
             style={{ fontSize: "0.7rem", fontWeight: 700 }}
           >
             <ArrowLeft size={13} />
-            Journal
+            Blog
           </Link>
         </div>
       </div>
-
-      {/* Cover */}
-      {article.image?.url && (
-        <section className="border-b border-primary">
-          <div {...createPreviewAttributes({ entryId: article.id, fieldApiId: "image" })}>
-            <img
-              src={article.image?.url}
-              alt={article.title}
-              className="w-full object-cover max-h-[520px]"
-            />
-          </div>
-        </section>
-      )}
 
       {/* Header */}
       <section className="border-b border-primary">
@@ -55,19 +47,30 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
           <div className="lg:col-span-8 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-primary">
             <div className="flex items-center gap-4 mb-6">
               <span
-                {...createPreviewAttributes({ entryId: article.id, fieldApiId: "category" })}
+                {...createPreviewAttributes({
+                  entryId: article.id,
+                  fieldApiId: "category",
+                })}
                 className="bg-accent text-white px-3 py-1 uppercase tracking-[0.15em]"
                 style={{ fontSize: "0.6rem", fontWeight: 700 }}
               >
                 {article.category}
               </span>
             </div>
-            <h1 {...createPreviewAttributes({ entryId: article.id, fieldApiId: "title" })}>
+            <h1
+              {...createPreviewAttributes({
+                entryId: article.id,
+                fieldApiId: "title",
+              })}
+            >
               {article.title}
               <span className="text-accent">.</span>
             </h1>
             <p
-              {...createPreviewAttributes({ entryId: article.id, fieldApiId: "summary" })}
+              {...createPreviewAttributes({
+                entryId: article.id,
+                fieldApiId: "summary",
+              })}
               className="text-muted mt-8 max-w-[600px]"
               style={{ lineHeight: 1.7, fontSize: "1.1rem" }}
             >
@@ -82,7 +85,15 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
               >
                 Published
               </p>
-              <p {...createPreviewAttributes({ entryId: article.id, fieldApiId: "publishedDate" })} style={{ fontWeight: 600 }}>{article.publishedDate}</p>
+              <p
+                {...createPreviewAttributes({
+                  entryId: article.id,
+                  fieldApiId: "publishedDate",
+                })}
+                style={{ fontWeight: 600 }}
+              >
+                {article.publishedDate}
+              </p>
             </div>
             {article.readTime && (
               <div>
@@ -92,12 +103,38 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
                 >
                   Read time
                 </p>
-                <p {...createPreviewAttributes({ entryId: article.id, fieldApiId: "readTime" })} style={{ fontWeight: 600 }}>{article.readTime}</p>
+                <p
+                  {...createPreviewAttributes({
+                    entryId: article.id,
+                    fieldApiId: "readTime",
+                  })}
+                  style={{ fontWeight: 600 }}
+                >
+                  {article.readTime}
+                </p>
               </div>
             )}
           </div>
         </div>
       </section>
+
+      {/* Cover */}
+      {article.image?.url && (
+        <section className="border-b border-primary">
+          <div
+            {...createPreviewAttributes({
+              entryId: article.id,
+              fieldApiId: "image",
+            })}
+          >
+            <img
+              src={article.image?.url}
+              alt={article.title}
+              className="w-full object-cover max-h-[520px]"
+            />
+          </div>
+        </section>
+      )}
 
       {/* Article body */}
       {article.body?.html && (
@@ -105,7 +142,10 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-8 lg:border-r border-primary">
               <div
-                {...createPreviewAttributes({ entryId: article.id, fieldApiId: "body" })}
+                {...createPreviewAttributes({
+                  entryId: article.id,
+                  fieldApiId: "body",
+                })}
                 className="px-8 md:px-12 lg:px-16 py-6 md:py-12 text-muted [&_h2]:text-primary [&_h2]:text-2xl [&_h2]:leading-snug [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:text-primary [&_h3]:text-xl [&_h3]:leading-snug [&_h3]:mt-10 [&_h3]:mb-3 [&_h4]:text-primary [&_h4]:text-base [&_h4]:font-bold [&_h4]:leading-normal [&_h4]:mt-8 [&_h4]:mb-2"
                 style={{ lineHeight: 1.85, fontSize: "1rem" }}
                 dangerouslySetInnerHTML={{ __html: article.body.html }}
@@ -130,7 +170,12 @@ export default function ArticleView({ article, allArticles }: ArticleViewProps) 
                       className="group block border border-primary hover:bg-primary hover:text-secondary transition-colors overflow-hidden"
                     >
                       {other.image?.url && (
-                        <div {...createPreviewAttributes({ entryId: other.id, fieldApiId: "image" })}>
+                        <div
+                          {...createPreviewAttributes({
+                            entryId: other.id,
+                            fieldApiId: "image",
+                          })}
+                        >
                           <img
                             src={other.image?.url}
                             alt={other.title}

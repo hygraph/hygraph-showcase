@@ -43,12 +43,12 @@ export default function ProductShowcase({
       : products;
 
   const colsMap: Record<string, string> = {
-    GRID_2COL: "grid-cols-1 md:grid-cols-2",
-    GRID_3COL: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
-    GRID_4COL: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+    GRID_2COL: "grid-cols-2",
+    GRID_3COL: "grid-cols-2 lg:grid-cols-3",
+    GRID_4COL: "grid-cols-2 lg:grid-cols-4",
   };
 
-  const cols = colsMap[section.layout] ?? "grid-cols-1 md:grid-cols-2";
+  const cols = colsMap[section.layout] ?? "grid-cols-2";
 
   return (
     <section className="border-b border-primary">
