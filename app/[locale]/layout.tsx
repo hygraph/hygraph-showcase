@@ -68,8 +68,9 @@ export default async function LocaleLayout({
 
   return (
     <SiteSettingsProvider siteSettings={siteSettings}>
-      <SegmentProvider>
-        <div className="flex min-h-screen flex-col">
+      <Suspense fallback={null}>
+        <SegmentProvider>
+          <div className="flex min-h-screen flex-col">
           {siteSettings?.announcement?.html && (
             <AnnouncementBanner html={siteSettings.announcement.html} entryId={siteSettings.id} />
           )}
@@ -81,8 +82,9 @@ export default async function LocaleLayout({
             bikeCategories={bikeCategories}
           />
           <Suspense><SegmentSwitcher segments={segments} /></Suspense>
-        </div>
-      </SegmentProvider>
+          </div>
+        </SegmentProvider>
+      </Suspense>
     </SiteSettingsProvider>
   );
 }
