@@ -94,7 +94,7 @@ export default function ContactForm({
             type="text"
             required
             placeholder={namePlaceholder}
-            className="w-full border border-primary px-4 py-3 bg-transparent placeholder-muted/50 focus:outline-none focus:border-accent transition-colors"
+            className="w-full border border-primary px-4 py-3 bg-transparent placeholder-muted/50 focus:outline-hidden focus:border-accent transition-colors"
           />
         </div>
         <div>
@@ -110,7 +110,7 @@ export default function ContactForm({
             type="email"
             required
             placeholder={emailPlaceholder}
-            className="w-full border border-primary px-4 py-3 bg-transparent placeholder-muted/50 focus:outline-none focus:border-accent transition-colors"
+            className="w-full border border-primary px-4 py-3 bg-transparent placeholder-muted/50 focus:outline-hidden focus:border-accent transition-colors"
           />
         </div>
       </div>
@@ -128,7 +128,7 @@ export default function ContactForm({
             {...createPreviewAttributes({ entryId: pageId, fieldApiId: "topicPlaceholder", componentChain: sectionChain })}
             required
             defaultValue=""
-            className="w-full border border-primary px-4 py-3 bg-secondary focus:outline-none focus:border-accent transition-colors appearance-none"
+            className="w-full border border-primary px-4 py-3 bg-secondary focus:outline-hidden focus:border-accent transition-colors appearance-none"
           >
             <option value="" disabled>
               {topicPlaceholder}
@@ -155,7 +155,7 @@ export default function ContactForm({
           required
           rows={6}
           placeholder={messagePlaceholder}
-          className="w-full border border-primary px-4 py-3 bg-transparent placeholder-muted/50 focus:outline-none focus:border-accent transition-colors resize-none"
+          className="w-full border border-primary px-4 py-3 bg-transparent placeholder-muted/50 focus:outline-hidden focus:border-accent transition-colors resize-none"
         />
       </div>
 

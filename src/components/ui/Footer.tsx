@@ -46,7 +46,7 @@ export default function Footer({
             <input
               type="email"
               placeholder="your@email.com"
-              className="flex-1 bg-transparent border border-secondary/30 px-4 py-3 text-secondary placeholder-secondary/30 focus:outline-none focus:border-accent"
+              className="flex-1 bg-transparent border border-secondary/30 px-4 py-3 text-secondary placeholder-secondary/30 focus:outline-hidden focus:border-accent"
             />
             <button
               className="bg-accent text-white px-6 py-3 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
