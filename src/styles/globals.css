@@ -1,31 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Static palette */
+  --color-primary: #121212;
+  --color-secondary: #F9F9F7;
+  --color-accent: #FF4F00;
+  --color-muted: #6B6B6B;
+
+  /* Dynamic brand colors (driven by CSS vars set in :root) */
+  --color-brand: hsl(var(--brand-hsl));
+  --color-brand-hover: hsl(var(--brand-hover-hsl));
+  --color-brand-active: hsl(var(--brand-active-hsl));
+  --color-brand-light: hsl(var(--brand-light-hsl));
+  --color-brand-dark: hsl(var(--brand-dark-hsl));
+  --color-brand-50: hsl(var(--brand-hsl) / 0.05);
+  --color-brand-100: hsl(var(--brand-hsl) / 0.10);
+  --color-brand-200: hsl(var(--brand-hsl) / 0.20);
+
+  /* Custom shadows */
+  --shadow-soft: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
+  --shadow-soft-md: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  --shadow-soft-lg: 0 8px 24px 0 rgba(0, 0, 0, 0.06);
+  --shadow-soft-xl: 0 16px 48px 0 rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 24px -4px hsl(var(--brand-hsl) / 0.3);
+}
 
 @layer base {
   :root {
-    /* Default brand color: Signal Orange (#FF4F00) — overridden by Hygraph SiteSettings.brandColor */
-    --color-brand-primary: 19 100% 50%;
-    --color-brand-hover: 19 100% 44%;
-    --color-brand-active: 19 100% 38%;
-    --color-brand-light: 19 100% 88%;
-    --color-brand-dark: 19 100% 30%;
-    /* Inter + Space Grotesk loaded via next/font, variables set on <html> */
-    --font-display: var(--font-inter), 'Inter', var(--font-space-grotesk), 'Space Grotesk', 'Helvetica', sans-serif;
+    /* Default brand color: Signal Orange (#FF4F00) in HSL */
+    --brand-hsl: 19 100% 50%;
+    --brand-hover-hsl: 19 100% 44%;
+    --brand-active-hsl: 19 100% 38%;
+    --brand-light-hsl: 19 100% 88%;
+    --brand-dark-hsl: 19 100% 30%;
   }
 
-  /* Enhanced focus states for accessibility */
   *:focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2;
+    @apply outline-hidden ring-2 ring-accent ring-offset-2;
   }
 
   body {
     background-color: #F9F9F7;
     color: #121212;
-    font-family: var(--font-inter), 'Inter', var(--font-space-grotesk), 'Space Grotesk', 'Helvetica', sans-serif;
   }
 
-  /* HyBikes typography scale — sized to match hybikes reference (12rem × 14px base = 168px h1 max) */
   h1 {
     font-size: clamp(3rem, 10vw, 10.5rem);
     font-weight: 900;
@@ -51,33 +69,23 @@
 }
 
 @layer components {
-  /* Reusable gradient backgrounds */
   .bg-gradient-brand {
     @apply bg-gradient-to-br from-brand via-brand-hover to-brand-dark;
   }
 
-  .bg-gradient-subtle {
-    @apply bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950;
-  }
-
-  /* Card elevation pattern */
   .card {
     @apply bg-white dark:bg-gray-800 rounded-xl shadow-soft-md hover:shadow-soft-lg transition-shadow duration-300;
   }
 
-  /* Text gradient effect */
   .text-gradient-brand {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-brand to-brand-dark;
   }
 
-  /* Smooth transition utility */
   .transition-all-smooth {
     @apply transition-all duration-300 ease-out;
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@utility text-balance {
+  text-wrap: balance;
 }
