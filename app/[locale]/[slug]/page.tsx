@@ -176,9 +176,11 @@ export default async function Page({ params, searchParams }: PageProps) {
     notFound();
   }
 
-  // Use variant sections if available, otherwise use base sections
+  // Use variant sections only if an explicit segment was requested
   const variant =
-    page.variants && page.variants.length > 0 ? page.variants[0] : null;
+    segmentId && page.variants && page.variants.length > 0
+      ? page.variants[0]
+      : null;
   const displaySections = variant?.sections || page.sections;
 
   function renderSections() {
