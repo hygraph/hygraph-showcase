@@ -44,6 +44,10 @@
     color: #121212;
   }
 
+  button, [role="button"] {
+    cursor: pointer;
+  }
+
   h1 {
     font-size: clamp(3rem, 10vw, 10.5rem);
     font-weight: 900;
