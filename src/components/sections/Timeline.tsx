@@ -18,7 +18,7 @@ export default function Timeline({ section, pageId }: TimelineProps) {
   if (!entries.length) return null;
 
   return (
-    <section className="border-b border-primary">
+    <dl className="border-b border-primary">
       {entries.map((entry, i) => {
         const entryChain = [
           ...sectionChain,
@@ -27,13 +27,14 @@ export default function Timeline({ section, pageId }: TimelineProps) {
         return (
           <div
             key={entry.id}
-            className={`grid grid-cols-12 items-center hover:bg-primary hover:text-secondary transition-colors group ${
+            className={`grid grid-cols-12 items-stretch hover:bg-primary hover:text-secondary transition-colors group ${
               i < entries.length - 1 ? "border-b border-primary" : ""
             }`}
           >
-            <div className="col-span-3 md:col-span-2 p-6 md:p-8 border-r border-primary group-hover:border-secondary/20">
-              <span
+            <dt className="col-span-3 md:col-span-2 p-6 md:p-8 flex items-center">
+              <time
                 {...createPreviewAttributes({ entryId: pageId, fieldApiId: "year", componentChain: entryChain })}
+                dateTime={String(entry.year)}
                 className="text-accent"
                 style={{
                   fontSize: "clamp(1rem, 2vw, 1.5rem)",
@@ -42,19 +43,19 @@ export default function Timeline({ section, pageId }: TimelineProps) {
                 }}
               >
                 {entry.year}
-              </span>
-            </div>
-            <div className="col-span-9 md:col-span-10 p-6 md:p-8">
+              </time>
+            </dt>
+            <dd className="col-span-9 md:col-span-10 p-6 md:p-8 border-l border-primary group-hover:border-secondary/20 flex items-center">
               <p
                 {...createPreviewAttributes({ entryId: pageId, fieldApiId: "event", componentChain: entryChain })}
                 style={{ lineHeight: 1.6 }}
               >
                 {entry.event}
               </p>
-            </div>
+            </dd>
           </div>
         );
       })}
-    </section>
+    </dl>
   );
 }
