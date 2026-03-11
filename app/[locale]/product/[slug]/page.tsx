@@ -65,7 +65,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   const relatedBikes = (allProductsData.products ?? []).filter(
-    (p) => p.slug !== slug
+    (p) => p.slug !== slug && p.category?.value === bike.category?.value
   );
 
   return <ProductView bike={bike} relatedBikes={relatedBikes} />;
