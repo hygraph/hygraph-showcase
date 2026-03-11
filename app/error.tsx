@@ -13,7 +13,6 @@ export default function Error({ error, reset }: ErrorProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-secondary text-primary">
-      {/* Content */}
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="max-w-lg w-full border border-primary">
           {/* Headline */}
@@ -29,37 +28,11 @@ export default function Error({ error, reset }: ErrorProps) {
             </h2>
           </div>
 
-          {/* Causes */}
+          {/* Message */}
           <div className="p-8 md:p-12 border-b border-primary">
-            <p className="text-muted mb-4" style={{ lineHeight: 1.7 }}>
-              This usually happens when:
-            </p>
-            <ul className="space-y-2 mb-6">
-              <li className="flex items-start gap-3">
-                <span
-                  className="text-accent mt-1"
-                  style={{ fontSize: "0.65rem" }}
-                >
-                  ■
-                </span>
-                <span style={{ lineHeight: 1.6 }}>
-                  Your Hygraph schema has breaking changes that are incompatible with this starter
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span
-                  className="text-accent mt-1"
-                  style={{ fontSize: "0.65rem" }}
-                >
-                  ■
-                </span>
-                <span style={{ lineHeight: 1.6 }}>
-                  This starter was updated and no longer works with your existing schema
-                </span>
-              </li>
-            </ul>
             <p className="text-muted" style={{ lineHeight: 1.7 }}>
-              The easiest fix is to start fresh with a new Starter project.
+              We couldn&apos;t load the page. This might be a temporary issue
+              with our content service.
             </p>
           </div>
 
@@ -74,13 +47,11 @@ export default function Error({ error, reset }: ErrorProps) {
               Try again
             </button>
             <a
-              href="https://app.hygraph.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/"
               className="flex-1 bg-accent text-white py-4 px-6 uppercase tracking-[0.15em] hover:bg-accent/90 transition-colors flex items-center justify-center gap-3"
               style={{ fontSize: "0.8rem", fontWeight: 700 }}
             >
-              Create new Starter
+              Go home
               <ArrowRight size={16} />
             </a>
           </div>
