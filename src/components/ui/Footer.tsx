@@ -42,14 +42,14 @@ export default function Footer({
           >
             {siteSettings?.footerSubscribeSubtitle}
           </p>
-          <div className="flex">
+          <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-0">
             <input
               type="email"
               placeholder="your@email.com"
-              className="flex-1 bg-transparent border border-secondary/30 px-4 py-3 text-secondary placeholder-secondary/30 focus:outline-hidden focus:border-accent"
+              className="flex-1 min-w-0 bg-transparent border border-secondary/30 px-4 py-3 text-secondary placeholder-secondary/30 focus:outline-hidden focus:border-accent"
             />
             <button
-              className="bg-accent text-white px-6 py-3 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
+              className="shrink-0 bg-accent text-white px-6 py-3 uppercase tracking-[0.1em] hover:bg-accent/90 transition-colors"
               style={{ fontSize: "0.75rem", fontWeight: 700 }}
             >
               Subscribe
