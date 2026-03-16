@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import mockProducts from "../products.json";
+import mockProducts from "./products.json";
 
 const COLOR_OPTION_ID = 1;
 const SIZE_OPTION_ID = 2;
@@ -56,26 +56,17 @@ function buildVariants(productId: number, def: ProductDef) {
   return variants;
 }
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: Promise<{ productId: string }> }
-) {
-  const { productId: productIdStr } = await params;
+export async function GET(request: NextRequest) {
+  const productIdStr = request.nextUrl.searchParams.get("id");
+
+  if (!productIdStr) {
+    return NextResponse.json({ data: null });
+  }
+
   const def = PRODUCTS[productIdStr];
 
   if (!def) {
-    return NextResponse.json({
-      data: null,
-      metadata: {
-        pagination: {
-          total: 0,
-          count: 0,
-          per_page: 0,
-          current_page: 0,
-          total_pages: 0,
-        },
-      },
-    });
+    return NextResponse.json({ data: null });
   }
 
   const productId = parseInt(productIdStr, 10);
