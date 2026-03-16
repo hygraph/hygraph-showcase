@@ -1,0 +1,28 @@
+src/components/pages/ArticleView.tsx
+  17dc7ebcbffbd80e 12-13,45,47-50,52-54,57-59,62-64,67,70,72-85
+src/graphql/queries/Article.gql
+  17dc7ebcbffbd80e 37
+src/types/hygraph-generated.ts
+  17dc7ebcbffbd80e 23606,23716
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "8ab2390c0865627bef4a6d71d6f666273f8b2c1c",
+  "prompts": {
+    "17dc7ebcbffbd80e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "41abd670-dfb3-47ad-8ee7-6e8ea829e45f",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 35,
+      "total_deletions": 12,
+      "accepted_lines": 35,
+      "overriden_lines": 10,
+      "messages_url": "https://usegitai.com/cas/9fe1294bf687f763f4b4e7164743656118826333a007f1b1f17e8bde79c95fe7"
+    }
+  }
+}
