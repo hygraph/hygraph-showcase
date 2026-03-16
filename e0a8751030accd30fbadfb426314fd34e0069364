@@ -1,0 +1,24 @@
+app/catalog/products/route.ts
+  17dc7ebcbffbd80e 1-107
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "e0a8751030accd30fbadfb426314fd34e0069364",
+  "prompts": {
+    "17dc7ebcbffbd80e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "41abd670-dfb3-47ad-8ee7-6e8ea829e45f",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 107,
+      "total_deletions": 0,
+      "accepted_lines": 107,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/a2c779abe674fbd75ce604c0233e6a28f39565da14b1fdd2fef8894c5fef7c94"
+    }
+  }
+}
