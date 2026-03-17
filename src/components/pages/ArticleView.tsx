@@ -326,13 +326,7 @@ export default function ArticleView({
       {/* Article content */}
       <section className="border-b border-primary">
         <div className="grid grid-cols-1 lg:grid-cols-12">
-          <div
-            {...createPreviewAttributes({
-              entryId: article.id,
-              fieldApiId: "content",
-            })}
-            className="lg:col-span-8 lg:border-r border-primary px-8 md:px-12 lg:px-16 py-6 md:py-12"
-          >
+          <div className="lg:col-span-8 lg:border-r border-primary px-8 md:px-12 lg:px-16 py-6 md:py-12">
             {article.content.map((block) => (
               <ContentBlockRenderer
                 key={block.id}
