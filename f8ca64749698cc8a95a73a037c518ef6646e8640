@@ -1,0 +1,24 @@
+app/catalog/products/products.json
+  65cfad77990e20d8 97-1536
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "f8ca64749698cc8a95a73a037c518ef6646e8640",
+  "prompts": {
+    "65cfad77990e20d8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6786c861-d94b-4cc3-bf39-15c5dec3e3cf",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 1440,
+      "total_deletions": 0,
+      "accepted_lines": 1440,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/123864f3ec6add5354c8ded21dc9a1b051445170746d6705acbef11af4f86d60"
+    }
+  }
+}
