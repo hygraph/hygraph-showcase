@@ -1,0 +1,22 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "a20882fec58e773eac1dab3dfd50aaa70e6a26cd",
+  "prompts": {
+    "65c3540d9ed44139": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d5aab4a2-28d8-423e-ba1c-143ea9ab3416",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 352,
+      "total_deletions": 70,
+      "accepted_lines": 282,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/8100aebb9a54e73819347e6afa0f153df8a185b12823ab757afa0acf4bfc9219"
+    }
+  }
+}
