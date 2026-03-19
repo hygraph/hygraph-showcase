@@ -2,7 +2,10 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { GetPageQuery } from "@/types/hygraph-generated";
 import { GetJobsDocument, type GetJobsQuery } from "@/types/hygraph-generated";
-import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
+import {
+  createComponentChainLink,
+  createPreviewAttributes,
+} from "@hygraph/preview-sdk/core";
 import SectionHeader from "@/components/sections/SectionHeader";
 import { hygraphRequest } from "@/lib/hygraph/client";
 
@@ -23,19 +26,29 @@ export default async function JobList({
   locale,
 }: JobListProps) {
   const data = await hygraphRequest<GetJobsQuery>(GetJobsDocument);
+  const chain = [createComponentChainLink("sections", section.id)];
   const jobs = data?.jobs ?? [];
   const cta = section.cta;
 
   return (
     <div>
       <SectionHeader
-        pageId={pageId}
         section={{
-          __typename: "SectionHeader",
-          id: section.id,
           label: section.label,
-          sectionHeadingHeadline: `${jobs.length} Roles`,
+          sectionHeadingHeadline: `${jobs.length} ${
+            section.titleWithCount || "Roles"
+          }`,
         }}
+        labelAttributes={createPreviewAttributes({
+          entryId: pageId,
+          fieldApiId: "label",
+          componentChain: chain,
+        })}
+        headlineAttributes={createPreviewAttributes({
+          entryId: pageId,
+          fieldApiId: "titleWithCount",
+          componentChain: chain,
+        })}
       />
       {/* Job listings */}
       <section className="border-b border-primary">
@@ -112,7 +125,14 @@ export default async function JobList({
                 </div>
 
                 <div className="flex items-center gap-2 text-brand uppercase tracking-widest shrink-0 group-hover:gap-3 transition-all">
-                  <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>
+                  <span
+                    style={{ fontSize: "0.75rem", fontWeight: 700 }}
+                    {...createPreviewAttributes({
+                      entryId: pageId,
+                      fieldApiId: "cta",
+                      componentChain: chain,
+                    })}
+                  >
                     {cta || "View role"}
                   </span>
                   <ArrowRight size={14} />

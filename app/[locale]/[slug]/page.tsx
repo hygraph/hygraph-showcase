@@ -4,6 +4,10 @@
  */
 
 import { cookies } from "next/headers";
+import {
+  createPreviewAttributes,
+  createComponentChainLink,
+} from "@hygraph/preview-sdk/core";
 import { hygraphRequest } from "@/lib/hygraph/client";
 import {
   GetPageDocument,
@@ -259,8 +263,22 @@ export default async function Page({ params, searchParams }: PageProps) {
         );
       }
       if (isSectionHeader(section)) {
+        const chain = [createComponentChainLink("sections", section.id)];
         return (
-          <SectionHeader key={section.id} section={section} pageId={page.id} />
+          <SectionHeader
+            key={section.id}
+            section={section}
+            labelAttributes={createPreviewAttributes({
+              entryId: page.id,
+              fieldApiId: "label",
+              componentChain: chain,
+            })}
+            headlineAttributes={createPreviewAttributes({
+              entryId: page.id,
+              fieldApiId: "headline",
+              componentChain: chain,
+            })}
+          />
         );
       }
       if (isTimeline(section)) {
