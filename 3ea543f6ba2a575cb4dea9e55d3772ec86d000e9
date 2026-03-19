@@ -1,0 +1,32 @@
+src/components/sections/JobList.tsx
+  193995a50a2c10f3 42-43,46-48,51
+src/graphql/queries/Page.gql
+  193995a50a2c10f3 55
+src/components/sections/SectionHeader.tsx
+  193995a50a2c10f3 2-7,12,22,29
+src/types/hygraph-generated.ts
+  193995a50a2c10f3 23792,24069,24249
+app/[locale]/[slug]/page.tsx
+  193995a50a2c10f3 7-8,10,266,271-273,275-278,280
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "3ea543f6ba2a575cb4dea9e55d3772ec86d000e9",
+  "prompts": {
+    "193995a50a2c10f3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "712046a2-7adc-4372-a060-8f636269a4e5",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 62,
+      "total_deletions": 71,
+      "accepted_lines": 37,
+      "overriden_lines": 8,
+      "messages_url": "https://usegitai.com/cas/8e7df973c82778b808b915d844528a6c92d04d215660ee3b7e07f69df891c872"
+    }
+  }
+}
