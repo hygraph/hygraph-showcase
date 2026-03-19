@@ -33,7 +33,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
           readTime
           summary
           image {
-            url(transformation: { image: { resize: { width: 1600, fit: clip }, quality: { value: 85 } }, validateOptions: true })
+            url(
+              transformation: {
+                image: {
+                  resize: { width: 1600, fit: clip }
+                  quality: { value: 85 }
+                }
+                validateOptions: true
+              }
+            )
             width
             height
           }
@@ -41,15 +49,9 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
       }
       ... on JobList {
         id
-        jobs {
-          id
-          slug
-          title
-          department
-          location
-          jobType
-          summary
-        }
+        label
+        cta
+        emptyStatePlaceholder
       }
       ... on HeroSection {
         id
@@ -59,7 +61,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
         mediaText
         backgroundMedia {
           id
-          url(transformation: { image: { resize: { width: 1200, fit: clip }, quality: { value: 85 } }, validateOptions: true })
+          url(
+            transformation: {
+              image: {
+                resize: { width: 1200, fit: clip }
+                quality: { value: 85 }
+              }
+              validateOptions: true
+            }
+          )
           width
           height
         }
@@ -98,7 +108,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
         }
         image {
           id
-          url(transformation: { image: { resize: { width: 1600, fit: clip }, quality: { value: 85 } }, validateOptions: true })
+          url(
+            transformation: {
+              image: {
+                resize: { width: 1600, fit: clip }
+                quality: { value: 85 }
+              }
+              validateOptions: true
+            }
+          )
           width
           height
         }
@@ -212,7 +230,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
             readTime
             summary
             image {
-              url(transformation: { image: { resize: { width: 1600, fit: clip }, quality: { value: 85 } }, validateOptions: true })
+              url(
+                transformation: {
+                  image: {
+                    resize: { width: 1600, fit: clip }
+                    quality: { value: 85 }
+                  }
+                  validateOptions: true
+                }
+              )
               width
               height
             }
@@ -220,15 +246,9 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
         }
         ... on JobList {
           id
-          jobs {
-            id
-            slug
-            title
-            department
-            location
-            jobType
-            summary
-          }
+          label
+          cta
+          emptyStatePlaceholder
         }
         ... on HeroSection {
           id
@@ -237,7 +257,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
           mediaText
           backgroundMedia {
             id
-            url(transformation: { image: { resize: { width: 1200, fit: clip }, quality: { value: 85 } }, validateOptions: true })
+            url(
+              transformation: {
+                image: {
+                  resize: { width: 1200, fit: clip }
+                  quality: { value: 85 }
+                }
+                validateOptions: true
+              }
+            )
             width
             height
           }
@@ -276,7 +304,15 @@ query GetPage($slug: String!, $locale: Locale!, $segmentId: ID) {
           }
           image {
             id
-            url(transformation: { image: { resize: { width: 1600, fit: clip }, quality: { value: 85 } }, validateOptions: true })
+            url(
+              transformation: {
+                image: {
+                  resize: { width: 1600, fit: clip }
+                  quality: { value: 85 }
+                }
+                validateOptions: true
+              }
+            )
             width
             height
           }

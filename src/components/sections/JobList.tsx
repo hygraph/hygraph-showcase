@@ -1,11 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useParams } from "next/navigation";
 import type { GetPageQuery } from "@/types/hygraph-generated";
-import { useSiteSettings } from "@/lib/context/SiteSettingsContext";
+import { GetJobsDocument, type GetJobsQuery } from "@/types/hygraph-generated";
 import { createPreviewAttributes } from "@hygraph/preview-sdk/core";
+import SectionHeader from "@/components/sections/SectionHeader";
+import { hygraphRequest } from "@/lib/hygraph/client";
 
 type JobListSection = Extract<
   GetPageQuery["pages"][0]["sections"][0],
@@ -15,17 +14,29 @@ type JobListSection = Extract<
 interface JobListProps {
   section: JobListSection;
   pageId: string;
+  locale: string;
 }
 
-export default function JobList({ section }: JobListProps) {
-  const jobs = section.jobs;
-  const params = useParams();
-  const locale = (params.locale as string) || "en";
-  const siteSettings = useSiteSettings();
-  const contactEmail = siteSettings?.contactEmail;
+export default async function JobList({
+  section,
+  pageId,
+  locale,
+}: JobListProps) {
+  const data = await hygraphRequest<GetJobsQuery>(GetJobsDocument);
+  const jobs = data?.jobs ?? [];
+  const cta = section.cta;
 
   return (
     <div>
+      <SectionHeader
+        pageId={pageId}
+        section={{
+          __typename: "SectionHeader",
+          id: section.id,
+          label: section.label,
+          sectionHeadingHeadline: `${jobs.length} Roles`,
+        }}
+      />
       {/* Job listings */}
       <section className="border-b border-primary">
         <div>
@@ -100,9 +111,9 @@ export default function JobList({ section }: JobListProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-brand uppercase tracking-[0.1em] shrink-0 group-hover:gap-3 transition-all">
+                <div className="flex items-center gap-2 text-brand uppercase tracking-widest shrink-0 group-hover:gap-3 transition-all">
                   <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>
-                    View role
+                    {cta || "View role"}
                   </span>
                   <ArrowRight size={14} />
                 </div>
@@ -113,7 +124,10 @@ export default function JobList({ section }: JobListProps) {
 
         {jobs.length === 0 && (
           <div className="p-16 text-center">
-            <p className="text-muted">No open positions at this time.</p>
+            <p className="text-muted">
+              {section.emptyStatePlaceholder ||
+                "No open positions at this time."}
+            </p>
           </div>
         )}
       </section>

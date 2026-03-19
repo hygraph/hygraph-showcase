@@ -211,7 +211,14 @@ export default async function Page({ params, searchParams }: PageProps) {
         );
       }
       if (isJobList(section)) {
-        return <JobList key={section.id} section={section} pageId={page.id} />;
+        return (
+          <JobList
+            key={section.id}
+            section={section}
+            pageId={page.id}
+            locale={locale}
+          />
+        );
       }
       if (isHeroSection(section)) {
         return (
