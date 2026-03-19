@@ -144,7 +144,7 @@ function ContentBlockRenderer({
                   fieldApiId: "product",
                   componentChain,
                 })}
-                href={`/${locale}/products/${block.product.slug}`}
+                href={`/${locale}/product/${block.product.slug}`}
                 className="shrink-0"
               >
                 <Image
@@ -181,7 +181,7 @@ function ContentBlockRenderer({
               )}
               {block.product && (
                 <Link
-                  href={`/${locale}/products/${block.product.slug}`}
+                  href={`/${locale}/product/${block.product.slug}`}
                   className="inline-block mt-4 text-brand hover:underline font-semibold"
                 >
                   View {block.product.name} →
