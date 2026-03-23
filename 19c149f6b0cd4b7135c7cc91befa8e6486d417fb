@@ -1,0 +1,28 @@
+instrumentation.ts
+  59d497112b03a988 1-39
+app/api/report-error/route.ts
+  59d497112b03a988 1-30,32-35,37-40,42-53,55-58
+src/components/ErrorCard.tsx
+  59d497112b03a988 3,15-18,20,23-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "19c149f6b0cd4b7135c7cc91befa8e6486d417fb",
+  "prompts": {
+    "59d497112b03a988": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "9b6eaf60-d757-4fc3-b905-418b0360b0ff",
+        "model": "default"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 118,
+      "total_deletions": 8,
+      "accepted_lines": 113,
+      "overriden_lines": 2,
+      "messages_url": "https://usegitai.com/cas/600314ecaad3ec5087e73ef38ad623c955ba587a1997e8d5b5cdb69d1d9184a2"
+    }
+  }
+}
