@@ -34,21 +34,24 @@ function ContentBlockRenderer({
   switch (block.__typename) {
     case "ArticleParagraph":
       return (
-        <div
-          {...createPreviewAttributes({
-            entryId: articleId,
-            fieldApiId: "text",
-            componentChain,
-          })}
-          className="article-paragraph-content text-muted"
-          style={{ lineHeight: 1.85, fontSize: "1rem" }}
-          dangerouslySetInnerHTML={{ __html: block.paragraphText.html }}
-        />
+        <div data-hygraph-component-chain={JSON.stringify(componentChain)}>
+          <div
+            {...createPreviewAttributes({
+              entryId: articleId,
+              fieldApiId: "text",
+              componentChain,
+            })}
+            data-hygraph-rich-text-format="html"
+            className="article-paragraph-content text-muted"
+            style={{ lineHeight: 1.85, fontSize: "1rem" }}
+            dangerouslySetInnerHTML={{ __html: block.paragraphText.html }}
+          />
+        </div>
       );
 
     case "ArticleImageSection":
       return (
-        <div className="my-8">
+        <div data-hygraph-component-chain={JSON.stringify(componentChain)} className="my-8">
           {block.image?.url && (
             <div
               {...createPreviewAttributes({
@@ -86,6 +89,7 @@ function ContentBlockRenderer({
                 fieldApiId: "text",
                 componentChain,
               })}
+              data-hygraph-rich-text-format="html"
               className="text-muted mt-4"
               style={{ lineHeight: 1.85, fontSize: "1rem" }}
               dangerouslySetInnerHTML={{ __html: block.imageSectionText.html }}
@@ -96,7 +100,7 @@ function ContentBlockRenderer({
 
     case "ArticleProductCallout":
       return (
-        <div className="my-8 border border-primary p-6">
+        <div data-hygraph-component-chain={JSON.stringify(componentChain)} className="my-8 border border-primary p-6">
           <div className="flex flex-col md:flex-row gap-6">
             {block.product?.image?.url && (
               <Link
@@ -135,6 +139,7 @@ function ContentBlockRenderer({
                     fieldApiId: "text",
                     componentChain,
                   })}
+                  data-hygraph-rich-text-format="html"
                   className="text-muted mt-2"
                   style={{ lineHeight: 1.7, fontSize: "0.95rem" }}
                   dangerouslySetInnerHTML={{ __html: block.calloutText.html }}
@@ -288,14 +293,21 @@ export default function ArticleView({
       <section className="border-b border-primary">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="lg:col-span-8 lg:border-r border-primary px-8 md:px-12 lg:px-16 py-6 md:py-12">
-            {article.content.map((block) => (
-              <ContentBlockRenderer
-                key={block.id}
-                block={block}
-                locale={locale}
-                articleId={article.id}
-              />
-            ))}
+            <div
+              {...createPreviewAttributes({
+                entryId: article.id,
+                fieldApiId: "content",
+              })}
+            >
+              {article.content.map((block) => (
+                <ContentBlockRenderer
+                  key={block.id}
+                  block={block}
+                  locale={locale}
+                  articleId={article.id}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Sidebar: other articles */}
