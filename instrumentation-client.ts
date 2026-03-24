@@ -5,7 +5,7 @@
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
-  dsn: "https://e6904982ecd0a6d080afd223fb66fa90@o4508006286491648.ingest.de.sentry.io/4511098633977936",
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
 
   // Enable sending user PII (Personally Identifiable Information)
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
