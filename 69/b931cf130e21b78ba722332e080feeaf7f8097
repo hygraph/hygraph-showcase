@@ -1,0 +1,24 @@
+instrumentation.ts
+  59d497112b03a988 2,11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "69b931cf130e21b78ba722332e080feeaf7f8097",
+  "prompts": {
+    "59d497112b03a988": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "9b6eaf60-d757-4fc3-b905-418b0360b0ff",
+        "model": "default"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 2,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/b2f5d2eb005c874e1a1d0f2f42cbf45f66b22c63bfad4f74cbf48a7ff51b94af"
+    }
+  }
+}
