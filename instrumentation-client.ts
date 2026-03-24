@@ -30,15 +30,11 @@ function getClientCookie(name: string): string | undefined {
 
 Sentry.addEventProcessor((event) => {
   const endpointCookie = getClientCookie("hygraph-endpoint");
-  const hasPreviewCookie = Boolean(getClientCookie("hygraph-preview-mode"));
-  const isInIframe =
-    typeof window !== "undefined" && window.self !== window.top;
 
   event.extra = {
     ...event.extra,
     hygraph_endpoint:
       endpointCookie ?? process.env.NEXT_PUBLIC_HYGRAPH_CONTENT_ENDPOINT ?? "",
-    live_preview: hasPreviewCookie || isInIframe,
   };
 
   return event;
