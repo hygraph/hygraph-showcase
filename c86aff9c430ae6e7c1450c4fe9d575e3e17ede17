@@ -1,0 +1,22 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "c86aff9c430ae6e7c1450c4fe9d575e3e17ede17",
+  "prompts": {
+    "2dcab578c0b5674d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "9a2d798c-b486-4077-8070-5a79d32bdc99",
+        "model": "default"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 2,
+      "messages_url": "https://usegitai.com/cas/63440779d840878c1ec644041f480ab7771a8ea62aa4440eaf419f22a6a6ae16"
+    }
+  }
+}
