@@ -2,6 +2,8 @@
 
 import "@/styles/globals.css";
 import ErrorCard from "@/components/ErrorCard";
+import { captureException } from "@sentry/nextjs";
+import { useEffect } from "react";
 
 interface GlobalErrorProps {
   error: Error & { digest?: string };
@@ -9,6 +11,10 @@ interface GlobalErrorProps {
 }
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
+  useEffect(() => {
+    captureException(error);
+  }, [error]);
+
   return (
     <html lang="en">
       <body>

@@ -45,7 +45,6 @@ export function middleware(request: NextRequest) {
     if (!endpointOverride || !shouldPersistEndpointCookie) return response;
 
     response.cookies.set(HYGRAPH_ENDPOINT_COOKIE_NAME, endpointOverride, {
-      httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'none',
       maxAge: 60 * 60, // 1 hour
