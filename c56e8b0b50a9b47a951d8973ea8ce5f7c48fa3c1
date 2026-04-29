@@ -1,0 +1,28 @@
+src/graphql/queries/Page.gql
+  d27cd8d01c9d5560 142,320
+src/components/ui/Button.tsx
+  d27cd8d01c9d5560 14-16,18-20,43-46,55-56,59-61,69-81,86,88
+src/components/sections/ProductShowcase.tsx
+  d27cd8d01c9d5560 7,17,36-37,76-77,91-120,129,131,146-154
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "c56e8b0b50a9b47a951d8973ea8ce5f7c48fa3c1",
+  "prompts": {
+    "d27cd8d01c9d5560": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ae1a3e16-749f-4347-8e04-d3416924f071",
+        "model": "composer-1.5"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 317,
+      "total_deletions": 251,
+      "accepted_lines": 103,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/2d5587ce11de6d06fd7faeb62285bb5221b8a0855961eef68c4fe55db195f775"
+    }
+  }
+}

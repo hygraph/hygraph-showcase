@@ -1,0 +1,30 @@
+sentry.edge.config.ts
+  d9f57a1951817a41 9
+instrumentation-client.ts
+  d9f57a1951817a41 8
+.env.local.example
+  d9f57a1951817a41 17
+sentry.server.config.ts
+  d9f57a1951817a41 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "0a4c42b3a3e1edfebf15df34a9c84d65ac4d437d",
+  "prompts": {
+    "d9f57a1951817a41": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4328337e-a920-454d-b355-f762fc77cc32",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 77,
+      "total_deletions": 27,
+      "accepted_lines": 53,
+      "overriden_lines": 1,
+      "messages_url": "https://usegitai.com/cas/49d58a915cd32f4ce0408a6f22bceb1c1cc7383adbbd0240f11deb7dc96d2a68"
+    }
+  }
+}

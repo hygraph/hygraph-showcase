@@ -1,0 +1,38 @@
+src/components/sections/FeaturedArticle.tsx
+  13ad3567f5c9ed45 2,111,114-115,139,142-143
+src/components/sections/EditorialSection.tsx
+  13ad3567f5c9ed45 9,145-146,153-154,169,172-173,185-186,207-208,219-220
+src/components/sections/HeroSection.tsx
+  13ad3567f5c9ed45 6,116,119-120,122
+src/graphql/queries/Page.gql
+  13ad3567f5c9ed45 36,62,101,215,240,279
+src/graphql/queries/Product.gql
+  13ad3567f5c9ed45 14
+src/components/sections/ArticleList.tsx
+  13ad3567f5c9ed45 2,70-71,73-74
+src/graphql/queries/Article.gql
+  13ad3567f5c9ed45 11,28,44,65,87,108
+src/graphql/queries/Products.gql
+  13ad3567f5c9ed45 11,57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "d5cae03450dec036e2ce70a2afc6ba5a8bda0120",
+  "prompts": {
+    "13ad3567f5c9ed45": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "06abbd5d-607f-4d3f-b67f-50c208028f29",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 48,
+      "total_deletions": 23,
+      "accepted_lines": 46,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/ee9cd654602cb780729426d95d1f0ab696c28415a7c779cb3f1499a6e12d20c3"
+    }
+  }
+}

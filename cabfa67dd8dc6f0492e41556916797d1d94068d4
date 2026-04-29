@@ -1,0 +1,43 @@
+src/graphql/queries/Page.gql
+  43470efbe6846fc9 52-54,249-251
+app/[locale]/[slug]/page.tsx
+  193995a50a2c10f3 219
+src/components/sections/JobList.tsx
+  193995a50a2c10f3 7,17,20,22,25-26
+  43470efbe6846fc9 6,21,27,31,33-36,38-39,116,128-129
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "cabfa67dd8dc6f0492e41556916797d1d94068d4",
+  "prompts": {
+    "193995a50a2c10f3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "712046a2-7adc-4372-a060-8f636269a4e5",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 11,
+      "total_deletions": 45,
+      "accepted_lines": 8,
+      "overriden_lines": 2,
+      "messages_url": "https://usegitai.com/cas/1b99855676ef0121e85e3434de277b7d330514c0c3e7d0098fe5e2b397be4ed5"
+    },
+    "43470efbe6846fc9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cf0de65b-a66d-4da6-859b-34a34de2f824",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 35,
+      "total_deletions": 18,
+      "accepted_lines": 20,
+      "overriden_lines": 1,
+      "messages_url": "https://usegitai.com/cas/6bf3765e1a0998df15fe7becd2445869ccca1ca3f10b8b5367a0100a73c7136f"
+    }
+  }
+}

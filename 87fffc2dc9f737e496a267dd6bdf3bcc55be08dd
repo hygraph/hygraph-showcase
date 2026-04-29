@@ -1,0 +1,24 @@
+instrumentation-client.ts
+  d9f57a1951817a41 16-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "87fffc2dc9f737e496a267dd6bdf3bcc55be08dd",
+  "prompts": {
+    "d9f57a1951817a41": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4328337e-a920-454d-b355-f762fc77cc32",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 30,
+      "total_deletions": 0,
+      "accepted_lines": 30,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/88ba39b1be517af429b15b4cc77d2aef945cf01cd1bfc72205b19422c99e169a"
+    }
+  }
+}

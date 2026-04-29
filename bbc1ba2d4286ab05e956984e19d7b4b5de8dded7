@@ -1,0 +1,24 @@
+public/site.webmanifest
+  93bd69331591d145 1,4-15,18-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "bbc1ba2d4286ab05e956984e19d7b4b5de8dded7",
+  "prompts": {
+    "93bd69331591d145": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "1744ec17-8e63-4685-9cfb-a4ec87cf2329",
+        "model": "composer-1.5"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 19,
+      "total_deletions": 0,
+      "accepted_lines": 15,
+      "overriden_lines": 4,
+      "messages_url": "https://usegitai.com/cas/5d3f4f37dcebcfa2654c93ab606122268a189176452e1d2873b9c3f531f184da"
+    }
+  }
+}

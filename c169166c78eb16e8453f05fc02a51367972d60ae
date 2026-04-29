@@ -1,0 +1,30 @@
+src/types/hygraph-generated.ts
+  17dc7ebcbffbd80e 23675,24392-24394
+src/lib/utils/theme.ts
+  17dc7ebcbffbd80e 94-98
+app/layout.tsx
+  17dc7ebcbffbd80e 52
+src/graphql/queries/SiteSettings.gql
+  17dc7ebcbffbd80e 5-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "c169166c78eb16e8453f05fc02a51367972d60ae",
+  "prompts": {
+    "17dc7ebcbffbd80e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "41abd670-dfb3-47ad-8ee7-6e8ea829e45f",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 15,
+      "total_deletions": 12,
+      "accepted_lines": 14,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/0b953417d838d9c1cd259ddf4a2aac4b6479d3da24cde33afaea14da2647ef52"
+    }
+  }
+}

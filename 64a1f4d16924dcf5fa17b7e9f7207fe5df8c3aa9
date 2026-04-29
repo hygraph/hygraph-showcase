@@ -1,0 +1,41 @@
+sentry.client.config.ts
+  d9f57a1951817a41 1-15,17,20-36,38-39
+sentry.server.config.ts
+  d9f57a1951817a41 6,8-10,20-26,28,30-37
+  2dcab578c0b5674d 7,19,38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "64a1f4d16924dcf5fa17b7e9f7207fe5df8c3aa9",
+  "prompts": {
+    "2dcab578c0b5674d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "9a2d798c-b486-4077-8070-5a79d32bdc99",
+        "model": "default"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 284,
+      "total_deletions": 162,
+      "accepted_lines": 113,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/c1ebefab77ddd36a929aab4fb1b53f35436c4c69d7f2acd5835666c8ff108da8"
+    },
+    "d9f57a1951817a41": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4328337e-a920-454d-b355-f762fc77cc32",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 116,
+      "total_deletions": 28,
+      "accepted_lines": 93,
+      "overriden_lines": 2,
+      "messages_url": "https://usegitai.com/cas/425620238d81c3e31bf943749e55222a139f2db736e99f0ff95a20c1756cf058"
+    }
+  }
+}

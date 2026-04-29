@@ -1,0 +1,26 @@
+src/components/pages/ProductView.tsx
+  2dcab578c0b5674d 30-39,75-81,83-89,114,274
+app/catalog/products/route.ts
+  2dcab578c0b5674d 4-5,14,16-24,28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "8cbaa4f182ff5b69b56e53e2f93c8600e1ba28ba",
+  "prompts": {
+    "2dcab578c0b5674d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "9a2d798c-b486-4077-8070-5a79d32bdc99",
+        "model": "default"
+      },
+      "human_author": "Danijel Vincijanovic <danijel.vincijanovic@gmail.com>",
+      "messages": [],
+      "total_additions": 221,
+      "total_deletions": 83,
+      "accepted_lines": 219,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/abe68ac849a4ce3e8cbeb1daf2b545c90e5c13dc8de90c266a5b7cdc84311340"
+    }
+  }
+}
