@@ -1,0 +1,23 @@
+package.json
+  6f191b4315263044 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "4326688d80e05f2ef45a569e9b3ad279b64aff5f",
+  "prompts": {
+    "6f191b4315263044": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "42d57806-32b3-4196-b2dc-37cd82bff0b1",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Daniel Winter",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
